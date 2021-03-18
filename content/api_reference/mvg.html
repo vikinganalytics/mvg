@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>MutliViz Analytics Engine &mdash; MultiViz Analytics Engine Library  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Population Based Anomaly Detection (BlackSheep)" href="../features/blacksheep.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/check_version.html">Check Version Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/sources_and_measurements.html">Sources and Measurements Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Features</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MutliViz Analytics Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mvg-library">MVG library</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MultiViz Analytics Engine Library</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>MutliViz Analytics Engine</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/content/api_reference/mvg.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-mvg.mvg">
+<span id="mutliviz-analytics-engine"></span><span id="mvg-reference"></span><h1>MutliViz Analytics Engine<a class="headerlink" href="#module-mvg.mvg" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mvg-library">
+<h2>MVG library<a class="headerlink" href="#mvg-library" title="Permalink to this headline">¶</a></h2>
+<p>For more information see README.md.</p>
+<dl class="py class">
+<dt id="mvg.mvg.MVG">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mvg.mvg.</span></code><code class="sig-name descname"><span class="pre">MVG</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for a session providing an API to the vibium server</p>
+<dl class="py method">
+<dt id="mvg.mvg.MVG.check_version">
+<code class="sig-name descname"><span class="pre">check_version</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.check_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the version of MVG is compatible with
+the API version called on the server side.
+This call does not require a valid token.
+Where: API version is the version on the server side,
+highest tested version is the highest API version the MVG
+has been tested against, and the MVG version is the
+version of the MVG library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>UserWarning</strong> – In case it would be advisable to upgrade MVG.</p></li>
+<li><p><strong>ValueError</strong> – In case MVG is incompatible with the API.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>message</strong> – Showing the api version, the highest vesrion tested against
+and the version of the MVG library.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.create_measurement">
+<code class="sig-name descname"><span class="pre">create_measurement</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.create_measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a measurement on the server side.</p>
+<p>Although it is up to the client side to handle the
+scaling of data it is recommended that the values
+represent the acceleration in g.
+The timestamp shall represent the time when the measurement was
+recorded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
+<li><p><strong>duration</strong> (<em>float</em>) – duration of the measurement in seconds.</p></li>
+<li><p><strong>timestamp</strong> (<em>int</em>) – in milliseconds since EPOCH.</p></li>
+<li><p><strong>data</strong> (<em>list</em>) – list of float values.</p></li>
+<li><p><strong>meta</strong> (<em>dict</em>) – Meta information to attach to data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.create_source">
+<code class="sig-name descname"><span class="pre">create_source</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.create_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a source on the server side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id</p></li>
+<li><p><strong>meta</strong> (<em>dict</em>) – meta information</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.delete_measurement">
+<code class="sig-name descname"><span class="pre">delete_measurement</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.delete_measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a measurement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id. Identifies source.</p></li>
+<li><p><strong>timestamp</strong> (<em>int</em>) – in milliseconds since EPOCH. Identifies measurement.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.delete_source">
+<code class="sig-name descname"><span class="pre">delete_source</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.delete_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a source on the given endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sid</strong> (<em>str</em>) – source Id.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.get_analysis_results">
+<code class="sig-name descname"><span class="pre">get_analysis_results</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jobid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.get_analysis_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves an analysis with given jobId
+The format of the result structure depends on the feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jobid</strong> (<em>str</em>) – jobid (analysis identifier)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>results</strong> – a dictionary with the results in case available.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.get_analysis_status">
+<code class="sig-name descname"><span class="pre">get_analysis_status</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jobid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.get_analysis_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the status of an analysis request with given jobId.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jobid</strong> (<em>str</em>) – jobid (analysis identifier)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>status</strong> – status of the analysis. It can take any of the following values:
+“queued”: The request is cheduled but have not started.
+“ongoing”: The request is running
+“failed”: The request failed due to internal issue.
+“successful”: The request finished successfully.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.get_endpoint">
+<code class="sig-name descname"><span class="pre">get_endpoint</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.get_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>endpoint</strong> (<em>str</em>)</p></li>
+<li><p><em>Endpoint sent to constructor</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.get_source">
+<code class="sig-name descname"><span class="pre">get_source</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.get_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the information stored for a source representing
+on the given endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sid</strong> (<em>str</em>) – source Id.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>source_information</strong> – Information stored about the source.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.get_token">
+<code class="sig-name descname"><span class="pre">get_token</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.get_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>token</strong> (<em>str</em>)</p></li>
+<li><p><em>Token  sent to constructor</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.list_analyses">
+<code class="sig-name descname"><span class="pre">list_analyses</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.list_analyses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves list of analysis IDs associated with a source
+and a feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
+<li><p><strong>feature</strong> (<em>str</em>) – name of the feature.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>results</strong> – a list of analysis IDs.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.list_sources">
+<code class="sig-name descname"><span class="pre">list_sources</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.list_sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists all sources (sensors) on the server side</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>list of all source id</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>s known to the server</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.parse_version">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">parse_version</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vstr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.parse_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the version string into an array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vstr</strong> (<em>str</em>) – Version string of form v3.2.1</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>version</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>VersionInfo</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.read_measurements">
+<code class="sig-name descname"><span class="pre">read_measurements</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.read_measurements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all measurements for all timestamps for a source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sid</strong> (<em>str</em>) – source Id.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>An array of arrays of single measurements.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.read_single_measurement">
+<code class="sig-name descname"><span class="pre">read_single_measurement</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.read_single_measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all measurements for one single timestamps from source Id.</p>
+<p>The format of the returned measurement is
+an array with the first value being the time stamp and the
+subsequent values being the data (samples).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
+<li><p><strong>timestamp</strong> (<em>int</em>) – in milliseconds since EPOCH.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array of measurements.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.request_analysis">
+<code class="sig-name descname"><span class="pre">request_analysis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.request_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request an analysis on the given endpoint with given parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
+<li><p><strong>feature</strong> (<em>str</em>) – name of feature to run.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – name value pairs of parameters [optional].</p></li>
+<li><p><strong>start_timestamp</strong> (<em>int</em>) – start of analysis time window [optional].</p></li>
+<li><p><strong>end_timestamp</strong> (<em>int</em>) – start of analysis time window [optional].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>jobid</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>analysis identifier</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.request_population_analysis">
+<code class="sig-name descname"><span class="pre">request_population_analysis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">sids:</span> <span class="pre">[&lt;class</span> <span class="pre">'str'&gt;],</span> <span class="pre">feature:</span> <span class="pre">str,</span> <span class="pre">parameters:</span> <span class="pre">Optional[dict]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">start_timestamp:</span> <span class="pre">Optional[int]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">end_timestamp:</span> <span class="pre">Optional[int]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.request_population_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request an population analysis on the given endpoint with given parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sids</strong> (<em>[</em><em>str</em><em>]</em>) – Source ids.</p></li>
+<li><p><strong>feature</strong> (<em>str</em>) – name of feature to run. This feature must be of population type.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – name value pairs of parameters [optional].</p></li>
+<li><p><strong>start_timestamp</strong> (<em>int</em>) – start of analysis time window [optional].</p></li>
+<li><p><strong>end_timestamp</strong> (<em>int</em>) – start of analysis time window [optional].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>jobid</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>analysis identifier</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.say_hello">
+<code class="sig-name descname"><span class="pre">say_hello</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.say_hello" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrievs information about the API.
+This call does not require a valid token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>message</strong> (<em>dict</em>)</p></li>
+<li><p><em>Hello message with info on MVG API.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.supported_features">
+<code class="sig-name descname"><span class="pre">supported_features</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.supported_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all supported features.
+Presence of a feature is indicated by string with the
+feature name set to true.
+That string shall be used to specify
+that feature in an analysis request.
+This call does not require a valid token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>A list of supported features (strings)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.update_measurement">
+<code class="sig-name descname"><span class="pre">update_measurement</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.update_measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces meta information along measurement.
+It is not possible to update the actual measurement
+data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
+<li><p><strong>timestamp</strong> (<em>int</em>) – in milliseconds since EPOCH. Identifies measurement.</p></li>
+<li><p><strong>meta</strong> (<em>dict</em>) – Meta information to attach to data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mvg.mvg.MVG.update_source">
+<code class="sig-name descname"><span class="pre">update_source</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.update_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces source meta information on the server side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
+<li><p><strong>meta</strong> (<em>dict</em>) – meta information to replace old meta information.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../features/blacksheep.html" class="btn btn-neutral float-left" title="Population Based Anomaly Detection (BlackSheep)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Viking Analytics AB.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

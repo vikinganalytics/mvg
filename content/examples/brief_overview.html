@@ -1,0 +1,1437 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Brief Overview on How to Use the MultiViz Analytics Engine Library &mdash; MultiViz Analytics Engine Library  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using MVG features" href="../features/general.html" />
+    <link rel="prev" title="Analysis and Results Visualization" href="analysis_visual.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources_and_measurements.html">Sources and Measurements Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Brief Overview on How to Use the MultiViz Analytics Engine Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Signing-up-for-the-service">Signing up for the service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Python-Pre-requisites">Python Pre-requisites</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Sources-and-Measurements">Sources and Measurements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Creating-a-Source">Creating a Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Uploading-a-Measurement">Uploading a Measurement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Analysis">Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Visualization">Visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Features</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/mvg.html">MutliViz Analytics Engine</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MultiViz Analytics Engine Library</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Brief Overview on How to Use the MultiViz Analytics Engine Library</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/content/examples/brief_overview.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Brief-Overview-on-How-to-Use-the-MultiViz-Analytics-Engine-Library">
+<h1>Brief Overview on How to Use the MultiViz Analytics Engine Library<a class="headerlink" href="#Brief-Overview-on-How-to-Use-the-MultiViz-Analytics-Engine-Library" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
+<p>The MultiViz Vibration Service is an analytics service based on the MultiViz Vibration Engine. To access it Viking Analytics provides a REST API towards its analytics server. To simplify the access of the Vibration service, Viking Analytics provides a Python Package called MVG, which allows to interact with the vibration service via regular python calls.</p>
+<p>This interactive document shall show the whole flow working with the vibration service from Python, from data upload to retrieval of analysis results.</p>
+<div class="section" id="Signing-up-for-the-service">
+<h3>Signing up for the service<a class="headerlink" href="#Signing-up-for-the-service" title="Permalink to this headline">¶</a></h3>
+<p>For commercial use of the services you will need to acquire a token from Viking Analytics. For the example here, we can use a built in token for demo, we also use a special</p>
+</div>
+<div class="section" id="Python-Pre-requisites">
+<h3>Python Pre-requisites<a class="headerlink" href="#Python-Pre-requisites" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Make sure you have Python 3.6 or higher installed.</p></li>
+<li><p>Install the MVG package from <a class="reference external" href="https://pypi.org/project/va-mvg/">“https://pypi.org/project/va-mvg/”</a></p></li>
+<li><p>Make sure you have the following packages installed (json, matplotlib…)</p></li>
+</ol>
+<p>In the following section we will walk through the code needed for the API interaction</p>
+</div>
+</div>
+<div class="section" id="Imports">
+<h2>Imports<a class="headerlink" href="#Imports" title="Permalink to this headline">¶</a></h2>
+<p>First, we begin with the general imports of Python libraries that are needed as part of this project</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
+</pre></div>
+</div>
+</div>
+<p>We proceed by installing the MVG library in our project</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!{</span>sys.executable<span class="o">}</span> -m pip install --user va-mvg
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">ERROR: Can not perform a &#39;--user&#39; install. User site-packages are not visible in this virtualenv.</span>
+</pre></div></div>
+</div>
+<p>We follow by importing MVG library.</p>
+<p>The library documentation is available at <a class="reference external" href="https://vikinganalytics.github.io/mvg/index.html">https://vikinganalytics.github.io/mvg/index.html</a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
+</pre></div>
+</div>
+</div>
+<p>We begin by instantiating a “session” object with the mvg library. A session object basically caches the endpoint and the token, to simplify the the calls to the mvg library.</p>
+<p>NOTE: Each TOKEN is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA vibration’ service</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
+<span class="c1"># Replace by your own Token</span>
+<span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTQ5NDY4NzMsImV4cCI6MTkzMDQ4MzI2MCwiY2xpZW50X2lkIjoiZGV2X2NsaWVudF8xIiwic2l0ZV9pZCI6ImRldl9zaXRlXzEifQ.s9AXgQqtuBzMaodO8Av2Sl3BgHh0r4_cIixYV11vAuO5A8J_hWVqnknphSXY5W2WjYqnEbndzOldNa0vjZ_l3XlOu4DlLYD-HzPlFA9uaFugwQ7ALgGXicZJ5jXUxwiGKI-9p0qxn3AFkVX_3bCzn6eVVQaO-uUGMMS6v16bS4w&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">VALID_TOKEN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We now check if the server is alive. The hello message contains the API version</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">hello_message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">say_hello</span><span class="p">())</span>
+<span class="n">hello_message</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;{&#34;api&#34;: {&#34;name&#34;: &#34;MultiViz Engine API&#34;, &#34;version&#34;: &#34;v0.0.13&#34;}, &#34;features&#34;: {&#34;mode_id&#34;: true, &#34;blacksheep&#34;: false, &#34;emerging_mode&#34;: false, &#34;on_off&#34;: false, &#34;asset_type&#34;: false, &#34;indicator_arrow&#34;: false}, &#34;request_status&#34;: [&#34;initialized&#34;, &#34;accepted&#34;, &#34;queued&#34;, &#34;ongoing&#34;, &#34;failed&#34;, &#34;ready&#34;], &#34;traffic_limit&#34;: 10000000, &#34;max_source_id_length&#34;: 255, &#34;max_meta_size&#34;: 50000, &#34;max_number_of_samples&#34;: 400000, &#34;max_number_of_sources&#34;: 100, &#34;max_number_of_measurements&#34;: 1000, &#34;db_version&#34;: &#34;1.0.0&#34;}&#39;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Sources-and-Measurements">
+<h2>Sources and Measurements<a class="headerlink" href="#Sources-and-Measurements" title="Permalink to this headline">¶</a></h2>
+<p>Before we begin, we will ensure there are no previously existing sources and if there are, we will delete them.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sources</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Retrieved sources&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting </span><span class="si">{</span><span class="n">src</span><span class="p">[</span><span class="s1">&#39;source_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="n">src</span><span class="p">[</span><span class="s1">&#39;source_id&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Retrieved sources
+{&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}}
+Deleting u0001
+</pre></div></div>
+</div>
+<p>The example below revolves around a sources with source_id “u0001”.</p>
+<p>For convenience, this source and its measurements are available with the package distribution.</p>
+<p>You can retrieve the data from our public charlie repo <a class="reference external" href="https://github.com/vikinganalytics/va-data-charlie.git">https://github.com/vikinganalytics/va-data-charlie.git</a></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>git clone https://github.com/vikinganalytics/va-data-charlie.git
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+fatal: destination path &#39;va-data-charlie&#39; already exists and is not an empty directory.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Path to the source folder</span>
+<span class="n">REF_DB_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;va-data-charlie&quot;</span> <span class="o">/</span> <span class="s2">&quot;charlieDb&quot;</span> <span class="o">/</span> <span class="s2">&quot;acc&quot;</span>
+<span class="n">REF_DB_PATH</span>
+<span class="c1"># Definition of the source_id</span>
+<span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
+<span class="n">SOURCE_ID</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;u0001&#39;
+</pre></div></div>
+</div>
+<div class="section" id="Creating-a-Source">
+<h3>Creating a Source<a class="headerlink" href="#Creating-a-Source" title="Permalink to this headline">¶</a></h3>
+<p>A source represents a vibration data source, typically a vibration sensor. Internally, in the analytics engine and data storage, all vibration data is stored under its source. In essence, a source is an identifier formed by - the source ID - meta data with required fields - optional arbitrary customer specific ‘free form’ data belonging to the source.</p>
+<p>The vibration service will only rely on the required fields. The free form data is a possibility for the client side to keep together source information, measurements and meta data which may be interesting for the analytics built-in features in the service. Examples of the free form data include location of sensor or the asset which it is mounted on. As we will see later, timestamps are internally represented as millisconds since EPOCH (Jan 1st 1970), for that reason it is good practice to
+include the timezone where the measurement originated in the meta data.</p>
+<p>There are two ways to create a source:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># OPTION 1: Writing the meta-data directly when creating the source</span>
+<span class="n">SOURCE_IDP</span> <span class="o">=</span> <span class="s2">&quot;u001&quot;</span>
+<span class="n">meta_information</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;assetId&#39;</span><span class="p">:</span> <span class="s1">&#39;assetJ&#39;</span><span class="p">,</span> <span class="s1">&#39;measPoint&#39;</span><span class="p">:</span> <span class="s1">&#39;mloc01&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;cancun&#39;</span><span class="p">,</span> <span class="s1">&#39;timezone&#39;</span><span class="p">:</span> <span class="s1">&#39;Europe/Stockholm&#39;</span><span class="p">}</span>
+<span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">SOURCE_IDP</span><span class="p">,</span> <span class="n">meta_information</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_IDP</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="n">SOURCE_IDP</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># OPTION 2: Uploading the meta-data from a json file</span>
+<span class="n">src_path</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span>
+<span class="n">meta_filename</span> <span class="o">=</span> <span class="n">src_path</span> <span class="o">/</span> <span class="s2">&quot;meta.json&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">meta_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;source_id&#39;: &#39;u0001&#39;,
+ &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}}
+</pre></div></div>
+</div>
+<p>List sources</p>
+<p>We can now check if our source actually has been created, by listing all the sources in the database.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sources</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
+<span class="n">sources</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[{&#39;source_id&#39;: &#39;u0001&#39;,
+  &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}}]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Uploading-a-Measurement">
+<h3>Uploading a Measurement<a class="headerlink" href="#Uploading-a-Measurement" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have created a source, we can upload vibration measurements related to the source. The information needed to create a measurement consists of - sid: name of the source ID to associate the measurement with a source. - duration: float value that represent the duration, in seconds, of the measurement to estimate the sampling frequency. - timestamp: integer representing the milliseconds since EPOCH of when the measurement was taken. - data: list of floating point values representing the
+raw data of the vibration measurement. - meta: additional meta information for later use by the client but not to be processed by the analytics engine.</p>
+<p>In this example, all the measurement data is stored as csv and json files, where the timestamp is the name of each of these files.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># meas is a list of timestamps representing the measurements in our repo</span>
+<span class="n">meas</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">src_path</span><span class="p">)}</span>
+<span class="c1"># We remove the &quot;meta&quot; file from this list</span>
+<span class="n">meas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># We iterate over all of elements in this list</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">meas</span><span class="p">:</span>
+
+    <span class="c1"># raw data per measurement</span>
+    <span class="n">TS_MEAS</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span>  <span class="c1"># filename</span>
+    <span class="n">TS_MEAS</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span> <span class="o">/</span> <span class="n">TS_MEAS</span>  <span class="c1"># path to file</span>
+    <span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">TS_MEAS</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">])</span>  <span class="c1"># read csv into df</span>
+    <span class="n">accs</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># convert to list</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+
+    <span class="c1"># meta information file per measurement</span>
+    <span class="n">TS_META</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>  <span class="c1"># filename</span>
+    <span class="n">TS_META</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span> <span class="o">/</span> <span class="n">TS_META</span>  <span class="c1"># path</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">TS_META</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>  <span class="c1"># read json</span>
+        <span class="n">meas_info</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>  <span class="c1"># into dict</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read meta:</span><span class="si">{</span><span class="n">meas_info</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># get duration and other meta info</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">meas_info</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span>
+    <span class="n">meta_info</span> <span class="o">=</span> <span class="n">meas_info</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Upload measurements</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Uploading </span><span class="si">{</span><span class="n">TS_MEAS</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">create_measurement</span><span class="p">(</span><span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
+                                   <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span>
+                                   <span class="n">timestamp</span><span class="o">=</span><span class="n">m</span><span class="p">,</span>
+                                   <span class="n">data</span><span class="o">=</span><span class="n">accs</span><span class="p">,</span>
+                                   <span class="n">meta</span><span class="o">=</span><span class="n">meta_info</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570359660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571050860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573041660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570273260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571223660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570618860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573646460.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571137260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573732860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572782460.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570705260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573992060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571914860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572436860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571396460.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570186860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572868860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573819260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570791660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572087660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573905660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572264060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573214460.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570446060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571655660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573300860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571569260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572955260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574164860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571828460.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574337660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572609660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570964460.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571310060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573387260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572001260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574251260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570878060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574078460.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571482860.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573560060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572177660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572696060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570532460.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573128060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572523260.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573473660.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571742060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574424060.csv
+Read 40000 samples
+Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572350460.csv
+</pre></div></div>
+</div>
+<p>Check if we actually created the measurements by reading them.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">m</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">read_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="si">}</span><span class="s2"> stored measurements&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 50 stored measurements
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Analysis">
+<h2>Analysis<a class="headerlink" href="#Analysis" title="Permalink to this headline">¶</a></h2>
+<p>We begin by listing all the features available in the service</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">available_features</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">supported_features</span><span class="p">()</span>
+<span class="n">available_features</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;RMS&#39;: &#39;0.0.1&#39;, &#39;ModeId&#39;: &#39;0.1.0&#39;}
+</pre></div></div>
+</div>
+<p>In this example, we will request both features to be applied to the previously defined SOURCE_ID.</p>
+<p>We will begin with the ‘RMS’ feature, which provides the RMS for each signal. Thus, we proceed to request the analysis to the VA Vibration service.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">RMS_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s1">&#39;RMS&#39;</span><span class="p">)</span>
+<span class="n">RMS_u0001</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;request_id&#39;: &#39;e4596c662ec5b1b14f4ef8dd6bb8cca1&#39;, &#39;request_status&#39;: &#39;ongoing&#39;}
+</pre></div></div>
+</div>
+<p>The requested analysis will return a dictionary object with two elements. The first element is a <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> that can be used to retrieve the results after. The second element is <code class="docutils literal notranslate"><span class="pre">&quot;request_status&quot;</span></code> that provides the status right after placing the analysis request.</p>
+<p>Before we are able to get the analysis results, we need to wait until those results are successfully completed.</p>
+<p>We can query for the status of our requested analysis. The possible status are: - Queued: The analysis has not started in the remote server and it is in the queue to begin. - Ongoing: The analysis is been processed at this time. - Failed: The analysis is complete and failed to produce a result. - Successful: The analysis is complete and it successfully produced a result.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">REQUEST_ID_RMS_u0001</span> <span class="o">=</span> <span class="n">RMS_u0001</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">REQUEST_ID_RMS_u0001</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RMS Analysis: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+RMS Analysis: ongoing
+</pre></div></div>
+</div>
+<p>The next feature is ‘ModeId’. The ‘ModeId’ feature displays all the operating modes over time of an individual asset. The similar procedure is repeated to request the analysis of the “ModeId” feature for our source “u0001”.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ModeId_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s1">&#39;ModeId&#39;</span><span class="p">)</span>
+<span class="n">ModeId_u0001</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;request_id&#39;: &#39;9c99a0fa8b26f8c6409fc4233f35b688&#39;, &#39;request_status&#39;: &#39;ongoing&#39;}
+</pre></div></div>
+</div>
+<p>We also check the status for our second source.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">REQUEST_ID_ModeId_u0001</span> <span class="o">=</span> <span class="n">ModeId_u0001</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">REQUEST_ID_ModeId_u0001</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ModeId Analysis: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ModeId Analysis: ongoing
+</pre></div></div>
+</div>
+<p>We can proceed to get the results by calling the corresponding requestIds for the feature of each source.</p>
+<p>The output of the get_analysis_results function is a dictionary and we show the keys of one those dictionaries. The keys are the same for all features and contains two elements. The first key <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> indicates if the analysis was succesful. The second key <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> includes the numeric results.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rms_table</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">jobid</span><span class="o">=</span><span class="n">REQUEST_ID_RMS_u0001</span><span class="p">)</span>
+<span class="n">mode_table</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">jobid</span><span class="o">=</span><span class="n">REQUEST_ID_ModeId_u0001</span><span class="p">)</span>
+
+<span class="n">rms_table</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dict_keys([&#39;status&#39;, &#39;results&#39;])
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> of the “RMS” feature are two lists. One list corresponds to the timestamp of a measurement and the other list contains the rms value for the measurement.</p>
+<p>These lists can be converted into a dataframe for ease of manipulation. In addition, the “timestamp” column is converted to a timestamp object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_rms</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rms_table</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">])</span>
+<span class="n">df_rms</span><span class="p">[</span><span class="s1">&#39;Timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_rms</span><span class="p">[</span><span class="s1">&#39;Timestamp&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+<span class="n">df_rms</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Timestamp</th>
+      <th>rms</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-10-04 11:01:00</td>
+      <td>0.662108</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-10-05 11:01:00</td>
+      <td>0.662183</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-10-06 11:01:00</td>
+      <td>0.661652</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-10-07 11:01:00</td>
+      <td>0.661923</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-10-08 11:01:00</td>
+      <td>0.661714</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> of the “ModeId” feature is a dictionary and two lists. The dictionary contains the timestamps, where an index value represents the key and the timestamp is the dictionary value. The first list corresponds to the mode label given to the timestamp. The second list is a boolean to indicate the uncertainty of label.</p>
+<p>We extract the timestamp values into a list, which will be later converted to a timestamp object. We pass all the lists to a dataframe for ease of manipulation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mode_results</span> <span class="o">=</span> <span class="n">mode_table</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span>
+<span class="n">column_heads</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mode_results</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">timestamp_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mode_results</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="n">df_mode</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">column_heads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">timestamp_list</span><span class="p">,</span> <span class="n">column_heads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span> <span class="n">mode_results</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">],</span> <span class="n">column_heads</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">:</span> <span class="n">mode_results</span><span class="p">[</span><span class="s1">&#39;uncertain&#39;</span><span class="p">]})</span>
+<span class="n">df_mode</span><span class="p">[</span><span class="s1">&#39;Timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_mode</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+
+<span class="n">df_mode</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>timestamps</th>
+      <th>labels</th>
+      <th>uncertain</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-10-04 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-04 11:01:00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-10-05 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-05 11:01:00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-10-06 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-06 11:01:00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-10-07 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-07 11:01:00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-10-08 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-08 11:01:00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="section" id="Visualization">
+<h3>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this headline">¶</a></h3>
+<p>We can use those results to generate some plots that may ease the visualization.</p>
+<p>The MVG framework provides some visualization functions that can help towards this goal. We begin by importing the visualization module</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">plotting</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+<p>One of the provided functions enable to display the different modes over time. This way we can identify all its modes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">image_modes</span> <span class="o">=</span> <span class="n">plotting</span><span class="o">.</span><span class="n">modes_over_time</span><span class="p">(</span><span class="n">df_mode</span><span class="p">,</span> <span class="n">SOURCE_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/content_examples_brief_overview_48_0.png" src="../../_images/content_examples_brief_overview_48_0.png" />
+</div>
+</div>
+<p>We can call the individual boxplot for one source and display the boxplot of the “RMS” for each one of the operating modes. However, we need to merge the “RMS” and “ModeId” dataframes first.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_u0001</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_rms</span><span class="p">,</span> <span class="n">df_mode</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;Timestamp&quot;</span><span class="p">)</span>
+<span class="n">df_u0001</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Timestamp</th>
+      <th>rms</th>
+      <th>timestamps</th>
+      <th>labels</th>
+      <th>uncertain</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-10-04 11:01:00</td>
+      <td>0.662108</td>
+      <td>2019-10-04 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-04 11:01:00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-10-05 11:01:00</td>
+      <td>0.662183</td>
+      <td>2019-10-05 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-05 11:01:00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-10-06 11:01:00</td>
+      <td>0.661652</td>
+      <td>2019-10-06 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-06 11:01:00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-10-07 11:01:00</td>
+      <td>0.661923</td>
+      <td>2019-10-07 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-07 11:01:00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-10-08 11:01:00</td>
+      <td>0.661714</td>
+      <td>2019-10-08 11:01:00</td>
+      <td>1</td>
+      <td>False</td>
+      <td>2019-10-08 11:01:00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Now, we can proceed to plot the boxplot.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plotting</span><span class="o">.</span><span class="n">modes_boxplot</span><span class="p">(</span><span class="n">df_u0001</span><span class="p">,</span> <span class="s2">&quot;rms&quot;</span><span class="p">,</span> <span class="n">SOURCE_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;AxesSubplot:title={&#39;center&#39;:&#39;Boxplot for u0001&#39;}, xlabel=&#39;Modes&#39;, ylabel=&#39;rms&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/content_examples_brief_overview_52_1.png" src="../../_images/content_examples_brief_overview_52_1.png" />
+</div>
+</div>
+<p>Here we conclude our brief overview to begin using the MultiViz Vibration Service.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../features/general.html" class="btn btn-neutral float-right" title="Using MVG features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="analysis_visual.html" class="btn btn-neutral float-left" title="Analysis and Results Visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Viking Analytics AB.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

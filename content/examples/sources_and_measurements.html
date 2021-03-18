@@ -1,0 +1,3473 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Sources and Measurements Example &mdash; MultiViz Analytics Engine Library  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Analysis and Results Visualization" href="analysis_visual.html" />
+    <link rel="prev" title="Error Handling Example" href="error_handling.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sources and Measurements Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Downloading-the-Data">Downloading the Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Connect-to-the-API">Connect to the API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Check-Database">Check Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Build-measurements">Build measurements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Read-the-Measurements">Read the Measurements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Uploading-another-source">Uploading another source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Features</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/mvg.html">MutliViz Analytics Engine</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MultiViz Analytics Engine Library</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Sources and Measurements Example</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/content/examples/sources_and_measurements.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Sources-and-Measurements-Example">
+<h1>Sources and Measurements Example<a class="headerlink" href="#Sources-and-Measurements-Example" title="Permalink to this headline">¶</a></h1>
+<p>This example shows how to upload measurements from an external repository into the Viking Analytics Vibration service and how to read this data.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
+
+<span class="c1"># import mvg library with python bindings to mvg-API</span>
+<span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
+</pre></div>
+</div>
+</div>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the VA vibration service.</p>
+<p><strong>You need to insert your token received from Viking Analytics here:</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Replace by your own Token</span>
+<span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;Add token here&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>This is Viking Analytics default logging setup which can be adapted to suit your needs. Log messages are printed from <code class="docutils literal notranslate"><span class="pre">mvg</span></code> library, see the source code for details.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">root_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+<span class="n">stream_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="n">root_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Downloading-the-Data">
+<h2>Downloading the Data<a class="headerlink" href="#Downloading-the-Data" title="Permalink to this headline">¶</a></h2>
+<p>We pick the data from one source from our public charlie repo <a class="reference external" href="https://github.com/vikinganalytics/va-data-charlie.git">https://github.com/vikinganalytics/va-data-charlie.git</a> for convenience. Clone that repository to get access to the data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>git clone https://github.com/vikinganalytics/va-data-charlie.git
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+fatal: destination path &#39;va-data-charlie&#39; already exists and is not an empty directory.
+</pre></div></div>
+</div>
+<p>We are going to use two of the sources from the charlie dataset with IDs <code class="docutils literal notranslate"><span class="pre">u0001</span></code> and <code class="docutils literal notranslate"><span class="pre">u0005</span></code></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">REF_DB_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;va-data-charlie&quot;</span> <span class="o">/</span> <span class="s2">&quot;charlieDb&quot;</span> <span class="o">/</span> <span class="s2">&quot;acc&quot;</span>
+<span class="n">SOURCE_IDS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span> <span class="s2">&quot;u0005&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Connect-to-the-API">
+<h2>Connect to the API<a class="headerlink" href="#Connect-to-the-API" title="Permalink to this headline">¶</a></h2>
+<p>Instantiate a session object with mvg library a session object basically caches the endpoint and the token, to simplify the the calls to the mvg library.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">VALID_TOKEN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We now check if the server is alive. The hello message contains, amongst others the API version.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">hello_message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">say_hello</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hello_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:16,959 - INFO - mvg.mvg - Getting API info for: https://api.beta.multiviz.com
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;api&#34;: {&#34;name&#34;: &#34;MultiViz Engine API&#34;, &#34;version&#34;: &#34;v0.0.13&#34;}, &#34;features&#34;: {&#34;mode_id&#34;: true, &#34;blacksheep&#34;: false, &#34;emerging_mode&#34;: false, &#34;on_off&#34;: false, &#34;asset_type&#34;: false, &#34;indicator_arrow&#34;: false}, &#34;request_status&#34;: [&#34;initialized&#34;, &#34;accepted&#34;, &#34;queued&#34;, &#34;ongoing&#34;, &#34;failed&#34;, &#34;ready&#34;], &#34;traffic_limit&#34;: 10000000, &#34;max_source_id_length&#34;: 255, &#34;max_meta_size&#34;: 50000, &#34;max_number_of_samples&#34;: 400000, &#34;max_number_of_sources&#34;: 100, &#34;max_number_of_measurements&#34;: 1000, &#34;db_version&#34;: &#34;1.0.0&#34;}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Check-Database">
+<h2>Check Database<a class="headerlink" href="#Check-Database" title="Permalink to this headline">¶</a></h2>
+<p>We start by seeing if there are any sources in the database. A source represents a measurement source e.g. one specific channel of a measurement sensor. Note that sources cannot be used to represent a sensor with several channels. If this is required, the client side needs to take care of it.</p>
+<p>Because we want to start at a clean slate we will list all sources (potentially none) and delete all of them</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sources</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Retrieved sources&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="c1"># While the list returned contains all information</span>
+    <span class="c1"># about all known sources, it is also possible</span>
+    <span class="c1"># to query for a single source by its id</span>
+    <span class="n">s_info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">src</span><span class="p">[</span><span class="s1">&#39;source_id&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source info retrieved for one source: </span><span class="si">{</span><span class="n">s_info</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:17,113 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:17,114 - INFO - mvg.mvg - listing sources
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Retrieved sources
+</pre></div></div>
+</div>
+<p>The example below revolves around a source with source id u0001</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>To make sure we start from a clean slate we delete our resource in case it exists. All information including measurements and analysis results will be removed</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting </span><span class="si">{</span><span class="n">SOURCE_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source </span><span class="si">{</span><span class="n">SOURCE_ID</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:17,256 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:17,257 - INFO - mvg.mvg - retrieving source with source id=u0001
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Source u0001 does not exist
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Build-measurements">
+<h2>Build measurements<a class="headerlink" href="#Build-measurements" title="Permalink to this headline">¶</a></h2>
+<p>Now we want to (re) build the source and the attached measurements from scratch</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">src_path</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span>
+<span class="n">m_file_name</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span> <span class="o">/</span> <span class="s2">&quot;meta.json&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">m_file_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;creating&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+creating
+{&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}
+</pre></div></div>
+</div>
+<p>Create the source and check for it</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>  <span class="c1"># create</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Retrieved&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:17,418 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:17,418 - INFO - mvg.mvg - creating source with source id=u0001
+2021-03-18 10:54:17,419 - INFO - mvg.mvg - metadata: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}
+2021-03-18 10:54:17,552 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:17,553 - INFO - mvg.mvg - retrieving source with source id=u0001
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Retrieved
+{&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}}
+</pre></div></div>
+</div>
+<p>Update the source</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;YES! I have been updated&quot;</span>
+<span class="n">session</span><span class="o">.</span><span class="n">update_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>  <span class="c1"># update</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Retrieved&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:17,689 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:17,690 - INFO - mvg.mvg - updating source with source id=u0001
+2021-03-18 10:54:17,691 - INFO - mvg.mvg - metadata: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;, &#39;updated&#39;: &#39;YES! I have been updated&#39;}
+2021-03-18 10:54:17,831 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:17,831 - INFO - mvg.mvg - retrieving source with source id=u0001
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Retrieved
+{&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;, &#39;updated&#39;: &#39;YES! I have been updated&#39;}}
+</pre></div></div>
+</div>
+<p>Upload measurements to source. Measurements are tied to sources, they consist of</p>
+<ul class="simple">
+<li><p>an array of floating point values</p></li>
+<li><p>timestamp when the values were sampled</p></li>
+<li><p>a field for the duration of the measurement</p></li>
+<li><p>meta information to be stored along the measurement</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">meas</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">src_path</span><span class="p">)}</span>
+<span class="n">meas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">meas</span></code> now contains a list of timestamps representing the measurements in our repo we upload from iterate over all of them</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">meas</span><span class="p">:</span>
+
+    <span class="c1"># samples file for one measurement</span>
+    <span class="n">TS_MEAS</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span>  <span class="c1"># filename</span>
+    <span class="n">TS_MEAS</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span> <span class="o">/</span> <span class="n">TS_MEAS</span>  <span class="c1"># path to file</span>
+    <span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">TS_MEAS</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">])</span>  <span class="c1"># read csv into df</span>
+    <span class="n">accs</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># convert to list</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+
+    <span class="c1"># meta information file for one measurement</span>
+    <span class="n">TS_META</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>  <span class="c1"># filename</span>
+    <span class="n">TS_META</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span> <span class="o">/</span> <span class="n">TS_META</span>  <span class="c1"># path</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">TS_META</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>  <span class="c1"># read json</span>
+        <span class="n">meas_info</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>  <span class="c1"># into dict</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read meta: </span><span class="si">{</span><span class="n">meas_info</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># get duration and other meta info</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">meas_info</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span>
+    <span class="n">meta_info</span> <span class="o">=</span> <span class="n">meas_info</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span>
+    <span class="c1"># add sampling rate, not required by vibration API</span>
+    <span class="c1"># but may be used on client side</span>
+    <span class="c1"># in general any information can be stored</span>
+    <span class="c1"># along the actual samples</span>
+    <span class="n">meta_info</span><span class="p">[</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span><span class="o">/</span><span class="n">duration</span>
+    <span class="c1"># &lt;&lt;&lt; end of code specific for repo</span>
+
+    <span class="c1"># Upload measurements</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Uploading </span><span class="si">{</span><span class="n">TS_MEAS</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># see mvg for details on this call</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">create_measurement</span><span class="p">(</span><span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
+                                   <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span>
+                                   <span class="n">timestamp</span><span class="o">=</span><span class="n">m</span><span class="p">,</span>
+                                   <span class="n">data</span><span class="o">=</span><span class="n">accs</span><span class="p">,</span>
+                                   <span class="n">meta</span><span class="o">=</span><span class="n">meta_info</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OUCH&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:17,999 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:18,000 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:18,000 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:18,001 - INFO - mvg.mvg -   timestamp: 1572609660
+2021-03-18 10:54:18,001 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572609660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:19,166 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:19,167 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:19,167 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:19,168 - INFO - mvg.mvg -   timestamp: 1572955260
+2021-03-18 10:54:19,168 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572955260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:20,411 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:20,411 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:20,412 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:20,413 - INFO - mvg.mvg -   timestamp: 1574164860
+2021-03-18 10:54:20,413 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574164860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:21,721 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:21,722 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:21,723 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:21,723 - INFO - mvg.mvg -   timestamp: 1570878060
+2021-03-18 10:54:21,724 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570878060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:22,826 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:22,826 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:22,827 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:22,827 - INFO - mvg.mvg -   timestamp: 1572868860
+2021-03-18 10:54:22,828 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572868860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:24,098 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:24,098 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:24,099 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:24,100 - INFO - mvg.mvg -   timestamp: 1574337660
+2021-03-18 10:54:24,100 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574337660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:25,302 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:25,302 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:25,302 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:25,303 - INFO - mvg.mvg -   timestamp: 1573128060
+2021-03-18 10:54:25,303 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573128060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:26,515 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:26,516 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:26,516 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:26,517 - INFO - mvg.mvg -   timestamp: 1570532460
+2021-03-18 10:54:26,517 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570532460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:27,538 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:27,538 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:27,539 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:27,539 - INFO - mvg.mvg -   timestamp: 1571137260
+2021-03-18 10:54:27,540 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571137260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:28,953 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:28,953 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:28,954 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:28,955 - INFO - mvg.mvg -   timestamp: 1573732860
+2021-03-18 10:54:28,955 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573732860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:30,035 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:30,036 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:30,036 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:30,037 - INFO - mvg.mvg -   timestamp: 1573819260
+2021-03-18 10:54:30,038 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573819260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:31,196 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:31,197 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:31,198 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:31,198 - INFO - mvg.mvg -   timestamp: 1573905660
+2021-03-18 10:54:31,199 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573905660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:32,201 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:32,201 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:32,202 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:32,202 - INFO - mvg.mvg -   timestamp: 1570273260
+2021-03-18 10:54:32,203 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570273260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:33,491 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:33,492 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:33,492 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:33,493 - INFO - mvg.mvg -   timestamp: 1570791660
+2021-03-18 10:54:33,493 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570791660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:34,576 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:34,576 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:34,577 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:34,577 - INFO - mvg.mvg -   timestamp: 1574251260
+2021-03-18 10:54:34,578 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574251260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:35,904 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:35,904 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:35,905 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:35,905 - INFO - mvg.mvg -   timestamp: 1573473660
+2021-03-18 10:54:35,906 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573473660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:37,139 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:37,140 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:37,140 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:37,141 - INFO - mvg.mvg -   timestamp: 1571742060
+2021-03-18 10:54:37,141 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571742060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:38,190 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:38,191 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:38,192 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:38,192 - INFO - mvg.mvg -   timestamp: 1573992060
+2021-03-18 10:54:38,193 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573992060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:39,326 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:39,327 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:39,327 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:39,328 - INFO - mvg.mvg -   timestamp: 1573300860
+2021-03-18 10:54:39,328 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573300860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:40,379 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:40,380 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:40,380 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:40,380 - INFO - mvg.mvg -   timestamp: 1572782460
+2021-03-18 10:54:40,381 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572782460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:41,819 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:41,820 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:41,820 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:41,820 - INFO - mvg.mvg -   timestamp: 1572350460
+2021-03-18 10:54:41,821 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572350460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:43,219 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:43,220 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:43,220 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:43,221 - INFO - mvg.mvg -   timestamp: 1570964460
+2021-03-18 10:54:43,222 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570964460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:44,321 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:44,322 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:44,322 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:44,323 - INFO - mvg.mvg -   timestamp: 1571482860
+2021-03-18 10:54:44,323 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571482860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:45,610 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:45,611 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:45,611 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:45,612 - INFO - mvg.mvg -   timestamp: 1570359660
+2021-03-18 10:54:45,612 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570359660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:46,620 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:46,620 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:46,621 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:46,621 - INFO - mvg.mvg -   timestamp: 1572001260
+2021-03-18 10:54:46,622 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572001260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:47,590 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:47,590 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:47,590 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:47,591 - INFO - mvg.mvg -   timestamp: 1573041660
+2021-03-18 10:54:47,591 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573041660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:48,602 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:48,603 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:48,603 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:48,604 - INFO - mvg.mvg -   timestamp: 1573214460
+2021-03-18 10:54:48,604 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573214460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:49,861 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:49,862 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:49,862 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:49,863 - INFO - mvg.mvg -   timestamp: 1570618860
+2021-03-18 10:54:49,864 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570618860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:50,864 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:50,865 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:50,865 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:50,865 - INFO - mvg.mvg -   timestamp: 1571655660
+2021-03-18 10:54:50,866 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571655660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:51,946 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:51,946 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:51,947 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:51,947 - INFO - mvg.mvg -   timestamp: 1573560060
+2021-03-18 10:54:51,948 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573560060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:53,009 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:53,010 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:53,010 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:53,011 - INFO - mvg.mvg -   timestamp: 1571396460
+2021-03-18 10:54:53,011 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571396460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:53,939 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:53,940 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:53,941 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:53,942 - INFO - mvg.mvg -   timestamp: 1570186860
+2021-03-18 10:54:53,942 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570186860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:55,031 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:55,031 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:55,032 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:55,032 - INFO - mvg.mvg -   timestamp: 1570446060
+2021-03-18 10:54:55,033 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570446060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:56,179 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:56,179 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:56,180 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:56,181 - INFO - mvg.mvg -   timestamp: 1574078460
+2021-03-18 10:54:56,181 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574078460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:57,132 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:57,133 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:57,133 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:57,134 - INFO - mvg.mvg -   timestamp: 1572436860
+2021-03-18 10:54:57,134 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572436860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:58,269 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:58,270 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:58,271 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:58,271 - INFO - mvg.mvg -   timestamp: 1573646460
+2021-03-18 10:54:58,272 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573646460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:54:59,535 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:54:59,536 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:54:59,536 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:54:59,537 - INFO - mvg.mvg -   timestamp: 1573387260
+2021-03-18 10:54:59,537 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573387260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:00,709 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:00,710 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:00,710 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:00,711 - INFO - mvg.mvg -   timestamp: 1571050860
+2021-03-18 10:55:00,711 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571050860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:01,994 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:01,994 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:01,995 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:01,996 - INFO - mvg.mvg -   timestamp: 1571223660
+2021-03-18 10:55:01,996 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571223660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:03,119 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:03,119 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:03,120 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:03,121 - INFO - mvg.mvg -   timestamp: 1572264060
+2021-03-18 10:55:03,121 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572264060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:04,323 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:04,324 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:04,324 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:04,324 - INFO - mvg.mvg -   timestamp: 1571828460
+2021-03-18 10:55:04,325 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571828460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:05,388 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:05,388 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:05,388 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:05,389 - INFO - mvg.mvg -   timestamp: 1571310060
+2021-03-18 10:55:05,389 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571310060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:06,547 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:06,548 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:06,549 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:06,549 - INFO - mvg.mvg -   timestamp: 1571569260
+2021-03-18 10:55:06,550 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571569260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:07,587 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:07,587 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:07,588 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:07,588 - INFO - mvg.mvg -   timestamp: 1574424060
+2021-03-18 10:55:07,589 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574424060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:08,671 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:08,672 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:08,672 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:08,673 - INFO - mvg.mvg -   timestamp: 1572696060
+2021-03-18 10:55:08,673 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572696060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:09,972 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:09,973 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:09,973 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:09,974 - INFO - mvg.mvg -   timestamp: 1570705260
+2021-03-18 10:55:09,974 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570705260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:11,232 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:11,233 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:11,233 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:11,234 - INFO - mvg.mvg -   timestamp: 1571914860
+2021-03-18 10:55:11,234 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571914860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:12,382 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:12,383 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:12,383 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:12,384 - INFO - mvg.mvg -   timestamp: 1572523260
+2021-03-18 10:55:12,384 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572523260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:13,448 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:13,449 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:13,449 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:13,450 - INFO - mvg.mvg -   timestamp: 1572177660
+2021-03-18 10:55:13,451 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572177660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:14,425 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:14,426 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-03-18 10:55:14,427 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:14,427 - INFO - mvg.mvg -   timestamp: 1572087660
+2021-03-18 10:55:14,428 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572087660.csv
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Read-the-Measurements">
+<h2>Read the Measurements<a class="headerlink" href="#Read-the-Measurements" title="Permalink to this headline">¶</a></h2>
+<p>Check if we actually created the measurements by reading them</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">m</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">read_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="si">}</span><span class="s2"> stored measurements&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:15,659 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:15,660 - INFO - mvg.mvg - retrieving all measurements from source id=u0001
+2021-03-18 10:55:15,824 - INFO - mvg.mvg - 50 measurements in database
+2021-03-18 10:55:15,824 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:15,825 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:15,825 - INFO - mvg.mvg - timestamp=1570186860
+2021-03-18 10:55:16,294 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:16,295 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:16,295 - INFO - mvg.mvg - timestamp=1570273260
+2021-03-18 10:55:16,825 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:16,826 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:16,826 - INFO - mvg.mvg - timestamp=1570359660
+2021-03-18 10:55:17,304 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:17,304 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:17,305 - INFO - mvg.mvg - timestamp=1570446060
+2021-03-18 10:55:17,810 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:17,810 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:17,811 - INFO - mvg.mvg - timestamp=1570532460
+2021-03-18 10:55:18,307 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:18,307 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:18,308 - INFO - mvg.mvg - timestamp=1570618860
+2021-03-18 10:55:18,850 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:18,850 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:18,851 - INFO - mvg.mvg - timestamp=1570705260
+2021-03-18 10:55:19,331 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:19,331 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:19,332 - INFO - mvg.mvg - timestamp=1570791660
+2021-03-18 10:55:19,807 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:19,808 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:19,808 - INFO - mvg.mvg - timestamp=1570878060
+2021-03-18 10:55:20,280 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:20,280 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:20,281 - INFO - mvg.mvg - timestamp=1570964460
+2021-03-18 10:55:20,771 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:20,771 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:20,772 - INFO - mvg.mvg - timestamp=1571050860
+2021-03-18 10:55:21,255 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:21,255 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:21,255 - INFO - mvg.mvg - timestamp=1571137260
+2021-03-18 10:55:21,732 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:21,732 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:21,733 - INFO - mvg.mvg - timestamp=1571223660
+2021-03-18 10:55:22,186 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:22,187 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:22,187 - INFO - mvg.mvg - timestamp=1571310060
+2021-03-18 10:55:22,675 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:22,675 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:22,676 - INFO - mvg.mvg - timestamp=1571396460
+2021-03-18 10:55:23,230 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:23,231 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:23,231 - INFO - mvg.mvg - timestamp=1571482860
+2021-03-18 10:55:23,724 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:23,725 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:23,725 - INFO - mvg.mvg - timestamp=1571569260
+2021-03-18 10:55:24,232 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:24,233 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:24,233 - INFO - mvg.mvg - timestamp=1571655660
+2021-03-18 10:55:24,724 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:24,724 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:24,725 - INFO - mvg.mvg - timestamp=1571742060
+2021-03-18 10:55:25,235 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:25,236 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:25,236 - INFO - mvg.mvg - timestamp=1571828460
+2021-03-18 10:55:25,734 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:25,735 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:25,735 - INFO - mvg.mvg - timestamp=1571914860
+2021-03-18 10:55:26,294 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:26,294 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:26,295 - INFO - mvg.mvg - timestamp=1572001260
+2021-03-18 10:55:26,816 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:26,817 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:26,817 - INFO - mvg.mvg - timestamp=1572087660
+2021-03-18 10:55:27,303 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:27,304 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:27,304 - INFO - mvg.mvg - timestamp=1572177660
+2021-03-18 10:55:27,794 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:27,794 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:27,794 - INFO - mvg.mvg - timestamp=1572264060
+2021-03-18 10:55:28,299 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:28,300 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:28,300 - INFO - mvg.mvg - timestamp=1572350460
+2021-03-18 10:55:28,769 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:28,770 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:28,770 - INFO - mvg.mvg - timestamp=1572436860
+2021-03-18 10:55:29,319 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:29,320 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:29,320 - INFO - mvg.mvg - timestamp=1572523260
+2021-03-18 10:55:29,827 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:29,827 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:29,828 - INFO - mvg.mvg - timestamp=1572609660
+2021-03-18 10:55:30,326 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:30,327 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:30,328 - INFO - mvg.mvg - timestamp=1572696060
+2021-03-18 10:55:30,842 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:30,843 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:30,843 - INFO - mvg.mvg - timestamp=1572782460
+2021-03-18 10:55:31,326 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:31,327 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:31,327 - INFO - mvg.mvg - timestamp=1572868860
+2021-03-18 10:55:31,799 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:31,799 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:31,800 - INFO - mvg.mvg - timestamp=1572955260
+2021-03-18 10:55:32,316 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:32,317 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:32,317 - INFO - mvg.mvg - timestamp=1573041660
+2021-03-18 10:55:32,800 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:32,801 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:32,801 - INFO - mvg.mvg - timestamp=1573128060
+2021-03-18 10:55:33,277 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:33,277 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:33,278 - INFO - mvg.mvg - timestamp=1573214460
+2021-03-18 10:55:33,791 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:33,791 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:33,792 - INFO - mvg.mvg - timestamp=1573300860
+2021-03-18 10:55:34,257 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:34,258 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:34,259 - INFO - mvg.mvg - timestamp=1573387260
+2021-03-18 10:55:35,820 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:35,821 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:35,821 - INFO - mvg.mvg - timestamp=1573473660
+2021-03-18 10:55:36,317 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:36,317 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:36,318 - INFO - mvg.mvg - timestamp=1573560060
+2021-03-18 10:55:36,830 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:36,831 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:36,831 - INFO - mvg.mvg - timestamp=1573646460
+2021-03-18 10:55:37,328 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:37,329 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:37,329 - INFO - mvg.mvg - timestamp=1573732860
+2021-03-18 10:55:37,791 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:37,791 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:37,792 - INFO - mvg.mvg - timestamp=1573819260
+2021-03-18 10:55:38,278 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:38,279 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:38,279 - INFO - mvg.mvg - timestamp=1573905660
+2021-03-18 10:55:38,790 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:38,790 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:38,791 - INFO - mvg.mvg - timestamp=1573992060
+2021-03-18 10:55:39,278 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:39,279 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:39,279 - INFO - mvg.mvg - timestamp=1574078460
+2021-03-18 10:55:39,739 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:39,739 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:39,740 - INFO - mvg.mvg - timestamp=1574164860
+2021-03-18 10:55:40,224 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:40,225 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:40,225 - INFO - mvg.mvg - timestamp=1574251260
+2021-03-18 10:55:40,693 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:40,693 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:40,694 - INFO - mvg.mvg - timestamp=1574337660
+2021-03-18 10:55:41,192 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:41,193 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:41,193 - INFO - mvg.mvg - timestamp=1574424060
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 50 stored measurements
+</pre></div></div>
+</div>
+<p>It is also possible to read a specific measurement at a single timestamp let’s get the timestamp of the first measurement</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ts_0</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
+<span class="n">meas_0</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">read_single_measurement</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">ts_0</span><span class="p">)</span>
+<span class="c1"># we&#39;ll printout the returned measurement</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;source_id: </span><span class="si">{</span><span class="n">meas_0</span><span class="p">[</span><span class="s1">&#39;source_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;timestamp: </span><span class="si">{</span><span class="n">meas_0</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;duration:  </span><span class="si">{</span><span class="n">meas_0</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;meta:      </span><span class="si">{</span><span class="n">meas_0</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data:      </span><span class="si">{</span><span class="n">meas_0</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:41,730 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:41,731 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:41,732 - INFO - mvg.mvg - timestamp=1570186860
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+source_id: u0001
+timestamp: 1570186860
+duration:  2.8672073400507907
+meta:      {&#39;sampling_rate&#39;: 13950.857142857141}
+data:      [0.63897705078125, -0.55078125]...
+</pre></div></div>
+</div>
+<p>We can update the meta information for a measurement at a single timestamp let’s get the timestamp of the first measurement</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ts_0</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
+<span class="n">new_meta</span> <span class="o">=</span> <span class="n">meas_0</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span>
+<span class="n">new_meta</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;YES!&quot;</span>
+<span class="n">session</span><span class="o">.</span><span class="n">update_measurement</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">ts_0</span><span class="p">,</span> <span class="n">new_meta</span><span class="p">)</span>
+<span class="n">meas_0_u</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">read_single_measurement</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">ts_0</span><span class="p">)</span>
+
+<span class="c1"># we&#39;ll printout the returned measurement</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;source_id: </span><span class="si">{</span><span class="n">meas_0_u</span><span class="p">[</span><span class="s1">&#39;source_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;timestamp: </span><span class="si">{</span><span class="n">meas_0_u</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;duration:  </span><span class="si">{</span><span class="n">meas_0_u</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;meta:      </span><span class="si">{</span><span class="n">meas_0_u</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data:      </span><span class="si">{</span><span class="n">meas_0_u</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:42,227 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:42,228 - INFO - mvg.mvg - deleting measurement for source id=u0001
+2021-03-18 10:55:42,229 - INFO - mvg.mvg -   timestamp: 1570186860
+2021-03-18 10:55:42,360 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:42,360 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:42,360 - INFO - mvg.mvg - timestamp=1570186860
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+source_id: u0001
+timestamp: 1570186860
+duration:  2.8672073400507907
+meta:      {&#39;sampling_rate&#39;: 13950.857142857141, &#39;updated&#39;: &#39;YES!&#39;}
+data:      [0.63897705078125, -0.55078125]...
+</pre></div></div>
+</div>
+<p>Finally we delete the measurement</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">session</span><span class="o">.</span><span class="n">delete_measurement</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">ts_0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:42,872 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:42,874 - INFO - mvg.mvg - deleting measurement for source id=u0001
+2021-03-18 10:55:42,874 - INFO - mvg.mvg -   timestamp: 1570186860
+</pre></div></div>
+</div>
+<p>We check if it’s actually deleted</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">meas_0</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">read_single_measurement</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">ts_0</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Previously deleted measurement does not exist&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:43,025 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:43,025 - INFO - mvg.mvg - retrieving measurements from source id=u0001
+2021-03-18 10:55:43,026 - INFO - mvg.mvg - timestamp=1570186860
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Previously deleted measurement does not exist
+</pre></div></div>
+</div>
+<p>If all went well we end up here now the source u0001 is in the database along with a number measurements</p>
+</div>
+<div class="section" id="Uploading-another-source">
+<h2>Uploading another source<a class="headerlink" href="#Uploading-another-source" title="Permalink to this headline">¶</a></h2>
+<p>Here we show how to upload another source in a more compact way.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">NEW_SOURCE</span> <span class="o">=</span> <span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting </span><span class="si">{</span><span class="n">NEW_SOURCE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="n">NEW_SOURCE</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source </span><span class="si">{</span><span class="n">NEW_SOURCE</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
+
+<span class="n">src_path</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">NEW_SOURCE</span>
+<span class="n">m_file_name</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">NEW_SOURCE</span> <span class="o">/</span> <span class="s2">&quot;meta.json&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">m_file_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">NEW_SOURCE</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>  <span class="c1"># create</span>
+
+<span class="n">meas</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">src_path</span><span class="p">)}</span>
+<span class="n">meas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">meas</span><span class="p">:</span>
+
+    <span class="c1"># samples file for one measurement</span>
+    <span class="n">TS_MEAS</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span>  <span class="c1"># filename</span>
+    <span class="n">TS_MEAS</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">NEW_SOURCE</span> <span class="o">/</span> <span class="n">TS_MEAS</span>  <span class="c1"># path to file</span>
+    <span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">TS_MEAS</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">])</span>  <span class="c1"># read csv into df</span>
+    <span class="n">accs</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># convert to list</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+
+    <span class="c1"># meta information file for one measurement</span>
+    <span class="n">TS_META</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>  <span class="c1"># filename</span>
+    <span class="n">TS_META</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">NEW_SOURCE</span> <span class="o">/</span> <span class="n">TS_META</span>  <span class="c1"># path</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">TS_META</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>  <span class="c1"># read json</span>
+        <span class="n">meas_info</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>  <span class="c1"># into dict</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read meta: </span><span class="si">{</span><span class="n">meas_info</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">meas_info</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span>
+    <span class="n">meta_info</span> <span class="o">=</span> <span class="n">meas_info</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span>
+    <span class="n">meta_info</span><span class="p">[</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span><span class="o">/</span><span class="n">duration</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Uploading </span><span class="si">{</span><span class="n">TS_MEAS</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># see mvg for details on this call</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">create_measurement</span><span class="p">(</span><span class="n">sid</span><span class="o">=</span><span class="n">NEW_SOURCE</span><span class="p">,</span>
+                                   <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span>
+                                   <span class="n">timestamp</span><span class="o">=</span><span class="n">m</span><span class="p">,</span>
+                                   <span class="n">data</span><span class="o">=</span><span class="n">accs</span><span class="p">,</span>
+                                   <span class="n">meta</span><span class="o">=</span><span class="n">meta_info</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:43,170 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:43,170 - INFO - mvg.mvg - deleting source with source id=u0005
+2021-03-18 10:55:43,315 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:43,315 - INFO - mvg.mvg - creating source with source id=u0005
+2021-03-18 10:55:43,316 - INFO - mvg.mvg - metadata: {&#39;assetId&#39;: &#39;assetE&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Deleting u0005
+Source u0005 does not exist
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:43,459 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:43,459 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:43,460 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:43,460 - INFO - mvg.mvg -   timestamp: 1572609660
+2021-03-18 10:55:43,460 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572609660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:44,660 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:44,661 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:44,661 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:44,662 - INFO - mvg.mvg -   timestamp: 1572955260
+2021-03-18 10:55:44,663 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572955260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:45,708 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:45,709 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:45,710 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:45,710 - INFO - mvg.mvg -   timestamp: 1574164860
+2021-03-18 10:55:45,711 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1574164860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:46,949 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:46,949 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:46,950 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:46,951 - INFO - mvg.mvg -   timestamp: 1570878060
+2021-03-18 10:55:46,952 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570878060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:48,552 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:48,553 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:48,553 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:48,554 - INFO - mvg.mvg -   timestamp: 1572868860
+2021-03-18 10:55:48,554 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572868860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:49,704 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:49,705 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:49,705 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:49,705 - INFO - mvg.mvg -   timestamp: 1574337660
+2021-03-18 10:55:49,706 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1574337660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:51,092 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:51,092 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:51,093 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:51,093 - INFO - mvg.mvg -   timestamp: 1573128060
+2021-03-18 10:55:51,093 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573128060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:52,334 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:52,334 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:52,335 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:52,335 - INFO - mvg.mvg -   timestamp: 1570532460
+2021-03-18 10:55:52,335 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570532460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:53,586 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:53,587 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:53,587 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:53,588 - INFO - mvg.mvg -   timestamp: 1571137260
+2021-03-18 10:55:53,588 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571137260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:54,594 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:54,595 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:54,595 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:54,596 - INFO - mvg.mvg -   timestamp: 1573732860
+2021-03-18 10:55:54,597 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573732860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:55,712 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:55,712 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:55,713 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:55,713 - INFO - mvg.mvg -   timestamp: 1573819260
+2021-03-18 10:55:55,714 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573819260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:57,031 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:57,031 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:57,032 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:57,033 - INFO - mvg.mvg -   timestamp: 1573905660
+2021-03-18 10:55:57,033 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573905660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:58,301 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:58,301 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:58,301 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:58,302 - INFO - mvg.mvg -   timestamp: 1570273260
+2021-03-18 10:55:58,303 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570273260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:55:59,644 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:55:59,645 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:55:59,645 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:55:59,646 - INFO - mvg.mvg -   timestamp: 1570791660
+2021-03-18 10:55:59,647 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570791660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:00,842 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:00,843 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:00,844 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:00,844 - INFO - mvg.mvg -   timestamp: 1574251260
+2021-03-18 10:56:00,844 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1574251260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:01,962 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:01,963 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:01,964 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:01,964 - INFO - mvg.mvg -   timestamp: 1573473660
+2021-03-18 10:56:01,965 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573473660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:03,045 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:03,046 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:03,046 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:03,047 - INFO - mvg.mvg -   timestamp: 1571742060
+2021-03-18 10:56:03,048 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571742060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:04,234 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:04,235 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:04,235 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:04,236 - INFO - mvg.mvg -   timestamp: 1573992060
+2021-03-18 10:56:04,236 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573992060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:05,269 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:05,269 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:05,270 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:05,270 - INFO - mvg.mvg -   timestamp: 1573300860
+2021-03-18 10:56:05,271 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573300860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:06,276 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:06,277 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:06,277 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:06,278 - INFO - mvg.mvg -   timestamp: 1572782460
+2021-03-18 10:56:06,278 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572782460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:07,663 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:07,664 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:07,664 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:07,664 - INFO - mvg.mvg -   timestamp: 1572350460
+2021-03-18 10:56:07,665 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572350460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:09,086 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:09,086 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:09,087 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:09,087 - INFO - mvg.mvg -   timestamp: 1570964460
+2021-03-18 10:56:09,088 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570964460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:10,269 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:10,270 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:10,270 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:10,271 - INFO - mvg.mvg -   timestamp: 1571482860
+2021-03-18 10:56:10,271 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571482860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:11,466 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:11,467 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:11,467 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:11,468 - INFO - mvg.mvg -   timestamp: 1570359660
+2021-03-18 10:56:11,469 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570359660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:12,896 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:12,896 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:12,897 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:12,898 - INFO - mvg.mvg -   timestamp: 1572001260
+2021-03-18 10:56:12,898 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572001260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:14,235 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:14,235 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:14,236 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:14,236 - INFO - mvg.mvg -   timestamp: 1573041660
+2021-03-18 10:56:14,237 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573041660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:15,504 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:15,505 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:15,506 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:15,506 - INFO - mvg.mvg -   timestamp: 1573214460
+2021-03-18 10:56:15,507 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573214460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:16,625 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:16,625 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:16,626 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:16,627 - INFO - mvg.mvg -   timestamp: 1570618860
+2021-03-18 10:56:16,627 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570618860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:17,698 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:17,699 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:17,699 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:17,700 - INFO - mvg.mvg -   timestamp: 1571655660
+2021-03-18 10:56:17,700 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571655660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:18,979 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:18,979 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:18,980 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:18,980 - INFO - mvg.mvg -   timestamp: 1573560060
+2021-03-18 10:56:18,980 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573560060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:20,460 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:20,461 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:20,461 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:20,461 - INFO - mvg.mvg -   timestamp: 1571396460
+2021-03-18 10:56:20,462 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571396460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:21,500 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:21,500 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:21,501 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:21,501 - INFO - mvg.mvg -   timestamp: 1570186860
+2021-03-18 10:56:21,502 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570186860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:22,699 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:22,699 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:22,700 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:22,701 - INFO - mvg.mvg -   timestamp: 1570446060
+2021-03-18 10:56:22,701 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570446060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:23,853 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:23,854 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:23,855 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:23,855 - INFO - mvg.mvg -   timestamp: 1574078460
+2021-03-18 10:56:23,855 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1574078460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:24,938 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:24,938 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:24,939 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:24,939 - INFO - mvg.mvg -   timestamp: 1572436860
+2021-03-18 10:56:24,940 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572436860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:26,196 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:26,196 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:26,197 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:26,197 - INFO - mvg.mvg -   timestamp: 1573646460
+2021-03-18 10:56:26,198 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573646460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:27,550 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:27,550 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:27,551 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:27,551 - INFO - mvg.mvg -   timestamp: 1573387260
+2021-03-18 10:56:27,552 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1573387260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:28,689 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:28,690 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:28,691 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:28,691 - INFO - mvg.mvg -   timestamp: 1571050860
+2021-03-18 10:56:28,691 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571050860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:29,893 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:29,894 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:29,895 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:29,895 - INFO - mvg.mvg -   timestamp: 1571223660
+2021-03-18 10:56:29,896 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571223660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:31,081 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:31,081 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:31,082 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:31,082 - INFO - mvg.mvg -   timestamp: 1572264060
+2021-03-18 10:56:31,082 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572264060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:32,097 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:32,098 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:32,099 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:32,099 - INFO - mvg.mvg -   timestamp: 1571828460
+2021-03-18 10:56:32,100 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571828460.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:33,114 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:33,115 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:33,115 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:33,116 - INFO - mvg.mvg -   timestamp: 1571310060
+2021-03-18 10:56:33,116 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571310060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:34,181 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:34,182 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:34,182 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:34,183 - INFO - mvg.mvg -   timestamp: 1571569260
+2021-03-18 10:56:34,184 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571569260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:35,200 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:35,201 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:35,201 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:35,201 - INFO - mvg.mvg -   timestamp: 1574424060
+2021-03-18 10:56:35,202 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1574424060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:36,425 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:36,425 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:36,426 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:36,426 - INFO - mvg.mvg -   timestamp: 1572696060
+2021-03-18 10:56:36,427 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572696060.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:37,620 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:37,620 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:37,621 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:37,621 - INFO - mvg.mvg -   timestamp: 1570705260
+2021-03-18 10:56:37,622 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1570705260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:38,883 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:38,883 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:38,884 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:38,884 - INFO - mvg.mvg -   timestamp: 1571914860
+2021-03-18 10:56:38,885 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1571914860.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:40,041 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:40,042 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:40,042 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:40,043 - INFO - mvg.mvg -   timestamp: 1572523260
+2021-03-18 10:56:40,043 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572523260.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:41,005 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:41,005 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:41,006 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:41,006 - INFO - mvg.mvg -   timestamp: 1572177660
+2021-03-18 10:56:41,007 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572177660.csv
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-03-18 10:56:42,316 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-03-18 10:56:42,317 - INFO - mvg.mvg - creating measurement from source id=u0005
+2021-03-18 10:56:42,317 - INFO - mvg.mvg -   duration:  2.8672073400507907
+2021-03-18 10:56:42,318 - INFO - mvg.mvg -   timestamp: 1572087660
+2021-03-18 10:56:42,319 - INFO - mvg.mvg -   meta data: {&#39;sampling_rate&#39;: 13950.857142857141}
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Read 40000 samples
+Read meta: {&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0005/1572087660.csv
+</pre></div></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="analysis_visual.html" class="btn btn-neutral float-right" title="Analysis and Results Visualization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="error_handling.html" class="btn btn-neutral float-left" title="Error Handling Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Viking Analytics AB.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
