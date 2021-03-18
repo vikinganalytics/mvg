@@ -1,0 +1,6 @@
+typer
+pandas
+requests
+numpy
+semver
+matplotlib

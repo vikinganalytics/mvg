@@ -1,0 +1,40 @@
+.. MultiViz Analytics Engine Library documentation master file, created by
+   sphinx-quickstart on Tue Mar  2 12:03:06 2021.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+.. Include the project README as the content for the front page
+
+.. mdinclude:: ../../README.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples
+
+   content/examples/check_version
+   content/examples/error_handling
+   content/examples/sources_and_measurements
+   content/examples/analysis_visual
+   content/examples/brief_overview
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Features
+
+   content/features/general
+   content/features/ModeId
+   content/features/RMS
+   content/features/blacksheep
+	    
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference
+
+   content/api_reference/mvg
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

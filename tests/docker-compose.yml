@@ -1,0 +1,8 @@
+version: "3.3"
+
+services:
+    vibium:
+        image: ghcr.io/vikinganalytics/vibium/vibium_cloud:${VIBIUM_VERSION}
+        restart: unless-stopped
+        ports:
+          - 8000:8000
