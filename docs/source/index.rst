@@ -11,12 +11,12 @@
    :maxdepth: 2
    :caption: Examples
 
+   content/examples/brief_overview
    content/examples/check_version
    content/examples/error_handling
    content/examples/sources_and_measurements
    content/examples/analysis_visual
-   content/examples/brief_overview
-
+   
 .. toctree::
    :maxdepth: 2
    :caption: Features
