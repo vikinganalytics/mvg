@@ -69,7 +69,7 @@ It is primarily the clients side's responsibility to keep track of analyses.
 
 ## Version handling of mvg and API version
 
-The version string of the MVG api has the form
+The version string of the MVG API on the server side has the form
 v{MAJOR}.{MINOR}.{PATCH}.
 An increase of MAJOR means an incompatible change which requires an
 upgrade of mvg, an increase in MINOR does not require an upgrade of
@@ -82,17 +82,12 @@ documentation and examples/check_version.py for details.
 
 ### Examples
 
-There are three executable python files in the examples directory:
-
-1. `sources_and_measurements.py` showing how to create, retrieve and
-   delete sources or measurements for the API.
-   
-2. `error_handling.py`showing how to handle errors occuring either
-   when calling the API or during processing on the server
-   side. Errors on the server side will conveyed as http status codes.
-   
-3. `analysis.py` still to be written.
-
+Under the examples section there are a number of jupyter notebooks
+with Python code to show how to use the library for interfacing the
+Viking Analytics Engine. The notebooks can be downloaded by 
+clicking "View Page Source" link located on the top left of the
+examples. You will need to change the extension to .ipynb before
+running them.
 
 ### Maintainer
 
