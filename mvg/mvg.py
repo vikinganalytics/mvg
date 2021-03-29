@@ -6,6 +6,7 @@ For more information see README.md.
 
 import re
 import json
+import time
 import logging
 import requests
 from requests.exceptions import HTTPError, RequestException
@@ -14,7 +15,7 @@ import semver
 logger = logging.getLogger(__name__)
 
 
-class MVG:
+class MVGAPI:
     """Class for a session providing an API to the vibium server"""
 
     def __init__(self, endpoint: str, token: str):
@@ -687,3 +688,60 @@ class MVG:
         response = self._request("get", f"/analyses/requests/{jobid}/results")
 
         return response.json()
+
+
+class MVG(MVGAPI):
+    """Class for a session providing an API to the vibium server
+    with additional helper and plotting functions
+    """
+
+    def __init__(self, endpoint: str, token: str):
+        """
+        Constructor
+        On instantiation of a MVG object the session parameters
+        are stored for future calls and the version of the API
+        is requested.
+        In case token is "NO TOKEN", will insert the harcoded
+        valid token from testcases.
+        HTTPError is raised if  a connection to the API cannot
+        be established.
+        Parameters
+        ----------
+        endpoint: str
+            the server address (URL).
+        token: str
+            the token used for authentication and authorization.
+        """
+        super().__init__(endpoint=endpoint, token=token)
+
+    def wait_for_analyses(self, jobid_list: list, timeout=None):
+        """Wait for the analyses specified by list of jobids to finish.
+        Parameters
+        ----------
+        jobid_list : list
+            list of jobids (analysis identifier)
+        timeout: float [Optional]
+            amount of time (in seconds) to wait for the analyses to finish
+        """
+
+        start = time.time()
+        min_wait = 1.5
+        jobs = set(jobid_list)
+        while len(jobs) > 0:
+            done_jobs = set()
+            for jobid in jobs:
+                status = self.get_analysis_status(jobid)
+                if status in ("successful", "failed"):
+                    logger.info("Anlysis with ID %s done", jobid)
+                    done_jobs.add(jobid)
+            jobs = jobs - done_jobs
+
+            if len(jobs) > 0:
+                if timeout is None:
+                    time.sleep(min_wait)
+                else:
+                    elapsed = time.time() - start
+                    if elapsed > timeout:
+                        logger.info("wait_for_analyses timed out")
+                        break
+                    time.sleep(min(min_wait, timeout - elapsed))
