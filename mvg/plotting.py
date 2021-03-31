@@ -142,6 +142,7 @@ def modes_over_time(
     height=100,
     width=5,
     timeticks_interval=None,
+    timeunit="ms",
     axes=None,
 ):
     """Creates a rectangular timeline of modes.
@@ -169,6 +170,9 @@ def modes_over_time(
     timeticks_interval: int, optional
         time interval (in days) to separate the X-ticks.
 
+    timeunit: str, optional
+        unit of time corresponding to the timestamp epoch
+
     axes: object of class matplotlib.axes, optional
         the axes to be used by boxplot.
 
@@ -177,7 +181,7 @@ def modes_over_time(
     image: object of class matplotlib.axes
 
     """
-    data["Date"] = pd.to_datetime(data["Timestamp"], unit="ms")
+    data["Date"] = pd.to_datetime(data["timestamps"], unit=timeunit)
     colors = colors or MODE_COLOR_CODES
 
     # Create figure with blank plot
@@ -241,7 +245,7 @@ def modes_over_time(
     return image
 
 
-def modes_over_time_group(dfs, requestids, days=1, tol=2):
+def modes_over_time_group(dfs, requestids, days=1, tol=2, timeunit="ms"):
     """Creates a rectangular timeline of modes for a set of sources.
 
     The figure display the rectangular timeline of modes
@@ -261,6 +265,9 @@ def modes_over_time_group(dfs, requestids, days=1, tol=2):
 
     tol: int, optional
         tolerance (in hours) to consider when merging timestamps.
+
+    timeunit: str, optional
+        unit of time corresponding to the timestamp epoch
     """
     # Create figure
     _, axes = plt.subplots(
@@ -273,25 +280,24 @@ def modes_over_time_group(dfs, requestids, days=1, tol=2):
     max_epoch = 0
     for i in dfs:
         # Conversion Timestamp to Epoch
-        i["Epoch"] = i["Timestamp"].apply(lambda x: int(x.timestamp()))
-        if (min_epoch >= i["Epoch"].min()) or (min_epoch == 0):
-            min_epoch = i["Epoch"].min()
-        if max_epoch <= i["Epoch"].max():
-            max_epoch = i["Epoch"].max()
+        if (min_epoch >= i["timestamps"].min()) or (min_epoch == 0):
+            min_epoch = i["timestamps"].min()
+        if max_epoch <= i["timestamps"].max():
+            max_epoch = i["timestamps"].max()
 
     # Create reference dataframe (in seconds) covering timestamps of all dataframes
     epoch_multiplier = 24 * 60 * 60  # * 1000
     steps = days * epoch_multiplier
-    df_ref = pd.DataFrame(range(min_epoch, max_epoch + steps, steps), columns=["Epoch"])
+    df_ref = pd.DataFrame(range(min_epoch, max_epoch + steps, steps), columns=["timestamps"])
 
     # Iterate over set of sources to create rectangular timeframes
     # with a tolerance in milliseconds
     for count, value in enumerate(dfs):
         dfexp = pd.merge_asof(
-            df_ref, value, on="Epoch", tolerance=int(tol * 60 * 60 * 1000)
+            df_ref, value, on="timestamps", tolerance=int(tol * 60 * 60 * 1000)
         )
         dfexp["labels"] = dfexp["labels"].fillna(value=-1)
         # X-ticks (time) interval is 7 days (one week)
         modes_over_time(
-            dfexp, requestids[count], timeticks_interval=7, axes=axes[count]
+            dfexp, requestids[count], timeticks_interval=7, timeunit=timeunit, axes=axes[count]
         )
