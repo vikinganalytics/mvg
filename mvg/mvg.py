@@ -49,6 +49,9 @@ class MVGAPI:
         self.mvg_version = self.parse_version("v0.4.1")
         self.tested_api_version = self.parse_version("v0.1.0")
 
+        # Errors to ignore
+        self.do_not_raise = []
+
         # Get API version
         try:
             response = self._request("get", "")
@@ -97,7 +100,16 @@ class MVGAPI:
             response.raise_for_status()
         except HTTPError as exc:
             logger.debug(str(exc))
-            if response.text:
+
+            # Error ignorer
+            ignore = False
+            for err_no in self.do_not_raise:
+                if re.search(err_no, str(exc)):
+                    ignore = True
+            if ignore:
+                logstr = "Ignoring" + str(exc)
+                logger.info(logstr)
+            elif response.text:
                 logger.debug(str(response.text))
                 raise exc
 
@@ -691,13 +703,18 @@ class MVGAPI:
 
 
 class MVG(MVGAPI):
-    """Class for a session providing an API to the vibium server
-    with additional helper and plotting functions
+    """Class for a session providing an API to the vibium server.
+    Subclass to MVGAPI adding convience functions
+    - waiting for request
+    - ignoring http errors (per default 409, existing resource)
     """
 
     def __init__(self, endpoint: str, token: str):
         """
-        Constructor
+        Constructor.
+        As compared to super class configures session to ignore '
+        409 error. More errors can be ignored by setting class
+        attribute do_not_raise with a dictionary of http error codes.
         On instantiation of a MVG object the session parameters
         are stored for future calls and the version of the API
         is requested.
@@ -713,6 +730,7 @@ class MVG(MVGAPI):
             the token used for authentication and authorization.
         """
         super().__init__(endpoint=endpoint, token=token)
+        self.do_not_raise = ["409"]
 
     def wait_for_analyses(self, jobid_list: list, timeout=None):
         """Wait for the analyses specified by list of jobids to finish.

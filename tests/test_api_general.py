@@ -68,10 +68,7 @@ def test_supported_features(vibium):
     session = MVG(vibium, VALID_TOKEN)
     resp = session.supported_features()
     print(resp)
-    assert resp["mode_id"]
-    # assert not resp['on_off']
-    # assert not resp['asset_type']
-    assert not resp["indicator_arrow"]
+    assert resp["ModeId"]
 
 
 # API GET    /analyses [unauthorized]

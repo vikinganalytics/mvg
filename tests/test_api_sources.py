@@ -137,6 +137,11 @@ def test_measurements_crud(session):
             sid=SOURCE_ID, duration=duration, timestamp=ts_m, data=accs, meta=meta_info
         )
 
+        # create again (ignore error)
+        session.create_measurement(
+            sid=SOURCE_ID, duration=duration, timestamp=ts_m, data=accs, meta=meta_info
+        )
+
         # read back and check
         m_back = session.read_single_measurement(SOURCE_ID, ts_m)
         assert m_back["data"] == accs
@@ -219,3 +224,31 @@ def test_sources_d(session):
     assert exc.value.response.status_code == 404
     print("Finishing")
     print(session.list_sources())
+
+
+# API ignore existing
+# API POST   /sources/
+# API GET    /sources/{source_id}
+# API POST   /sources/{source_id} - source exists, ignored
+# API POST   /sources/{source_id} - source exists, not ignored
+def test_sources_cru_existing(session):
+    m_file_name = REF_DB_PATH / "u0001" / "meta.json"
+    with open(m_file_name, "r") as json_file:
+        meta = json.load(json_file)
+    # create_source happy case
+    session.create_source(SOURCE_ID, meta)
+    # list_source happy case
+    src = session.get_source(SOURCE_ID)
+    assert src["source_id"] == SOURCE_ID
+    assert src["meta"] == meta
+
+    # create_source again (409 ignored)
+    session.create_source(SOURCE_ID, meta)
+
+    # create_source again (409 not ignored)
+    session.do_not_raise = []
+    with pytest.raises(HTTPError):
+        session.create_source(SOURCE_ID, meta)
+
+
+# End of code
