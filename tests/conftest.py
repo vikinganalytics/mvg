@@ -5,8 +5,8 @@ import requests
 from mvg import MVG
 
 # Retrieve API version to test against
-session = MVG("NO ENDPOINT", "NO TOKEN")
-VIBIUM_VERSION = "v" + str(session.tested_api_version)
+version_session = MVG("https://api.beta.multiviz.com", "NO TOKEN")
+VIBIUM_VERSION = "v" + str(version_session.tested_api_version)
 
 
 def is_responsive(url):
