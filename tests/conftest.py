@@ -3,7 +3,7 @@ import os
 import pytest
 import requests
 
-VIBIUM_VERSION = "v0.0.9"
+VIBIUM_VERSION = "v0.1.1"
 
 
 def is_responsive(url):
