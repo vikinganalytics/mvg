@@ -25,6 +25,7 @@ MANIFEST
 Lib/
 Scripts/
 doc/
+fwdevelop/
 
 # Test otuput
 mca/test_output
