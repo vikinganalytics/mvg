@@ -2,8 +2,11 @@ import os
 
 import pytest
 import requests
+from mvg import MVG
 
-VIBIUM_VERSION = "v0.0.9"
+# Retrieve API version to test against
+version_session = MVG("https://api.beta.multiviz.com", "NO TOKEN")
+VIBIUM_VERSION = "v" + str(version_session.tested_api_version)
 
 
 def is_responsive(url):
