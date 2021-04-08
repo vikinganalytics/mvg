@@ -1,6 +1,10 @@
 """
 MVG library
 -----------
+For use of client side development the MVG class shall be used.
+
+The MVGAPI class is intended for development of the library itself.
+
 For more information see README.md.
 """
 
@@ -704,16 +708,17 @@ class MVGAPI:
 
 class MVG(MVGAPI):
     """Class for a session providing an API to the vibium server.
-    Subclass to MVGAPI adding convience functions
-    - waiting for request
-    - ignoring http errors (per default 409, existing resource)
+    Note that this class ignores specific http errors
+    (per default 409, existing resource). If this is not wanted use
+    MVGAPI class instead.
     """
 
     def __init__(self, endpoint: str, token: str):
         """
         Constructor.
-        As compared to super class configures session to ignore '
-        409 error. More errors can be ignored by setting class
+        As compared to super class configures session to ignore
+        409 errors (occuring when an existing resource is overwritten.
+        More errors can be ignored by setting class
         attribute do_not_raise with a dictionary of http error codes.
         On instantiation of a MVG object the session parameters
         are stored for future calls and the version of the API
@@ -722,6 +727,7 @@ class MVG(MVGAPI):
         valid token from testcases.
         HTTPError is raised if  a connection to the API cannot
         be established.
+
         Parameters
         ----------
         endpoint: str
@@ -734,6 +740,7 @@ class MVG(MVGAPI):
 
     def wait_for_analyses(self, jobid_list: list, timeout=None):
         """Wait for the analyses specified by list of jobids to finish.
+
         Parameters
         ----------
         jobid_list : list
