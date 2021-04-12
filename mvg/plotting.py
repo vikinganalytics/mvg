@@ -288,7 +288,9 @@ def modes_over_time_group(dfs, requestids, days=1, tol=2, timeunit="ms"):
     # Create reference dataframe (in seconds) covering timestamps of all dataframes
     epoch_multiplier = 24 * 60 * 60  # * 1000
     steps = days * epoch_multiplier
-    df_ref = pd.DataFrame(range(min_epoch, max_epoch + steps, steps), columns=["timestamps"])
+    df_ref = pd.DataFrame(
+        range(min_epoch, max_epoch + steps, steps), columns=["timestamps"]
+    )
 
     # Iterate over set of sources to create rectangular timeframes
     # with a tolerance in milliseconds
@@ -299,5 +301,9 @@ def modes_over_time_group(dfs, requestids, days=1, tol=2, timeunit="ms"):
         dfexp["labels"] = dfexp["labels"].fillna(value=-1)
         # X-ticks (time) interval is 7 days (one week)
         modes_over_time(
-            dfexp, requestids[count], timeticks_interval=7, timeunit=timeunit, axes=axes[count]
+            dfexp,
+            requestids[count],
+            timeticks_interval=7,
+            timeunit=timeunit,
+            axes=axes[count],
         )
