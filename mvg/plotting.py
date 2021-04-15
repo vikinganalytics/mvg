@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 # where code -1 represents "No Data"
 MODE_COLOR_CODES = dict(
     (
+        [-2, "gray"],
         [-1, "white"],
         [0, "red"],
         [1, "blue"],
@@ -192,12 +193,18 @@ def modes_over_time(
 
     # Create rectangular patch for timestamp
     datalist = data["labels"].tolist()
+    uncertlist = data["uncertain"].tolist()
     for i, val in enumerate(datalist):
+        # gray border around uncertains
+        if uncertlist[i]:
+            ecol = -2
+        else:
+            ecol = val
         rect = patches.Rectangle(
             (i * width, 0),
             width,
             height,
-            edgecolor=colors[val],
+            edgecolor=colors[ecol],
             facecolor=colors[val],
             fill=True,
         )
