@@ -32,7 +32,7 @@ MODE_COLOR_CODES = dict(
 )
 
 
-def modes_boxplot(data, feature, requestid, total_modes=None, axes=None):
+def modes_boxplot(data, feature, request_id, total_modes=None, axes=None):
     """Creates a box plot for a source.
 
     The box plot describes the distribution of the requested variable
@@ -46,9 +46,9 @@ def modes_boxplot(data, feature, requestid, total_modes=None, axes=None):
     feature: string
         requested variable to be displayed.
 
-    requestid: string
-        string with requestId (or source_id). Can be replaced by other name
-        to represent the requestId.
+    request_id: string
+        string with request_id (or source_id). Can be replaced by other name
+        to represent the request_id.
 
     total_modes: int, optional
         number of modes to be considered. If None displays unique
@@ -82,13 +82,13 @@ def modes_boxplot(data, feature, requestid, total_modes=None, axes=None):
     # Plot and format figure
     image = data.boxplot(column=feature, by="Modes", ax=axes)
     image.get_figure().suptitle("")
-    image.get_figure().gca().set_title("Boxplot for {}".format(requestid))
+    image.get_figure().gca().set_title("Boxplot for {}".format(request_id))
     image.get_figure().gca().set_ylabel(feature)
 
     return image
 
 
-def modes_group_boxplot(dfs, feature, requestids):
+def modes_group_boxplot(dfs, feature, request_ids):
     """Creates a box plot for a set of sources.
 
     The figure display a boxplot for a list of sources
@@ -103,13 +103,13 @@ def modes_group_boxplot(dfs, feature, requestids):
     feature: string
         requested variable to be displayed.
 
-    requestids: List of strings
-        list of strings with requestIds (or sources_ids). Can be replaced by other name
-        to represent each requestId.
+    request_ids: List of strings
+        list of strings with request_ids (or sources_ids). Can be replaced by other name
+        to represent each request_id.
     """
     # Create figure
     fig, axes = plt.subplots(nrows=len(dfs), ncols=1, figsize=(6, 6))
-    logger.info("The number of requestIds to be plotted is %s", len(dfs))
+    logger.info("The number of request_ids to be plotted is %s", len(dfs))
 
     # Identify maximum number of modes across set of sources
     max_no_modes = 1
@@ -122,11 +122,11 @@ def modes_group_boxplot(dfs, feature, requestids):
         axp = modes_boxplot(
             value,
             feature,
-            requestids[count],
+            request_ids[count],
             total_modes=max_no_modes,
             axes=axes[count],
         )
-        axp.set_title("Boxplot for {}".format(requestids[count]))
+        axp.set_title("Boxplot for {}".format(request_ids[count]))
         axp.set_ylabel(feature)
         if count + 1 != len(dfs):
             axp.set_xlabel("")
@@ -137,7 +137,7 @@ def modes_group_boxplot(dfs, feature, requestids):
 # pylint: disable=too-many-locals
 def modes_over_time(
     data,
-    requestid,
+    request_id,
     colors=None,
     height=100,
     width=5,
@@ -154,9 +154,9 @@ def modes_over_time(
     data: dataframe
         data from labels table.
 
-    requestid: string
-        string with requestId (or source_Id). Can be replaced by other name
-        to represent the requestId.
+    request_id: string
+        string with request_id (or source_Id). Can be replaced by other name
+        to represent the request_id.
 
     colors: dictionary, optional
         color code for each mode.
@@ -239,13 +239,13 @@ def modes_over_time(
             patch = patches.Patch(color=colors[i], label="Mode {}".format(int(i)))
         legend_labels.append(patch)
     axes.legend(handles=legend_labels, bbox_to_anchor=(1.05, 1), loc="upper left")
-    axes.set_title("Modes over time for {}".format(requestid))
+    axes.set_title("Modes over time for {}".format(request_id))
     plt.tight_layout()
 
     return image
 
 
-def modes_over_time_group(dfs, requestids, days=1, tol=2, timeunit="ms"):
+def modes_over_time_group(dfs, request_ids, days=1, tol=2, timeunit="ms"):
     """Creates a rectangular timeline of modes for a set of sources.
 
     The figure display the rectangular timeline of modes
@@ -256,9 +256,9 @@ def modes_over_time_group(dfs, requestids, days=1, tol=2, timeunit="ms"):
     dfs: list of dataframes
         list with data from labels table.
 
-    requestids: List of strings
-        list of strings with requestIds (or source_Ids). Can be replaced by other name
-        to represent each jobId.
+    request_ids: List of strings
+        list of strings with request_ids (or source_Ids). Can be replaced by other name
+        to represent each request_id.
 
     days: int, optional
         interval to be considered for each measurement.
@@ -273,7 +273,7 @@ def modes_over_time_group(dfs, requestids, days=1, tol=2, timeunit="ms"):
     _, axes = plt.subplots(
         nrows=len(dfs), ncols=1, figsize=(9, 6), sharex=True, tight_layout=True
     )
-    logger.info("The number of requestIds to be plotted is %s", len(dfs))
+    logger.info("The number of request_ids to be plotted is %s", len(dfs))
 
     # Identify x-axis (epochs) limits
     min_epoch = 0
@@ -302,7 +302,7 @@ def modes_over_time_group(dfs, requestids, days=1, tol=2, timeunit="ms"):
         # X-ticks (time) interval is 7 days (one week)
         modes_over_time(
             dfexp,
-            requestids[count],
+            request_ids[count],
             timeticks_interval=7,
             timeunit=timeunit,
             axes=axes[count],

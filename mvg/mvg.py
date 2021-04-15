@@ -553,7 +553,7 @@ class MVGAPI:
 
         Returns
         -------
-        jobid: analysis identifier
+        request_id: analysis identifier
 
         """
         logger.info("endpoint %s", self.endpoint)
@@ -607,7 +607,7 @@ class MVGAPI:
 
         Returns
         -------
-        jobid: analysis identifier
+        request_id: analysis identifier
 
         """
         logger.info("endpoint %s", self.endpoint)
@@ -658,13 +658,13 @@ class MVGAPI:
 
         return response.json()
 
-    def get_analysis_status(self, jobid: str):
-        """Return the status of an analysis request with given jobId.
+    def get_analysis_status(self, request_id: str):
+        """Return the status of an analysis request with given request_id.
 
         Parameters
         ----------
-        jobid : str
-            jobid (analysis identifier)
+        request_id : str
+            request_id (analysis identifier)
 
         Returns
         -------
@@ -677,20 +677,20 @@ class MVGAPI:
 
         """
         logger.info("endpoint %s", self.endpoint)
-        logger.info("get analysis status with jobid=%s", jobid)
+        logger.info("get analysis status with request_id=%s", request_id)
 
-        response = self._request("get", f"/analyses/requests/{jobid}")
+        response = self._request("get", f"/analyses/requests/{request_id}")
 
         return response.json()["request_status"]
 
-    def get_analysis_results(self, jobid: str):
-        """Retrieves an analysis with given jobId
+    def get_analysis_results(self, request_id: str):
+        """Retrieves an analysis with given request_id
         The format of the result structure depends on the feature.
 
         Parameters
         ----------
-        jobid : str
-            jobid (analysis identifier)
+        request_id : str
+            request_id (analysis identifier)
 
         Returns
         -------
@@ -699,9 +699,9 @@ class MVGAPI:
 
         """
         logger.info("endpoint %s", self.endpoint)
-        logger.info("get analysis results with jobid=%s", jobid)
+        logger.info("get analysis results with request_id=%s", request_id)
 
-        response = self._request("get", f"/analyses/requests/{jobid}/results")
+        response = self._request("get", f"/analyses/requests/{request_id}/results")
 
         return response.json()
 
@@ -738,27 +738,27 @@ class MVG(MVGAPI):
         super().__init__(endpoint=endpoint, token=token)
         self.do_not_raise = ["409"]
 
-    def wait_for_analyses(self, jobid_list: list, timeout=None):
-        """Wait for the analyses specified by list of jobids to finish.
+    def wait_for_analyses(self, request_id_list: list, timeout=None):
+        """Wait for the analyses specified by list of request_ids to finish.
 
         Parameters
         ----------
-        jobid_list : list
-            list of jobids (analysis identifier)
+        request_id_list : list
+            list of request_ids (analysis identifier)
         timeout: float [Optional]
             amount of time (in seconds) to wait for the analyses to finish
         """
 
         start = time.time()
         min_wait = 1.5
-        jobs = set(jobid_list)
+        jobs = set(request_id_list)
         while len(jobs) > 0:
             done_jobs = set()
-            for jobid in jobs:
-                status = self.get_analysis_status(jobid)
+            for request_id in jobs:
+                status = self.get_analysis_status(request_id)
                 if status in ("successful", "failed"):
-                    logger.info("Anlysis with ID %s done", jobid)
-                    done_jobs.add(jobid)
+                    logger.info("Anlysis with ID %s done", request_id)
+                    done_jobs.add(request_id)
             jobs = jobs - done_jobs
 
             if len(jobs) > 0:
