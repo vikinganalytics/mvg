@@ -182,7 +182,14 @@ def modes_over_time(
     image: object of class matplotlib.axes
 
     """
-    data["Date"] = pd.to_datetime(data["timestamps"], unit=timeunit)
+
+    if "datetime" in data.columns:
+        # analysis classes have correct t_zone handling
+        # so use those timestamps if they exist
+        data = data.rename(columns={"datetime": "Date"})
+    else:
+        data["Date"] = pd.to_datetime(data["timestamps"], unit=timeunit)
+
     colors = colors or MODE_COLOR_CODES
 
     # Create figure with blank plot
