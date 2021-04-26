@@ -266,7 +266,7 @@ It is primarily the clients side’s responsibility to keep track of analyses.</
 </div>
 <div class="section" id="version-handling-of-mvg-and-api-version">
 <h2>Version handling of mvg and API version<a class="headerlink" href="#version-handling-of-mvg-and-api-version" title="Permalink to this headline">¶</a></h2>
-<p>The version string of the MVG api has the form
+<p>The version string of the MVG API on the server side has the form
 v{MAJOR}.{MINOR}.{PATCH}.
 An increase of MAJOR means an incompatible change which requires an
 upgrade of mvg, an increase in MINOR does not require an upgrade of
@@ -280,15 +280,12 @@ documentation and examples/check_version.py for details.</p>
 </ul>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p>There are three executable python files in the examples directory:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">sources_and_measurements.py</span></code> showing how to create, retrieve and
-delete sources or measurements for the API.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_handling.py</span></code>showing how to handle errors occuring either
-when calling the API or during processing on the server
-side. Errors on the server side will conveyed as http status codes.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">analysis.py</span></code> still to be written.</p></li>
-</ol>
+<p>Under the examples section there are a number of jupyter notebooks
+with Python code to show how to use the library for interfacing the
+Viking Analytics Engine. The notebooks can be downloaded by
+clicking “View Page Source” link located on the top left of the
+examples. You will need to change the extension to .ipynb before
+running them.</p>
 </div>
 <div class="section" id="maintainer">
 <h3>Maintainer<a class="headerlink" href="#maintainer" title="Permalink to this headline">¶</a></h3>
@@ -327,13 +324,14 @@ side. Errors on the server side will conveyed as http status codes.</p></li>
 <li class="toctree-l2"><a class="reference internal" href="content/examples/sources_and_measurements.html#Check-Database">Check Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="content/examples/sources_and_measurements.html#Build-measurements">Build measurements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="content/examples/sources_and_measurements.html#Read-the-Measurements">Read the Measurements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="content/examples/sources_and_measurements.html#Uploading-another-source">Uploading another source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/examples/sources_and_measurements.html#Uploading-additional-sources">Uploading additional sources</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="content/examples/analysis_visual.html">Analysis and Results Visualization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="content/examples/analysis_visual.html#Preliminaries">Preliminaries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="content/examples/analysis_visual.html#Analysis">Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/examples/analysis_visual.html#Asset-Analysis">Asset Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="content/examples/analysis_visual.html#Visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/examples/analysis_visual.html#Population-Analysis">Population Analysis</a></li>
 </ul>
 </li>
 </ul>
