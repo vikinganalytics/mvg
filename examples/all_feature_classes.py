@@ -15,28 +15,45 @@ req_ids = [
 ]
 
 
+# local wrapper for parse_results
 def parse_request(req_id):
-    result = parse_results(ses.get_analysis_results(req_id))
+    # parse funcrtion, also take time info
+    result = parse_results(
+        ses.get_analysis_results(req_id), # call API
+        t_zone="Europe/Stockholm",
+        t_unit="s")
     return result
 
+breakpoint()
 
-res = parse_request(req_ids[0])
-res.summary()
-res.plot()
-print(res.to_df().head())
-res.save()
-
+# Get class, parse will return object of correct class
 res = parse_request(req_ids[1])
-res.summary()
-res.plot()
-print(res.to_df().head())
-res.save()
+res.feature()
 
+# use (interactive) functions
+s_table = res.summary() # Reasonable summary
+res.plot() # default plot
+print(res.to_df().head()) # get results as dataFrame
+res.save() # save object as pickle
+
+# Class accessor functions
+res.request_id()
+res.feature()
+res.status()
+res.raw_results # more for internal use
+
+# Repeat execise for other features
 res = parse_request(req_ids[2])
 dump_file = res.save()
 res_pkl = pickle.load(open(dump_file, "rb"))
 res_pkl.summary()
 res_pkl.plot()
 print(res_pkl.to_df().head())
+
+res = parse_request(req_ids[0])
+res.summary()
+res.plot()
+print(res.to_df().head())
+res.save()
 
 print("Bye")

@@ -80,7 +80,7 @@ class Analysis:
 
         Returns
         -------
-            request_id
+        request_id: str
         """
 
         return self.raw_results["request_id"]
@@ -90,7 +90,7 @@ class Analysis:
 
         Returns
         -------
-            feature
+        feature: str
         """
 
         return self.raw_results["feature"]
@@ -100,7 +100,7 @@ class Analysis:
 
         Returns
         -------
-            results
+        results: dict
         """
 
         return self.raw_results["results"]
@@ -110,7 +110,7 @@ class Analysis:
 
         Returns
         -------
-            status
+        status: str
         """
 
         return self.raw_results["status"]
@@ -163,7 +163,7 @@ class Analysis:
 
         Returns
         -------
-        Actually used file path.
+        Actually used file path: str
         """
 
         if file_name is None:
@@ -182,7 +182,8 @@ class Analysis:
 
         Returns
         -------
-            Dataframe with analysis results.
+        Dataframe with analysis results: dataFrame
+
         """
 
         self.check_status()
@@ -214,9 +215,10 @@ class RMS(Analysis):
 
     def summary(self):
         """Print summary information on RMS.
+        
         Returns
         -------
-            Dataframe with summary table.
+        summary table: dataFrame
         """
 
         super().summary()
@@ -261,7 +263,7 @@ class ModeId(Analysis):
 
         Returns
         -------
-            Dataframe with summary table.
+        Summary table: dataFrame
         """
 
         # Header
@@ -327,7 +329,7 @@ class BlackSheep(Analysis):
 
         Returns
         -------
-        data frame with summary table.
+        Summary table: dataFrame
         """
 
         # Header
@@ -360,7 +362,7 @@ def parse_results(results, t_zone=None, t_unit=None):
 
     Returns
     -------
-    Object of the correct analysis type.
+    Object of the correct analysis class: subclass to Analysis 
 
     Raises
     ------
