@@ -19,28 +19,28 @@ req_ids = [
 def parse_request(req_id):
     # parse funcrtion, also take time info
     result = parse_results(
-        ses.get_analysis_results(req_id), # call API
+        ses.get_analysis_results(req_id),  # call API
         t_zone="Europe/Stockholm",
-        t_unit="s")
+        t_unit="s",
+    )
     return result
 
-breakpoint()
 
 # Get class, parse will return object of correct class
 res = parse_request(req_ids[1])
 res.feature()
 
 # use (interactive) functions
-s_table = res.summary() # Reasonable summary
-res.plot() # default plot
-print(res.to_df().head()) # get results as dataFrame
-res.save() # save object as pickle
+s_table = res.summary()  # Reasonable summary
+res.plot()  # default plot
+print(res.to_df().head())  # get results as dataFrame
+res.save()  # save object as pickle
 
 # Class accessor functions
 res.request_id()
 res.feature()
 res.status()
-res.raw_results # more for internal use
+# res.raw_results for class internal use
 
 # Repeat execise for other features
 res = parse_request(req_ids[2])
