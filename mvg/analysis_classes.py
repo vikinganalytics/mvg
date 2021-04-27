@@ -169,9 +169,8 @@ class Analysis:
         if file_name is None:
             file_name = f"{self.request_id()}.pkl"
         print(f"Saving {self.feature()} object to", file_name)
-        filehandler = open(file_name, "wb")
-        pickle.dump(self, filehandler)
-        filehandler.close()
+        with open(file_name, "wb") as pkl_file:
+            pickle.dump(self, pkl_file)
         return file_name
 
     # Save results to dataframe
@@ -215,7 +214,7 @@ class RMS(Analysis):
 
     def summary(self):
         """Print summary information on RMS.
-        
+
         Returns
         -------
         summary table: dataFrame
@@ -362,7 +361,7 @@ def parse_results(results, t_zone=None, t_unit=None):
 
     Returns
     -------
-    Object of the correct analysis class: subclass to Analysis 
+    Object of the correct analysis class: subclass to Analysis
 
     Raises
     ------
