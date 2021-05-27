@@ -15,6 +15,7 @@ of the correct feature class.
 """
 
 import pickle
+import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -49,6 +50,7 @@ class Analysis:
         self.t_zone = t_zone
         self.t_unit = t_unit
         self.dframe = None
+        self.inputs = results.get("inputs", "Inputs not available")
         self.time_column = None
 
     def _add_datetime(self):
@@ -57,6 +59,8 @@ class Analysis:
         timezone and time unit given in constructor. Will add
         an additional column "datetime" to the dataframe
         and set time_column to "datetime"
+        Works on class object dframe and sets time column to
+        datetime.
         """
 
         # Check if there is info for conversion
@@ -73,6 +77,40 @@ class Analysis:
             )
             # Mark datetime as availbke
             self.time_column = "datetime"
+
+    def _add_datetime_df(self, dframe, timecolumn):
+        """
+        Convert EPOCH time to datetime with the
+        timezone and time unit given in constructor. Will add
+        an additional column "datetime" to the dataframe
+        Operates on given df and given time column
+
+        Parameters
+        ----------
+        dframe: DataFrame
+            DataFrame to operate on
+        timecolumn: str
+            columns containing time
+
+        Returns
+        -------
+        DataFrame with added datetime colums
+        """
+
+        # Check if there is info for conversion
+        if self.t_zone is not None:
+            # EPOCH to datetime
+            dframe = dframe.assign(
+                datetime=pd.to_datetime(dframe[timecolumn], unit=self.t_unit, utc=True)
+            )
+            # Set timezone
+            dframe = dframe.assign(
+                datetime=(dframe["datetime"].dt.tz_convert(self.t_zone))
+            )
+            # Mark datetime as availble
+            # self.time_column = "datetime"
+
+        return dframe
 
     # Accessor functions
     def request_id(self):
@@ -94,6 +132,16 @@ class Analysis:
         """
 
         return self.raw_results["feature"]
+
+    def request_params(self):
+        """inputs to the analysis run
+
+        Returns
+        -------
+        results: dict
+        """
+
+        return self.inputs
 
     def results(self):
         """results dict as returned from request
@@ -118,8 +166,9 @@ class Analysis:
     # For avoiding problems when no results are available
     def check_status(self):
         if "success" not in self.status():
-            print("   Analysis was not successful")
-            raise ValueError(f"Analysis {self.request_id} failed on server side")
+            err_str = f"Analysis {self.request_id} failed on server side"
+            print(err_str)
+            raise ValueError(err_str)
         return self.status()
 
     # Prints header for summary functions
@@ -174,10 +223,16 @@ class Analysis:
         return file_name
 
     # Save results to dataframe
-    def to_df(self):
+    def to_df(self, file_name=None):
         """Return a dataframe with the analysis results.
+        Save as csv if file_name given.
         Format of the dataframe depends on specific analysis.
         Will raise an exception in case no results are available.
+
+        Parameters
+        ----------
+        file_name: str
+            filename to save object under. If not given no file is saved.
 
         Returns
         -------
@@ -186,7 +241,42 @@ class Analysis:
         """
 
         self.check_status()
-        return self.dframe.copy()
+        if file_name is not None:
+            print(f"Saving {self.feature()} data frame results to", file_name)
+            self.dframe.copy().to_csv(file_name, index=False)
+        return self.dframe
+
+    # Save self as pickel
+    def to_json(self, file_name=None, raw=False):
+        """Saves the request result from the API JSON
+        In case of filname is not given, filename will be
+        <request_id>.json
+
+        Parameters
+        ----------
+        file_name: str
+            filename to save object under.
+        raw: boolean
+            return only alogrithm results [false, default]
+            return full request response [true]
+
+        Returns
+        -------
+        Actually used file path: str
+        """
+
+        if file_name is None:
+            file_name = f"{self.request_id()}.json"
+        print(f"Saving {self.feature()} API results to", file_name)
+
+        if raw:
+            s_dict = self.raw_results
+        else:
+            s_dict = self.results()
+
+        with open(file_name, "w") as json_file:
+            json.dump(s_dict, json_file, indent=4)
+        return file_name
 
 
 class RMS(Analysis):
@@ -252,9 +342,16 @@ class ModeId(Analysis):
         """
 
         Analysis.__init__(self, results, t_zone, t_unit)
-        self.dframe = pd.DataFrame.from_dict(self.results())
-        self.time_column = "timestamps"
-        self._add_datetime()
+        if "success" not in self.status():
+            print(f"Analysis {self.request_id} failed on server side")
+        else:
+            dict_for_df = self.results().copy()
+            dict_for_emerging = dict_for_df.pop("mode_info")
+            self.emerging_df = pd.DataFrame.from_dict(dict_for_emerging)
+            self.dframe = pd.DataFrame.from_dict(dict_for_df)
+            self.time_column = "timestamps"
+            self._add_datetime()
+            self.emerging_df = self._add_datetime_df(self.emerging_df, "emerging_time")
 
     def summary(self):
         """
@@ -286,7 +383,13 @@ class ModeId(Analysis):
         print()
         print("Lables & uncertain labels")
         print(tabulate(tbl2, headers="keys", tablefmt="psql"))
-        return [tbl, tbl2]
+
+        # Emerging
+        print()
+        print("Emerging Modes")
+        print(tabulate(self.emerging_df, headers="keys", tablefmt="psql"))
+
+        return [tbl, tbl2, self.emerging_df]
 
     def plot(self):
         """Generate a basic plot on ModeId."""
@@ -315,20 +418,42 @@ class BlackSheep(Analysis):
         Analysis.__init__(self, results, t_zone, t_unit)
 
         # Dataframe conversion
-        self.dframe = pd.DataFrame(
-            {"source": results["inputs"]["UUID"], "atypical": False}
-        )
-        self.dframe = self.dframe.set_index("source")
-        self.dframe.loc[self.results()["atypical_assets"]] = True
-        self.dframe = self.dframe.reset_index()
-        self.time_column = None
+        if "success" not in self.status():
+            print("Analysis was not successful")
+        else:
+            self.dframe = self._bsd_df()
+            # List of which assests are what
+            self.typicality = pd.DataFrame(
+                {"source": results["inputs"]["UUID"], "atypical": False}
+            )
+            self.typicality = self.typicality.set_index("source")
+            aty = [a["uuid"] for a in self.results()["atypical_assets"]]
+            self.typicality.loc[aty] = True
+            self.typicality = self.typicality.reset_index()
+            self.time_column = None
+
+    def _bsd_df(self):
+        # Wide
+        def aty_df(ass):
+            uuid = ass.pop("uuid")
+            bsd_df = pd.DataFrame.from_dict(ass)
+            bsd_df.columns = ["timestamps", uuid + "_label", uuid + "_atypical"]
+            return bsd_df
+
+        wide_df = None
+        for ass in self.results()["atypical_assets"]:
+            if wide_df is None:
+                wide_df = aty_df(ass.copy())
+            else:
+                wide_df = pd.merge(aty_df(ass.copy()), wide_df)
+        return wide_df
 
     def summary(self):
         """Print summary on BlackSheep
 
         Returns
         -------
-        Summary table: dataFrame
+        Summary tables: atypical assets and stats
         """
 
         # Header
@@ -336,9 +461,18 @@ class BlackSheep(Analysis):
 
         # Table
         print()
-        tbl = self.dframe.groupby(["atypical"]).agg(np.size)
+        print(
+            tabulate(
+                self.typicality.reset_index(drop=True, inplace=False),
+                headers=["source", "atypical"],
+                tablefmt="psql",
+            )
+        )
+
+        print()
+        tbl = self.typicality.groupby(["atypical"]).agg(np.size)
         print(tabulate(tbl, headers=["atypical", "N"], tablefmt="psql"))
-        return tbl
+        return [self.typicality, tbl]
 
 
 # Parser/Factory function

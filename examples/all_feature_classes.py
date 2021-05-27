@@ -8,6 +8,7 @@ ENDPOINT = "http://127.0.0.1:8000"
 TOKEN = os.environ["VIB_TOKEN"]
 ses = MVG(ENDPOINT, TOKEN)
 
+# These normally will need to changed
 req_ids = [
     "34ab72e0f2419fd716941a2e74566c7f",
     "2f6dc5ae055f9e82f6f5311c23250f07",
