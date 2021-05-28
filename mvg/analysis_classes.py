@@ -19,6 +19,8 @@ import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib import cm
+import matplotlib.patches as mpatches
 from tabulate import tabulate
 from mvg import plotting
 
@@ -473,6 +475,68 @@ class BlackSheep(Analysis):
         tbl = self.typicality.groupby(["atypical"]).agg(np.size)
         print(tabulate(tbl, headers=["atypical", "N"], tablefmt="psql"))
         return [self.typicality, tbl]
+
+    def plot(self):
+        """Generate a (not so) basic plot for BlackSheep
+        Will show per atypical asset changes to and from
+        atypical modes"""
+
+        # Check if run was successful
+        self.check_status()
+
+        # For Matrix & xTicks
+        pdf = self.to_df()
+        pdfd = pdf.loc[:, ~pdf.columns.str.endswith("label")]
+
+        # x axis ticks timestamps of changes in atypicality
+
+        # Find changes
+        pdfd["hash"] = 0
+        for row in pdfd.itertuples():
+            pdfd.at[row.Index, "hash"] = hash(row[2:])
+        ticktimes = pdfd.loc[pdfd["hash"].shift(1) != pdfd["hash"]]
+
+        # Convert EPOCH if t_zone given
+        if self.t_zone is not None:
+            ticktimes = self._add_datetime_df(ticktimes, "timestamps")
+            ticktimes["datetime"] = pd.to_datetime(
+                ticktimes["datetime"].dt.strftime("%Y %m %I %M")
+            )
+
+        # For matrix
+        pdfd = pdfd.drop(["timestamps", "hash"], axis=1)
+
+        # Setup plot
+        fig, bsd_plt = plt.subplots(1, 1)
+
+        # Title
+        bsd_plt.set_title("Atypical Assets and Modes [" + self.request_id() + "]")
+
+        # y-bsd_pltis Asset labels
+        aty = self.results()["atypical_assets"]
+        assets = [a["uuid"] for a in aty]
+        bsd_plt.set_yticks([0, 1])
+        bsd_plt.set_yticklabels(assets)
+
+        # axis Timestamps
+        bsd_plt.set_xticks(ticktimes.index)
+        bsd_plt.set_xticklabels(ticktimes["datetime"])
+        fig.autofmt_xdate(rotation=45)
+
+        # Color map
+        mcm = cm.get_cmap("viridis", 2)
+
+        # Colors for plot and legend
+        cmap = {0: mcm(0), 1: mcm(1)}
+        labels = {0: "normal", 1: "atypical"}
+        patches = [mpatches.Patch(color=cmap[i], label=labels[i]) for i in cmap]
+        plt.legend(handles=patches, loc=4, borderaxespad=0.0)
+
+        # The plot
+        bsd_plt.imshow(np.asmatrix(pdfd).transpose(), aspect="auto", cmap=mcm)
+
+        # Display plot
+        plt.show()
 
 
 # Parser/Factory function

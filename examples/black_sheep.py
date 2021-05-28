@@ -3,7 +3,7 @@ from mvg import MVG
 from mvg.analysis_classes import parse_results
 
 
-RERUN = True
+RERUN = False
 
 ENDPOINT = "http://127.0.0.1:8000"
 TOKEN = os.environ["VIB_TOKEN"]
@@ -40,7 +40,7 @@ else:
 res_dict = ses.get_analysis_results(REQ_ID)
 
 # Parse results
-res = parse_results(res_dict)
+res = parse_results(res_dict, "Europe/Stockholm", "s")
 res.summary()
 res.plot()
 print(res.to_df().head())

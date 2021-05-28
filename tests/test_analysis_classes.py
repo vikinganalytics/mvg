@@ -78,7 +78,7 @@ def test_ModeId():
     feat = parse_results(api_results, t_zone=None, t_unit=None)
     # Check dataframe conversion
     df_df = pd.read_csv("./tests/test_data/ModeId_df.csv")
-    pd.testing.assert_frame_equal(feat.to_df(),df_df, check_less_precise=True)
+    pd.testing.assert_frame_equal(feat.to_df(), df_df, check_less_precise=True)
 
     # Summary
     res = feat.summary()
@@ -102,8 +102,7 @@ def test_failed_run():
     # read dict
     with open("./tests/test_data/BlackSheep_failed.json") as json_file:
         api_results = json.load(json_file)
-    breakpoint()
-            
+
     # try to get non implemented object
     feat = parse_results(api_results, t_zone=None, t_unit=None)
     with pytest.raises(ValueError):
