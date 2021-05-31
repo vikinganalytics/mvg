@@ -424,6 +424,7 @@ class BlackSheep(Analysis):
             print("Analysis was not successful")
         else:
             self.dframe = self._bsd_df()
+
             # List of which assests are what
             self.typicality = pd.DataFrame(
                 {"source": results["inputs"]["UUID"], "atypical": False}
@@ -447,7 +448,7 @@ class BlackSheep(Analysis):
             if wide_df is None:
                 wide_df = aty_df(ass.copy())
             else:
-                wide_df = pd.merge(aty_df(ass.copy()), wide_df)
+                wide_df = pd.merge(aty_df(ass.copy()), wide_df, how="outer")
         return wide_df
 
     def summary(self):
@@ -479,7 +480,7 @@ class BlackSheep(Analysis):
     def plot(self):
         """Generate a (not so) basic plot for BlackSheep
         Will show per atypical asset changes to and from
-        atypical modes"""
+        atypical modes (experimental)"""
 
         # Check if run was successful
         self.check_status()
@@ -503,24 +504,27 @@ class BlackSheep(Analysis):
                 ticktimes["datetime"].dt.strftime("%Y %m %I %M")
             )
 
-        # For matrix
-        pdfd = pdfd.drop(["timestamps", "hash"], axis=1)
-
         # Setup plot
         fig, bsd_plt = plt.subplots(1, 1)
 
         # Title
-        bsd_plt.set_title("Atypical Assets and Modes [" + self.request_id() + "]")
+        bsd_plt.set_title(
+            "Atypical Assets and Modes [" + self.request_id() + "] (Experimental plot)"
+        )
 
         # y-bsd_pltis Asset labels
         aty = self.results()["atypical_assets"]
         assets = [a["uuid"] for a in aty]
-        bsd_plt.set_yticks([0, 1])
+        # bsd_plt.set_yticks([0, 1])
+        bsd_plt.set_yticks(np.arange(0, len(assets) + 1, 1))
         bsd_plt.set_yticklabels(assets)
 
         # axis Timestamps
         bsd_plt.set_xticks(ticktimes.index)
-        bsd_plt.set_xticklabels(ticktimes["datetime"])
+        if self.time_column is not None:
+            bsd_plt.set_xticklabels(ticktimes["datetime"])
+        else:
+            bsd_plt.set_xticklabels(ticktimes["timestamps"])
         fig.autofmt_xdate(rotation=45)
 
         # Color map
@@ -532,8 +536,15 @@ class BlackSheep(Analysis):
         patches = [mpatches.Patch(color=cmap[i], label=labels[i]) for i in cmap]
         plt.legend(handles=patches, loc=4, borderaxespad=0.0)
 
-        # The plot
-        bsd_plt.imshow(np.asmatrix(pdfd).transpose(), aspect="auto", cmap=mcm)
+        # The plot (need to remove na)
+
+        # For matrix
+        pdfd = pdfd.drop(["timestamps", "hash"], axis=1)
+        pdfd = pdfd.fillna(method="ffill")
+        pdfd = pdfd.dropna()
+        plotmx = np.asmatrix(pdfd).transpose()
+        plotmx = plotmx.astype(int)
+        bsd_plt.imshow(plotmx, aspect="auto", cmap=mcm)
 
         # Display plot
         plt.show()

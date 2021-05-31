@@ -2,7 +2,7 @@ import os
 from mvg import MVG
 from mvg.analysis_classes import parse_results
 
-RERUN = True
+RERUN = False
 
 # Instantiate a session object with mvg library
 ENDPOINT = "http://127.0.0.1:8000"
@@ -16,14 +16,13 @@ if RERUN:
     print(f"Waiting for {REQ_ID}")
     ses.wait_for_analyses([REQ_ID])
 else:
-    REQ_ID = "c82db3fa8c31d8424ba32fd2e8c597a6"
+    REQ_ID = "3e2b074eef3526a1e53669958ff91f25"
 
 res_dict = ses.get_analysis_results(REQ_ID)
-print(res_dict)
 
 # Parse results
 res = parse_results(res_dict, "Europe/Stockholm", "s")
-res.to_df("t.csv")
+breakpoint()
 res.summary()
 res.plot()
 res.to_df().head()
