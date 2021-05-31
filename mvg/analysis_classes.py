@@ -510,9 +510,8 @@ class BlackSheep(Analysis):
         )
 
         # y-bsd_pltis Asset labels
-        aty = self.results()["atypical_assets"]
-        assets = [a["uuid"] for a in aty]
-        # bsd_plt.set_yticks([0, 1])
+        coli = pdfd.columns.to_list()
+        assets = [c.replace("_atypical", "") for c in coli if c.endswith("atypical")]
         bsd_plt.set_yticks(np.arange(0, len(assets) + 1, 1))
         bsd_plt.set_yticklabels(assets)
 
