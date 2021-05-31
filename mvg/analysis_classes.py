@@ -449,7 +449,7 @@ class BlackSheep(Analysis):
                 wide_df = aty_df(ass.copy())
             else:
                 wide_df = pd.merge(aty_df(ass.copy()), wide_df, how="outer")
-        return wide_df
+        return wide_df.sort_values(by="timestamps")
 
     def summary(self):
         """Print summary on BlackSheep
@@ -500,9 +500,6 @@ class BlackSheep(Analysis):
         # Convert EPOCH if t_zone given
         if self.t_zone is not None:
             ticktimes = self._add_datetime_df(ticktimes, "timestamps")
-            ticktimes["datetime"] = pd.to_datetime(
-                ticktimes["datetime"].dt.strftime("%Y %m %I %M")
-            )
 
         # Setup plot
         fig, bsd_plt = plt.subplots(1, 1)
