@@ -110,7 +110,7 @@ class Analysis:
                 datetime=(dframe["datetime"].dt.tz_convert(self.t_zone))
             )
             # Mark datetime as availble
-            # self.time_column = "datetime"
+            self.time_column = "datetime"
 
         return dframe
 
@@ -485,13 +485,13 @@ class BlackSheep(Analysis):
         # Check if run was successful
         self.check_status()
 
-        # For Matrix & xTicks
+        # For Matrix & xTicks, remove label columns
+        # store in pdfd df
         pdf = self.to_df()
         pdfd = pdf.loc[:, ~pdf.columns.str.endswith("label")]
 
         # x axis ticks timestamps of changes in atypicality
-
-        # Find changes
+        # Find changes in atypticality and store rows in
         pdfd["hash"] = 0
         for row in pdfd.itertuples():
             pdfd.at[row.Index, "hash"] = hash(row[2:])
@@ -501,24 +501,30 @@ class BlackSheep(Analysis):
         if self.t_zone is not None:
             ticktimes = self._add_datetime_df(ticktimes, "timestamps")
 
+        # select reasonable number of ticks
+        # this could be improved to yield equidistant ticks
+        if len(ticktimes) > 10:
+            ticktimes = ticktimes.iloc[:: int(len(ticktimes) / 10), :]
+
         # Setup plot
         fig, bsd_plt = plt.subplots(1, 1)
 
         # Title
-        bsd_plt.set_title(
-            "Atypical Assets and Modes [" + self.request_id() + "] (Experimental plot)"
-        )
+        bsd_plt.set_title("Atypical Assets and Modes [" + self.request_id() + "]")
 
-        # y-bsd_pltis Asset labels
+        # y-axis Asset labels
+        # extract names from df
         coli = pdfd.columns.to_list()
         assets = [c.replace("_atypical", "") for c in coli if c.endswith("atypical")]
         bsd_plt.set_yticks(np.arange(0, len(assets) + 1, 1))
         bsd_plt.set_yticklabels(assets)
 
-        # axis Timestamps
+        # x axis ticks
         bsd_plt.set_xticks(ticktimes.index)
         if self.time_column is not None:
-            bsd_plt.set_xticklabels(ticktimes["datetime"])
+            bsd_plt.set_xticklabels(
+                ticktimes["datetime"].apply(lambda x: x.strftime("%y%m%d-%H%M%S"))
+            )
         else:
             bsd_plt.set_xticklabels(ticktimes["timestamps"])
         fig.autofmt_xdate(rotation=45)
@@ -533,7 +539,6 @@ class BlackSheep(Analysis):
         plt.legend(handles=patches, loc=4, borderaxespad=0.0)
 
         # The plot (need to remove na)
-
         # For matrix
         pdfd = pdfd.drop(["timestamps", "hash"], axis=1)
         pdfd = pdfd.fillna(method="ffill")
