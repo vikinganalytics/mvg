@@ -395,8 +395,8 @@ class MVGAPI:
         self._request("post", f"/sources/{sid}/measurements", json=meas_struct)
 
     # in example
-    def read_measurements(self, sid: str):
-        """Retrieves all measurements (all timestamps) for a source.
+    def list_measurements(self, sid: str):
+        """Retrieves all measurements (all timestamps and metadata) for a source.
 
         Parameters
         ----------
