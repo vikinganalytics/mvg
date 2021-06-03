@@ -396,7 +396,7 @@ class MVGAPI:
 
     # in example
     def read_measurements(self, sid: str):
-        """Retrieves all measurements for all timestamps for a source.
+        """Retrieves all measurements (all timestamps) for a source.
 
         Parameters
         ----------
@@ -412,16 +412,9 @@ class MVGAPI:
         logger.info("retrieving all measurements from source id=%s", sid)
 
         response = self._request("get", f"/sources/{sid}/measurements")
+        all_measurements = response.json()
 
-        # Step 2: read actual measurement data for all timestamps
-        timestamps = response.json()
-        logger.info("%s measurements in database", len(timestamps))
-
-        all_measurements = []
-        for m_time in timestamps:
-            all_measurements.append(
-                self.read_single_measurement(sid, m_time["timestamp"])
-            )
+        logger.info("%s measurements in database", len(all_measurements))
 
         return all_measurements
 
