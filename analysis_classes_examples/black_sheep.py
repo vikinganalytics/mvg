@@ -40,7 +40,7 @@ if RERUN:
     ses.wait_for_analyses([REQ_ID])
     bsd_res = ses.get_analysis_results(REQ_ID)
 else:
-    REQ_ID = "0e8b182e2c88044960f56c866e35ac32" # replace with valid ID
+    REQ_ID = "0e8b182e2c88044960f56c866e35ac32"  # replace with valid ID
 
 res_dict = ses.get_analysis_results(REQ_ID)
 
