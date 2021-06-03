@@ -25,7 +25,7 @@ if RERUN:
     ses.wait_for_analyses([RMS["request_id"]])
     rms_res = ses.get_analysis_results(RMS["request_id"])
 else:
-    REQ_ID = "2f6dc5ae055f9e82f6f5311c23250f07" # replace with valid ID 
+    REQ_ID = "2f6dc5ae055f9e82f6f5311c23250f07"  # replace with valid ID
     rms_res = ses.get_analysis_results(REQ_ID)
 print(rms_res)
 

@@ -25,7 +25,7 @@ if RERUN:
     print(f"Waiting for {REQ_ID}")
     ses.wait_for_analyses([REQ_ID])
 else:
-    REQ_ID = "3e2b074eef3526a1e53669958ff91f25" # replace with valid 
+    REQ_ID = "3e2b074eef3526a1e53669958ff91f25"  # replace with valid
 
 res_dict = ses.get_analysis_results(REQ_ID)
 
