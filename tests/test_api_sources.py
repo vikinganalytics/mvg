@@ -164,7 +164,7 @@ def test_measurements_crud(session):
         session.delete_measurement(SOURCE_ID, ts_m)
 
     # check if empty
-    m_left = session.read_measurements(SOURCE_ID)
+    m_left = session.list_measurements(SOURCE_ID)
     assert len(m_left) == 0
 
 
