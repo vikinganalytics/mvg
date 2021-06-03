@@ -171,6 +171,12 @@ class Analysis:
             err_str = f"Analysis {self.request_id} failed on server side"
             print(err_str)
             raise ValueError(err_str)
+        elif "queued" in self.status():
+            err_str = f"Analysis {self.request_id} not ready yet (queued)"
+            print(err_str)
+            raise ValueError(err_str)
+        else:
+            pass
         return self.status()
 
     # Prints header for summary functions
@@ -323,7 +329,7 @@ class RMS(Analysis):
 
         self.check_status()
         self.dframe.plot(x=self.time_column, y=["rms", "dc", "utilization"])
-        plt.title(f"RMS Summary plot for request {self.request_id}")
+        plt.title(f"RMS Summary plot for request {self.request_id()}")
         plt.show()
 
 
