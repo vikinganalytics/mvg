@@ -89,6 +89,17 @@ clicking "View Page Source" link located on the top left of the
 examples. You will need to change the extension to .ipynb before
 running them.
 
+### Analysis Classes (beta)
+
+Analysis classes provide a simple and powerful way to parse and
+inspect the results for analysis calls for our features.
+Apart from converting the results to dataframes, 
+they can be used in an interactive
+shell to inspect the results from analysis calls.
+
+In the directory anlysis_class_examples there are scripts for 
+showing how to use the analysis classes. 
+
 ### Maintainer
 
 Maintainer of the mvg library is Viking Analytics AB. <https://www.vikinganalytics.se>

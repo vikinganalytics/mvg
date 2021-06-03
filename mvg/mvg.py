@@ -695,7 +695,7 @@ class MVGAPI:
         logger.info("get analysis results with request_id=%s", request_id)
 
         response = self._request("get", f"/analyses/requests/{request_id}/results")
-
+     
         return response.json()
 
 
