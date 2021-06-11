@@ -492,7 +492,7 @@ class BlackSheep(Analysis):
 
         # x axis ticks timestamps of changes in atypicality
         # Find changes in atypticality and store rows in
-        pdfd["hash"] = 0
+        pdfd.insert(3,"hash",0)
         for row in pdfd.itertuples():
             pdfd.at[row.Index, "hash"] = hash(row[2:])
         ticktimes = pdfd.loc[pdfd["hash"].shift(1) != pdfd["hash"]]
