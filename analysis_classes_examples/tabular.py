@@ -6,6 +6,7 @@ from requests import HTTPError
 from mvg import MVG
 from mvg import analysis_classes
 from mvg.analysis_classes import parse_results
+
 ## Preprartions
 import pandas as pd
 
@@ -20,15 +21,15 @@ ENDPOINT = os.environ["TEST_URL"]
 TOKEN = os.environ["TEST_TOKEN"]
 ses = MVG(ENDPOINT, TOKEN)
 
-try: 
+try:
     # create source for KPI
     SOURCE_ID = "tabular_source"
     data = pd.read_csv("data.csv")
     cols = data.columns.to_list()
-    ses.create_tabular_source(SOURCE_ID,{},cols)
+    ses.create_tabular_source(SOURCE_ID, {}, cols)
     jdata = data.to_dict("list")
-    ses.create_tabular_measurement(SOURCE_ID,data.to_dict("list"))
- 
+    ses.create_tabular_measurement(SOURCE_ID, data.to_dict("list"))
+
     if RERUN:
         ANA = ses.request_analysis(SOURCE_ID, "ModeId")
         print(f"Waiting for {ANA}")
