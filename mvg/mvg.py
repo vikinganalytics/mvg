@@ -50,7 +50,7 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.6.0")
+        self.mvg_version = self.parse_version("v0.5.0")
         self.tested_api_version = self.parse_version("v0.1.6")
 
         # Errors to ignore
@@ -268,6 +268,32 @@ class MVGAPI:
 
         self._request("post", "/sources/", json=source_info)
 
+    def create_tabular_source(self, sid: str, meta: dict, columns: list):
+        """
+        Creates a source on the server side.
+
+        Parameters
+        ----------
+        sid : str
+            source Id
+
+        meta : dict
+            meta information
+
+        meta : columns
+            columns of KPI data
+        """
+
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("creating kpi source with source id=%s", sid)
+        logger.info("metadata: %s", meta)
+        logger.info("columns: %s", columns)
+
+        # Package info to be submitted to db
+
+        source_info = {"source_id": sid, "meta": meta, "columns": columns}
+        self._request("post", "/sources/tabular", json=source_info)
+
     def list_sources(self):
         """Lists all sources (sensors) on the server side
 
@@ -393,6 +419,39 @@ class MVGAPI:
         }
 
         self._request("post", f"/sources/{sid}/measurements", json=meas_struct)
+    def create_tabular_measurement(
+            self, sid: str, data:  dict):
+        """Stores a measurement on the server side.
+
+        Although it is up to the client side to handle the
+        scaling of data it is recommended that the values
+        represent the acceleration in g.
+        The timestamp shall represent the time when the measurement was
+        recorded.
+
+        Parameters
+        ----------
+        sid: str
+            source Id.
+
+        duration: float
+            duration of the measurement in seconds.
+
+        timestamp: int
+            in milliseconds since EPOCH.
+
+        data: list
+            list of float values.
+
+        meta: dict
+            Meta information to attach to data.
+
+        """
+
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("creating tabular measurement from source id=%s", sid)
+        self._request("post", f"/sources/{sid}/measurements/tabular",
+                      json={"data":data})
 
     # in example
     def list_measurements(self, sid: str):
