@@ -51,10 +51,10 @@ class MVGAPI:
         self.token = token
 
         self.mvg_version = self.parse_version("v0.6.1")
-        # failed on 0.1.11
         # worked on 0.1.6
         # worked on 0.1.10
-        self.tested_api_version = self.parse_version("v0.1.11rc1")
+        # failed on 0.1.11
+        self.tested_api_version = self.parse_version("v0.1.10")
 
         # Errors to ignore
         self.do_not_raise = []
