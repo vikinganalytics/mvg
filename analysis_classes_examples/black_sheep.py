@@ -10,8 +10,8 @@ from mvg.analysis_classes import parse_results
 RERUN = True
 
 # replace token and server with your url/token
-ENDPOINT = os.environ["TEST_URL"]
-TOKEN = os.environ["TEST_TOKEN"]
+ENDPOINT = os.environ["SERVER_URL"]
+TOKEN = os.environ["SERVER_TOKEN"]
 
 ses = MVG(ENDPOINT, TOKEN)
 SOURCE_ID_ALL = ["u0001", "u0002", "u0003", "u0004", "u0005", "u0006"]

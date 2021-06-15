@@ -35,5 +35,6 @@ mca/test_output
 # doc/*html
 .ipynb_checkpoints/
 
-# Data directory
+# Data 
 va-data-charlie/
+analysis_classes_examples/*.pkl
