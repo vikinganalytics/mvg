@@ -9,7 +9,6 @@ For more information see README.md.
 """
 
 import re
-import json
 import time
 import logging
 from typing import Dict, List
@@ -51,7 +50,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.5.0")
+        self.mvg_version = self.parse_version("v0.7.0")
+        # TODO: Update this with the tabular release version
         self.tested_api_version = self.parse_version("v0.1.6")
 
         # Errors to ignore
