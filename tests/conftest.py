@@ -59,7 +59,7 @@ def docker_compose_file(pytestconfig):
 if args.host == "":
 
     @pytest.fixture(scope="session")
-    def vibium(docker_ip, docker_services, target_url):
+    def vibium(docker_ip, docker_services):
         """Ensure that HTTP service is up and responsive."""
         # `port_for` takes a container port and returns the corresponding host port
         port = docker_services.port_for("vibium", 8000)
