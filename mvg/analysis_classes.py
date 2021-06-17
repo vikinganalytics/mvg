@@ -424,7 +424,6 @@ class BlackSheep(Analysis):
             print("Analysis was not successful")
         else:
             self.dframe = self._bsd_df()
-
             # List of which assests are what
             self.typicality = pd.DataFrame(
                 {"source": results["inputs"]["UUID"], "atypical": False}
@@ -449,6 +448,9 @@ class BlackSheep(Analysis):
                 wide_df = aty_df(ass.copy())
             else:
                 wide_df = pd.merge(aty_df(ass.copy()), wide_df, how="outer")
+
+        # Add timestamps
+        wide_df = self._add_datetime_df(wide_df, "timestamps")
         return wide_df.sort_values(by="timestamps")
 
     def summary(self):
@@ -485,14 +487,15 @@ class BlackSheep(Analysis):
         # Check if run was successful
         self.check_status()
 
-        # For Matrix & xTicks, remove label columns
+        # For Matrix & xTicks, remove label columns and potentiall datetime
         # store in pdfd df
         pdf = self.to_df()
         pdfd = pdf.loc[:, ~pdf.columns.str.endswith("label")]
+        pdfd = pdfd.loc[:, ~pdfd.columns.str.endswith("datetime")]
 
         # x axis ticks timestamps of changes in atypicality
         # Find changes in atypticality and store rows in
-        pdfd["hash"] = 0
+        pdfd.insert(3, "hash", 0)
         for row in pdfd.itertuples():
             pdfd.at[row.Index, "hash"] = hash(row[2:])
         ticktimes = pdfd.loc[pdfd["hash"].shift(1) != pdfd["hash"]]
