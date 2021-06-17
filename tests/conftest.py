@@ -17,13 +17,16 @@ import sys
 # before being passed to pytest
 # see https://izziswift.com/how-to-pass-arguments-in-pytest-by-command-line/
 
-# needed otherwhise --host will fail pytest
+# needed, otherwise --host will fail pytest
 def pytest_addoption(parser):
-    parser.addoption("--host")   
+    parser.addoption("--host")
+
 
 # ugly parser code
 parser = argparse.ArgumentParser(description="run test on --host")
-parser.add_argument('--host', help='host to run tests on (default: %(default)s)', default="")
+parser.add_argument(
+    "--host", help="host to run tests on (default: %(default)s)", default=""
+)
 args, notknownargs = parser.parse_known_args()
 sys.argv[1:] = notknownargs
 
@@ -31,6 +34,7 @@ sys.argv[1:] = notknownargs
 # Retrieve API version to test against
 version_session = MVG("https://api.beta.multiviz.com", "NO TOKEN")
 VIBIUM_VERSION = "v" + str(version_session.tested_api_version)
+
 
 def is_responsive(url):
     try:
@@ -46,12 +50,14 @@ def docker_compose_file(pytestconfig):
     os.environ["VIBIUM_VERSION"] = VIBIUM_VERSION
     return pytestconfig.rootdir / "tests" / "docker-compose.yml"
 
+
 # ugly vibium fixture configuration
 # Here we need to switch between vibium fixture
 # for docker-run (--host not set)
 # or for run towards a running server
 # e.g. --host http://127.0.0.1:8000
 if args.host == "":
+
     @pytest.fixture(scope="session")
     def vibium(docker_ip, docker_services, target_url):
         """Ensure that HTTP service is up and responsive."""
@@ -63,7 +69,9 @@ if args.host == "":
         )
         return url
 
+
 else:
+
     @pytest.fixture(scope="session")
     # ugly function fetching golbal argument inside context
     def vibium():
