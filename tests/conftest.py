@@ -10,19 +10,21 @@ import sys
 
 # This version of conftest.py adds some really ugly code to
 # run the tests as integration tests by running like
-# >pytest -s  tests --host http://127.0.0.1:8000
+# > pytest -s  tests --host http://127.0.0.1:8000
 # As it is impossible to call a fixture outside a test
 # and I did not find a way to disable docker compose
 # the command line argument --host is consumed by argparse
 # before being passed to pytest
 # see https://izziswift.com/how-to-pass-arguments-in-pytest-by-command-line/
 
+
+# Stuff for --host
 # needed, otherwise --host will fail pytest
 def pytest_addoption(parser):
     parser.addoption("--host")
 
 
-# ugly parser code
+# consume --host via argparse
 parser = argparse.ArgumentParser(description="run test on --host")
 parser.add_argument(
     "--host", help="host to run tests on (default: %(default)s)", default=""

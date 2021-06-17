@@ -23,14 +23,6 @@ REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
 SOURCE_ID = uuid.uuid1().hex  # generate a unique source per testrun
 
 
-# To override vibium with a locally running version
-# @pytest.fixture(scope="session")
-# def vibium():
-#     url = "https://api.beta.multiviz.com"
-#     # url = "http://127.0.0.1:8000"
-#     return url
-
-
 @pytest.fixture(scope="session")
 def session(vibium):
 
