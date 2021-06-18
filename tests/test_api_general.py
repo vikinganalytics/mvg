@@ -12,16 +12,6 @@ from mvg import MVG
 
 VALID_TOKEN = os.environ["TEST_TOKEN"]
 
-
-# To override vibium with a locally running version
-# @pytest.fixture(scope="session")
-# def vibium():
-#     # url = "http://127.0.0.1:8000"
-#     url = "https://api.beta.multiviz.com"
-#     print(f"Overriding vibium function with url {url}")
-#     return url
-
-
 # API        /
 def test_say_hello(vibium):
     session = MVG(vibium, "NO TOKEN")

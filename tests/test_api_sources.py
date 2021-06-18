@@ -27,6 +27,7 @@ SOURCE_ID_TABULAR = uuid.uuid1().hex
 tabular_df = pd.read_csv(REF_DB_PATH.parent / "tabular_data.csv")
 tabular_dict = tabular_df.to_dict("list")
 
+<<<<<<< HEAD
 # # To override vibium with a locally running version
 # @pytest.fixture(scope="session")
 # def vibium():
@@ -35,6 +36,8 @@ tabular_dict = tabular_df.to_dict("list")
 #     return url
 
 
+=======
+>>>>>>> master
 @pytest.fixture(scope="session")
 def session(vibium):
 
