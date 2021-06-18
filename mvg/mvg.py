@@ -277,13 +277,14 @@ class MVGAPI:
         Parameters
         ----------
         sid : str
-            source Id
+            Source ID
 
         meta : dict
-            meta information
+            Meta information of source
 
         columns : List[str]
-            Data variables
+            Data variables. Currently supports numerical data.
+            Cannot be updated after creating source.
         """
 
         logger.info("endpoint %s", self.endpoint)
@@ -451,9 +452,11 @@ class MVGAPI:
 
         logger.info("endpoint %s", self.endpoint)
         logger.info("creating tabular measurement from source id=%s", sid)
+
         body = {"data": data}
         if meta is not None:
             body["meta"] = meta
+
         self._request(
             "post",
             f"/sources/{sid}/measurements/tabular",

@@ -27,17 +27,7 @@ SOURCE_ID_TABULAR = uuid.uuid1().hex
 tabular_df = pd.read_csv(REF_DB_PATH.parent / "tabular_data.csv")
 tabular_dict = tabular_df.to_dict("list")
 
-<<<<<<< HEAD
-# # To override vibium with a locally running version
-# @pytest.fixture(scope="session")
-# def vibium():
-#     # url = "https://api.beta.multiviz.com"
-#     url = "http://127.0.0.1:8000"
-#     return url
 
-
-=======
->>>>>>> master
 @pytest.fixture(scope="session")
 def session(vibium):
 
@@ -284,18 +274,18 @@ def test_tabular_sources(session):
 
 def test_tabular_measurements_float_timestamps(session):
     with pytest.raises(HTTPError) as exc:
-        session.create_tabular_measurement(SOURCE_ID_TABULAR, tabular_dict)
+        tabular_dict_float = tabular_dict.copy()
+        tabular_dict_float["timestamp"] = [ts + 0.1 for ts in tabular_dict["timestamp"]]
+        session.create_tabular_measurement(SOURCE_ID_TABULAR, tabular_dict_float)
     assert exc.value.response.status_code == 422
 
 
 def test_tabular_measurements(session):
     columns = tabular_df.columns.tolist()
     columns.remove("timestamp")
-    tabular_dict_int_ts = tabular_dict.copy()
-    tabular_dict_int_ts["timestamp"] = [int(ts) for ts in tabular_dict["timestamp"]]
-    session.create_tabular_measurement(SOURCE_ID_TABULAR, tabular_dict_int_ts)
+    session.create_tabular_measurement(SOURCE_ID_TABULAR, tabular_dict)
 
-    ts0 = tabular_dict_int_ts["timestamp"][0]
+    ts0 = tabular_dict["timestamp"][0]
     meas = session.read_single_measurement(SOURCE_ID_TABULAR, ts0)
     assert meas["meta"] == {}
     assert all(np.array(meas["data"]) == tabular_df.drop("timestamp", axis=1).iloc[0])

@@ -12,6 +12,7 @@ from mvg import MVG
 
 VALID_TOKEN = os.environ["TEST_TOKEN"]
 
+
 # API        /
 def test_say_hello(vibium):
     session = MVG(vibium, "NO TOKEN")
