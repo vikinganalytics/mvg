@@ -145,6 +145,8 @@ def modes_over_time(
     timeticks_interval=None,
     timeunit="ms",
     axes=None,
+    only_start_end_timeticks=False,
+    timetick_angle=85,
 ):
     """Creates a rectangular timeline of modes.
 
@@ -177,6 +179,12 @@ def modes_over_time(
     axes: object of class matplotlib.axes, optional
         the axes to be used by boxplot.
 
+    only_start_end_timeticks: bool, optional
+        If True, only print the time stamps for the first and last element of data.
+
+    timetick_angle: float, optional
+        the angle of time tick texts.
+
     Returns
     ----------
     image: object of class matplotlib.axes
@@ -201,15 +209,31 @@ def modes_over_time(
     # Create rectangular patch for timestamp
     datalist = data["labels"].tolist()
     uncertlist = data["uncertain"].tolist()
-    for i, val in enumerate(datalist):
+
+    ts_range = data["timestamps"].iloc[-1] - data["timestamps"].iloc[0]
+
+    # Collect the indices of data where modes change plus start and end points
+    interval_list = (
+        [0]
+        + [i for i in range(1, len(datalist)) if datalist[i] != datalist[i - 1]]
+        + [len(datalist) - 1]
+    )
+    for idx in range(len(interval_list) - 1):
         # gray border around uncertains
-        if uncertlist[i]:
-            ecol = -2
-        else:
-            ecol = val
+        i = interval_list[idx]
+        val = datalist[i]
+        ecol = -2 if uncertlist[i] else val
+        i_next = interval_list[idx + 1]
+        scaling_factor = len(datalist) / ts_range
+        block_len = (
+            data["timestamps"].iloc[i_next] - data["timestamps"].iloc[i]
+        ) * scaling_factor
+        start_pos = (
+            data["timestamps"].iloc[i] - data["timestamps"].iloc[0]
+        ) * scaling_factor
         rect = patches.Rectangle(
-            (i * width, 0),
-            width,
+            (width * start_pos, 0),
+            width * block_len,
             height,
             edgecolor=colors[ecol],
             facecolor=colors[val],
@@ -224,6 +248,8 @@ def modes_over_time(
         tick_index.extend(ticks_x)
     else:
         tick_index = list(range(0, len(datalist), timeticks_interval))
+    if only_start_end_timeticks:
+        tick_index = [0, len(datalist) - 1]
     tick_positions = [i * width for i in tick_index]
 
     # Modify figure properties to leave wide rectangle only
@@ -242,7 +268,7 @@ def modes_over_time(
     df_changes = data.iloc[tick_index]
     tick_x_labels = df_changes["Date"]
     tick_x_labels = tick_x_labels.apply(lambda x: x.date())
-    axes.set_xticklabels(tick_x_labels, rotation=85)
+    axes.set_xticklabels(tick_x_labels, rotation=timetick_angle)
     legend_labels = []
     for i in list(data["labels"].unique()):
         if i == -1:
