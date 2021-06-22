@@ -9,9 +9,9 @@ For more information see README.md.
 """
 
 import re
-import json
 import time
 import logging
+from typing import Dict, List
 import requests
 from requests.exceptions import HTTPError, RequestException
 import semver
@@ -54,7 +54,7 @@ class MVGAPI:
         # worked on 0.1.6
         # worked on 0.1.10
         # failed on 0.1.11
-        self.tested_api_version = self.parse_version("v0.1.10")
+        self.tested_api_version = self.parse_version("v0.1.12")
 
         # Errors to ignore
         self.do_not_raise = []
@@ -69,7 +69,7 @@ class MVGAPI:
         api_vstr = response.json()["message"]["api"]["version"]
         self.api_version = self.parse_version(api_vstr)
 
-    def _request(self, method, path, **kwargs):
+    def _request(self, method, path, **kwargs) -> requests.Response:
         """Helper function for removing duplicate code on API requests.
         Makes requests on self.endpoint with authorization header and
         validates the response by status code. Writes DEBUG logs on
@@ -123,7 +123,7 @@ class MVGAPI:
         return response
 
     @staticmethod
-    def parse_version(vstr):
+    def parse_version(vstr) -> semver.VersionInfo:
         """
         Parses the version string into an array
 
@@ -139,7 +139,7 @@ class MVGAPI:
         vstr = re.sub("^v", "", vstr)
         return semver.VersionInfo.parse(vstr)
 
-    def get_endpoint(self):
+    def get_endpoint(self) -> str:
         """
         Accessor function.
 
@@ -150,7 +150,7 @@ class MVGAPI:
         """
         return self.endpoint
 
-    def get_token(self):
+    def get_token(self) -> str:
         """
         Accessor function.
 
@@ -161,7 +161,7 @@ class MVGAPI:
         """
         return self.token
 
-    def check_version(self):
+    def check_version(self) -> dict:
         """
         Checks if the version of MVG is compatible with
         the API version called on the server side.
@@ -232,7 +232,7 @@ class MVGAPI:
             "mvg_version": str(self.mvg_version),
         }
 
-    def say_hello(self):
+    def say_hello(self) -> dict:
         """
         Retrievs information about the API.
         This call does not require a valid token.
@@ -268,10 +268,36 @@ class MVGAPI:
 
         # Package info to be submitted to db
         source_info = {"source_id": sid, "meta": meta}
-
         self._request("post", "/sources/", json=source_info)
 
-    def list_sources(self):
+    def create_tabular_source(self, sid: str, meta: dict, columns: List[str]):
+        """
+        Creates a tabular source on the server side.
+
+        Parameters
+        ----------
+        sid : str
+            Source ID
+
+        meta : dict
+            Meta information of source
+
+        columns : List[str]
+            Data variables. Currently supports numerical data.
+            Cannot be updated after creating source.
+        """
+
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("creating tabular source with source id=%s", sid)
+        logger.info("metadata: %s", meta)
+        logger.info("columns: %s", columns)
+
+        # Package info to be submitted to db
+
+        source_info = {"source_id": sid, "meta": meta, "columns": columns}
+        self._request("post", "/sources/tabular", json=source_info)
+
+    def list_sources(self) -> list:
         """Lists all sources (sensors) on the server side
 
         Returns
@@ -289,7 +315,7 @@ class MVGAPI:
         return response.json()
 
     # In example
-    def get_source(self, sid: str):
+    def get_source(self, sid: str) -> dict:
         """Returns the information stored for a source representing
         on the given endpoint.
 
@@ -300,7 +326,7 @@ class MVGAPI:
 
         Returns
         -------
-        source_information: (dict)
+        dict
             Information stored about the source.
         """
 
@@ -330,7 +356,7 @@ class MVGAPI:
         logger.info("updating source with source id=%s", sid)
         logger.info("metadata: %s", meta)
 
-        self._request("put", f"/sources/{sid}", data=json.dumps(meta))
+        self._request("put", f"/sources/{sid}", json=meta)
 
     # In example
     def delete_source(self, sid: str):
@@ -387,18 +413,58 @@ class MVGAPI:
         logger.info("  meta data: %s", meta)
 
         # Package info for db to be submitted
-        meas_struct = {
-            "source_id": sid,  # should be source_id
-            "timestamp": timestamp,
-            "duration": duration,
-            "data": data,
-            "meta": meta,
-        }
+        meas_struct = [
+            {
+                "source_id": sid,  # should be source_id
+                "timestamp": timestamp,
+                "duration": duration,
+                "data": data,
+                "meta": meta,
+            }
+        ]
 
         self._request("post", f"/sources/{sid}/measurements", json=meas_struct)
 
+    def create_tabular_measurement(
+        self, sid: str, data: Dict[str, List[float]], meta: Dict[float, dict] = None
+    ):
+        """Stores a measurement on the server side.
+
+        Although it is up to the client side to handle the
+        scaling of data it is recommended that the values
+        represent the acceleration in g.
+        The timestamp shall represent the time when the measurement was
+        recorded.
+
+        Parameters
+        ----------
+        sid: str
+            source Id.
+
+        data: Dict[str, List[float]]
+            Tabular data on the format {column: values}. 'timestamp' column is required.
+            This format can be generated by pandas.DataFrame.to_dict("list")
+
+        meta: dict
+            Meta information to attach to data. Should have the format
+            {timestamp: meta_dict}. Timestamps must match data timestamps
+        """
+
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("creating tabular measurement from source id=%s", sid)
+
+        body = {"data": data}
+        if meta is not None:
+            body["meta"] = meta
+
+        self._request(
+            "post",
+            f"/sources/{sid}/measurements/tabular",
+            json=body,
+        )
+
     # in example
-    def list_measurements(self, sid: str):
+    def list_measurements(self, sid: str) -> list:
         """Retrieves all measurements (all timestamps and metadata) for a source.
 
         Parameters
@@ -422,7 +488,7 @@ class MVGAPI:
         return all_measurements
 
     # in example
-    def read_single_measurement(self, sid: str, timestamp: int):
+    def read_single_measurement(self, sid: str, timestamp: int) -> dict:
         """
         Retrieves all measurements for one single timestamps from source Id.
 
@@ -440,7 +506,8 @@ class MVGAPI:
 
         Returns
         -------
-        array of measurements.
+        dict containing measurement data, meta information and duration or
+        columns, depending on source data class
         """
 
         logger.info("endpoint %s", self.endpoint)
@@ -476,7 +543,7 @@ class MVGAPI:
         self._request(
             "put",
             f"/sources/{sid}/measurements/{timestamp}",
-            data=json.dumps(meta),
+            json={"meta": meta},
         )
 
     # In example
@@ -500,7 +567,7 @@ class MVGAPI:
         self._request("delete", f"/sources/{sid}/measurements/{timestamp}")
 
     # Analysis
-    def supported_features(self):
+    def supported_features(self) -> list:
         """Return all supported features.
         Presence of a feature is indicated by string with the
         feature name set to true.
@@ -527,7 +594,7 @@ class MVGAPI:
         parameters: dict = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
-    ):
+    ) -> str:
         """Request an analysis on the given endpoint with given parameters.
 
         Parameters
@@ -576,17 +643,17 @@ class MVGAPI:
 
     def request_population_analysis(
         self,
-        sids: [str],
+        sids: List[str],
         feature: str,
         parameters: dict = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
-    ):
+    ) -> str:
         """Request an population analysis on the given endpoint with given parameters.
 
         Parameters
         ----------
-        sids : [str]
+        sids : List[str]
             Source ids.
 
         feature : str
@@ -629,7 +696,7 @@ class MVGAPI:
         )
         return response.json()
 
-    def list_analyses(self, sid: str, feature: str):
+    def list_analyses(self, sid: str, feature: str) -> list:
         """Retrieves list of analysis IDs associated with a source
         and a feature.
 
@@ -643,7 +710,7 @@ class MVGAPI:
 
         Returns
         -------
-        results: list
+        list
             a list of analysis IDs.
 
         """
@@ -654,7 +721,7 @@ class MVGAPI:
 
         return response.json()
 
-    def get_analysis_status(self, request_id: str):
+    def get_analysis_status(self, request_id: str) -> str:
         """Return the status of an analysis request with given request_id.
 
         Parameters
@@ -664,7 +731,7 @@ class MVGAPI:
 
         Returns
         -------
-        status: str
+        str
             status of the analysis. It can take any of the following values:
             "queued": The request is cheduled but have not started.
             "ongoing": The request is running
@@ -679,7 +746,7 @@ class MVGAPI:
 
         return response.json()["request_status"]
 
-    def get_analysis_results(self, request_id: str):
+    def get_analysis_results(self, request_id: str) -> dict:
         """Retrieves an analysis with given request_id
         The format of the result structure depends on the feature.
 
@@ -690,7 +757,7 @@ class MVGAPI:
 
         Returns
         -------
-        results: dict
+        dict
             a dictionary with the results in case available.
 
         """
