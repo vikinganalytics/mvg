@@ -16,7 +16,8 @@
    content/examples/error_handling
    content/examples/sources_and_measurements
    content/examples/analysis_visual
-   
+   content/examples/tabular_example
+
 .. toctree::
    :maxdepth: 2
    :caption: Features
