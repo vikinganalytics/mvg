@@ -292,7 +292,9 @@ def test_tabular_measurements(session):
     ts0 = tabular_dict["timestamp"][0]
     meas = session.read_single_measurement(SOURCE_ID_TABULAR, ts0)
     assert meas["meta"] == {}
-    assert all(np.array(meas["data"]) == tabular_df.drop("timestamp", axis=1).iloc[0])
+    assert all(
+        np.array(meas["data"]) == tabular_df.drop("timestamp", axis=1).iloc[0].values
+    )
     assert meas["columns"] == columns
 
     session.update_measurement(SOURCE_ID_TABULAR, ts0, {"new": "meta"})
