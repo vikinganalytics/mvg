@@ -24,7 +24,9 @@ REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
 SOURCE_ID_WAVEFORM = uuid.uuid1().hex  # generate a unique source per testrun
 SOURCE_ID_TABULAR = uuid.uuid1().hex
 
-tabular_df = pd.read_csv(REF_DB_PATH.parent / "tabular_data.csv")
+tabular_df = pd.read_csv(
+    REF_DB_PATH.parent / "tabular_data.csv", float_precision="round_trip"
+)
 tabular_dict = tabular_df.to_dict("list")
 
 
@@ -118,7 +120,9 @@ def test_measurements_crud(session):
         # samples file for one measurement
         ts_meas = str(ts_m) + ".csv"  # filename
         ts_meas = REF_DB_PATH / "u0001" / ts_meas  # path to file
-        ts_df = pd.read_csv(ts_meas, names=["acc"])  # read csv into df
+        ts_df = pd.read_csv(
+            ts_meas, names=["acc"], float_precision="round_trip"
+        )  # read csv into df
         accs = ts_df.iloc[:, 0].tolist()  # convert to list
         print(f"Read {len(accs)} samples")
 
