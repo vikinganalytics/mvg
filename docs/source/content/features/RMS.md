@@ -45,11 +45,14 @@ feature ("RMS").
 ## Structure of the Results
 
 The result returned by the analysis call will be a dictionary
-containing three lists
+containing five lists:
 ```
 {
 	'timestamps': [... list of timestamps ...],
 	'rms': [... list of RMS values ...]
+	'rms_dc': [... list of RMS values without DC component ...],
+	'dc': [... list of DC component values ...]
+	'utilization': [... list with timestamp utilization ...],
 }
 ```
 
