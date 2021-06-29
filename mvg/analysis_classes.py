@@ -68,9 +68,14 @@ class Analysis:
         ---------
         interactive: bool
             Wheter to display plot on screen (True) or to store to file (False).
+
+        Returns
+        -------
+        plot file name: str
+          name of plot file (or emtpy string in case of interactive plot)
         """
         if interactive:
-            plot_file = None
+            plot_file = ""
             plt.show()
         else:
             if len(self.sources()) > 1:
@@ -258,16 +263,23 @@ class Analysis:
 
     # Default method
     def plot(self, interactive=True):  # pylint: disable=unused-argument
-        """Pro forma ancestor function
+        """Pro forma ancestor function.
 
         Parameters
-        -----------
-        interactive: bool
-           not used
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+
+        Returns
+        -------
+        plot file name: str
+          name of plot file (or emtpy string in case of interactive plot)
         """
 
         self.check_status()
         print(f"Plot function not implemented for {type(self).__name__}")
+        return ""
 
     # Save self as pickel
     def save(self, file_name=None):
@@ -387,7 +399,19 @@ class RMS(Analysis):
         return tab
 
     def plot(self, interactive=True):
-        """Generate a basic plot on RMS."""
+        """
+        Generate a basic plot on RMS.
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+        Returns
+        -------
+        plot file name : str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
 
         self.check_status()
         self._dframe.plot(x=self.time_column, y=["rms", "dc", "utilization"])
@@ -462,7 +486,20 @@ class ModeId(Analysis):
         return [tbl, tbl2, self.emerging_df]
 
     def plot(self, interactive=True):
-        """Generate a basic plot on ModeId."""
+        """
+        Generate a basic plot on ModeId.
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+        Returns
+        -------
+        plot file name : str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
+
         self.check_status()
         plotting.modes_over_time(self.to_df(), self.request_id(), timeunit=self._t_unit)
         return self._render_plot(interactive)
@@ -550,7 +587,18 @@ class BlackSheep(Analysis):
     def plot(self, interactive=True):
         """Generate a (not so) basic plot for BlackSheep
         Will show per atypical asset changes to and from
-        atypical modes (experimental)"""
+        atypical modes
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+        Returns
+        -------
+        plot file name : str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
 
         # Check if run was successful
         self.check_status()
