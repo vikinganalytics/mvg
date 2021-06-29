@@ -49,8 +49,22 @@ def test_RMS():
     }
 
     # Plot (not tested at all)
+    plt_file = feat.plot(False)
+    assert plt_file is not None
+    assert os.path.exists(plt_file)
+    os.remove(plt_file)  # Cleanup
 
-
+    
+    # Accessor functions (tested only in RMS)
+    ts_sum = 78615280200
+    assert sum(feat.raw_results()['results']['timestamps']) == ts_sum
+    assert feat.request_id() == "2f6dc5ae055f9e82f6f5311c23250f07"
+    assert feat.feature() == "RMS"
+    assert sum(feat.request_params()['timestamps']) == ts_sum
+    assert sum(feat.results()['timestamps']) == ts_sum
+    assert feat.status() == "successful"
+    assert feat.sources() == ['u0001']
+    
 def test_BlackSheep():
     # read dict
     with open("./tests/test_data/BlackSheep_results_dict.json") as json_file:
