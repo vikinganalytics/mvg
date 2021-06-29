@@ -62,7 +62,7 @@ class Analysis:
         self.time_column = None
 
     def _render_plot(self, interactive):
-        """ Render plot to screen (interactive) or file.
+        """Render plot to screen (interactive) or file.
 
         Parameters
         ---------
@@ -78,7 +78,7 @@ class Analysis:
             else:
                 srcstr = self.sources()[0] + "_"
             plot_file = srcstr + self.request_id() + ".png"
-            plt.savefig(plot_file, dpi=600, bbox_inches='tight')
+            plt.savefig(plot_file, dpi=600, bbox_inches="tight")
             print(f"saved plot to {plot_file}")
 
         return plot_file
@@ -144,7 +144,7 @@ class Analysis:
 
     # Accessor functions
     def raw_results(self):
-        """ Raw results as returned by server
+        """Raw results as returned by server
         Returns
         -------
         raw_results: dict
@@ -220,9 +220,9 @@ class Analysis:
         sources: list
         """
 
-        sources = self.inputs()['UUID']
-        if not isinstance(self.inputs()['UUID'], list):
-            sources = [self.inputs()['UUID']]
+        sources = self.inputs()["UUID"]
+        if not isinstance(self.inputs()["UUID"], list):
+            sources = [self.inputs()["UUID"]]
 
         return sources
 
@@ -257,8 +257,15 @@ class Analysis:
             print(f"from {from_t} to {to_t}")
 
     # Default method
-    def plot(self, interactive=True):
-        """ Pro forma ancestor function"""
+    def plot(self, interactive=True):  # pylint: disable=unused-argument
+        """Pro forma ancestor function
+
+        Parameters
+        -----------
+        interactive: bool
+           not used
+        """
+
         self.check_status()
         print(f"Plot function not implemented for {type(self).__name__}")
 
