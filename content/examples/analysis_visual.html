@@ -98,7 +98,7 @@
             
               <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sources_and_measurements.html">Sources and Measurements Example</a></li>
@@ -461,7 +461,8 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Analysis-and-Results-Visualization">
 <h1>Analysis and Results Visualization<a class="headerlink" href="#Analysis-and-Results-Visualization" title="Permalink to this headline">¶</a></h1>
-<p>This script describes the procedure to request an analysis to the Viking Analytics Vibration service. It shows how to query for results of single-asset or asset-population analysis. In addition, it presents some examples of how to visualize the results available for the mode identification feature.</p>
+<p>This script describes the procedure to request an analysis to the Viking Analytics’ MultiViz Analytics Engine (MVG) service. It shows how to query for results of single-asset or asset-population analysis. In addition, it presents some examples of how to visualize the results available for the mode identification feature.</p>
+<p>In this example, we will describe how to access and manipulate the analysis results directly. The <a class="reference internal" href="analysis_classes.html"><span class="doc">“Analysis Classes”</span></a> example provides a simplified and unified interface to access these results as a pandas dataframe, along with some basic visualization of the results.</p>
 <div class="section" id="Preliminaries">
 <h2>Preliminaries<a class="headerlink" href="#Preliminaries" title="Permalink to this headline">¶</a></h2>
 <p>This procedure describes all the steps to request an analysis, get analysis results and plot those results using the functions in <code class="docutils literal notranslate"><span class="pre">plotting</span></code>. Local visualizations functions to create the figures are imported from <code class="docutils literal notranslate"><span class="pre">plotting</span></code>.</p>
@@ -470,7 +471,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
 
@@ -482,16 +484,16 @@ div.rendered_html tbody tr:hover {
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the VA vibration service.</p>
 <p>**You need to insert your token received from Viking Analytics here:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Replace by your own Token</span>
-<span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;Add token here&quot;</span>
+<span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TEST_TOKEN&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
-<p>Instantiate a session object with mvg library. A session object basically caches the endpoint and the token, to simplify the the calls to the mvg library.</p>
+<p>Instantiate a session object with MVG library. A session object basically caches the endpoint and the token, to simplify the calls to the MVG library.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -505,7 +507,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="section" id="Asset-Analysis">
 <h2>Asset Analysis<a class="headerlink" href="#Asset-Analysis" title="Permalink to this headline">¶</a></h2>
-<p>In this example, we will use the sources uploaded by the <a class="reference internal" href="sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example. We start by seeing if the sources are available in the database. At least, sources, “u0001” and “u0005”, should appear as available.</p>
+<p>In this example, we will use the sources uploaded by the <a class="reference internal" href="sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example. We start by looking if the sources are available in the database. At least, sources, “u0001” and “u0005”, should appear as available.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -527,21 +529,21 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Retrieved sources
-{&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;, &#39;updated&#39;: &#39;YES! I have been updated&#39;}}
-Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;, &#39;updated&#39;: &#39;YES! I have been updated&#39;}}
-{&#39;source_id&#39;: &#39;u0002&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetB&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}}
-Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0002&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetB&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}}
-{&#39;source_id&#39;: &#39;u0003&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetC&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;milano&#39;}}
-Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0003&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetC&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;milano&#39;}}
-{&#39;source_id&#39;: &#39;u0004&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetD&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;milano&#39;}}
-Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0004&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetD&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;milano&#39;}}
-{&#39;source_id&#39;: &#39;u0005&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetE&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}}
-Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0005&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetE&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}}
-{&#39;source_id&#39;: &#39;u0006&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetF&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}}
-Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0006&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetF&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}}
+{&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+{&#39;source_id&#39;: &#39;u0002&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetB&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0002&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetB&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+{&#39;source_id&#39;: &#39;u0003&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetC&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;milano&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0003&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetC&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;milano&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+{&#39;source_id&#39;: &#39;u0004&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetD&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;milano&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0004&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetD&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;milano&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+{&#39;source_id&#39;: &#39;u0005&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetE&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0005&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetE&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+{&#39;source_id&#39;: &#39;u0006&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetF&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
+Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0006&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetF&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;london&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;}}
 </pre></div></div>
 </div>
-<p>During our example, we will utilize sources, “u0001” and “u0005”, previously uploaded to our database.</p>
+<p>During our example, we will utilize sources, “u0001” and “u0005”, which were previously uploaded to our database.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -578,10 +580,10 @@ Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0006&#39;, &#3
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;RMS&#39;: &#39;0.0.1&#39;, &#39;ModeId&#39;: &#39;0.1.0&#39;, &#39;BlackSheep&#39;: &#39;0.1.0&#39;}
+{&#39;RMS&#39;: &#39;1.0.0&#39;, &#39;ModeId&#39;: &#39;0.1.1&#39;, &#39;BlackSheep&#39;: &#39;1.0.0&#39;}
 </pre></div></div>
 </div>
-<p>Once the source and measurements had been uploaded in the database, we can request an analysis to the VA Vibration service. When we request an analysis, we need to say the source to be used in the analysis and the feature to be applied.</p>
+<p>Once the source and measurements had been uploaded in the database, we can request an analysis to the VA Vibration service. When we request an analysis, we need to say which source is to be used in the analysis and the feature to be applied.</p>
 <p>The requested analysis will return a dictionary object with two elements. The first element is a <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> that can be used to retrieve the results after. The second element is <code class="docutils literal notranslate"><span class="pre">&quot;request_status&quot;</span></code> that provides the status right after placing the analysis request.</p>
 <p>Here, we will request the “RMS” feature from our source “u0001”.</p>
 <div class="nbinput docutils container">
@@ -601,7 +603,7 @@ Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0006&#39;, &#3
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;request_id&#39;: &#39;de9562802a3248a9723ce4a8950c9a00&#39;, &#39;request_status&#39;: &#39;ongoing&#39;}
+{&#39;request_id&#39;: &#39;2f8ef4370ca6f16ee30a71cf55645b02&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
 <p>Now, we proceed to request the “ModeId” feature for the same source.</p>
@@ -621,13 +623,13 @@ Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0006&#39;, &#3
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;request_id&#39;: &#39;9cced936d101c436eb32e7f8dc379796&#39;, &#39;request_status&#39;: &#39;ongoing&#39;}
+{&#39;request_id&#39;: &#39;e0ee3ad6935947f70a9d455f37da4c48&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
-<p>Before we are able to get the analysis results, we need to wait until those results are successfully completed.</p>
-<p>We can query for the status of our requested analysis. The possible status are: - Queued: The analysis has not started in the remote server and it is in the queue to begin. - Ongoing: The analysis is been processed at this time. - Failed: The analysis is complete and failed to produce a result. - Successful: The analysis is complete and it successfully produced a result.</p>
+<p>Before we are able to get the analysis results, we need to wait until those analyses are successfully completed.</p>
+<p>We can query for the status of our requested analyses. The possible status are: - Queued: The analysis has not started in the remote server and it is in the queue to begin. - Ongoing: The analysis is been processed at this time. - Failed: The analysis is complete and failed to produce a result. - Successful: The analysis is complete and it produced a successful result.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -650,7 +652,7 @@ ModeId Analysis: successful
 </div>
 <p>The similar procedure is repeated to request the “RMS” and “ModeId” for our source “u0005”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -661,16 +663,16 @@ ModeId Analysis: successful
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;request_id&#39;: &#39;9b0673ec9ee86fd9069cd33b4f917a4a&#39;, &#39;request_status&#39;: &#39;ongoing&#39;}
+{&#39;request_id&#39;: &#39;2a0a12ff777aaefe7401fdc8b93e288d&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -681,17 +683,17 @@ ModeId Analysis: successful
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;request_id&#39;: &#39;51d92e031290b7e28dd094faf01ea6ea&#39;, &#39;request_status&#39;: &#39;queued&#39;}
+{&#39;request_id&#39;: &#39;4a76979f8d731606eb2cf03e9a6fd221&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
 <p>Also, we check the status of our analysis for source “u0005” to confirm they had been completed successfully.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -718,7 +720,7 @@ ModeId Analysis: successful
 <p>Once the analysis is complete, one get the results by calling the corresponding “request_id” for each analysis.</p>
 <p>First, let’s check all existing “request_id” in the database for each source and feature.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -736,53 +738,54 @@ ModeId Analysis: successful
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The RMS analysis of u0001 has request_id [&#39;5cf800607f127ebbca7b90c3b51c506a&#39;, &#39;de9562802a3248a9723ce4a8950c9a00&#39;].
-The RMS analysis of u0005 has request_id [&#39;9b0673ec9ee86fd9069cd33b4f917a4a&#39;].
-The ModeId analysis of u0001 has request_id [&#39;e176f4928372a627e743222eb2de0690&#39;, &#39;535be882dd271d03c26bef8257ae03ec&#39;, &#39;57b816d91decda67355da0ad160f0016&#39;, &#39;25bdf3a393c5c166ae230ef98911606c&#39;, &#39;9cced936d101c436eb32e7f8dc379796&#39;].
-The ModeId analysis of u0005 has request_id [&#39;ff5392230521bd4bdcc5c36491eeefe5&#39;, &#39;99934e2c5fd0858a90836ae3ec02cd52&#39;, &#39;51d92e031290b7e28dd094faf01ea6ea&#39;].
+The RMS analysis of u0001 has request_id [&#39;5cf800607f127ebbca7b90c3b51c506a&#39;, &#39;de9562802a3248a9723ce4a8950c9a00&#39;, &#39;2398c778dfe8625264fcfe952ead21b7&#39;, &#39;78077ee974f2b5d17290c982d22b915a&#39;, &#39;1a12f0e88c388eed298245bf122d7565&#39;, &#39;2f8ef4370ca6f16ee30a71cf55645b02&#39;].
+The RMS analysis of u0005 has request_id [&#39;9b0673ec9ee86fd9069cd33b4f917a4a&#39;, &#39;2a0a12ff777aaefe7401fdc8b93e288d&#39;].
+The ModeId analysis of u0001 has request_id [&#39;e176f4928372a627e743222eb2de0690&#39;, &#39;535be882dd271d03c26bef8257ae03ec&#39;, &#39;57b816d91decda67355da0ad160f0016&#39;, &#39;25bdf3a393c5c166ae230ef98911606c&#39;, &#39;9cced936d101c436eb32e7f8dc379796&#39;, &#39;d34f7e8f0a5b01a8471f1a5df23e1923&#39;, &#39;ba1202a3c210c9e388a980913cda3640&#39;, &#39;a089f212b2eda4eb79fc569b00c74659&#39;, &#39;e0ee3ad6935947f70a9d455f37da4c48&#39;].
+The ModeId analysis of u0005 has request_id [&#39;ff5392230521bd4bdcc5c36491eeefe5&#39;, &#39;99934e2c5fd0858a90836ae3ec02cd52&#39;, &#39;51d92e031290b7e28dd094faf01ea6ea&#39;, &#39;4a76979f8d731606eb2cf03e9a6fd221&#39;].
 </pre></div></div>
 </div>
 <p>The following step is to retrieve the results by calling each one of the “request_id”.</p>
 <p>The output of the <code class="docutils literal notranslate"><span class="pre">&quot;get_analysis_results&quot;</span></code> function is a dictionary and we show the keys of one those dictionaries. The keys are the same for all features.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">rms_table1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_IDS_u0001</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">mode_table1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_IDS_u0001</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">rms_table5</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_IDS_u0005</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">mode_table5</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_IDS_u0005</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span></span><span class="n">rms_output1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_IDS_u0001</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">mode_output1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_IDS_u0001</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">rms_output5</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_IDS_u0005</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">mode_output5</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_IDS_u0005</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="n">rms_table1</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">rms_output1</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-dict_keys([&#39;status&#39;, &#39;results&#39;])
+dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;results&#39;, &#39;inputs&#39;, &#39;error_info&#39;, &#39;debug_info&#39;])
 </pre></div></div>
 </div>
-<p>Each dictionary contains two key elements. The first key <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> indicates if the analysis was succesful. The second key <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> includes the numeric results.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> of the “RMS” feature are two lists. One list corresponds to the epoch (in seconds) of the measurement and the other list contains the rms value for the measurement.</p>
-<p>These lists can be converted into a dataframe for ease of manipulation. In addition, the “timestamp” column is converted to a timestamp object in a column called “Date”.</p>
+<p>Each dictionary contains seven key elements. These elements are: - <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> indicates if the analysis was successful. - <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> is the identifier of the requested analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;feature&quot;</span></code> is the name of the request feature. - <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> includes the numeric results. - <code class="docutils literal notranslate"><span class="pre">&quot;inputs&quot;</span></code> includes the input information for the request analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;error_info&quot;</span></code> includes the error information in case the analysis fails and it is empty if the analysis is successful. - <code class="docutils literal notranslate"><span class="pre">&quot;debug_info&quot;</span></code>
+includes debuging (log) information related to the failed analysis.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> of the “RMS” feature are five lists. These lists are: - timestamps: epoch (in seconds for this example) of the measurements. - rms: rms value for each measurement. - rms_dc: rms value without the dc component for each measurement. - dc: dc component value for each measurement. - utilization: boolean indicating whether the measurement was used for the rms calculation.</p>
+<p>These lists can be converted into a dataframe for ease of manipulation. In this example, we will show how to access the dictionary results information and convert it into a Pandas dataframe. Please check the <a class="reference internal" href="analysis_classes.html"><span class="doc">“Analysis Classes”</span></a> example for directly getting a results Pandas dataframe. In addition, the “timestamp” column is converted to a timestamp object in a column called “Date”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df_rms1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rms_table1</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">])</span>
+<span></span><span class="n">df_rms1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rms_output1</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">])</span>
 <span class="n">df_rms1</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_rms1</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="n">df_rms1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -806,59 +809,82 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
       <th></th>
       <th>timestamps</th>
       <th>rms</th>
+      <th>rms_dc</th>
+      <th>dc</th>
+      <th>utilization</th>
       <th>Date</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1570273260</td>
-      <td>0.662183</td>
-      <td>2019-10-05 11:01:00</td>
+      <td>1570186860</td>
+      <td>0.647086</td>
+      <td>0.662108</td>
+      <td>-0.140237</td>
+      <td>1</td>
+      <td>2019-10-04 11:01:00</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1570359660</td>
-      <td>0.661652</td>
-      <td>2019-10-06 11:01:00</td>
+      <td>1570273260</td>
+      <td>0.647123</td>
+      <td>0.662183</td>
+      <td>-0.140420</td>
+      <td>1</td>
+      <td>2019-10-05 11:01:00</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1570446060</td>
-      <td>0.661923</td>
-      <td>2019-10-07 11:01:00</td>
+      <td>1570359660</td>
+      <td>0.646619</td>
+      <td>0.661652</td>
+      <td>-0.140239</td>
+      <td>1</td>
+      <td>2019-10-06 11:01:00</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1570532460</td>
-      <td>0.661714</td>
-      <td>2019-10-08 11:01:00</td>
+      <td>1570446060</td>
+      <td>0.646873</td>
+      <td>0.661923</td>
+      <td>-0.140347</td>
+      <td>1</td>
+      <td>2019-10-07 11:01:00</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1570618860</td>
-      <td>0.661709</td>
-      <td>2019-10-09 11:01:00</td>
+      <td>1570532460</td>
+      <td>0.646643</td>
+      <td>0.661714</td>
+      <td>-0.140423</td>
+      <td>1</td>
+      <td>2019-10-08 11:01:00</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> of the “ModeId” feature are three lists: - The first list is the measurement epoch in the same unit as the measurement was uploaded, which was seconds for this example. - The second list corresponds to the mode label given to the timestamp. - The third list is a boolean to indicate the uncertainty of label.</p>
-<p>We pass all the lists to a dataframe for ease of manipulation. Similarly to the “RMS” feature, the “timestamp” column is converted to a timestamp object in a column called “Date”.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> of the “ModeId” feature are four lists and one dictionary: - The first list is the measurement epoch in the same unit as the measurement was uploaded, which was seconds for this example. - The second list corresponds to the mode label given to the timestamp. - The third list is a boolean to indicate the uncertainty of label. - The fourth list corresponds to the mode probability of each mode label. The dictionary, called ‘model_info’, contains the “Emerging modes” results.</p>
+<p>“Emerging modes” is an additional output of the analysis results that describes the first appearance of each one of the identified modes.</p>
+<p>We pass all the lists to a dataframe for ease of manipulation. Similarly to the RMS feature, we will show how to access the dictionary results information and convert it into a Pandas dataframe. Please check the <a class="reference internal" href="analysis_classes.html"><span class="doc">“Analysis Classes”</span></a> example for directly getting a results Pandas dataframe. In addition, the “timestamp” column is converted to a timestamp object in a column called “Date”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df_mode1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mode_table1</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">])</span>
+<span></span><span class="n">mode_all1</span> <span class="o">=</span> <span class="n">mode_output1</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">mode_emerging1</span> <span class="o">=</span> <span class="n">mode_all1</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mode_info&quot;</span><span class="p">)</span>
+
+<span class="c1"># Conversion to dataframe of the full mode labels table</span>
+<span class="n">df_mode1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mode_all1</span><span class="p">)</span>
 <span class="n">df_mode1</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_mode1</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="n">df_mode1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -883,44 +909,113 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
       <th>timestamps</th>
       <th>labels</th>
       <th>uncertain</th>
+      <th>mode_probability</th>
       <th>Date</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1570273260</td>
+      <td>1570186860</td>
       <td>0</td>
       <td>False</td>
-      <td>2019-10-05 11:01:00</td>
+      <td>0.000159</td>
+      <td>2019-10-04 11:01:00</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1570359660</td>
+      <td>1570273260</td>
       <td>0</td>
       <td>False</td>
-      <td>2019-10-06 11:01:00</td>
+      <td>0.000596</td>
+      <td>2019-10-05 11:01:00</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1570446060</td>
+      <td>1570359660</td>
       <td>0</td>
       <td>False</td>
-      <td>2019-10-07 11:01:00</td>
+      <td>0.000058</td>
+      <td>2019-10-06 11:01:00</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1570532460</td>
+      <td>1570446060</td>
       <td>0</td>
       <td>False</td>
-      <td>2019-10-08 11:01:00</td>
+      <td>0.000211</td>
+      <td>2019-10-07 11:01:00</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1570618860</td>
+      <td>1570532460</td>
       <td>0</td>
       <td>False</td>
-      <td>2019-10-09 11:01:00</td>
+      <td>0.000007</td>
+      <td>2019-10-08 11:01:00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Conversion to dataframe of the emerging modes table</span>
+<span class="n">df_emerging1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mode_emerging1</span><span class="p">)</span>
+<span class="n">df_emerging1</span><span class="p">[</span><span class="s1">&#39;emerging_Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_emerging1</span><span class="p">[</span><span class="s1">&#39;emerging_time&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">df_emerging1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>modes</th>
+      <th>emerging_time</th>
+      <th>max_prob_time</th>
+      <th>max_probability</th>
+      <th>emerging_Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1570186860</td>
+      <td>1574424060</td>
+      <td>0.014102</td>
+      <td>2019-10-04 11:01:00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1571655660</td>
+      <td>1571655660</td>
+      <td>0.023025</td>
+      <td>2019-10-21 11:01:00</td>
     </tr>
   </tbody>
 </table>
@@ -928,7 +1023,7 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 </div>
 <p>For the purpose of demonstration of our visualization functions, we will merge the dataframes of the “RMS” results and the “ModeId” results into a single dataframe.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -938,7 +1033,7 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -962,51 +1057,75 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
       <th></th>
       <th>timestamps</th>
       <th>rms</th>
+      <th>rms_dc</th>
+      <th>dc</th>
+      <th>utilization</th>
       <th>Date</th>
       <th>labels</th>
       <th>uncertain</th>
+      <th>mode_probability</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1570273260</td>
-      <td>0.662183</td>
-      <td>2019-10-05 11:01:00</td>
+      <td>1570186860</td>
+      <td>0.647086</td>
+      <td>0.662108</td>
+      <td>-0.140237</td>
+      <td>1</td>
+      <td>2019-10-04 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>0.000159</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1570359660</td>
-      <td>0.661652</td>
-      <td>2019-10-06 11:01:00</td>
+      <td>1570273260</td>
+      <td>0.647123</td>
+      <td>0.662183</td>
+      <td>-0.140420</td>
+      <td>1</td>
+      <td>2019-10-05 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>0.000596</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1570446060</td>
-      <td>0.661923</td>
-      <td>2019-10-07 11:01:00</td>
+      <td>1570359660</td>
+      <td>0.646619</td>
+      <td>0.661652</td>
+      <td>-0.140239</td>
+      <td>1</td>
+      <td>2019-10-06 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>0.000058</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1570532460</td>
-      <td>0.661714</td>
-      <td>2019-10-08 11:01:00</td>
+      <td>1570446060</td>
+      <td>0.646873</td>
+      <td>0.661923</td>
+      <td>-0.140347</td>
+      <td>1</td>
+      <td>2019-10-07 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>0.000211</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1570618860</td>
-      <td>0.661709</td>
-      <td>2019-10-09 11:01:00</td>
+      <td>1570532460</td>
+      <td>0.646643</td>
+      <td>0.661714</td>
+      <td>-0.140423</td>
+      <td>1</td>
+      <td>2019-10-08 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>0.000007</td>
     </tr>
   </tbody>
 </table>
@@ -1014,15 +1133,17 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 </div>
 <p>We repeat the same procedure of converting the results to a dataframe for source “u0005”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1">#RMS</span>
-<span class="n">df_rms5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rms_table5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">])</span>
+<span class="n">df_rms5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rms_output5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">])</span>
 <span class="n">df_rms5</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_rms5</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
-<span class="c1">#MODE_ID</span>
-<span class="n">df_mode5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mode_table5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">])</span>
+<span class="c1">#MODE_ID (full)</span>
+<span class="n">mode_all5</span> <span class="o">=</span> <span class="n">mode_output5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">mode_emerging5</span> <span class="o">=</span> <span class="n">mode_all5</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mode_info&quot;</span><span class="p">)</span>
+<span class="n">df_mode5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mode_all5</span><span class="p">)</span>
 <span class="n">df_mode5</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_mode5</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="c1">#Merging dataframes</span>
 <span class="n">df_u0005</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_rms5</span><span class="p">,</span> <span class="n">df_mode5</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;timestamps&quot;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
@@ -1031,7 +1152,7 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1055,59 +1176,83 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
       <th></th>
       <th>timestamps</th>
       <th>rms</th>
+      <th>rms_dc</th>
+      <th>dc</th>
+      <th>utilization</th>
       <th>Date</th>
       <th>labels</th>
       <th>uncertain</th>
+      <th>mode_probability</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>1570186860</td>
+      <td>0.646887</td>
       <td>0.661967</td>
+      <td>-0.140491</td>
+      <td>1</td>
       <td>2019-10-04 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>1.339510e-05</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1570273260</td>
+      <td>0.646963</td>
       <td>0.661950</td>
+      <td>-0.140056</td>
+      <td>1</td>
       <td>2019-10-05 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>3.450000e-07</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1570359660</td>
+      <td>0.646905</td>
       <td>0.661932</td>
+      <td>-0.140244</td>
+      <td>1</td>
       <td>2019-10-06 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>4.187300e-06</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1570446060</td>
+      <td>0.647395</td>
       <td>0.662385</td>
+      <td>-0.140124</td>
+      <td>1</td>
       <td>2019-10-07 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>3.173160e-05</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1570532460</td>
+      <td>0.647057</td>
       <td>0.662064</td>
+      <td>-0.140165</td>
+      <td>1</td>
       <td>2019-10-08 11:01:00</td>
       <td>0</td>
       <td>False</td>
+      <td>6.430700e-06</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-<p>We call the individual boxplot for one source and display the boxplot of the “RMS” for each one of the operating modes. Here, we use results for source “u0001”.</p>
+<p>We can call the individual boxplot for one source and display the boxplot of the “RMS” for each one of the operating modes. Here, we use results for source “u0001”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1119,12 +1264,12 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_analysis_visual_37_0.png" src="../../_images/content_examples_analysis_visual_37_0.png" />
+<img alt="../../_images/content_examples_analysis_visual_38_0.png" src="../../_images/content_examples_analysis_visual_38_0.png" />
 </div>
 </div>
 <p>We create a list with all the sources dataframes for the “ModeId” feature and display the “RMS” boxplot across the different modes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1136,12 +1281,12 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_analysis_visual_39_0.png" src="../../_images/content_examples_analysis_visual_39_0.png" />
+<img alt="../../_images/content_examples_analysis_visual_40_0.png" src="../../_images/content_examples_analysis_visual_40_0.png" />
 </div>
 </div>
 <p>We call the display over time of an individual source and identify all its operating modes. We define the parameter “timeunit” given that the default unit in the function is milliseconds and the epochs in our data is seconds.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1153,12 +1298,12 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_analysis_visual_41_0.png" src="../../_images/content_examples_analysis_visual_41_0.png" />
+<img alt="../../_images/content_examples_analysis_visual_42_0.png" src="../../_images/content_examples_analysis_visual_42_0.png" />
 </div>
 </div>
 <p>We create a list with all the sources dataframes and display the modes over time for all.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1170,7 +1315,7 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_analysis_visual_43_0.png" src="../../_images/content_examples_analysis_visual_43_0.png" />
+<img alt="../../_images/content_examples_analysis_visual_44_0.png" src="../../_images/content_examples_analysis_visual_44_0.png" />
 </div>
 </div>
 </div>
@@ -1179,7 +1324,7 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 <p>Another feature is “BlackSheep”, which targets a group of assets and aims to identify the atypical assets within a population.</p>
 <p>During our example, we will utilize all sources previously uploaded to our database.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1189,7 +1334,7 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1198,9 +1343,9 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 </pre></div></div>
 </div>
 <p>Similar to single asset feature, the requested population analysis will return a dictionary object with two elements. The first element is a <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> that can be used to retrieve the results after. The second element is <code class="docutils literal notranslate"><span class="pre">&quot;request_status&quot;</span></code> that provides the status right after placing the analysis request.</p>
-<p>Here, we will request the “BlackSheep” feature for all our sources. In addition, we show how to pass additional parameters into the analysis request. When we want to pass additional parameter request, this needs to be in the form of a dictionary. In this particular analysis, we had relaxed the <code class="docutils literal notranslate"><span class="pre">&quot;atypical_threshold&quot;</span></code> parameter from the default value of 0.05 to 0.20 to discover a larger number of assets as atypical.</p>
+<p>Here, we will request the “BlackSheep” feature for all our sources. In addition, we show how to pass additional parameters into the analysis request. When we want to pass an additional parameter request, this needs to be in the form of a dictionary. In this particular analysis, we had relaxed the <code class="docutils literal notranslate"><span class="pre">&quot;atypical_threshold&quot;</span></code> parameter from the default value of 0.05 to 0.10 to discover a larger number of assets as atypical.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1211,17 +1356,17 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;request_id&#39;: &#39;880ed4bfa182ab64f4b8d3d213a7800f&#39;, &#39;request_status&#39;: &#39;queued&#39;}
+{&#39;request_id&#39;: &#39;f91fcc72ffbf8f82f86400c33ca1624c&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
 <p>Similarly, we can query for the status of our requested analysis, where the different status options remain the same.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1240,9 +1385,10 @@ BlackSheep Analysis: successful
 </pre></div></div>
 </div>
 <p>The next step is to retrieve the results by calling the “request_id”.</p>
-<p>The output of the <code class="docutils literal notranslate"><span class="pre">&quot;get_analysis_results&quot;</span></code> function is similar to single asset features, which is a dictionary with two key elements, <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code>.</p>
+<p>The output of the <code class="docutils literal notranslate"><span class="pre">&quot;get_analysis_results&quot;</span></code> function is similar to single asset features. These seven elements are: - <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> indicates if the analysis was successful. - <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> is the identifier of the requested analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;feature&quot;</span></code> is the name of the request feature. - <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> includes the numeric results. - <code class="docutils literal notranslate"><span class="pre">&quot;inputs&quot;</span></code> includes the input information for the request analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;error_info&quot;</span></code> includes the error information in case the analysis fails and it is empty
+if the analysis is successful. - <code class="docutils literal notranslate"><span class="pre">&quot;debug_info&quot;</span></code> includes debuging (log) information related to the failed analysis.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1252,22 +1398,46 @@ BlackSheep Analysis: successful
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-dict_keys([&#39;status&#39;, &#39;results&#39;])
+dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;results&#39;, &#39;inputs&#39;, &#39;error_info&#39;, &#39;debug_info&#39;])
 </pre></div></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> of the “BlackSheep” indicates the atypical assets. We can see the list of atypical assets as the results output.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> of the “BlackSheep” indicates the atypical assets. <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> is a dictionary with a key element labelled <code class="docutils literal notranslate"><span class="pre">&quot;atypical_assets&quot;</span></code>. <code class="docutils literal notranslate"><span class="pre">&quot;atypical_assets&quot;</span></code> is a list and the length of the list indicates the number of atypical assets. Each element on this list is a dictionary. The dictionary includes the source_id of the atypical assets, a list with all the measurement timestamps and the corresponding list with a boolean indicating whether the measurement is atypical.</p>
+<p>Here, we show the number of atypical assets and the atypical order of these assets.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">atypical</span> <span class="o">=</span> <span class="n">blacksheep_table</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">atypical</span><span class="p">)</span>
+<span></span><span class="n">atypical_output</span> <span class="o">=</span> <span class="n">blacksheep_table</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span>
+<span class="n">atypical</span> <span class="o">=</span> <span class="n">atypical_output</span><span class="p">[</span><span class="s2">&quot;atypical_assets&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There is a total of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">atypical</span><span class="p">)</span><span class="si">}</span><span class="s2"> atypical assets in this analysis.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+There is a total of 2 atypical assets in this analysis
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">atypical1</span> <span class="o">=</span> <span class="n">atypical</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">atypical2</span> <span class="o">=</span> <span class="n">atypical</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The 1st blacksheep is </span><span class="si">{</span><span class="n">atypical1</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The 2nd blacksheep is </span><span class="si">{</span><span class="n">atypical2</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
 
 </pre></div>
 </div>
@@ -1277,7 +1447,8 @@ dict_keys([&#39;status&#39;, &#39;results&#39;])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;atypical_assets&#39;: [&#39;u0003&#39;, &#39;u0002&#39;]}
+The 1st blacksheep is u0003
+The 2nd blacksheep is u0002
 </pre></div></div>
 </div>
 </div>

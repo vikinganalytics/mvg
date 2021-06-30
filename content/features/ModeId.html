@@ -96,7 +96,7 @@
             
               <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../examples/brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/check_version.html">Check Version Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/error_handling.html">Error Handling Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/sources_and_measurements.html">Sources and Measurements Example</a></li>
@@ -297,13 +297,27 @@ result, the optimizer can be disabled and a specific number of modes
 <div class="section" id="structure-of-the-results">
 <h2>Structure of the Results<a class="headerlink" href="#structure-of-the-results" title="Permalink to this headline">¶</a></h2>
 <p>The result returned by the analysis call will be a dictionary
-containing three lists: the <em>timestamps</em>, the <em>label</em> (aka operational
-modes) and <em>uncertain</em> where a logical value of <code class="docutils literal notranslate"><span class="pre">True</span></code> indicates an
+containing four lists: the <em>timestamps</em>, the <em>label</em> (aka operational
+modes), the _mode<em>probability</em> and <em>uncertain</em> where a logical value of <code class="docutils literal notranslate"><span class="pre">True</span></code> indicates an
 uncertain assignment to the mode, which could be an indication of an anomaly.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s1">&#39;timestamps&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">timestamps</span> <span class="o">...</span><span class="p">],</span>
     <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">labels</span> <span class="p">(</span><span class="o">=</span><span class="n">mode</span> <span class="n">numbers</span><span class="p">)</span><span class="o">...</span><span class="p">],</span>
-    <span class="s1">&#39;uncertain&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">booleans</span> <span class="n">indicating</span> <span class="n">uncertain</span> <span class="n">modes</span><span class="p">]</span>
+    <span class="s1">&#39;uncertain&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">booleans</span> <span class="n">indicating</span> <span class="n">uncertain</span> <span class="n">modes</span><span class="o">...</span><span class="p">]</span>
+    <span class="s1">&#39;mode_probability&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">mode</span> <span class="n">probabilities</span> <span class="k">for</span> <span class="n">each</span> <span class="n">timestamps</span><span class="o">...</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In addition, the results returned by the analysis include an additional dictionary with the “Emerging Modes”.
+“Emerging Modes” is an additional result output that describes the first appearance of each mode.
+The dictionary contains four lists: the <em>modes</em>, the _emerging<em>time</em> corresponding to the epoch of first appearance of
+each mode , the _max_prob<em>time</em> corresponding to the epoch with the largest mode probability and
+_max<em>probability</em> for each mode.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;modes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">modes</span> <span class="o">...</span><span class="p">],</span>
+    <span class="s1">&#39;emerging_time&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">timestamps</span> <span class="k">for</span> <span class="n">first</span> <span class="n">appearance</span> <span class="n">of</span> <span class="n">each</span> <span class="n">mode</span><span class="o">...</span><span class="p">],</span>
+    <span class="s1">&#39;max_prob_time&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">timestamps</span> <span class="k">with</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">mode</span> <span class="n">probability</span><span class="o">...</span><span class="p">]</span>
+    <span class="s1">&#39;max_probability&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="k">with</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">mode</span> <span class="n">probabilities</span><span class="o">...</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>

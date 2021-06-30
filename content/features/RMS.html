@@ -98,7 +98,7 @@
             
               <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../examples/brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/check_version.html">Check Version Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/error_handling.html">Error Handling Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/sources_and_measurements.html">Sources and Measurements Example</a></li>
@@ -260,10 +260,13 @@ feature (“RMS”).</p>
 <div class="section" id="structure-of-the-results">
 <h2>Structure of the Results<a class="headerlink" href="#structure-of-the-results" title="Permalink to this headline">¶</a></h2>
 <p>The result returned by the analysis call will be a dictionary
-containing three lists</p>
+containing five lists:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s1">&#39;timestamps&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">timestamps</span> <span class="o">...</span><span class="p">],</span>
     <span class="s1">&#39;rms&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">RMS</span> <span class="n">values</span> <span class="o">...</span><span class="p">]</span>
+    <span class="s1">&#39;rms_dc&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">RMS</span> <span class="n">values</span> <span class="n">without</span> <span class="n">DC</span> <span class="n">component</span> <span class="o">...</span><span class="p">],</span>
+    <span class="s1">&#39;dc&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">DC</span> <span class="n">component</span> <span class="n">values</span> <span class="o">...</span><span class="p">]</span>
+    <span class="s1">&#39;utilization&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="nb">list</span> <span class="k">with</span> <span class="n">timestamp</span> <span class="n">utilization</span> <span class="o">...</span><span class="p">],</span>
 <span class="p">}</span>
 </pre></div>
 </div>
