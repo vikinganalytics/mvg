@@ -50,10 +50,7 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.6.1")
-        # worked on 0.1.6
-        # worked on 0.1.10
-        # failed on 0.1.11
+        self.mvg_version = self.parse_version("v0.6.3")
         self.tested_api_version = self.parse_version("v0.1.12")
 
         # Errors to ignore
