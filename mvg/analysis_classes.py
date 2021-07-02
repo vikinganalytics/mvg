@@ -8,7 +8,7 @@ Basic usage:
 >>> result.plot() # plot results
 >>> result.summary() # print summary table
 >>> df = result.to_df() # convert to dataframe
->>> result.save() # save to pickle file
+>>> result.save_pkl() # save to pickle file
 
 The parse function will detect the kind of request and return an object
 of the correct feature class.
@@ -56,9 +56,10 @@ class Analysis:
         self._t_unit = t_unit
 
         # Dataframe representation
-        self._dframe = None
+        self._results_df = None
 
         self._inputs = results.get("inputs", "Inputs not available")
+
         self.time_column = None
 
     def _render_plot(self, interactive):
@@ -98,20 +99,7 @@ class Analysis:
         datetime.
         """
 
-        # Check if there is info for conversion
-        if self._t_zone is not None:
-            # EPOCH to datetime
-            self._dframe = self._dframe.assign(
-                datetime=pd.to_datetime(
-                    self._dframe["timestamps"], unit=self._t_unit, utc=True
-                )
-            )
-            # Set timezone
-            self._dframe = self._dframe.assign(
-                datetime=(self._dframe["datetime"].dt.tz_convert(self._t_zone))
-            )
-            # Mark datetime as availbke
-            self.time_column = "datetime"
+        self._results_df = self._add_datetime_df(self._results_df, "datetime")
 
     def _add_datetime_df(self, dframe, timecolumn):
         """
@@ -134,15 +122,15 @@ class Analysis:
 
         # Check if there is info for conversion
         if self._t_zone is not None:
-            # EPOCH to datetime
-            dframe = dframe.assign(
-                datetime=pd.to_datetime(dframe[timecolumn], unit=self._t_unit, utc=True)
-            )
-            # Set timezone
-            dframe = dframe.assign(
-                datetime=(dframe["datetime"].dt.tz_convert(self._t_zone))
-            )
-            # Mark datetime as availble
+
+            # EPOCH to datetime considering time zone
+            dt_col = pd.to_datetime(
+                    self._results_df["timestamps"], unit=self._t_unit, utc=True
+            ).dt.tz_convert(self._t_zone)
+            
+            dframe["datetime"] = dt_col
+
+            # Mark datetime as available
             self.time_column = "datetime"
 
         return dframe
@@ -176,16 +164,6 @@ class Analysis:
         """
 
         return self._raw_results["feature"]
-
-    def request_params(self):
-        """inputs to the analysis run
-
-        Returns
-        -------
-        results: dict
-        """
-
-        return self._inputs
 
     def results(self):
         """results dict as returned from request
@@ -254,8 +232,8 @@ class Analysis:
         self.check_status()
         # print time info if applicable
         if self.time_column is not None:
-            from_t = self._dframe[self.time_column].min()
-            to_t = self._dframe[self.time_column].max()
+            from_t = self._results_df[self.time_column].min()
+            to_t = self._results_df[self.time_column].max()
             if self.time_column == "datetime":
                 from_t = from_t.strftime("%Y%m%d-%H:%M.%S")
                 to_t = to_t.strftime("%Y%m%d-%H:%M.%S")
@@ -282,7 +260,7 @@ class Analysis:
         return ""
 
     # Save self as pickel
-    def save(self, file_name=None):
+    def save_pkl(self, file_name=None):
         """Serializes the analysis object as pickle file.
         In case of filname is not given, filename will be
         <request_id>.pkl
@@ -304,18 +282,9 @@ class Analysis:
             pickle.dump(self, pkl_file)
         return file_name
 
-    # Save results to dataframe
-    def to_df(self, file_name=None):
+    # Return results as dataframe
+    def to_df(self):
         """Return a dataframe with the analysis results.
-        Save as csv if file_name given.
-        Format of the dataframe depends on specific analysis.
-        Will raise an exception in case no results are available.
-
-        Parameters
-        ----------
-        file_name: str
-            filename to save object under. If not given no file is saved.
-
         Returns
         -------
         Dataframe with analysis results: dataFrame
@@ -323,13 +292,39 @@ class Analysis:
         """
 
         self.check_status()
-        if file_name is not None:
-            print(f"Saving {self.feature()} data frame results to", file_name)
-            self._dframe.copy().to_csv(file_name, index=False)
-        return self._dframe
+        return self._results_df
 
+    # Save results to dataframe
+    def save_df(self, file_name=None):
+        """Save a dataframe with the analysis results.
+        In case of filname is not given, filename will be
+        <request_id>.csv
+        Format of the dataframe depends on specific analysis.
+        Will raise an exception in case no results are available.
+
+        Parameters
+        ----------
+        file_name: str
+            filename to save dataframe under. 
+
+        Returns
+        -------
+        Actually used file path: str
+
+        """
+
+        self.check_status()
+        
+        if file_name is None:
+            file_name = f"{self.request_id()}.csv"
+
+        print(f"Saving {self.feature()} data frame results to", file_name)
+        self._results_df.copy().to_csv(file_name, index=False)
+
+        return file_name
+    
     # Save self as pickel
-    def to_json(self, file_name=None, raw=False):
+    def save_json(self, file_name=None, raw=False):
         """Saves the request result from the API JSON
         In case of filname is not given, filename will be
         <request_id>.json
@@ -380,7 +375,7 @@ class RMS(Analysis):
         """
 
         Analysis.__init__(self, results, t_zone, t_unit)
-        self._dframe = pd.DataFrame.from_dict(self.results())
+        self._results_df = pd.DataFrame.from_dict(self.results())
         self.time_column = "timestamps"
         self._add_datetime()
 
@@ -394,7 +389,7 @@ class RMS(Analysis):
 
         super().summary()
         print()
-        tab = self._dframe.describe()
+        tab = self._results_df.describe()
         print(tabulate(tab, headers="keys", tablefmt="psql"))
         return tab
 
@@ -414,7 +409,7 @@ class RMS(Analysis):
         """
 
         self.check_status()
-        self._dframe.plot(x=self.time_column, y=["rms", "dc", "utilization"])
+        self._results_df.plot(x=self.time_column, y=["rms", "dc", "utilization"])
         plt.title(f"RMS Summary plot for request {self.request_id()}")
         return self._render_plot(interactive)
 
@@ -442,7 +437,7 @@ class ModeId(Analysis):
             dict_for_df = self.results().copy()
             dict_for_emerging = dict_for_df.pop("mode_info")
             self.emerging_df = pd.DataFrame.from_dict(dict_for_emerging)
-            self._dframe = pd.DataFrame.from_dict(dict_for_df)
+            self._results_df = pd.DataFrame.from_dict(dict_for_df)
             self.time_column = "timestamps"
             self._add_datetime()
             self.emerging_df = self._add_datetime_df(self.emerging_df, "emerging_time")
@@ -460,7 +455,7 @@ class ModeId(Analysis):
         super().summary()
 
         # labels
-        tbl = self._dframe.groupby(["labels"]).agg(np.size)
+        tbl = self._results_df.groupby(["labels"]).agg(np.size)
         tbl["uncertain"] = tbl["uncertain"] / sum(tbl["uncertain"]) * 100
         tbl = tbl.rename(columns={"timestamps": "counts", "uncertain": "portion"})
         print()
@@ -468,7 +463,7 @@ class ModeId(Analysis):
         print(tabulate(tbl, headers="keys", tablefmt="psql"))
 
         # Uncertain
-        tbl2 = self._dframe.groupby(
+        tbl2 = self._results_df.groupby(
             ["labels", "uncertain"],
         ).agg(np.size)
         tbl2["counts"] = tbl2["timestamps"]
@@ -528,7 +523,7 @@ class BlackSheep(Analysis):
         if "success" not in self.status():
             print("Analysis was not successful")
         else:
-            self._dframe = self._bsd_df()
+            self._results_df = self._bsd_df()
             # List of which assests are what
             self.typicality = pd.DataFrame(
                 {"source": results["inputs"]["UUID"], "atypical": False}

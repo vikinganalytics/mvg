@@ -30,7 +30,7 @@ def test_RMS():
     assert str(feat.to_df()["datetime"][0]) == "2019-10-04 13:01:00+02:00"
 
     # test save as pickle file
-    pkl_file = feat.save()
+    pkl_file = feat.save_pkl()
     assert pkl_file == "2f6dc5ae055f9e82f6f5311c23250f07.pkl"
 
     assert os.path.exists(pkl_file)
@@ -59,7 +59,7 @@ def test_RMS():
     assert sum(feat.raw_results()["results"]["timestamps"]) == ts_sum
     assert feat.request_id() == "2f6dc5ae055f9e82f6f5311c23250f07"
     assert feat.feature() == "RMS"
-    assert sum(feat.request_params()["timestamps"]) == ts_sum
+    assert sum(feat.inputs()["timestamps"]) == ts_sum
     assert sum(feat.results()["timestamps"]) == ts_sum
     assert feat.status() == "successful"
     assert feat.sources() == ["u0001"]
