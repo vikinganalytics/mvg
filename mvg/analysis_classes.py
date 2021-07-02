@@ -125,13 +125,13 @@ class Analysis:
 
             # EPOCH to datetime considering time zone
             dt_col = pd.to_datetime(
-                    self._results_df["timestamps"], unit=self._t_unit, utc=True
+                dframe["timestamps"], unit=self._t_unit, utc=True
             ).dt.tz_convert(self._t_zone)
-            
+
             dframe["datetime"] = dt_col
 
-            # Mark datetime as available
-            self.time_column = "datetime"
+            # Mark timecolumn as available
+            self.time_column = timecolumn
 
         return dframe
 
@@ -305,7 +305,7 @@ class Analysis:
         Parameters
         ----------
         file_name: str
-            filename to save dataframe under. 
+            filename to save dataframe under.
 
         Returns
         -------
@@ -314,7 +314,7 @@ class Analysis:
         """
 
         self.check_status()
-        
+
         if file_name is None:
             file_name = f"{self.request_id()}.csv"
 
@@ -322,7 +322,7 @@ class Analysis:
         self._results_df.copy().to_csv(file_name, index=False)
 
         return file_name
-    
+
     # Save self as pickel
     def save_json(self, file_name=None, raw=False):
         """Saves the request result from the API JSON
