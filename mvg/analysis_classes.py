@@ -440,6 +440,7 @@ class ModeId(Analysis):
             self._results_df = pd.DataFrame.from_dict(dict_for_df)
             self.time_column = "timestamps"
             self._add_datetime()
+            breakpoint()
             self.emerging_df = self._add_datetime_df(self.emerging_df, "emerging_time")
 
     def summary(self):
@@ -480,7 +481,7 @@ class ModeId(Analysis):
 
         return [tbl, tbl2, self.emerging_df]
 
-    def plot(self, interactive=True):
+    def plot(self, interactive=True, time_format = None):
         """
         Generate a basic plot on ModeId.
 
@@ -496,7 +497,11 @@ class ModeId(Analysis):
         """
 
         self.check_status()
-        plotting.modes_over_time(self.to_df(), self.request_id(), timeunit=self._t_unit)
+        plotting.modes_over_time(data=self.to_df(),
+                                 request_id=self.request_id(),
+                                 timeunit=self._t_unit,
+                                 time_format=time_format)
+        
         return self._render_plot(interactive)
 
 

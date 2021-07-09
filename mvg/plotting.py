@@ -148,6 +148,7 @@ def modes_over_time(
     show_uncertain=True,
     only_start_end_timeticks=False,
     timetick_angle=85,
+    time_format = None
 ):
     """Creates a rectangular timeline of modes.
 
@@ -188,6 +189,10 @@ def modes_over_time(
 
     timetick_angle: float, optional
         the angle of time tick texts.
+
+    timeformat: str, optional
+        strftime format specifier for tick_x_lables. If not given 
+        only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
     Returns
     ----------
@@ -286,7 +291,11 @@ def modes_over_time(
 
     # Modify ticks position and create legend
     df_changes = data.iloc[tick_index]
-    tick_x_labels = df_changes["Date"].apply(lambda x: x.date())
+    if time_format is None:
+        tick_x_labels = df_changes["Date"].apply(lambda x: x.date())
+    else:
+        tick_x_labels = df_changes["Date"].apply(lambda x: x.strftime(time_format))
+    
     axes.set_xticklabels(tick_x_labels, rotation=timetick_angle)
     legend_labels = [
         patches.Patch(facecolor=colors[i], edgecolor="black", label="No data")
