@@ -30,7 +30,7 @@ def test_RMS():
     assert str(feat.to_df()["datetime"][0]) == "2019-10-04 13:01:00+02:00"
 
     # test save as pickle file
-    pkl_file = feat.save()
+    pkl_file = feat.save_pkl()
     assert pkl_file == "2f6dc5ae055f9e82f6f5311c23250f07.pkl"
 
     assert os.path.exists(pkl_file)
@@ -49,6 +49,20 @@ def test_RMS():
     }
 
     # Plot (not tested at all)
+    plt_file = feat.plot(False)
+    assert plt_file is not None
+    assert os.path.exists(plt_file)
+    os.remove(plt_file)  # Cleanup
+
+    # Accessor functions (tested only in RMS)
+    ts_sum = 78615280200
+    assert sum(feat.raw_results()["results"]["timestamps"]) == ts_sum
+    assert feat.request_id() == "2f6dc5ae055f9e82f6f5311c23250f07"
+    assert feat.feature() == "RMS"
+    assert sum(feat.inputs()["timestamps"]) == ts_sum
+    assert sum(feat.results()["timestamps"]) == ts_sum
+    assert feat.status() == "successful"
+    assert feat.sources() == ["u0001"]
 
 
 def test_BlackSheep():

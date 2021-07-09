@@ -8,7 +8,7 @@ Basic usage:
 >>> result.plot() # plot results
 >>> result.summary() # print summary table
 >>> df = result.to_df() # convert to dataframe
->>> result.save() # save to pickle file
+>>> result.save_pkl() # save to pickle file
 
 The parse function will detect the kind of request and return an object
 of the correct feature class.
@@ -48,12 +48,46 @@ class Analysis:
             time unit for conversion from epoch time [ms].
         """
 
-        self.raw_results = results
-        self.t_zone = t_zone
-        self.t_unit = t_unit
-        self.dframe = None
-        self.inputs = results.get("inputs", "Inputs not available")
+        # raw_results as returned from server
+        self._raw_results = results
+
+        # timezone and unit set in constructor
+        self._t_zone = t_zone
+        self._t_unit = t_unit
+
+        # Dataframe representation
+        self._results_df = None
+
+        self._inputs = results.get("inputs", "Inputs not available")
+
         self.time_column = None
+
+    def _render_plot(self, interactive):
+        """Render plot to screen (interactive) or file.
+
+        Parameters
+        ---------
+        interactive: bool
+            Wheter to display plot on screen (True) or to store to file (False).
+
+        Returns
+        -------
+        plot file name: str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
+        if interactive:
+            plot_file = ""
+            plt.show()
+        else:
+            if len(self.sources()) > 1:
+                srcstr = self.sources()[0] + "_to_" + self.sources()[-1] + "_"
+            else:
+                srcstr = self.sources()[0] + "_"
+            plot_file = srcstr + self.request_id() + ".png"
+            plt.savefig(plot_file, dpi=600, bbox_inches="tight")
+            print(f"saved plot to {plot_file}")
+
+        return plot_file
 
     def _add_datetime(self):
         """
@@ -65,20 +99,7 @@ class Analysis:
         datetime.
         """
 
-        # Check if there is info for conversion
-        if self.t_zone is not None:
-            # EPOCH to datetime
-            self.dframe = self.dframe.assign(
-                datetime=pd.to_datetime(
-                    self.dframe["timestamps"], unit=self.t_unit, utc=True
-                )
-            )
-            # Set timezone
-            self.dframe = self.dframe.assign(
-                datetime=(self.dframe["datetime"].dt.tz_convert(self.t_zone))
-            )
-            # Mark datetime as availbke
-            self.time_column = "datetime"
+        self._results_df = self._add_datetime_df(self._results_df, "datetime")
 
     def _add_datetime_df(self, dframe, timecolumn):
         """
@@ -100,21 +121,30 @@ class Analysis:
         """
 
         # Check if there is info for conversion
-        if self.t_zone is not None:
-            # EPOCH to datetime
-            dframe = dframe.assign(
-                datetime=pd.to_datetime(dframe[timecolumn], unit=self.t_unit, utc=True)
-            )
-            # Set timezone
-            dframe = dframe.assign(
-                datetime=(dframe["datetime"].dt.tz_convert(self.t_zone))
-            )
-            # Mark datetime as availble
-            self.time_column = "datetime"
+        if self._t_zone is not None:
+
+            # EPOCH to datetime considering time zone
+            dt_col = pd.to_datetime(
+                dframe["timestamps"], unit=self._t_unit, utc=True
+            ).dt.tz_convert(self._t_zone)
+
+            dframe["datetime"] = dt_col
+
+            # Mark timecolumn as available
+            self.time_column = timecolumn
 
         return dframe
 
     # Accessor functions
+    def raw_results(self):
+        """Raw results as returned by server
+        Returns
+        -------
+        raw_results: dict
+        """
+
+        return self._raw_results
+
     def request_id(self):
         """request_id from request
 
@@ -123,7 +153,7 @@ class Analysis:
         request_id: str
         """
 
-        return self.raw_results["request_id"]
+        return self._raw_results["request_id"]
 
     def feature(self):
         """feature from request
@@ -133,17 +163,7 @@ class Analysis:
         feature: str
         """
 
-        return self.raw_results["feature"]
-
-    def request_params(self):
-        """inputs to the analysis run
-
-        Returns
-        -------
-        results: dict
-        """
-
-        return self.inputs
+        return self._raw_results["feature"]
 
     def results(self):
         """results dict as returned from request
@@ -153,7 +173,7 @@ class Analysis:
         results: dict
         """
 
-        return self.raw_results["results"]
+        return self._raw_results["results"]
 
     def status(self):
         """status from request
@@ -163,7 +183,31 @@ class Analysis:
         status: str
         """
 
-        return self.raw_results["status"]
+        return self._raw_results["status"]
+
+    def inputs(self):
+        """inputs to the request algortihm
+
+        Returns
+        -------
+        inputs: dict
+        """
+
+        return self._inputs
+
+    def sources(self):
+        """sources to the request algortihm
+
+        Returns
+        -------
+        sources: list
+        """
+
+        sources = self.inputs()["UUID"]
+        if not isinstance(self.inputs()["UUID"], list):
+            sources = [self.inputs()["UUID"]]
+
+        return sources
 
     # For avoiding problems when no results are available
     def check_status(self):
@@ -188,21 +232,35 @@ class Analysis:
         self.check_status()
         # print time info if applicable
         if self.time_column is not None:
-            from_t = self.dframe[self.time_column].min()
-            to_t = self.dframe[self.time_column].max()
+            from_t = self._results_df[self.time_column].min()
+            to_t = self._results_df[self.time_column].max()
             if self.time_column == "datetime":
                 from_t = from_t.strftime("%Y%m%d-%H:%M.%S")
                 to_t = to_t.strftime("%Y%m%d-%H:%M.%S")
             print(f"from {from_t} to {to_t}")
 
     # Default method
-    def plot(self):
-        """ Pro forma ancestor function"""
+    def plot(self, interactive=True):  # pylint: disable=unused-argument
+        """Pro forma ancestor function.
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+
+        Returns
+        -------
+        plot file name: str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
+
         self.check_status()
         print(f"Plot function not implemented for {type(self).__name__}")
+        return ""
 
     # Save self as pickel
-    def save(self, file_name=None):
+    def save_pkl(self, file_name=None):
         """Serializes the analysis object as pickle file.
         In case of filname is not given, filename will be
         <request_id>.pkl
@@ -224,18 +282,9 @@ class Analysis:
             pickle.dump(self, pkl_file)
         return file_name
 
-    # Save results to dataframe
-    def to_df(self, file_name=None):
+    # Return results as dataframe
+    def to_df(self):
         """Return a dataframe with the analysis results.
-        Save as csv if file_name given.
-        Format of the dataframe depends on specific analysis.
-        Will raise an exception in case no results are available.
-
-        Parameters
-        ----------
-        file_name: str
-            filename to save object under. If not given no file is saved.
-
         Returns
         -------
         Dataframe with analysis results: dataFrame
@@ -243,13 +292,39 @@ class Analysis:
         """
 
         self.check_status()
-        if file_name is not None:
-            print(f"Saving {self.feature()} data frame results to", file_name)
-            self.dframe.copy().to_csv(file_name, index=False)
-        return self.dframe
+        return self._results_df
+
+    # Save results to dataframe
+    def save_df(self, file_name=None):
+        """Save a dataframe with the analysis results.
+        In case of filname is not given, filename will be
+        <request_id>.csv
+        Format of the dataframe depends on specific analysis.
+        Will raise an exception in case no results are available.
+
+        Parameters
+        ----------
+        file_name: str
+            filename to save dataframe under.
+
+        Returns
+        -------
+        Actually used file path: str
+
+        """
+
+        self.check_status()
+
+        if file_name is None:
+            file_name = f"{self.request_id()}.csv"
+
+        print(f"Saving {self.feature()} data frame results to", file_name)
+        self._results_df.copy().to_csv(file_name, index=False)
+
+        return file_name
 
     # Save self as pickel
-    def to_json(self, file_name=None, raw=False):
+    def save_json(self, file_name=None, raw=False):
         """Saves the request result from the API JSON
         In case of filname is not given, filename will be
         <request_id>.json
@@ -272,7 +347,7 @@ class Analysis:
         print(f"Saving {self.feature()} API results to", file_name)
 
         if raw:
-            s_dict = self.raw_results
+            s_dict = self._raw_results
         else:
             s_dict = self.results()
 
@@ -300,7 +375,7 @@ class RMS(Analysis):
         """
 
         Analysis.__init__(self, results, t_zone, t_unit)
-        self.dframe = pd.DataFrame.from_dict(self.results())
+        self._results_df = pd.DataFrame.from_dict(self.results())
         self.time_column = "timestamps"
         self._add_datetime()
 
@@ -314,17 +389,29 @@ class RMS(Analysis):
 
         super().summary()
         print()
-        tab = self.dframe.describe()
+        tab = self._results_df.describe()
         print(tabulate(tab, headers="keys", tablefmt="psql"))
         return tab
 
-    def plot(self):
-        """Generate a basic plot on RMS."""
+    def plot(self, interactive=True):
+        """
+        Generate a basic plot on RMS.
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+        Returns
+        -------
+        plot file name : str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
 
         self.check_status()
-        self.dframe.plot(x=self.time_column, y=["rms", "dc", "utilization"])
+        self._results_df.plot(x=self.time_column, y=["rms", "dc", "utilization"])
         plt.title(f"RMS Summary plot for request {self.request_id()}")
-        plt.show()
+        return self._render_plot(interactive)
 
 
 class ModeId(Analysis):
@@ -350,7 +437,7 @@ class ModeId(Analysis):
             dict_for_df = self.results().copy()
             dict_for_emerging = dict_for_df.pop("mode_info")
             self.emerging_df = pd.DataFrame.from_dict(dict_for_emerging)
-            self.dframe = pd.DataFrame.from_dict(dict_for_df)
+            self._results_df = pd.DataFrame.from_dict(dict_for_df)
             self.time_column = "timestamps"
             self._add_datetime()
             self.emerging_df = self._add_datetime_df(self.emerging_df, "emerging_time")
@@ -368,7 +455,7 @@ class ModeId(Analysis):
         super().summary()
 
         # labels
-        tbl = self.dframe.groupby(["labels"]).agg(np.size)
+        tbl = self._results_df.groupby(["labels"]).agg(np.size)
         tbl["uncertain"] = tbl["uncertain"] / sum(tbl["uncertain"]) * 100
         tbl = tbl.rename(columns={"timestamps": "counts", "uncertain": "portion"})
         print()
@@ -376,7 +463,7 @@ class ModeId(Analysis):
         print(tabulate(tbl, headers="keys", tablefmt="psql"))
 
         # Uncertain
-        tbl2 = self.dframe.groupby(
+        tbl2 = self._results_df.groupby(
             ["labels", "uncertain"],
         ).agg(np.size)
         tbl2["counts"] = tbl2["timestamps"]
@@ -393,11 +480,24 @@ class ModeId(Analysis):
 
         return [tbl, tbl2, self.emerging_df]
 
-    def plot(self):
-        """Generate a basic plot on ModeId."""
+    def plot(self, interactive=True):
+        """
+        Generate a basic plot on ModeId.
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+        Returns
+        -------
+        plot file name : str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
+
         self.check_status()
-        plotting.modes_over_time(self.to_df(), self.request_id(), timeunit=self.t_unit)
-        plt.show()
+        plotting.modes_over_time(self.to_df(), self.request_id(), timeunit=self._t_unit)
+        return self._render_plot(interactive)
 
 
 class BlackSheep(Analysis):
@@ -423,7 +523,7 @@ class BlackSheep(Analysis):
         if "success" not in self.status():
             print("Analysis was not successful")
         else:
-            self.dframe = self._bsd_df()
+            self._results_df = self._bsd_df()
             # List of which assests are what
             self.typicality = pd.DataFrame(
                 {"source": results["inputs"]["UUID"], "atypical": False}
@@ -479,10 +579,21 @@ class BlackSheep(Analysis):
         print(tabulate(tbl, headers=["atypical", "N"], tablefmt="psql"))
         return [self.typicality, tbl]
 
-    def plot(self):
+    def plot(self, interactive=True):
         """Generate a (not so) basic plot for BlackSheep
         Will show per atypical asset changes to and from
-        atypical modes (experimental)"""
+        atypical modes
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+        Returns
+        -------
+        plot file name : str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
 
         # Check if run was successful
         self.check_status()
@@ -495,13 +606,13 @@ class BlackSheep(Analysis):
 
         # x axis ticks timestamps of changes in atypicality
         # Find changes in atypticality and store rows in
-        pdfd.insert(3, "hash", 0)
+        pdfd.insert(len(pdfd.columns), "hash", 0)
         for row in pdfd.itertuples():
             pdfd.at[row.Index, "hash"] = hash(row[2:])
         ticktimes = pdfd.loc[pdfd["hash"].shift(1) != pdfd["hash"]]
 
         # Convert EPOCH if t_zone given
-        if self.t_zone is not None:
+        if self._t_zone is not None:
             ticktimes = self._add_datetime_df(ticktimes, "timestamps")
 
         # select reasonable number of ticks
@@ -551,7 +662,7 @@ class BlackSheep(Analysis):
         bsd_plt.imshow(plotmx, aspect="auto", cmap=mcm)
 
         # Display plot
-        plt.show()
+        return self._render_plot(interactive)
 
 
 # Parser/Factory function

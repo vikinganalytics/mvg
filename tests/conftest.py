@@ -58,6 +58,8 @@ def docker_compose_file(pytestconfig):
 # for docker-run (--host not set)
 # or for run towards a running server
 # e.g. --host http://127.0.0.1:8000
+# the token shall be stored in an environemnt variable
+# TEST_TOKEN
 if args.host == "":
 
     @pytest.fixture(scope="session")

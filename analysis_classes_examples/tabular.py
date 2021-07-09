@@ -48,5 +48,4 @@ except HTTPError as exc:
 ana = parse_results(ana_res, t_zone="Europe/Stockholm", t_unit="s")
 ana.plot()
 ana.summary()
-ana.save()
 print("Bye")
