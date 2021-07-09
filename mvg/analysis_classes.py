@@ -99,7 +99,7 @@ class Analysis:
         datetime.
         """
 
-        self._results_df = self._add_datetime_df(self._results_df, "datetime")
+        self._results_df = self._add_datetime_df(self._results_df, "timestamps")
 
     def _add_datetime_df(self, dframe, timecolumn):
         """
@@ -125,13 +125,13 @@ class Analysis:
 
             # EPOCH to datetime considering time zone
             dt_col = pd.to_datetime(
-                dframe["timestamps"], unit=self._t_unit, utc=True
+                dframe[timecolumn], unit=self._t_unit, utc=True
             ).dt.tz_convert(self._t_zone)
 
             dframe["datetime"] = dt_col
 
             # Mark timecolumn as available
-            self.time_column = timecolumn
+            # self.time_column = timecolumn
 
         return dframe
 
@@ -240,7 +240,9 @@ class Analysis:
             print(f"from {from_t} to {to_t}")
 
     # Default method
-    def plot(self, interactive=True):  # pylint: disable=unused-argument
+    def plot(
+        self, interactive=True, time_format=None
+    ):  # pylint: disable=unused-argument
         """Pro forma ancestor function.
 
         Parameters
@@ -248,6 +250,9 @@ class Analysis:
         interactive : bool
             True: show plot, False: save plot
 
+        time_format: str, optional
+            strftime format specifier for tick_x_lables. If not given
+            only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
         Returns
         -------
@@ -393,7 +398,7 @@ class RMS(Analysis):
         print(tabulate(tab, headers="keys", tablefmt="psql"))
         return tab
 
-    def plot(self, interactive=True):
+    def plot(self, interactive=True, time_format=None):
         """
         Generate a basic plot on RMS.
 
@@ -401,6 +406,11 @@ class RMS(Analysis):
         ----------
         interactive : bool
             True: show plot, False: save plot
+
+        time_format: str, optional
+            strftime format specifier for tick_x_lables. If not given
+            only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
 
         Returns
         -------
@@ -440,7 +450,6 @@ class ModeId(Analysis):
             self._results_df = pd.DataFrame.from_dict(dict_for_df)
             self.time_column = "timestamps"
             self._add_datetime()
-            breakpoint()
             self.emerging_df = self._add_datetime_df(self.emerging_df, "emerging_time")
 
     def summary(self):
@@ -481,7 +490,7 @@ class ModeId(Analysis):
 
         return [tbl, tbl2, self.emerging_df]
 
-    def plot(self, interactive=True, time_format = None):
+    def plot(self, interactive=True, time_format=None):
         """
         Generate a basic plot on ModeId.
 
@@ -490,6 +499,10 @@ class ModeId(Analysis):
         interactive : bool
             True: show plot, False: save plot
 
+        time_format: str, optional
+            strftime format specifier for tick_x_lables. If not given
+            only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
         Returns
         -------
         plot file name : str
@@ -497,11 +510,13 @@ class ModeId(Analysis):
         """
 
         self.check_status()
-        plotting.modes_over_time(data=self.to_df(),
-                                 request_id=self.request_id(),
-                                 timeunit=self._t_unit,
-                                 time_format=time_format)
-        
+        plotting.modes_over_time(
+            data=self.to_df(),
+            request_id=self.request_id(),
+            timeunit=self._t_unit,
+            time_format=time_format,
+        )
+
         return self._render_plot(interactive)
 
 
@@ -584,7 +599,8 @@ class BlackSheep(Analysis):
         print(tabulate(tbl, headers=["atypical", "N"], tablefmt="psql"))
         return [self.typicality, tbl]
 
-    def plot(self, interactive=True):
+    # pylint: disable=too-many-locals
+    def plot(self, interactive=True, time_format=None):
         """Generate a (not so) basic plot for BlackSheep
         Will show per atypical asset changes to and from
         atypical modes
@@ -593,6 +609,11 @@ class BlackSheep(Analysis):
         ----------
         interactive : bool
             True: show plot, False: save plot
+
+        time_format: str, optional
+            strftime format specifier for tick_x_lables. If not given
+            only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
 
         Returns
         -------

@@ -89,9 +89,8 @@ def get_and_display_results(ses, request_id, show, pdb):
         breakpoint()
     
     res.summary()
-    res.plot(show)
+    res.plot(show,time_format="%y%m%d-%H:%M:%S")
     res.to_df().head()
-    res.save()
     print("Bye")
 
 
