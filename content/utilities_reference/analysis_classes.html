@@ -64,7 +64,7 @@
 
           
             
-            <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
+            <img src="../../_static/content/img/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -93,7 +93,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Examples</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../examples/brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/check_version.html">Check Version Example</a></li>
@@ -102,14 +102,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/analysis_visual.html">Analysis and Results Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/tabular_example.html">Working with Tabular Data</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Features</span></p>
+<p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../api_reference/mvg.html">MutliViz Analytics Engine</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MutliViz Analysis Classes</a></li>
@@ -214,7 +214,7 @@ a pandas dataFrame.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span> <span class="c1"># plot results</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span> <span class="c1"># print summary table</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span> <span class="c1"># convert to dataframe</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c1"># save to pickle file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">save_pkl</span><span class="p">()</span> <span class="c1"># save to pickle file</span>
 </pre></div>
 </div>
 <p>The parse function will detect the kind of request and return an object
@@ -244,9 +244,42 @@ of the correct feature class.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>inputs to the request algortihm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>inputs</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pro forma ancestor function</p>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pro forma ancestor function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.raw_results">
+<span class="sig-name descname"><span class="pre">raw_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.raw_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raw results as returned by server
+:returns: <strong>raw_results</strong>
+:rtype: dict</p>
 </dd></dl>
 
 <dl class="py method">
@@ -259,20 +292,6 @@ of the correct feature class.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.request_params">
-<span class="sig-name descname"><span class="pre">request_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.request_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>inputs to the analysis run</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>results</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -292,8 +311,52 @@ of the correct feature class.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.save" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.save_df">
+<span class="sig-name descname"><span class="pre">save_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.save_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a dataframe with the analysis results.
+In case of filname is not given, filename will be
+&lt;request_id&gt;.csv
+Format of the dataframe depends on specific analysis.
+Will raise an exception in case no results are available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – filename to save dataframe under.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Actually used file path</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.save_json">
+<span class="sig-name descname"><span class="pre">save_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.save_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the request result from the API JSON
+In case of filname is not given, filename will be
+&lt;request_id&gt;.json</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – filename to save object under.</p></li>
+<li><p><strong>raw</strong> (<em>boolean</em>) – return only alogrithm results [false, default]
+return full request response [true]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Actually used file path</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.save_pkl">
+<span class="sig-name descname"><span class="pre">save_pkl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.save_pkl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serializes the analysis object as pickle file.
 In case of filname is not given, filename will be
 &lt;request_id&gt;.pkl</p>
@@ -306,6 +369,20 @@ In case of filname is not given, filename will be
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.sources">
+<span class="sig-name descname"><span class="pre">sources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>sources to the request algortihm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>sources</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -334,45 +411,10 @@ successful</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.to_df">
-<span class="sig-name descname"><span class="pre">to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.to_df" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">to_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.to_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dataframe with the analysis results.
-Save as csv if file_name given.
-Format of the dataframe depends on specific analysis.
-Will raise an exception in case no results are available.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – filename to save object under. If not given no file is saved.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>Dataframe with analysis results</strong></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.to_json">
-<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves the request result from the API JSON
-In case of filname is not given, filename will be
-&lt;request_id&gt;.json</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file_name</strong> (<em>str</em>) – filename to save object under.</p></li>
-<li><p><strong>raw</strong> (<em>boolean</em>) – return only alogrithm results [false, default]
-return full request response [true]</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>Actually used file path</strong></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
+:returns: <strong>Dataframe with analysis results</strong>
+:rtype: dataFrame</p>
 </dd></dl>
 
 </dd></dl>
@@ -383,10 +425,21 @@ return full request response [true]</p></li>
 <dd><p>Bases: <a class="reference internal" href="#mvg.analysis_classes.Analysis" title="mvg.analysis_classes.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.analysis_classes.Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.BlackSheep.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.BlackSheep.plot" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.BlackSheep.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a (not so) basic plot for BlackSheep
 Will show per atypical asset changes to and from
-atypical modes (experimental)</p>
+atypical modes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -411,8 +464,19 @@ atypical modes (experimental)</p>
 <dd><p>Bases: <a class="reference internal" href="#mvg.analysis_classes.Analysis" title="mvg.analysis_classes.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.analysis_classes.Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.ModeId.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.ModeId.plot" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.ModeId.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a basic plot on ModeId.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -438,8 +502,19 @@ atypical modes (experimental)</p>
 <p>Analysis class for RMS feature.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.RMS.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.RMS.plot" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.RMS.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a basic plot on RMS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

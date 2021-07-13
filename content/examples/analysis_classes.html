@@ -65,7 +65,7 @@
 
           
             
-            <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
+            <img src="../../_static/content/img/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -94,7 +94,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Examples</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
@@ -103,14 +103,14 @@
 <li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tabular_example.html">Working with Tabular Data</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Features</span></p>
+<p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../api_reference/mvg.html">MutliViz Analytics Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../utilities_reference/analysis_classes.html">MutliViz Analysis Classes</a></li>
@@ -462,7 +462,7 @@ div.rendered_html tbody tr:hover {
 <span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span> <span class="c1"># plot results</span>
 <span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span> <span class="c1"># print summary table</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span> <span class="c1"># convert to DataFrame</span>
-<span class="n">result</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c1"># save to pickle file</span>
+<span class="n">result</span><span class="o">.</span><span class="n">save_pkl</span><span class="p">()</span> <span class="c1"># save to pickle file</span>
 </pre></div>
 </div>
 <div class="section" id="Prerequisites">
@@ -475,7 +475,7 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Importing-the-required-packages,-classes-and-functions">
 <h3>Importing the required packages, classes and functions<a class="headerlink" href="#Importing-the-required-packages,-classes-and-functions" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -496,7 +496,7 @@ div.rendered_html tbody tr:hover {
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the Viking Analytics MultiViz Vibration service.</p>
 <p><strong>You need to insert your token received from Viking Analytics here:</strong></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -523,8 +523,8 @@ Using developer API: 0.0.0-dev0. You must confirm compatibility yourself.
 <div class="highlight"><pre>
 {
     &#34;api_version&#34;: &#34;0.0.0-dev0&#34;,
-    &#34;mvg_highest_tested_version&#34;: &#34;0.1.6&#34;,
-    &#34;mvg_version&#34;: &#34;0.6.0&#34;
+    &#34;mvg_highest_tested_version&#34;: &#34;0.1.12&#34;,
+    &#34;mvg_version&#34;: &#34;0.6.3&#34;
 }
 </pre></div></div>
 </div>
@@ -533,7 +533,7 @@ Using developer API: 0.0.0-dev0. You must confirm compatibility yourself.
 <h3>Running the Analyses<a class="headerlink" href="#Running-the-Analyses" title="Permalink to this headline">¶</a></h3>
 <p>Once the API session is live, we start by checking if the source u0001 we will use is available in the database:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -567,7 +567,7 @@ Using developer API: 0.0.0-dev0. You must confirm compatibility yourself.
 <p>We will now request an analysis (first two lines, uncomment one of them) and wait for the results to become available.</p>
 <p>The results as returned will be stored in a dictionary named <code class="docutils literal notranslate"><span class="pre">raw_result</span></code>. The raw results are shown in the results cell, mainly to show that they are not optimized for readability or interpretation.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -941,7 +941,7 @@ Waiting for {&#39;request_id&#39;: &#39;1643d1ddbf3af3fcbb831fc71ca56df5&#39;, &
 <h2>Timestamps<a class="headerlink" href="#Timestamps" title="Permalink to this headline">¶</a></h2>
 <p>The Vibration API requires timestamps to be represented in EPOCH time. To display human interpertable timestamps a timezone and a time unit (specifying if the timestamps are seconds ‘s’ or milliseconds ‘ms’ from EPOCH). This information can be given in the parse_results calls 2nd and 3rd argument). If they are left blank EPOCH times are kept. When exporting the results to a DataFrame, a column called “datetime” will be appended to show the human interpretable times.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -977,7 +977,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1079,7 +1079,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 <h3>Plotting<a class="headerlink" href="#Plotting" title="Permalink to this headline">¶</a></h3>
 <p>For visual representation of the results there is the ‘plot’ method:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1087,19 +1087,28 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <img alt="../../_images/content_examples_analysis_classes_12_0.png" src="../../_images/content_examples_analysis_classes_12_0.png" />
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;&#39;
+</pre></div></div>
+</div>
 </div>
 <div class="section" id="Export-results-to-DataFrame">
 <h3>Export results to DataFrame<a class="headerlink" href="#Export-results-to-DataFrame" title="Permalink to this headline">¶</a></h3>
 <p>The to_df() method will export results to a DataFrame. Note that the format of the DataFrame depends on the specific analysis and that not all of the results can be represented as a data frame.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1108,7 +1117,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1598,7 +1607,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 <h3>Full results<a class="headerlink" href="#Full-results" title="Permalink to this headline">¶</a></h3>
 <p>In case the full server results are needed in the form they were returned, we can obtain them with the results() method:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1879,7 +1888,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 <h4>Black Sheep Analysis example<a class="headerlink" href="#Black-Sheep-Analysis-example" title="Permalink to this headline">¶</a></h4>
 <p>The BlackSheep is a population analysis and has a somewhat different call signature as it requires a number of assets to be submitted to analysis.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1962,11 +1971,11 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     1574424060
                 ],
                 &#34;labels&#34;: [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
                     2,
                     2,
                     2,
@@ -1977,6 +1986,21 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     2,
                     2,
                     2,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
                     0,
                     0,
                     0,
@@ -1992,26 +2016,11 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     0,
                     0,
                     0,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
                 ],
                 &#34;atypical&#34;: [
                     false,
@@ -2121,38 +2130,38 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     1574424060
                 ],
                 &#34;labels&#34;: [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
                     2,
                     2,
                     2,
                     2,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
                     2,
                     2,
                     2,
@@ -2959,7 +2968,7 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
 <h3>Using the analysis classes<a class="headerlink" href="#Using-the-analysis-classes" title="Permalink to this headline">¶</a></h3>
 <p>We use exactly the same code as above to inspect the results:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -3005,23 +3014,45 @@ request_id 35ffa9730d671736e8393a1946ba275f
 +------------+-----+
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+c:\users\viking\repos\mvg\mvg\analysis_classes.py:131: SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  dframe[&#34;datetime&#34;] = dt_col
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_analysis_classes_20_1.png" src="../../_images/content_examples_analysis_classes_20_1.png" />
+<img alt="../../_images/content_examples_analysis_classes_20_2.png" src="../../_images/content_examples_analysis_classes_20_2.png" />
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;&#39;
+</pre></div></div>
 </div>
 </div>
 <div class="section" id="Serializing">
 <h3>Serializing<a class="headerlink" href="#Serializing" title="Permalink to this headline">¶</a></h3>
 <p>Finally, we can save the object including the results to pickle. If no name is given it is saved under the name &lt;request_id&gt;.pkl.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pretty_result</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span></span><span class="n">pretty_result</span><span class="o">.</span><span class="n">save_pkl</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -3034,13 +3065,22 @@ Saving BlackSheep object to 35ffa9730d671736e8393a1946ba275f.pkl
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 &#39;35ffa9730d671736e8393a1946ba275f.pkl&#39;
 </pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
