@@ -259,11 +259,15 @@ of the correct feature class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.plot" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pro forma ancestor function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
@@ -425,13 +429,17 @@ successful</p>
 <dd><p>Bases: <a class="reference internal" href="#mvg.analysis_classes.Analysis" title="mvg.analysis_classes.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.analysis_classes.Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.BlackSheep.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.BlackSheep.plot" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.BlackSheep.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a (not so) basic plot for BlackSheep
 Will show per atypical asset changes to and from
 atypical modes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
@@ -464,11 +472,15 @@ atypical modes</p>
 <dd><p>Bases: <a class="reference internal" href="#mvg.analysis_classes.Analysis" title="mvg.analysis_classes.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.analysis_classes.Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.ModeId.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.ModeId.plot" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.ModeId.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a basic plot on ModeId.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
@@ -502,11 +514,15 @@ atypical modes</p>
 <p>Analysis class for RMS feature.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.analysis_classes.RMS.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.RMS.plot" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.RMS.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a basic plot on RMS.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
