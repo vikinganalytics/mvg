@@ -549,7 +549,7 @@ class BlackSheep(Analysis):
                 {"source": results["inputs"]["UUID"], "atypical": False}
             )
             self.typicality = self.typicality.set_index("source")
-            aty = [a["uuid"] for a in self.results()["atypical_assets"]]
+            aty = [a["source_id"] for a in self.results()["atypical_assets"]]
             self.typicality.loc[aty] = True
             self.typicality = self.typicality.reset_index()
             self.time_column = None
@@ -557,9 +557,9 @@ class BlackSheep(Analysis):
     def _bsd_df(self):
         # Wide
         def aty_df(ass):
-            uuid = ass.pop("uuid")
+            source_id = ass.pop("source_id")
             bsd_df = pd.DataFrame.from_dict(ass)
-            bsd_df.columns = ["timestamps", uuid + "_label", uuid + "_atypical"]
+            bsd_df.columns = ["timestamps", source_id + "_label", source_id + "_atypical"]
             return bsd_df
 
         wide_df = None
