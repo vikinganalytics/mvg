@@ -559,7 +559,11 @@ class BlackSheep(Analysis):
         def aty_df(ass):
             source_id = ass.pop("source_id")
             bsd_df = pd.DataFrame.from_dict(ass)
-            bsd_df.columns = ["timestamps", source_id + "_label", source_id + "_atypical"]
+            bsd_df.columns = [
+                "timestamps",
+                source_id + "_label",
+                source_id + "_atypical",
+            ]
             return bsd_df
 
         wide_df = None
