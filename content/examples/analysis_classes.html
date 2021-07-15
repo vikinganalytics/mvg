@@ -46,7 +46,9 @@
 
     
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Working with Tabular Data" href="tabular_example.html" />
+    <link rel="prev" title="Analysis and Results Visualization" href="analysis_visual.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -65,7 +67,7 @@
 
           
             
-            <img src="../../_static/content/img/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
+            <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -95,12 +97,38 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sources_and_measurements.html">Sources and Measurements Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Analysis Classes - a Unified Interface to Analysis Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Or-in-(pseudo)-code">Or in (pseudo) code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Prerequisites">Prerequisites</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Example-flow">Example flow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Importing-the-required-packages,-classes-and-functions">Importing the required packages, classes and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Create-a-Session-and-test-API-access">Create a Session and test API access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Running-the-Analyses">Running the Analyses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Requsting-the-Analysis">Requsting the Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Showing-and-Browsing-the-results-using-analysis_classes">Showing and Browsing the results using analysis_classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Timestamps">Timestamps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Plotting">Plotting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Export-results-to-DataFrame">Export results to DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Full-results">Full results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Black-Sheep-Analysis-example">Black Sheep Analysis example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Using-the-analysis-classes">Using the analysis classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Serializing">Serializing</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tabular_example.html">Working with Tabular Data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
@@ -454,7 +482,7 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Analysis-Classes---a-Unified-Interface-to-Analysis-Results">
 <h1>Analysis Classes - a Unified Interface to Analysis Results<a class="headerlink" href="#Analysis-Classes---a-Unified-Interface-to-Analysis-Results" title="Permalink to this headline">¶</a></h1>
 <p>MVG comes with a set of analysis classes which provide a unified interface to analysis results <em>irrespective of the specific feature</em>. Note that the analysis classes are helper classes, as such the mvg class does <em>not</em> depend on them.</p>
-<p>Except for step (1) requesting the specific feature analysis, the following generic workflow holds (1) Request a specific analysis (2) Retrieve results and parse them into an analysis_class object (3) Use generic methods like plot(), summary() or to_df()</p>
+<p>Except for step (1) requesting the specific feature analysis, the following generic workflow holds: - (1) Request a specific analysis - (2) Retrieve results and parse them into an analysis_class object - (3) Use generic methods like plot(), summary() or to_df()</p>
 <p>One application is to use the analysis classes interactively from a Python REPL session.</p>
 <div class="section" id="Or-in-(pseudo)-code">
 <h2>Or in (pseudo) code<a class="headerlink" href="#Or-in-(pseudo)-code" title="Permalink to this headline">¶</a></h2>
@@ -502,19 +530,11 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Replace by your own Token</span>
 <span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_TOKEN&quot;</span><span class="p">]</span> <span class="c1"># use our own token</span>
-<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_URL&quot;</span><span class="p">]</span> <span class="c1"># use API URL &quot;https://api.beta.multiviz.com&quot;</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">check_version</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span> <span class="c1"># Check if API is accessible</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-Using developer API: 0.0.0-dev0. You must confirm compatibility yourself.
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -522,9 +542,9 @@ Using developer API: 0.0.0-dev0. You must confirm compatibility yourself.
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 {
-    &#34;api_version&#34;: &#34;0.0.0-dev0&#34;,
+    &#34;api_version&#34;: &#34;0.1.14&#34;,
     &#34;mvg_highest_tested_version&#34;: &#34;0.1.12&#34;,
-    &#34;mvg_version&#34;: &#34;0.6.3&#34;
+    &#34;mvg_version&#34;: &#34;0.7.2&#34;
 }
 </pre></div></div>
 </div>
@@ -591,10 +611,10 @@ Using developer API: 0.0.0-dev0. You must confirm compatibility yourself.
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Waiting for {&#39;request_id&#39;: &#39;1643d1ddbf3af3fcbb831fc71ca56df5&#39;, &#39;request_status&#39;: &#39;queued&#39;}
+Waiting for {&#39;request_id&#39;: &#39;bd831c060faf3d6ca5332be3f17c5c10&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 {
     &#34;status&#34;: &#34;successful&#34;,
-    &#34;request_id&#34;: &#34;1643d1ddbf3af3fcbb831fc71ca56df5&#34;,
+    &#34;request_id&#34;: &#34;bd831c060faf3d6ca5332be3f17c5c10&#34;,
     &#34;feature&#34;: &#34;RMS&#34;,
     &#34;results&#34;: {
         &#34;timestamps&#34;: [
@@ -859,15 +879,15 @@ Waiting for {&#39;request_id&#39;: &#39;1643d1ddbf3af3fcbb831fc71ca56df5&#39;, &
         ]
     },
     &#34;inputs&#34;: {
-        &#34;request_id&#34;: &#34;1643d1ddbf3af3fcbb831fc71ca56df5&#34;,
+        &#34;request_id&#34;: &#34;bd831c060faf3d6ca5332be3f17c5c10&#34;,
         &#34;feature&#34;: &#34;RMS&#34;,
         &#34;experiment&#34;: &#34;RMS&#34;,
         &#34;sw-commit&#34;: {
-            &#34;api&#34;: &#34;0.0.0-dev0&#34;,
+            &#34;api&#34;: &#34;v0.1.14&#34;,
             &#34;feature&#34;: &#34;1.0.0&#34;
         },
         &#34;dataType&#34;: &#34;waveform&#34;,
-        &#34;db_def&#34;: &#34;vibium_app\\pipeline\\wartenberg\\feature\\data\\featureDb\\database.json&#34;,
+        &#34;db_def&#34;: &#34;/pipeline/apfel/strudel/data/strudelDb/database.json&#34;,
         &#34;UUID&#34;: &#34;u0001&#34;,
         &#34;timestamps&#34;: [
             1570186860,
@@ -959,8 +979,8 @@ Waiting for {&#39;request_id&#39;: &#39;1643d1ddbf3af3fcbb831fc71ca56df5&#39;, &
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 === RMS ===
-request_id 1643d1ddbf3af3fcbb831fc71ca56df5
-from 20191004-13:01.00 to 20191122-13:01.00
+request_id bd831c060faf3d6ca5332be3f17c5c10
+from 1570186860 to 1574424060
 
 +-------+--------------+------------+------------+------------+---------------+
 |       |   timestamps |        rms |     rms_dc |         dc |   utilization |
@@ -1611,7 +1631,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">pretty_result</span><span class="o">.</span><span class="n">results</span><span class="p">(),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span> <span class="c1"># Pretty but pretty long</span>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">pretty_result</span><span class="o">.</span><span class="n">results</span><span class="p">(),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span> <span class="c1"># Pretty but long</span>
 </pre></div>
 </div>
 </div>
@@ -1900,7 +1920,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waiting for </span><span class="si">{</span><span class="n">analysis_request</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">analysis_request</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">]])</span>
 <span class="n">raw_result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">analysis_request</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">raw_result</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span> <span class="c1"># Pretty but pretty long</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">raw_result</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span> <span class="c1"># Pretty but long</span>
 </pre></div>
 </div>
 </div>
@@ -1909,15 +1929,14 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &#39;request_status&#39;: &#39;queued&#39;}
+Waiting for {&#39;request_id&#39;: &#39;8f45d56950eea95e8382b57d1aec5746&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 {
     &#34;status&#34;: &#34;successful&#34;,
-    &#34;request_id&#34;: &#34;35ffa9730d671736e8393a1946ba275f&#34;,
+    &#34;request_id&#34;: &#34;8f45d56950eea95e8382b57d1aec5746&#34;,
     &#34;feature&#34;: &#34;BlackSheep&#34;,
     &#34;results&#34;: {
         &#34;atypical_assets&#34;: [
             {
-                &#34;uuid&#34;: &#34;u0003&#34;,
                 &#34;timestamps&#34;: [
                     1570186860,
                     1570273260,
@@ -1971,11 +1990,11 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     1574424060
                 ],
                 &#34;labels&#34;: [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
                     2,
                     2,
                     2,
@@ -1986,6 +2005,21 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     2,
                     2,
                     2,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
                     1,
                     1,
                     1,
@@ -2001,26 +2035,11 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     1,
                     1,
                     1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
                 ],
                 &#34;atypical&#34;: [
                     false,
@@ -2073,10 +2092,10 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     false,
                     false,
                     false
-                ]
+                ],
+                &#34;source_id&#34;: &#34;u0003&#34;
             },
             {
-                &#34;uuid&#34;: &#34;u0002&#34;,
                 &#34;timestamps&#34;: [
                     1570186860,
                     1570273260,
@@ -2130,38 +2149,38 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     1574424060
                 ],
                 &#34;labels&#34;: [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
                     2,
                     2,
                     2,
                     2,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
                     2,
                     2,
                     2,
@@ -2232,7 +2251,8 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
                     false,
                     false,
                     false
-                ]
+                ],
+                &#34;source_id&#34;: &#34;u0002&#34;
             }
         ]
     },
@@ -2973,7 +2993,7 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Parse</span>
-<span class="n">pretty_result</span> <span class="o">=</span> <span class="n">parse_results</span><span class="p">(</span><span class="n">raw_result</span><span class="p">,</span> <span class="s2">&quot;Europe/Stockholm&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">pretty_result</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">raw_result</span><span class="p">,</span> <span class="s2">&quot;Europe/Stockholm&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="c1"># Show summary</span>
 <span class="n">pretty_result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 <span class="n">pretty_result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -2986,7 +3006,7 @@ Waiting for {&#39;request_id&#39;: &#39;35ffa9730d671736e8393a1946ba275f&#39;, &
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 === BlackSheep ===
-request_id 35ffa9730d671736e8393a1946ba275f
+request_id 8f45d56950eea95e8382b57d1aec5746
 
 +----+----------+------------+
 |    | source   | atypical   |
@@ -3019,7 +3039,7 @@ request_id 35ffa9730d671736e8393a1946ba275f
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-c:\users\viking\repos\mvg\mvg\analysis_classes.py:131: SettingWithCopyWarning:
+C:\Users\Sergio\Documents\GitHub\mvg\mvg\analysis_classes.py:131: SettingWithCopyWarning:
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -3053,6 +3073,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">pretty_result</span><span class="o">.</span><span class="n">save_pkl</span><span class="p">()</span>
+
+
+
 </pre></div>
 </div>
 </div>
@@ -3061,7 +3084,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Saving BlackSheep object to 35ffa9730d671736e8393a1946ba275f.pkl
+Saving BlackSheep object to 8f45d56950eea95e8382b57d1aec5746.pkl
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -3070,17 +3093,8 @@ Saving BlackSheep object to 35ffa9730d671736e8393a1946ba275f.pkl
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;35ffa9730d671736e8393a1946ba275f.pkl&#39;
+&#39;8f45d56950eea95e8382b57d1aec5746.pkl&#39;
 </pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -3091,6 +3105,10 @@ Saving BlackSheep object to 35ffa9730d671736e8393a1946ba275f.pkl
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="tabular_example.html" class="btn btn-neutral float-right" title="Working with Tabular Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="analysis_visual.html" class="btn btn-neutral float-left" title="Analysis and Results Visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

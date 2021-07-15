@@ -67,7 +67,7 @@
 
           
             
-            <img src="../../_static/content/img/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
+            <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -111,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tabular_example.html">Working with Tabular Data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
@@ -557,8 +558,8 @@ fatal: destination path &#39;va-data-charlie&#39; already exists and is not an e
 </div>
 </div>
 <p>We now check if the server is alive. The hello message contains, amongst others the API version.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -566,6 +567,22 @@ fatal: destination path &#39;va-data-charlie&#39; already exists and is not an e
 <span class="nb">print</span><span class="p">(</span><span class="n">hello_message</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2021-07-13 19:29:54,775 - INFO - mvg.mvg - Getting API info for: https://api.beta.multiviz.com
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;api&#34;: {&#34;name&#34;: &#34;MultiViz Engine API&#34;, &#34;version&#34;: &#34;v0.1.14&#34;, &#34;swagger&#34;: &#34;http://api.beta.multiviz.com/docs&#34;}}
+</pre></div></div>
 </div>
 </div>
 <div class="section" id="Check-Database">
@@ -621,7 +638,7 @@ Source info retrieved for one source: {&#39;source_id&#39;: &#39;u0001&#39;, &#3
 </pre></div>
 </div>
 </div>
-<p>To make sure we start from a clean slate we delete our resource in case it exists. All information including measurements and analysis results will be removed</p>
+<p>To make sure we start from a clean slate we delete our resource in case it exists.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -2083,7 +2100,7 @@ data:      [0.63897705078125, -0.55078125]...
 Previously deleted measurement does not exist
 </pre></div></div>
 </div>
-<p>If all went well we end up here now the source u0001 is in the database along with a number of its measurements.</p>
+<p>If all went well we end up here now. The source u0001 is in the database along with a number of its measurements.</p>
 </div>
 <div class="section" id="Uploading-additional-sources">
 <h2>Uploading additional sources<a class="headerlink" href="#Uploading-additional-sources" title="Permalink to this headline">¶</a></h2>

@@ -16,6 +16,7 @@
    content/examples/error_handling
    content/examples/sources_and_measurements
    content/examples/analysis_visual
+   content/examples/analysis_classes
    content/examples/tabular_example
 
 .. toctree::
