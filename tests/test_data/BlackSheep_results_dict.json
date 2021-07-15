@@ -5,7 +5,7 @@
     "results": {
         "atypical_assets": [
             {
-                "uuid": "u0003",
+                "source_id": "u0003",
                 "timestamps": [
                     1570186860,
                     1570273260,
@@ -164,7 +164,7 @@
                 ]
             },
             {
-                "uuid": "u0002",
+                "source_id": "u0002",
                 "timestamps": [
                     1570186860,
                     1570273260,
