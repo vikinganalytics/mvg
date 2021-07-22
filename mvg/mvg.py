@@ -768,27 +768,54 @@ class MVGAPI:
     # Labels
     def create_label(
         self,
-        source_id: str,
+        sid: str,
         timestamp: int,
         label: str,
         severity: int,
         notes: Optional[str] = "",
     ):
+        """Create a label for a measurement
+
+        Parameters
+        ----------
+        sid : str
+            Id of the source for the measurement
+        timestamp : int
+            Timestamp of the measurement to label
+        label : str
+            A string label to attach to the measurement
+        severity : int
+            Severity of the label as a positive integer
+        notes : Optional[str], optional
+            Optional notes for the label, by default ""
+        """
         logger.info("endpoint %s", self.endpoint)
-        logger.info(f"Creating label for {source_id} - {timestamp}")
+        logger.info(f"Creating label for {sid} - {timestamp}")
 
         label_data = {"label": label, "severity": severity, "notes": notes}
 
-        response = self._request(
-            "post", f"/sources/{source_id}/labels/{timestamp}", json=label_data
-        )
-        return response.json()
+        self._request("post", f"/sources/{sid}/labels/{timestamp}", json=label_data)
 
-    def get_label(self, source_id: str, timestamp: int) -> dict:
+    def get_label(self, sid: str, timestamp: int) -> dict:
+        """Get a single label from a measurement
+
+        Parameters
+        ----------
+        sid : str
+            Id of the source for the measurement
+        timestamp : int
+            Timestamp of the measurement
+
+        Returns
+        -------
+        dict
+            label information
+        """
+
         logger.info("endpoint %s", self.endpoint)
         logger.info("Getting label")
 
-        response = self._request("get", f"/sources/{source_id}/labels/{timestamp}")
+        response = self._request("get", f"/sources/{sid}/labels/{timestamp}")
         return response.json()
 
     def get_labels(self, source_id: str) -> List[dict]:
@@ -800,28 +827,48 @@ class MVGAPI:
 
     def update_label(
         self,
-        source_id: str,
+        sid: str,
         timestamp: int,
         label: str,
         severity: int,
         notes: Optional[str] = "",
     ):
+        """Update a label for a measurement
+
+        Parameters
+        ----------
+        sid : str
+            Id of the source for the measurement
+        timestamp : int
+            Timestamp of the measurement
+        label : str
+            The new label to attach to the measurement
+        severity : int
+            The new severity of the label as a positive integer
+        notes : Optional[str], optional
+            New optional notes for the label, by default ""
+        """
         logger.info("endpoint %s", self.endpoint)
-        logger.info(f"Updating label of {source_id} - {timestamp}")
+        logger.info(f"Updating label of {sid} - {timestamp}")
 
         label_data = {"label": label, "severity": severity, "notes": notes}
 
-        response = self._request(
-            "put", f"/sources/{source_id}/labels/{timestamp}", json=label_data
-        )
-        return response.json()
+        self._request("put", f"/sources/{sid}/labels/{timestamp}", json=label_data)
 
-    def delete_label(self, source_id: str, timestamp: int):
+    def delete_label(self, sid: str, timestamp: int):
+        """Delete all label information from a measurement
+
+        Parameters
+        ----------
+        sid : str
+            Id of the source for the measurement
+        timestamp : int
+            Timestamp of the measurement
+        """
         logger.info("endpoint %s", self.endpoint)
-        logger.info(f"Deleting label for {source_id} - {timestamp}")
+        logger.info(f"Deleting label for {sid} - {timestamp}")
 
-        response = self._request("delete", f"/sources/{source_id}/labels/{timestamp}")
-        return response.json()
+        self._request("delete", f"/sources/{sid}/labels/{timestamp}")
 
 
 class MVG(MVGAPI):
