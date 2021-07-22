@@ -11,7 +11,7 @@ For more information see README.md.
 import re
 import time
 import logging
-from typing import Dict, List
+from typing import Dict, List, Optional
 import requests
 from requests.exceptions import HTTPError, RequestException
 import semver
@@ -763,6 +763,64 @@ class MVGAPI:
 
         response = self._request("get", f"/analyses/requests/{request_id}/results")
 
+        return response.json()
+
+    # Labels
+    def create_label(
+        self,
+        source_id: str,
+        timestamp: int,
+        label: str,
+        severity: int,
+        notes: Optional[str] = "",
+    ):
+        logger.info("endpoint %s", self.endpoint)
+        logger.info(f"Creating label for {source_id} - {timestamp}")
+
+        label_data = {"label": label, "severity": severity, "notes": notes}
+
+        response = self._request(
+            "post", f"/sources/{source_id}/labels/{timestamp}", json=label_data
+        )
+        return response.json()
+
+    def get_label(self, source_id: str, timestamp: int) -> dict:
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("Getting label")
+
+        response = self._request("get", f"/sources/{source_id}/labels/{timestamp}")
+        return response.json()
+
+    def get_labels(self, source_id: str) -> List[dict]:
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("Getting labels")
+
+        response = self._request("get", f"/sources/{source_id}/labels")
+        return response.json()
+
+    def update_label(
+        self,
+        source_id: str,
+        timestamp: int,
+        label: str,
+        severity: int,
+        notes: Optional[str] = "",
+    ):
+        logger.info("endpoint %s", self.endpoint)
+        logger.info(f"Updating label of {source_id} - {timestamp}")
+
+        label_data = {"label": label, "severity": severity, "notes": notes}
+
+        response = self._request(
+            "put", f"/sources/{source_id}/labels/{timestamp}", json=label_data
+        )
+        return response.json()
+
+    def delete_label(self, source_id: str, timestamp: int):
+        logger.info("endpoint %s", self.endpoint)
+        logger.info(f"Deleting label for {source_id} - {timestamp}")
+
+        response = self._request("delete", f"/sources/{source_id}/labels/{timestamp}")
         return response.json()
 
 
