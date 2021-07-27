@@ -332,7 +332,7 @@ def test_create_label(session, tabular_source_with_measurements):
     label1_ = session.get_label(tabular_source_with_measurements, timestamps[0])
     label2_ = session.get_label(tabular_source_with_measurements, timestamps[1])
 
-    labels = session.get_labels(tabular_source_with_measurements)
+    labels = session.list_labels(tabular_source_with_measurements)
 
     assert labels == [
         dict(timestamp=timestamps[0], **label1),
@@ -340,6 +340,25 @@ def test_create_label(session, tabular_source_with_measurements):
     ]
     assert label1_ == label1
     assert label2_ == label2
+
+
+def test_update_label(session, tabular_source_with_measurements):
+    timestamps = tabular_dict["timestamp"]
+    session.create_label(
+        tabular_source_with_measurements,
+        timestamps[0],
+        "failure",
+        100,
+        "This is really bad!",
+    )
+
+    session.update_label(
+        tabular_source_with_measurements, timestamps[0], "normal", 0, "It wasn't so bad"
+    )
+
+    label1 = session.get_label(tabular_source_with_measurements, timestamps[0])
+
+    assert label1 == {"label": "normal", "severity": 0, "notes": "It wasn't so bad"}
 
 
 def test_update_label(session, tabular_source_with_measurements):

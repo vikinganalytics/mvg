@@ -818,7 +818,7 @@ class MVGAPI:
         response = self._request("get", f"/sources/{sid}/labels/{timestamp}")
         return response.json()
 
-    def get_labels(self, source_id: str) -> List[dict]:
+    def list_labels(self, source_id: str) -> List[dict]:
         logger.info("endpoint %s", self.endpoint)
         logger.info("Getting labels")
 
