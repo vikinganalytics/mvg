@@ -13,7 +13,7 @@ import time
 import logging
 from typing import Dict, List, Optional
 import requests
-from requests.exceptions import HTTPError, RequestException
+from requests.exceptions import HTTPError, RequestException, ConnectionError
 import semver
 
 logger = logging.getLogger(__name__)
@@ -61,7 +61,7 @@ class MVGAPI:
             response = self._request("get", "")
         except RequestException as exc:
             logger.exception(exc)
-            raise HTTPError("Could not connect to the API.")
+            raise ConnectionError("Could not connect to the API.")
 
         api_vstr = response.json()["message"]["api"]["version"]
         self.api_version = self.parse_version(api_vstr)
