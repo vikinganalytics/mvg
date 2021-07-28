@@ -43,7 +43,7 @@ class MVGAPI:
 
         Raises
         ------
-        HTTPError
+        ConnectionError
             If a connection to the API cannot be established.
 
         """
@@ -60,7 +60,7 @@ class MVGAPI:
         # Get API version
         try:
             response = self._request("get", "")
-        except RequestException as exc:
+        except RequestException:
             raise requests.ConnectionError("Could not connect to the API.")
 
         api_vstr = response.json()["message"]["api"]["version"]
