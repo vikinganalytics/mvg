@@ -5,6 +5,7 @@ not relying on access to vibium-cloud API
 
 import json
 import os
+import tempfile
 import pandas as pd
 import pytest
 from mvg import analysis_classes
@@ -100,6 +101,17 @@ def test_ModeId():
     assert res[0]["counts"][1] == 8
     assert (res[1]["counts"][1] == 8).any()
     assert (res[1]["portion"][0] == 84).any()
+
+    # Mode table (only EPOCH times)
+    mt_df = feat.mode_table().reset_index(drop=True)
+    mt_correct_df = pd.read_csv("./tests/test_data/mode_table_no_datetime.csv")
+    assert mt_correct_df.equals(mt_df.reset_index(drop=True))
+
+    # Mode table (datetimes)
+    feat = parse_results(api_results, t_zone="Europe/Stockholm", t_unit="s")
+    mt_df = feat.mode_table().reset_index(drop=True)
+    mt_correct_df = pd.read_pickle("./tests/test_data/mode_table_datetime.pkl")
+    assert mt_correct_df.equals(mt_df.reset_index(drop=True))
 
 
 def test_none_existing_feature():

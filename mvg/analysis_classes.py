@@ -23,6 +23,7 @@ from matplotlib import cm
 import matplotlib.patches as mpatches
 from tabulate import tabulate
 from mvg import plotting
+from mvg.mode_table import create_mode_table
 
 
 # Base class for analyses
@@ -518,6 +519,24 @@ class ModeId(Analysis):
         )
 
         return self._render_plot(interactive)
+
+    def mode_table(self, show_uncertain=False):
+        """
+        Show mode table which gives start time for each consecutive period of
+        equal labels, including number of rows and time difference.
+        Will also show datetimes if timezone is given when instatiating
+        class.
+
+        Parameters
+        ----------
+        show_uncertain: bool
+            wheter to consider uncertain labels in the table (False)
+
+        Returns
+        -------
+        mode table
+        """
+        return create_mode_table(self.to_df(), self._t_unit, show_uncertain)
 
 
 class BlackSheep(Analysis):
