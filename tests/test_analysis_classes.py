@@ -104,13 +104,14 @@ def test_ModeId():
 
     # Mode table (only EPOCH times)
     mt_df = feat.mode_table().reset_index(drop=True)
-    mt_correct_df = pd.read_csv("./tests/test_data/mode_table_no_datetime.csv")
+    mt_correct_df = pd.read_csv("./tests/test_data/mode_table_nowc.csv")
     assert mt_correct_df.equals(mt_df.reset_index(drop=True))
 
-    # Mode table (datetimes)
+    # Mode table (+wallclock times)
     feat = parse_results(api_results, t_zone="Europe/Stockholm", t_unit="s")
     mt_df = feat.mode_table().reset_index(drop=True)
-    mt_correct_df = pd.read_pickle("./tests/test_data/mode_table_datetime.pkl")
+    mt_correct_df = pd.read_pickle("./tests/test_data/mode_table_wc.pkl")
+    mt_correct_df = mt_correct_df.reset_index(drop=True)
     assert mt_correct_df.equals(mt_df.reset_index(drop=True))
 
 

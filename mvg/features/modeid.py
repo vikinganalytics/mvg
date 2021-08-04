@@ -126,32 +126,42 @@ class ModeId(Analysis):
         # prepare
         mode_table["nextLabel"] = mode_table["labels"].shift(1)
         mode_table["startRow"] = mode_table.index
-        mode_table = mode_table[mode_table["labels"] != mode_table["nextLabel"]]
+        mode_table = mode_table[mode_table["labels"] != mode_table["nextLabel"]].copy()
 
-        # Calculate duration
+        # End Times
         mode_table["ts"] = mode_table["timestamps"]
+
         labels_timestamps = label_df["timestamps"]
-        mode_table["endTime"] = mode_table["timestamps"].shift(
+        mode_table["end"] = mode_table["timestamps"].shift(
             -1, fill_value=labels_timestamps.iloc[-1]
         )
-        if self._t_unit is None:
-            mode_table["duration"] = mode_table["endTime"] - mode_table["timestamps"]
-        else:
-            mode_table["duration"] = pd.to_datetime(
-                mode_table["endTime"], unit="s"
+        if "datetime" in label_df.columns.values:
+            mode_table["endWc"] = mode_table["datetime"].shift(-1, fill_value=None)
+            mode_table["startWc"] = mode_table["datetime"]
+
+        # Durations
+        mode_table["duration"] = mode_table["end"] - mode_table["timestamps"]
+        if self._t_unit is not None:
+            mode_table["durationWc"] = pd.to_datetime(
+                mode_table["end"], unit="s"
             ) - pd.to_datetime(mode_table["timestamps"], unit=self._t_unit)
+
+        # Number of Rows
         mode_table["nRows"] = (
             mode_table["startRow"].shift(-1, fill_value=len(label_df))
             - mode_table["startRow"]
         )
 
+        # rename in a safe way
+        mode_table["start"] = mode_table["timestamps"]
+
+        common_fields = ["start", "end", "labels", "startRow", "nRows"]
+        wallclock_fields = ["durationWc", "startWc", "endWc"]
+
         # Return table
         if "datetime" in label_df.columns.values:
-            mode_table = mode_table[
-                ["timestamps", "datetime", "labels", "startRow", "nRows", "duration"]
-            ]
+            mode_table = mode_table[common_fields + wallclock_fields]
         else:
-            mode_table = mode_table[
-                ["timestamps", "labels", "startRow", "nRows", "duration"]
-            ]
+            mode_table = mode_table[common_fields]
+
         return mode_table
