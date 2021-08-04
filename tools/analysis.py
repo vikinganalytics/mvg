@@ -98,7 +98,6 @@ def get_and_display_results(ses, request_id, show, pdb, gbg, sec):
     res.summary()
     res.plot(show, time_format="%y%m%d-%H:%M:%S")
     res.to_df().head()
-    print(res.mode_table())
     print("Bye")
 
 

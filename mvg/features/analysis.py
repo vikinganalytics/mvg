@@ -208,6 +208,8 @@ class Analysis:
         # Anounce
         print(f"=== {self.feature()} ===")
         print(f"request_id {self.request_id()}")
+        print(f"Sources {self.sources()}")
+
         # Check success
         self.check_status()
         # print time info if applicable
