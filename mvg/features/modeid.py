@@ -115,7 +115,8 @@ class ModeId(Analysis):
 
         Returns
         -------
-        mode table
+        mode_table: df
+            Dataframe showing times when modes change.
         """
         label_df = self.to_df()
         mode_table = self.to_df()
