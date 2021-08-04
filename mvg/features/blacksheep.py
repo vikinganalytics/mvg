@@ -1,4 +1,12 @@
+"""Analysis Class for BlackSheep Feature"""
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib import cm
+import matplotlib.patches as mpatches
+from tabulate import tabulate
 from mvg.features.analysis import Analysis
+
 
 class BlackSheep(Analysis):
     def __init__(self, results, t_zone="Europe/Stockholm", t_unit="ms"):

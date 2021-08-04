@@ -1,12 +1,8 @@
+"""Analysis Classes Base Class"""
 import pickle
 import json
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib import cm
-import matplotlib.patches as mpatches
-from tabulate import tabulate
-from mvg import plotting
 
 
 # Base class for analyses

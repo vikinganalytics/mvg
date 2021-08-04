@@ -1,4 +1,10 @@
+"""Analysis Class for ModeId Feature"""
+import numpy as np
+import pandas as pd
+from tabulate import tabulate
+from mvg import plotting
 from mvg.features.analysis import Analysis
+
 
 class ModeId(Analysis):
     def __init__(self, results, t_zone="Europe/Stockholm", t_unit="ms"):
@@ -94,3 +100,57 @@ class ModeId(Analysis):
         )
 
         return self._render_plot(interactive)
+
+    def mode_table(self, show_uncertain=False):
+        """
+        Show mode table which gives start time for each consecutive period of
+        equal labels, including number of rows and time difference.
+        Will also show datetimes if timezone is given when instatiating
+        class.
+
+        Parameters
+        ----------
+        show_uncertain: bool
+            wheter to consider uncertain labels in the table (False)
+
+        Returns
+        -------
+        mode table
+        """
+        label_df = self.to_df()
+        mode_table = self.to_df()
+        if show_uncertain:
+            mode_table.loc[mode_table["uncertain"], ["labels"]] = -1
+
+        # prepare
+        mode_table["nextLabel"] = mode_table["labels"].shift(1)
+        mode_table["startRow"] = mode_table.index
+        mode_table = mode_table[mode_table["labels"] != mode_table["nextLabel"]]
+
+        # Calculate duration
+        mode_table["ts"] = mode_table["timestamps"]
+        labels_timestamps = label_df["timestamps"]
+        mode_table["endTime"] = mode_table["timestamps"].shift(
+            -1, fill_value=labels_timestamps.iloc[-1]
+        )
+        if self._t_unit is None:
+            mode_table["duration"] = mode_table["endTime"] - mode_table["timestamps"]
+        else:
+            mode_table["duration"] = pd.to_datetime(
+                mode_table["endTime"], unit="s"
+            ) - pd.to_datetime(mode_table["timestamps"], unit=self._t_unit)
+        mode_table["nRows"] = (
+            mode_table["startRow"].shift(-1, fill_value=len(label_df))
+            - mode_table["startRow"]
+        )
+
+        # Return table
+        if "datetime" in label_df.columns.values:
+            mode_table = mode_table[
+                ["timestamps", "datetime", "labels", "startRow", "nRows", "duration"]
+            ]
+        else:
+            mode_table = mode_table[
+                ["timestamps", "labels", "startRow", "nRows", "duration"]
+            ]
+        return mode_table
