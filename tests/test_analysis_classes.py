@@ -8,8 +8,10 @@ import os
 import tempfile
 import pandas as pd
 import pytest
+from pandas._testing import assert_frame_equal
 from mvg import analysis_classes
 from mvg.analysis_classes import parse_results
+
 
 
 def test_RMS():
@@ -65,7 +67,24 @@ def test_RMS():
     assert feat.status() == "successful"
     assert feat.sources() == ["u0001"]
 
+def test_Envelope():
+    # read dict
+    with open("./tests/test_data/envelope_results.json") as json_file:
+        api_results = json.load(json_file)
 
+    # get object
+    feat = parse_results(api_results, t_zone=None, t_unit=None)
+
+    # Check dataframe conversion
+    df_df = pd.read_csv("./tests/test_data/envelope_df.csv")
+    assert_frame_equal(df_df,feat.to_df())
+
+    # Summary
+    summary_df = pd.read_csv("./tests/test_data/envelope_summary.csv")
+    feat_summary_df = feat.summary()
+    feat_summary_df = feat_summary_df.reset_index(drop=True)
+    assert_frame_equal(summary_df, feat_summary_df)
+    
 def test_BlackSheep():
     # read dict
     with open("./tests/test_data/BlackSheep_results_dict.json") as json_file:
