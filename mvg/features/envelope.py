@@ -67,7 +67,23 @@ class Envelope(Analysis):
         return tab
 
     def plot(self, interactive=True, time_format=None):
-        """Generate a basic plot on FFT and Envelope."""
+        """Generate a basic plot of FFT and Envelope.
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+        time_format: str, optional
+            strftime format specifier for tick_x_lables. If not given
+            only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
+
+        Returns
+        -------
+        plot file name : str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
 
         self.check_status()
         fig, (ax1, ax2, ax3) = plt.subplots(3, 1, sharex=False)
@@ -112,4 +128,4 @@ class Envelope(Analysis):
 
         # Control overall layout
         fig.tight_layout()
-        self._render_plot(interactive)
+        return self._render_plot(interactive)
