@@ -11,9 +11,10 @@ For more information see README.md.
 import re
 import time
 import logging
-from typing import Dict, List
+from typing import Dict, List, Optional
 import requests
 from requests.exceptions import HTTPError, RequestException
+
 import semver
 
 logger = logging.getLogger(__name__)
@@ -42,7 +43,7 @@ class MVGAPI:
 
         Raises
         ------
-        HTTPError
+        ConnectionError
             If a connection to the API cannot be established.
 
         """
@@ -59,9 +60,8 @@ class MVGAPI:
         # Get API version
         try:
             response = self._request("get", "")
-        except RequestException as exc:
-            logger.exception(exc)
-            raise HTTPError("Could not connect to the API.")
+        except RequestException:
+            raise requests.ConnectionError("Could not connect to the API.")
 
         api_vstr = response.json()["message"]["api"]["version"]
         self.api_version = self.parse_version(api_vstr)
@@ -764,6 +764,111 @@ class MVGAPI:
         response = self._request("get", f"/analyses/requests/{request_id}/results")
 
         return response.json()
+
+    # Labels
+    def create_label(
+        self,
+        sid: str,
+        timestamp: int,
+        label: str,
+        severity: int,
+        notes: Optional[str] = "",
+    ):
+        """Create a label for a measurement
+
+        Parameters
+        ----------
+        sid : str
+            Id of the source for the measurement
+        timestamp : int
+            Timestamp of the measurement to label
+        label : str
+            A string label to attach to the measurement
+        severity : int
+            Severity of the label as a positive integer
+        notes : Optional[str], optional
+            Optional notes for the label, by default ""
+        """
+        logger.info("endpoint %s", self.endpoint)
+        logger.info(f"Creating label for {sid} - {timestamp}")
+
+        label_data = {"label": label, "severity": severity, "notes": notes}
+
+        self._request("post", f"/sources/{sid}/labels/{timestamp}", json=label_data)
+
+    def get_label(self, sid: str, timestamp: int) -> dict:
+        """Get a single label from a measurement
+
+        Parameters
+        ----------
+        sid : str
+            Id of the source for the measurement
+        timestamp : int
+            Timestamp of the measurement
+
+        Returns
+        -------
+        dict
+            label information
+        """
+
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("Getting label")
+
+        response = self._request("get", f"/sources/{sid}/labels/{timestamp}")
+        return response.json()
+
+    def list_labels(self, source_id: str) -> List[dict]:
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("Getting labels")
+
+        response = self._request("get", f"/sources/{source_id}/labels")
+        return response.json()
+
+    def update_label(
+        self,
+        sid: str,
+        timestamp: int,
+        label: str,
+        severity: int,
+        notes: Optional[str] = "",
+    ):
+        """Update a label for a measurement
+
+        Parameters
+        ----------
+        sid : str
+            Id of the source for the measurement
+        timestamp : int
+            Timestamp of the measurement
+        label : str
+            The new label to attach to the measurement
+        severity : int
+            The new severity of the label as a positive integer
+        notes : Optional[str], optional
+            New optional notes for the label, by default ""
+        """
+        logger.info("endpoint %s", self.endpoint)
+        logger.info(f"Updating label of {sid} - {timestamp}")
+
+        label_data = {"label": label, "severity": severity, "notes": notes}
+
+        self._request("put", f"/sources/{sid}/labels/{timestamp}", json=label_data)
+
+    def delete_label(self, sid: str, timestamp: int):
+        """Delete all label information from a measurement
+
+        Parameters
+        ----------
+        sid : str
+            Id of the source for the measurement
+        timestamp : int
+            Timestamp of the measurement
+        """
+        logger.info("endpoint %s", self.endpoint)
+        logger.info(f"Deleting label for {sid} - {timestamp}")
+
+        self._request("delete", f"/sources/{sid}/labels/{timestamp}")
 
 
 class MVG(MVGAPI):
