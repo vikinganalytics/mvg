@@ -59,6 +59,23 @@ def session(vibium):
     return session
 
 
+@pytest.fixture()
+def tabular_source(session):
+    try:
+        columns = tabular_df.columns.tolist()
+        meta = {"extra": "information"}
+        session.create_tabular_source(SOURCE_ID_TABULAR, meta, columns)
+        yield SOURCE_ID_TABULAR
+    finally:
+        session.delete_source(SOURCE_ID_TABULAR)
+
+
+@pytest.fixture()
+def tabular_source_with_measurements(session, tabular_source):
+    session.create_tabular_measurement(SOURCE_ID_TABULAR, tabular_dict)
+    yield tabular_source
+
+
 # Just to check if API is live
 def test_say_hello(session):
     hello = session.say_hello()
@@ -265,44 +282,118 @@ def test_sources_cru_existing(session):
         session.create_source(SOURCE_ID_WAVEFORM, meta)
 
 
-def test_tabular_sources(session):
+def test_tabular_sources(session, tabular_source):
     columns = tabular_df.columns.tolist()
     columns.remove("timestamp")
     meta = {"extra": "information"}
-    session.create_tabular_source(SOURCE_ID_TABULAR, meta, columns)
-    src = session.get_source(SOURCE_ID_TABULAR)
-    assert src["source_id"] == SOURCE_ID_TABULAR
+    src = session.get_source(tabular_source)
+    assert src["source_id"] == tabular_source
     assert src["meta"] == meta
     assert src["properties"]["columns"] == columns
 
 
-def test_tabular_measurements_float_timestamps(session):
+def test_tabular_measurements_float_timestamps(session, tabular_source):
     with pytest.raises(HTTPError) as exc:
         tabular_dict_float = tabular_dict.copy()
         tabular_dict_float["timestamp"] = [ts + 0.1 for ts in tabular_dict["timestamp"]]
-        session.create_tabular_measurement(SOURCE_ID_TABULAR, tabular_dict_float)
+        session.create_tabular_measurement(tabular_source, tabular_dict_float)
     assert exc.value.response.status_code == 422
 
 
-def test_tabular_measurements(session):
+def test_tabular_measurements(session, tabular_source):
     columns = tabular_df.columns.tolist()
     columns.remove("timestamp")
-    session.create_tabular_measurement(SOURCE_ID_TABULAR, tabular_dict)
+    session.create_tabular_measurement(tabular_source, tabular_dict)
 
     ts0 = tabular_dict["timestamp"][0]
-    meas = session.read_single_measurement(SOURCE_ID_TABULAR, ts0)
+    meas = session.read_single_measurement(tabular_source, ts0)
     assert meas["meta"] == {}
     assert all(np.array(meas["data"]) == tabular_df.drop("timestamp", axis=1).iloc[0])
     assert meas["columns"] == columns
 
-    session.update_measurement(SOURCE_ID_TABULAR, ts0, {"new": "meta"})
-    meas = session.read_single_measurement(SOURCE_ID_TABULAR, ts0)
+    session.update_measurement(tabular_source, ts0, {"new": "meta"})
+    meas = session.read_single_measurement(tabular_source, ts0)
     assert meas["meta"] == {"new": "meta"}
 
-    session.delete_measurement(SOURCE_ID_TABULAR, ts0)
+    session.delete_measurement(tabular_source, ts0)
     with pytest.raises(HTTPError) as exc:
-        session.read_single_measurement(SOURCE_ID_TABULAR, ts0)
+        session.read_single_measurement(tabular_source, ts0)
     assert exc.value.response.status_code == 404
+
+
+def test_create_label(session, tabular_source_with_measurements):
+    timestamps = tabular_dict["timestamp"]
+    label1 = {"label": "normal", "severity": 0, "notes": ""}
+    label2 = {"label": "failure", "severity": 100, "notes": "This is really bad!"}
+
+    session.create_label(tabular_source_with_measurements, timestamps[0], **label1)
+    session.create_label(tabular_source_with_measurements, timestamps[1], **label2)
+
+    label1_ = session.get_label(tabular_source_with_measurements, timestamps[0])
+    label2_ = session.get_label(tabular_source_with_measurements, timestamps[1])
+
+    labels = session.list_labels(tabular_source_with_measurements)
+
+    assert labels == [
+        dict(timestamp=timestamps[0], **label1),
+        dict(timestamp=timestamps[1], **label2),
+    ]
+    assert label1_ == label1
+    assert label2_ == label2
+
+
+def test_update_label(session, tabular_source_with_measurements):
+    timestamps = tabular_dict["timestamp"]
+    session.create_label(
+        tabular_source_with_measurements,
+        timestamps[0],
+        "failure",
+        100,
+        "This is really bad!",
+    )
+
+    session.update_label(
+        tabular_source_with_measurements, timestamps[0], "normal", 0, "It wasn't so bad"
+    )
+
+    label1 = session.get_label(tabular_source_with_measurements, timestamps[0])
+
+    assert label1 == {"label": "normal", "severity": 0, "notes": "It wasn't so bad"}
+
+
+def test_update_label(session, tabular_source_with_measurements):
+    timestamps = tabular_dict["timestamp"]
+    session.create_label(
+        tabular_source_with_measurements,
+        timestamps[0],
+        "failure",
+        100,
+        "This is really bad!",
+    )
+
+    session.update_label(
+        tabular_source_with_measurements, timestamps[0], "normal", 0, "It wasn't so bad"
+    )
+
+    label1 = session.get_label(tabular_source_with_measurements, timestamps[0])
+
+    assert label1 == {"label": "normal", "severity": 0, "notes": "It wasn't so bad"}
+
+
+def test_delete_label(session, tabular_source_with_measurements):
+    timestamps = tabular_dict["timestamp"]
+    session.create_label(
+        tabular_source_with_measurements,
+        timestamps[0],
+        "failure",
+        100,
+        "This is really bad!",
+    )
+
+    session.delete_label(tabular_source_with_measurements, timestamps[0])
+    with pytest.raises(HTTPError) as exc:
+        session.get_label(tabular_source_with_measurements, timestamps[0])
+        assert exc.value.response.status_code == 404
 
 
 # End of code

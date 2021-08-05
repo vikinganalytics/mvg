@@ -8,6 +8,7 @@ import os
 import pytest
 import semver
 from requests import HTTPError
+import requests
 from mvg import MVG
 
 VALID_TOKEN = os.environ["TEST_TOKEN"]
@@ -73,5 +74,5 @@ def test_failure_authorization(vibium):
 
 
 def test_create_session_invalid_url():
-    with pytest.raises(HTTPError):
+    with pytest.raises(requests.ConnectionError):
         MVG("invalidurl", "NO TOKEN")
