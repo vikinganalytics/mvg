@@ -83,7 +83,6 @@ result, the optimizer can be disabled and a specific number of modes
 
 ```
 {
-	'optimized': False,
 	'number_of_clusters': 3
 }
 ```

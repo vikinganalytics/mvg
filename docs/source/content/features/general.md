@@ -3,11 +3,20 @@
 MVG provides a set of analytics features for analysis of
 vibration data. The documentation in the FEATURES section 
 focuses mostly on description of
-the features, for detailed information on how to invoke the features
+the features.
+
+For detailed information on how to invoke the features
 via the API, consult the [API Reference](../api_reference/mvg.html) or
 the [Examples](../examples/analysis_visual.html).
 
-## How to use features via MVG
+To get a consistent and user friendly view of the results, It is
+recommended to analyse the analysis results by means of the analysis 
+classes rather than using the raw results returned by the API. See 
+[Analysis_Classes_Examples](../examples/analysis_classes.html) and
+[Analysis_Classes_reference](../utilities_reference/analysis_classes.html).
+
+
+## How to invoke features via MVG 
 
 1. All features require data for the sources to be uploaded prior to invocation.
 
@@ -32,17 +41,23 @@ method.
    [get_analysis_results](../api_reference/mvg.html?highlight=sis_res#mvg.mvg.MVG.get_analysis_results)
    method. 
    
-6. The results are returned as a dictionary of the following
+6. The analysis returns as a dictionary of the following
 structure:
 
 ```
 {
-    'status': "<if call was successful>",
-	'results': {<dict with actual results>}
+    "status": "<if call was successful>",
+	"feature": "feature requested",
+	"results": {<dict with actual results>},
+	"error_info": "Information on why an analysis may have failed",
+	"debug_info": "currently not used"
 }
 ```
 
-The format of the actual results in the `results` section is documented under respective feature.
+The format of the actual results in the `results` section is
+documented under respective feature.
+
+7. For inspection of the features use the analysis classes (see above).
    
 ## Notes
 

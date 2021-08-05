@@ -25,8 +25,9 @@
 
    content/features/general
    content/features/ModeId
-   content/features/RMS
    content/features/blacksheep
+   content/features/Envelope
+   content/features/RMS
 	    
 .. toctree::
    :maxdepth: 2
