@@ -111,7 +111,7 @@ class Analysis:
             dframe["datetime"] = dt_col
 
             # Mark timecolumn as available
-            # self.time_column = timecolumn
+            self.time_column = "datetime"
 
         return dframe
 

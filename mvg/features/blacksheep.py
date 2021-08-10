@@ -148,7 +148,7 @@ class BlackSheep(Analysis):
         # extract names from df
         coli = pdfd.columns.to_list()
         assets = [c.replace("_atypical", "") for c in coli if c.endswith("atypical")]
-        bsd_plt.set_yticks(np.arange(0, len(assets) + 1, 1))
+        bsd_plt.set_yticks(np.arange(0, len(assets), 1))
         bsd_plt.set_yticklabels(assets)
 
         # x axis ticks
