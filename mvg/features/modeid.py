@@ -125,43 +125,58 @@ class ModeId(Analysis):
 
         # prepare
         mode_table["nextLabel"] = mode_table["labels"].shift(1)
+        mode_table["prevLabel"] = mode_table["labels"].shift(-1)
         mode_table["startRow"] = mode_table.index
-        mode_table = mode_table[mode_table["labels"] != mode_table["nextLabel"]].copy()
+        mode_table["endRow"] = mode_table.index
 
-        # End Times
-        mode_table["ts"] = mode_table["timestamps"]
-
-        labels_timestamps = label_df["timestamps"]
-        mode_table["end"] = mode_table["timestamps"].shift(
-            -1, fill_value=labels_timestamps.iloc[-1]
+        mt_next = mode_table[mode_table["labels"] != mode_table["nextLabel"]].copy()
+        mt_next = mt_next.rename(columns={"timestamps": "start", "datetime": "wcStart"})
+        mt_next = mt_next.drop(
+            ["mode_probability", "nextLabel", "prevLabel", "endRow"], axis=1
         )
-        if "datetime" in label_df.columns.values:
-            mode_table["endWc"] = mode_table["datetime"].shift(-1, fill_value=None)
-            mode_table["startWc"] = mode_table["datetime"]
+
+        mt_prev = mode_table[mode_table["labels"] != mode_table["prevLabel"]].copy()
+        mt_prev = mt_prev.rename(columns={"timestamps": "end", "datetime": "wcEnd"})
+        mt_prev = mt_prev.drop(
+            [
+                "mode_probability",
+                "nextLabel",
+                "prevLabel",
+                "startRow",
+                "labels",
+                "uncertain",
+            ],
+            axis=1,
+        )
+
+        # merge
+        mt_both = pd.concat([mt_next, mt_prev.set_index(mt_next.index)], axis=1)
 
         # Durations
-        mode_table["duration"] = mode_table["end"] - mode_table["timestamps"]
+        mt_both["duration"] = mt_both["end"] - mt_both["start"]
         if self._t_unit is not None:
-            mode_table["durationWc"] = pd.to_datetime(
-                mode_table["end"], unit="s"
-            ) - pd.to_datetime(mode_table["timestamps"], unit=self._t_unit)
+            mt_both["wcDuration"] = pd.to_datetime(
+                mt_both["end"], unit=self._t_unit
+            ) - pd.to_datetime(mt_both["start"], unit=self._t_unit)
 
         # Number of Rows
-        mode_table["nRows"] = (
-            mode_table["startRow"].shift(-1, fill_value=len(label_df))
-            - mode_table["startRow"]
-        )
+        mt_both["nRows"] = mt_both["endRow"] - mt_both["startRow"]
 
-        # rename in a safe way
-        mode_table["start"] = mode_table["timestamps"]
-
-        common_fields = ["start", "end", "labels", "startRow", "nRows"]
-        wallclock_fields = ["durationWc", "startWc", "endWc"]
+        common_fields = [
+            "labels",
+            "start",
+            "end",
+            "duration",
+            "startRow",
+            "endRow",
+            "nRows",
+        ]
+        wallclock_fields = ["wcStart", "wcEnd", "wcDuration"]
 
         # Return table
         if "datetime" in label_df.columns.values:
-            mode_table = mode_table[common_fields + wallclock_fields]
+            mt_both = mt_both[common_fields + wallclock_fields]
         else:
-            mode_table = mode_table[common_fields]
+            mt_both = mt_both[common_fields]
 
-        return mode_table
+        return mt_both
