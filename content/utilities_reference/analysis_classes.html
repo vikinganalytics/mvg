@@ -220,336 +220,6 @@ a pandas dataFrame.</p>
 </div>
 <p>The parse function will detect the kind of request and return an object
 of the correct feature class.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.analysis_classes.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Root class for analysis system classes.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.check_status">
-<span class="sig-name descname"><span class="pre">check_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.check_status" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.feature">
-<span class="sig-name descname"><span class="pre">feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.feature" title="Permalink to this definition">¶</a></dt>
-<dd><p>feature from request</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>feature</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.inputs">
-<span class="sig-name descname"><span class="pre">inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.inputs" title="Permalink to this definition">¶</a></dt>
-<dd><p>inputs to the request algortihm</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>inputs</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pro forma ancestor function.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
-only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.raw_results">
-<span class="sig-name descname"><span class="pre">raw_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.raw_results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Raw results as returned by server
-:returns: <strong>raw_results</strong>
-:rtype: dict</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.request_id">
-<span class="sig-name descname"><span class="pre">request_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.request_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>request_id from request</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>request_id</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.results">
-<span class="sig-name descname"><span class="pre">results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.results" title="Permalink to this definition">¶</a></dt>
-<dd><p>results dict as returned from request</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>results</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.save_df">
-<span class="sig-name descname"><span class="pre">save_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.save_df" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a dataframe with the analysis results.
-In case of filname is not given, filename will be
-&lt;request_id&gt;.csv
-Format of the dataframe depends on specific analysis.
-Will raise an exception in case no results are available.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – filename to save dataframe under.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>Actually used file path</strong></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.save_json">
-<span class="sig-name descname"><span class="pre">save_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.save_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves the request result from the API JSON
-In case of filname is not given, filename will be
-&lt;request_id&gt;.json</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file_name</strong> (<em>str</em>) – filename to save object under.</p></li>
-<li><p><strong>raw</strong> (<em>boolean</em>) – return only alogrithm results [false, default]
-return full request response [true]</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>Actually used file path</strong></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.save_pkl">
-<span class="sig-name descname"><span class="pre">save_pkl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.save_pkl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Serializes the analysis object as pickle file.
-In case of filname is not given, filename will be
-&lt;request_id&gt;.pkl</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – filename to save object under.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>Actually used file path</strong></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.sources">
-<span class="sig-name descname"><span class="pre">sources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.sources" title="Permalink to this definition">¶</a></dt>
-<dd><p>sources to the request algortihm</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>sources</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.status">
-<span class="sig-name descname"><span class="pre">status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.status" title="Permalink to this definition">¶</a></dt>
-<dd><p>status from request</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>status</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.summary">
-<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print header for summary function. Called as super() from specific
-analysis class. Will raise an exception in case request was not
-successful</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.Analysis.to_df">
-<span class="sig-name descname"><span class="pre">to_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.Analysis.to_df" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dataframe with the analysis results.
-:returns: <strong>Dataframe with analysis results</strong>
-:rtype: dataFrame</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="mvg.analysis_classes.BlackSheep">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.analysis_classes.</span></span><span class="sig-name descname"><span class="pre">BlackSheep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.BlackSheep" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mvg.analysis_classes.Analysis" title="mvg.analysis_classes.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.analysis_classes.Analysis</span></code></a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.BlackSheep.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.BlackSheep.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a (not so) basic plot for BlackSheep
-Will show per atypical asset changes to and from
-atypical modes</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
-only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.BlackSheep.summary">
-<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.BlackSheep.summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print summary on BlackSheep</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>Summary tables</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>atypical assets and stats</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="mvg.analysis_classes.ModeId">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.analysis_classes.</span></span><span class="sig-name descname"><span class="pre">ModeId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.ModeId" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mvg.analysis_classes.Analysis" title="mvg.analysis_classes.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.analysis_classes.Analysis</span></code></a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.ModeId.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.ModeId.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a basic plot on ModeId.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
-only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.ModeId.summary">
-<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.ModeId.summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print summary on ModeId.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>Summary table</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="mvg.analysis_classes.RMS">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.analysis_classes.</span></span><span class="sig-name descname"><span class="pre">RMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.RMS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mvg.analysis_classes.Analysis" title="mvg.analysis_classes.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.analysis_classes.Analysis</span></code></a></p>
-<p>Analysis class for RMS feature.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.RMS.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.RMS.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a basic plot on RMS.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
-only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.analysis_classes.RMS.summary">
-<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.RMS.summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print summary information on RMS.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>summary table</strong></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="mvg.analysis_classes.parse_results">
 <span class="sig-prename descclassname"><span class="pre">mvg.analysis_classes.</span></span><span class="sig-name descname"><span class="pre">parse_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.analysis_classes.parse_results" title="Permalink to this definition">¶</a></dt>
@@ -575,6 +245,360 @@ of the analysis class.</p>
     for the analysis class exists.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<span class="target" id="module-mvg.features.analysis"></span><p>Analysis Classes Base Class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.analysis.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Root class for analysis system classes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.check_status">
+<span class="sig-name descname"><span class="pre">check_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.check_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.feature">
+<span class="sig-name descname"><span class="pre">feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>feature from request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>feature</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>inputs to the request algortihm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>inputs</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pro forma ancestor function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.raw_results">
+<span class="sig-name descname"><span class="pre">raw_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.raw_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raw results as returned by server
+:returns: <strong>raw_results</strong>
+:rtype: dict</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.request_id">
+<span class="sig-name descname"><span class="pre">request_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.request_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>request_id from request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>request_id</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.results">
+<span class="sig-name descname"><span class="pre">results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>results dict as returned from request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>results</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.save_df">
+<span class="sig-name descname"><span class="pre">save_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.save_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a dataframe with the analysis results.
+In case of filname is not given, filename will be
+&lt;request_id&gt;.csv
+Format of the dataframe depends on specific analysis.
+Will raise an exception in case no results are available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – filename to save dataframe under.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Actually used file path</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.save_json">
+<span class="sig-name descname"><span class="pre">save_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.save_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the request result from the API JSON
+In case of filname is not given, filename will be
+&lt;request_id&gt;.json</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – filename to save object under.</p></li>
+<li><p><strong>raw</strong> (<em>boolean</em>) – return only alogrithm results [false, default]
+return full request response [true]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Actually used file path</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.save_pkl">
+<span class="sig-name descname"><span class="pre">save_pkl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.save_pkl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes the analysis object as pickle file.
+In case of filname is not given, filename will be
+&lt;request_id&gt;.pkl</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – filename to save object under.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Actually used file path</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.sources">
+<span class="sig-name descname"><span class="pre">sources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>sources to the request algortihm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>sources</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.status">
+<span class="sig-name descname"><span class="pre">status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>status from request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>status</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print header for summary function. Called as super() from specific
+analysis class. Will raise an exception in case request was not
+successful</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.analysis.Analysis.to_df">
+<span class="sig-name descname"><span class="pre">to_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.to_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dataframe with the analysis results.
+:returns: <strong>Dataframe with analysis results</strong>
+:rtype: dataFrame</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-mvg.features.modeid"></span><p>Analysis Class for ModeId Feature</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvg.features.modeid.ModeId">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.modeid.</span></span><span class="sig-name descname"><span class="pre">ModeId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.modeid.ModeId.mode_table">
+<span class="sig-name descname"><span class="pre">mode_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_uncertain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.mode_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show mode table which gives start time for each consecutive period of
+equal labels, including number of rows and time difference.
+Will also show datetimes if timezone is given when instatiating
+class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>show_uncertain</strong> (<em>bool</em>) – wheter to consider uncertain labels in the table (False)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>mode_table</strong> – Dataframe showing times when modes change.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>df</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.modeid.ModeId.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a basic plot on ModeId.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.modeid.ModeId.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print summary on ModeId.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>Summary table</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-mvg.features.blacksheep"></span><p>Analysis Class for BlackSheep Feature</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvg.features.blacksheep.BlackSheep">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.blacksheep.</span></span><span class="sig-name descname"><span class="pre">BlackSheep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.blacksheep.BlackSheep.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a (not so) basic plot for BlackSheep
+Will show per atypical asset changes to and from
+atypical modes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.blacksheep.BlackSheep.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print summary on BlackSheep</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>Summary tables</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>atypical assets and stats</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-mvg.features.rms"></span><p>Analysis Class for RMS Feature</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvg.features.rms.RMS">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.rms.</span></span><span class="sig-name descname"><span class="pre">RMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.rms.RMS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
+<p>Analysis class for RMS feature.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.rms.RMS.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.rms.RMS.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a basic plot on RMS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.rms.RMS.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.rms.RMS.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print summary information on RMS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>summary table</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
