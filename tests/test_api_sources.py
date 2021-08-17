@@ -173,6 +173,7 @@ def test_measurements_crud(session):
             timestamp=ts_m,
             data=accs,
             meta=meta_info,
+            ignore_conflict=True,
         )
 
         # read back and check
