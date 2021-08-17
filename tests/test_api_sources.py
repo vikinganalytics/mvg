@@ -274,10 +274,9 @@ def test_sources_cru_existing(session):
     assert src["meta"] == meta
 
     # create_source again (409 ignored)
-    session.create_source(SOURCE_ID_WAVEFORM, meta)
+    session.create_source(SOURCE_ID_WAVEFORM, meta, ignore_conflict=True)
 
     # create_source again (409 not ignored)
-    session.do_not_raise = []
     with pytest.raises(HTTPError):
         session.create_source(SOURCE_ID_WAVEFORM, meta)
 
