@@ -412,7 +412,6 @@ class MVGAPI:
         # Package info for db to be submitted
         meas_struct = [
             {
-                "source_id": sid,  # should be source_id
                 "timestamp": timestamp,
                 "duration": duration,
                 "data": data,
