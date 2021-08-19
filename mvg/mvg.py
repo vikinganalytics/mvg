@@ -232,7 +232,7 @@ class MVGAPI:
         # return list of IDs
         return response.json()["message"]
 
-    def create_source(self, sid: str, meta: dict, ignore_conflict: bool = False):
+    def create_source(self, sid: str, meta: dict, exist_ok: bool = False):
         """
         Creates a source on the server side.
 
@@ -244,7 +244,7 @@ class MVGAPI:
         meta : dict
             meta information
 
-        ignore_conflict : bool
+        exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
             caused by trying to create an existing source. Defaults to False
         """
@@ -254,15 +254,15 @@ class MVGAPI:
         logger.info("metadata: %s", meta)
 
         do_not_raise = []
-        if ignore_conflict:
-            do_not_raise.append(409)
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
 
         # Package info to be submitted to db
         source_info = {"source_id": sid, "meta": meta}
         self._request("post", "/sources/", do_not_raise, json=source_info)
 
     def create_tabular_source(
-        self, sid: str, meta: dict, columns: List[str], ignore_conflict: bool = False
+        self, sid: str, meta: dict, columns: List[str], exist_ok: bool = False
     ):
         """
         Creates a tabular source on the server side.
@@ -279,7 +279,7 @@ class MVGAPI:
             Data variables. Currently supports numerical data.
             Cannot be updated after creating source.
 
-        ignore_conflict : bool
+        exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
             caused by trying to create an existing source. Defaults to False
         """
@@ -290,8 +290,8 @@ class MVGAPI:
         logger.info("columns: %s", columns)
 
         do_not_raise = []
-        if ignore_conflict:
-            do_not_raise.append(409)
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
 
         # Package info to be submitted to db
         source_info = {"source_id": sid, "meta": meta, "columns": columns}
@@ -383,7 +383,7 @@ class MVGAPI:
         timestamp: int,
         data: list,
         meta: dict,
-        ignore_conflict: bool = False,
+        exist_ok: bool = False,
     ):
         """Stores a measurement on the server side.
 
@@ -410,7 +410,7 @@ class MVGAPI:
         meta: dict
             Meta information to attach to data.
 
-        ignore_conflict: bool
+        exist_ok: bool
             Set to true to prevent exceptions for 409 Conflict errors
             caused by trying to create an existing measurement. Defaults to False
         """
@@ -422,8 +422,8 @@ class MVGAPI:
         logger.info("  meta data: %s", meta)
 
         do_not_raise = []
-        if ignore_conflict:
-            do_not_raise.append(409)
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
 
         # Package info for db to be submitted
         meas_struct = [
@@ -445,7 +445,7 @@ class MVGAPI:
         sid: str,
         data: Dict[str, List[float]],
         meta: Dict[float, dict] = None,
-        ignore_conflict: bool = False,
+        exist_ok: bool = False,
     ):
         """Stores a measurement on the server side.
 
@@ -468,7 +468,7 @@ class MVGAPI:
             Meta information to attach to data. Should have the format
             {timestamp: meta_dict}. Timestamps must match data timestamps
 
-        ignore_conflict: bool
+        exist_ok: bool
             Set to true to prevent exceptions for 409 Conflict errors
             caused by trying to create an existing measurement. Defaults to False
         """
@@ -477,8 +477,8 @@ class MVGAPI:
         logger.info("creating tabular measurement from source id=%s", sid)
 
         do_not_raise = []
-        if ignore_conflict:
-            do_not_raise.append(409)
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
 
         body = {"data": data}
         if meta is not None:
@@ -803,7 +803,7 @@ class MVGAPI:
         label: str,
         severity: int,
         notes: Optional[str] = "",
-        ignore_conflict: bool = False,
+        exist_ok: bool = False,
     ):
         """Create a label for a measurement
 
@@ -819,7 +819,7 @@ class MVGAPI:
             Severity of the label as a positive integer
         notes : Optional[str], optional
             Optional notes for the label, by default ""
-        ignore_conflict : bool
+        exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
             caused by trying to create an existing label. Defaults to False
         """
@@ -829,8 +829,8 @@ class MVGAPI:
         label_data = {"label": label, "severity": severity, "notes": notes}
 
         do_not_raise = []
-        if ignore_conflict:
-            do_not_raise.append(409)
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
 
         self._request(
             "post", f"/sources/{sid}/labels/{timestamp}", do_not_raise, json=label_data
