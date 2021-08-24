@@ -148,7 +148,7 @@ def test_measurements_crud(session):
         ts_meta = REF_DB_PATH / "u0001" / ts_meta  # path
         with open(ts_meta, "r") as json_file:  # read json
             meas_info = json.load(json_file)  # into dict
-            print("Read meta:{meas_info}")
+            print(f"Read meta:{meas_info}")
 
         # get duration and other meta info
         duration = meas_info["duration"]
@@ -173,6 +173,7 @@ def test_measurements_crud(session):
             timestamp=ts_m,
             data=accs,
             meta=meta_info,
+            exist_ok=True,
         )
 
         # read back and check
@@ -274,10 +275,9 @@ def test_sources_cru_existing(session):
     assert src["meta"] == meta
 
     # create_source again (409 ignored)
-    session.create_source(SOURCE_ID_WAVEFORM, meta)
+    session.create_source(SOURCE_ID_WAVEFORM, meta, exist_ok=True)
 
     # create_source again (409 not ignored)
-    session.do_not_raise = []
     with pytest.raises(HTTPError):
         session.create_source(SOURCE_ID_WAVEFORM, meta)
 
@@ -340,25 +340,6 @@ def test_create_label(session, tabular_source_with_measurements):
     ]
     assert label1_ == label1
     assert label2_ == label2
-
-
-def test_update_label(session, tabular_source_with_measurements):
-    timestamps = tabular_dict["timestamp"]
-    session.create_label(
-        tabular_source_with_measurements,
-        timestamps[0],
-        "failure",
-        100,
-        "This is really bad!",
-    )
-
-    session.update_label(
-        tabular_source_with_measurements, timestamps[0], "normal", 0, "It wasn't so bad"
-    )
-
-    label1 = session.get_label(tabular_source_with_measurements, timestamps[0])
-
-    assert label1 == {"label": "normal", "severity": 0, "notes": "It wasn't so bad"}
 
 
 def test_update_label(session, tabular_source_with_measurements):

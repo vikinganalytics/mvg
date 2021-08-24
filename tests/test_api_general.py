@@ -33,7 +33,7 @@ def test_check_version(vibium):
     session.tested_api_version = session.api_version
     assert session.check_version()["api_version"] == session.api_version
 
-    # Check Incompatible Major version
+    # Check Incompatible Major version. Note: This test does not work locally
     session.tested_api_version = semver.VersionInfo(major=100)
     with pytest.raises(ValueError):
         session.check_version()

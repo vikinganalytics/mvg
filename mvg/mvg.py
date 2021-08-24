@@ -13,7 +13,7 @@ import time
 import logging
 from typing import Dict, List, Optional
 import requests
-from requests.exceptions import HTTPError, RequestException
+from requests.exceptions import RequestException
 
 import semver
 
@@ -54,9 +54,6 @@ class MVGAPI:
         self.mvg_version = self.parse_version("v0.7.7")
         self.tested_api_version = self.parse_version("v0.1.15")
 
-        # Errors to ignore
-        self.do_not_raise = []
-
         # Get API version
         try:
             response = self._request("get", "")
@@ -66,7 +63,7 @@ class MVGAPI:
         api_vstr = response.json()["message"]["api"]["version"]
         self.api_version = self.parse_version(api_vstr)
 
-    def _request(self, method, path, **kwargs) -> requests.Response:
+    def _request(self, method, path, do_not_raise=None, **kwargs) -> requests.Response:
         """Helper function for removing duplicate code on API requests.
         Makes requests on self.endpoint with authorization header and
         validates the response by status code. Writes DEBUG logs on
@@ -80,13 +77,11 @@ class MVGAPI:
         path : str
             Path to the url to call relative the self.endpoint
 
+        do_not_raise : list
+            List of error status codes to ignore. Defaults to [] if None
+
         **kwargs : Any
             Keyword arguments to pass to requests.request
-
-        Raises
-        ------
-        HTTPError
-            the original HTTPError from raise_for_status
 
         Returns
         -------
@@ -100,22 +95,13 @@ class MVGAPI:
             **kwargs,
         )
 
-        try:
-            response.raise_for_status()
-        except HTTPError as exc:
-            logger.debug(str(exc))
+        if do_not_raise is None:
+            do_not_raise = []
 
-            # Error ignorer
-            ignore = False
-            for err_no in self.do_not_raise:
-                if re.search(err_no, str(exc)):
-                    ignore = True
-            if ignore:
-                logstr = "Ignoring" + str(exc)
-                logger.info(logstr)
-            elif response.text:
-                logger.debug(str(response.text))
-                raise exc
+        if response.status_code in do_not_raise:
+            logger.info(f"Ignoring error {response.status_code} - {response.text}")
+        else:
+            response.raise_for_status()
 
         return response
 
@@ -246,7 +232,7 @@ class MVGAPI:
         # return list of IDs
         return response.json()["message"]
 
-    def create_source(self, sid: str, meta: dict):
+    def create_source(self, sid: str, meta: dict, exist_ok: bool = False):
         """
         Creates a source on the server side.
 
@@ -257,17 +243,27 @@ class MVGAPI:
 
         meta : dict
             meta information
+
+        exist_ok : bool
+            Set to true to prevent exceptions for 409 Conflict errors
+            caused by trying to create an existing source. Defaults to False
         """
 
         logger.info("endpoint %s", self.endpoint)
         logger.info("creating source with source id=%s", sid)
         logger.info("metadata: %s", meta)
 
+        do_not_raise = []
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
+
         # Package info to be submitted to db
         source_info = {"source_id": sid, "meta": meta}
-        self._request("post", "/sources/", json=source_info)
+        self._request("post", "/sources/", do_not_raise, json=source_info)
 
-    def create_tabular_source(self, sid: str, meta: dict, columns: List[str]):
+    def create_tabular_source(
+        self, sid: str, meta: dict, columns: List[str], exist_ok: bool = False
+    ):
         """
         Creates a tabular source on the server side.
 
@@ -282,6 +278,10 @@ class MVGAPI:
         columns : List[str]
             Data variables. Currently supports numerical data.
             Cannot be updated after creating source.
+
+        exist_ok : bool
+            Set to true to prevent exceptions for 409 Conflict errors
+            caused by trying to create an existing source. Defaults to False
         """
 
         logger.info("endpoint %s", self.endpoint)
@@ -289,10 +289,13 @@ class MVGAPI:
         logger.info("metadata: %s", meta)
         logger.info("columns: %s", columns)
 
-        # Package info to be submitted to db
+        do_not_raise = []
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
 
+        # Package info to be submitted to db
         source_info = {"source_id": sid, "meta": meta, "columns": columns}
-        self._request("post", "/sources/tabular", json=source_info)
+        self._request("post", "/sources/tabular", do_not_raise, json=source_info)
 
     def list_sources(self) -> list:
         """Lists all sources (sensors) on the server side
@@ -374,7 +377,13 @@ class MVGAPI:
     # Measurements
     # in example
     def create_measurement(
-        self, sid: str, duration: float, timestamp: int, data: list, meta: dict
+        self,
+        sid: str,
+        duration: float,
+        timestamp: int,
+        data: list,
+        meta: dict,
+        exist_ok: bool = False,
     ):
         """Stores a measurement on the server side.
 
@@ -401,6 +410,9 @@ class MVGAPI:
         meta: dict
             Meta information to attach to data.
 
+        exist_ok: bool
+            Set to true to prevent exceptions for 409 Conflict errors
+            caused by trying to create an existing measurement. Defaults to False
         """
 
         logger.info("endpoint %s", self.endpoint)
@@ -408,6 +420,10 @@ class MVGAPI:
         logger.info("  duration:  %s", duration)
         logger.info("  timestamp: %s", timestamp)
         logger.info("  meta data: %s", meta)
+
+        do_not_raise = []
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
 
         # Package info for db to be submitted
         meas_struct = [
@@ -419,10 +435,16 @@ class MVGAPI:
             }
         ]
 
-        self._request("post", f"/sources/{sid}/measurements", json=meas_struct)
+        self._request(
+            "post", f"/sources/{sid}/measurements", do_not_raise, json=meas_struct
+        )
 
     def create_tabular_measurement(
-        self, sid: str, data: Dict[str, List[float]], meta: Dict[float, dict] = None
+        self,
+        sid: str,
+        data: Dict[str, List[float]],
+        meta: Dict[float, dict] = None,
+        exist_ok: bool = False,
     ):
         """Stores a measurement on the server side.
 
@@ -444,10 +466,18 @@ class MVGAPI:
         meta: dict
             Meta information to attach to data. Should have the format
             {timestamp: meta_dict}. Timestamps must match data timestamps
+
+        exist_ok: bool
+            Set to true to prevent exceptions for 409 Conflict errors
+            caused by trying to create an existing measurement. Defaults to False
         """
 
         logger.info("endpoint %s", self.endpoint)
         logger.info("creating tabular measurement from source id=%s", sid)
+
+        do_not_raise = []
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
 
         body = {"data": data}
         if meta is not None:
@@ -772,6 +802,7 @@ class MVGAPI:
         label: str,
         severity: int,
         notes: Optional[str] = "",
+        exist_ok: bool = False,
     ):
         """Create a label for a measurement
 
@@ -787,13 +818,22 @@ class MVGAPI:
             Severity of the label as a positive integer
         notes : Optional[str], optional
             Optional notes for the label, by default ""
+        exist_ok : bool
+            Set to true to prevent exceptions for 409 Conflict errors
+            caused by trying to create an existing label. Defaults to False
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info(f"Creating label for {sid} - {timestamp}")
 
         label_data = {"label": label, "severity": severity, "notes": notes}
 
-        self._request("post", f"/sources/{sid}/labels/{timestamp}", json=label_data)
+        do_not_raise = []
+        if exist_ok:
+            do_not_raise.append(requests.codes["conflict"])  # 409
+
+        self._request(
+            "post", f"/sources/{sid}/labels/{timestamp}", do_not_raise, json=label_data
+        )
 
     def get_label(self, sid: str, timestamp: int) -> dict:
         """Get a single label from a measurement
@@ -872,35 +912,7 @@ class MVGAPI:
 
 class MVG(MVGAPI):
     """Class for a session providing an API to the vibium server.
-    Note that this class ignores specific http errors
-    (per default 409, existing resource). If this is not wanted use
-    MVGAPI class instead.
-    """
-
-    def __init__(self, endpoint: str, token: str):
-        """
-        Constructor.
-        As compared to super class configures session to ignore
-        409 errors (occuring when an existing resource is overwritten.
-        More errors can be ignored by setting class
-        attribute do_not_raise with a dictionary of http error codes.
-        On instantiation of a MVG object the session parameters
-        are stored for future calls and the version of the API
-        is requested.
-        In case token is "NO TOKEN", will insert the harcoded
-        valid token from testcases.
-        HTTPError is raised if  a connection to the API cannot
-        be established.
-
-        Parameters
-        ----------
-        endpoint: str
-            the server address (URL).
-        token: str
-            the token used for authentication and authorization.
-        """
-        super().__init__(endpoint=endpoint, token=token)
-        self.do_not_raise = ["409"]
+    Contains additional functionality over API methods"""
 
     def wait_for_analyses(self, request_id_list: list, timeout=None):
         """Wait for the analyses specified by list of request_ids to finish.
