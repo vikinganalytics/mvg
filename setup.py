@@ -28,6 +28,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/vikinganalytics/mvg",
+    package_dir={"": "mvg"},
     packages=setuptools.find_packages(where="mvg"),
     license="LICENSE",
     classifiers=[
