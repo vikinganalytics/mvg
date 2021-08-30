@@ -28,8 +28,8 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/vikinganalytics/mvg",
-    package_dir={"": "mvg"},
-    packages=setuptools.find_packages(where="mvg"),
+    package_dir={"": "."},
+    packages=setuptools.find_packages(where=".", include=["mvg", "mvg.*"]),
     license="LICENSE",
     classifiers=[
         "Programming Language :: Python :: 3",
