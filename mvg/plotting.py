@@ -21,14 +21,17 @@ MODE_COLOR_CODES = dict(
         [-1, "white"],
         [0, "blue"],
         [1, "fuchsia"],
-        [2, "yellow"],
+        [2, "orange"],
         [3, "aqua"],
-        [4, "orange"],
+        [4, "pink"],
         [5, "steelblue"],
-        [6, "green"],
-        [7, "lime"],
-        [8, "red"],
-        [9, "black"],
+        [6, "olive"],
+        [7, "lavender"],
+        [8, "yellow"],
+        [9, "green"],
+        [10, "lime"],
+        [11, "red"],
+        [12, "black"],
     )
 )
 
