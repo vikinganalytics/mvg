@@ -19,12 +19,14 @@ from mvg.features.analysis import Analysis  # Base Class
 from mvg.features.rms import RMS
 from mvg.features.modeid import ModeId
 from mvg.features.blacksheep import BlackSheep
+from mvg.features.kpidemo import KPIDemo
 
 # from mvg.features.envelope import Envelope
 
 _ = RMS  # avoid F401 linting error
 _ = ModeId  # avoid F401 linting error
 _ = BlackSheep  # avoid F401 linting error
+_ = KPIDemo  # avoid F401 linting error
 
 
 # Parser/Factory function
