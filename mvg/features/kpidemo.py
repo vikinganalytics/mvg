@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 """Analysis Class for KPIDemo Feature"""
+=======
+"""Analysis Class for RMS Feature"""
+>>>>>>> Adding the KPIDemo feature to MVG
 import pandas as pd
 import matplotlib.pyplot as plt
 from tabulate import tabulate
