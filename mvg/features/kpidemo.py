@@ -42,7 +42,9 @@ class KPIDemo(Analysis):
         print(tabulate(tab, headers="keys", tablefmt="psql"))
         return tab
 
-    def plot(self, kpi="rms", interactive=True, time_format=None):
+    def plot(
+        self, kpi="rms", interactive=True, time_format=None
+    ):  # pylint: disable=parameter-override
         """
         Generate a basic plot on KPIs.
 
