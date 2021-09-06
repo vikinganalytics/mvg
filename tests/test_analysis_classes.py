@@ -109,8 +109,8 @@ def test_KPIDemo():
     assert os.path.exists(plt_file)
     os.remove(plt_file)  # Cleanup
 
-    # Accessor functions (tested only in RMS)
-    ts_sum = 78615280200
+    # Accessor functions (tested only in KPIDemo)
+    ts_sum = 73900313220
     assert sum(feat.raw_results()["results"]["timestamps"]) == ts_sum
     assert feat.request_id() == "45f202227d51402eb7e71efd58370415"
     assert feat.feature() == "KPIDemo"
