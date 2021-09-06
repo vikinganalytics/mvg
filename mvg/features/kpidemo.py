@@ -44,7 +44,7 @@ class KPIDemo(Analysis):
 
     def plot(
         self, kpi="rms", interactive=True, time_format=None
-    ):  # pylint: disable=parameter-override
+    ):  # pylint: disable=W0221
         """
         Generate a basic plot on KPIs.
 
