@@ -1,4 +1,4 @@
-"""Analysis Class for RMS Feature"""
+"""Analysis Class for KPIDemo Feature"""
 import pandas as pd
 import matplotlib.pyplot as plt
 from tabulate import tabulate
