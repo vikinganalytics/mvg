@@ -104,7 +104,7 @@ def test_KPIDemo():
     }
 
     # Plot (not tested at all)
-    plt_file = feat.plot(False)
+    plt_file = feat.plot("rms", False)
     assert plt_file is not None
     assert os.path.exists(plt_file)
     os.remove(plt_file)  # Cleanup
