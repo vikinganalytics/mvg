@@ -81,7 +81,7 @@ def test_KPIDemo():
     assert len(feat.to_df()["timestamps"]) == len(api_results["results"]["timestamps"])
 
     # Test datetime conversion
-    feat = analysis_classes.RMS(api_results, t_zone="Europe/Stockholm", t_unit="s")
+    feat = analysis_classes.KPIDemo(api_results, t_zone="Europe/Stockholm", t_unit="s")
     assert str(feat.to_df()["datetime"][0]) == "2019-10-04 13:01:00+02:00"
 
     # test save as pickle file
