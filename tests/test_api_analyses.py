@@ -105,6 +105,8 @@ def waveform_source_with_measurements(session, waveform_source):
 
 
 def test_kpidemo_analysis(session, waveform_source):
+    print(session.list_sources())
+    print(len(session.list_measurements(SOURCE_ID_WAVEFORM)))
     kpi = session.request_analysis(SOURCE_ID_WAVEFORM, "KPIDemo")
     print(kpi)
     assert kpi["request_id"]
