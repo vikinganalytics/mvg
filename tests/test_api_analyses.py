@@ -44,6 +44,7 @@ def session(vibium):
 
     return session
 
+
 @pytest.fixture()
 def waveform_source(session):
     try:
