@@ -44,13 +44,6 @@ def session(vibium):
 
     return session
 
-    m_file_name = REF_DB_PATH / "u0001" / "meta.json"
-    with open(m_file_name, "r") as json_file:
-        meta = json.load(json_file)
-    # create_source happy case
-    session.create_source(SOURCE_ID_WAVEFORM, meta)
-
-
 @pytest.fixture()
 def waveform_source(session):
     try:
