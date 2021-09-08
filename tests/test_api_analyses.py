@@ -101,6 +101,16 @@ def waveform_source_with_measurements(session, waveform_source):
             meta=meta_info,
         )
 
+        # create again (ignore error)
+        session.create_measurement(
+            sid=SOURCE_ID_WAVEFORM,
+            duration=duration,
+            timestamp=ts_m,
+            data=accs,
+            meta=meta_info,
+            exist_ok=True,
+        )
+
     yield waveform_source
 
 
