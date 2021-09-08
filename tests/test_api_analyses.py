@@ -15,7 +15,6 @@ import pandas as pd
 from requests import HTTPError
 import pytest
 from mvg import MVG
-import numpy as np
 
 VALID_TOKEN = os.environ["TEST_TOKEN"]
 
@@ -122,7 +121,7 @@ def test_request_analysis(session, waveform_source_with_measurements):
 
 def test_analysis_results(session, waveform_source_with_measurements):
     REQUEST_ID = session.list_analyses(SOURCE_ID_WAVEFORM, "KPIDemo")
-    results = session.get_analysis_results(REQUEST_ID)
+    results = session.get_analysis_results(REQUEST_ID[0])
     assert len(results.keys()) == 7
     assert results["status"] == "successful"
     assert results["feature"] == "KPIDemo"
