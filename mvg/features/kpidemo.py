@@ -44,7 +44,7 @@ class KPIDemo(Analysis):
 
     def plot(
         self, kpi="rms", interactive=True, time_format=None
-    ):  # pylint: disable=W0221
+    ):  # pylint: disable=arguments-differ
         """
         Generate a basic plot on KPIs.
 
