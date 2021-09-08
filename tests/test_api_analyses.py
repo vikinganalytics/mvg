@@ -110,8 +110,8 @@ def waveform_source_with_measurements(session, waveform_source):
     yield waveform_source
 
 
-def test_kpidemo_analysis(session, waveform_source_with_measurements):
-    kpi = session.request_analysis(SOURCE_ID_WAVEFORM, "KPIDemo")
+def test_kpidemo_analysis(session, waveform_source):
+    kpi = session.request_analysis(waveform_source, "KPIDemo")
     print(kpi)
     assert kpi["request_id"]
     session.wait_for_analyses(kpi["request_id"])
