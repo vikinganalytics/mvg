@@ -20,7 +20,7 @@ VALID_TOKEN = os.environ["TEST_TOKEN"]
 
 # Test data and session setup
 REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
-SOURCE_ID_WAVEFORM = uuid.uuid1().hex  # generate a unique source per testrun
+SOURCE_ID_WAVEFORM = "u0001"  # uuid.uuid1().hex  # generate a unique source per testrun
 
 
 @pytest.fixture(scope="session")
