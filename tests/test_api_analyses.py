@@ -25,4 +25,5 @@ def test_kpidemo_analysis(session, waveform_source_with_measurements):
     assert results["status"] == "successful"
     assert results["feature"] == "KPIDemo"
     kpi_results = results["results"]
-    assert len(kpi_results.keys()) == 8
+    assert len(kpi_results.keys()) == 2
+    assert len(kpi_results["acc"].keys()) == 7
