@@ -90,7 +90,6 @@ def test_kpidemo_analysis(session, waveform_source_with_measurements):
     print(kpi)
     assert kpi["request_id"]
     time.sleep(1)
-    # session.wait_for_analyses(kpi["request_id"])
     status = session.get_analysis_status(kpi["request_id"])
     assert status == "successful"
     results = session.get_analysis_results(kpi["request_id"])
