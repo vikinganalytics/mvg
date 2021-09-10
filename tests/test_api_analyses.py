@@ -6,12 +6,14 @@ relying on access to vibium-cloud API
 Tests need to be run in order
 -p no:randomly
 """
+import time
 from pathlib import Path
 
 import os
 import json
 import uuid
 import pandas as pd
+import requests
 from requests import HTTPError
 import pytest
 from mvg import MVG
@@ -117,10 +119,15 @@ def waveform_source_with_measurements(session, waveform_source):
 def test_kpidemo_analysis(session, waveform_source_with_measurements):
     print(session.list_sources())
     print(len(session.list_measurements(SOURCE_ID_WAVEFORM)))
-    kpi = session.request_analysis(SOURCE_ID_WAVEFORM, "KPIDemo")
+    try:
+        kpi = session.request_analysis(SOURCE_ID_WAVEFORM, "KPIDemo")
+    except requests.HTTPError as exc:
+        print(exc.response.content)
+        raise
     print(kpi)
     assert kpi["request_id"]
-    session.wait_for_analyses(kpi["request_id"])
+    time.sleep(1)
+    #session.wait_for_analyses(kpi["request_id"])
     status = session.get_analysis_status(kpi["request_id"])
     assert status == "successful"
     results = session.get_analysis_results(kpi["request_id"])
