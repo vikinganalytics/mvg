@@ -17,46 +17,16 @@ import pytest
 from mvg import MVG
 import numpy as np
 
-VALID_TOKEN = os.environ["TEST_TOKEN"]
-
 # Test data and session setup
 REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
-SOURCE_ID_WAVEFORM = uuid.uuid1().hex  # generate a unique source per testrun
+SOURCE_ID_WAVEFORM = uuid.uuid1().hex  # generate a unique source per test
+
 SOURCE_ID_TABULAR = uuid.uuid1().hex
 
 tabular_df = pd.read_csv(
     REF_DB_PATH.parent / "tabular_data.csv", float_precision="round_trip"
 )
 tabular_dict = tabular_df.to_dict("list")
-
-
-@pytest.fixture(scope="session")
-def session(vibium):
-
-    url = vibium
-    print("Overriding vibium function with url %s", url)
-    session = MVG(url, VALID_TOKEN)
-    # To make sure we start from a clean slate
-    # we delete our resource in case it exists
-    # All information including measurements
-    # will be removed
-    # TO DO delete all so, currently we only
-    # handle resource SOURCE_ID
-    try:
-        session.get_source(SOURCE_ID_WAVEFORM)
-        print(f"Deleting {SOURCE_ID_WAVEFORM}")
-        session.delete_source(SOURCE_ID_WAVEFORM)
-    except HTTPError:
-        print(f"Source {SOURCE_ID_WAVEFORM} does not exist")
-
-    try:
-        session.get_source(SOURCE_ID_TABULAR)
-        print(f"Deleting {SOURCE_ID_TABULAR}")
-        session.delete_source(SOURCE_ID_TABULAR)
-    except HTTPError:
-        print(f"Source {SOURCE_ID_TABULAR} does not exist")
-
-    return session
 
 
 @pytest.fixture()

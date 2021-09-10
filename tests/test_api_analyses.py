@@ -25,41 +25,6 @@ REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
 SOURCE_ID_WAVEFORM = uuid.uuid1().hex  # generate a unique source per testrun
 
 
-@pytest.fixture(scope="session")
-def session(vibium):
-
-    url = vibium
-    print("Overriding vibium function with url %s", url)
-    session = MVG(url, VALID_TOKEN)
-    # To make sure we start from a clean slate
-    # we delete our resource in case it exists
-    # All information including measurements
-    # will be removed
-    # TO DO delete all so, currently we only
-    # handle resource SOURCE_ID
-    try:
-        session.get_source(SOURCE_ID_WAVEFORM)
-        print(f"Deleting {SOURCE_ID_WAVEFORM}")
-        session.delete_source(SOURCE_ID_WAVEFORM)
-    except HTTPError:
-        print(f"Source {SOURCE_ID_WAVEFORM} does not exist")
-
-    return session
-
-
-@pytest.fixture()
-def waveform_source(session):
-    try:
-        m_file_name = REF_DB_PATH / "u0001" / "meta.json"
-        with open(m_file_name, "r") as json_file:
-            meta = json.load(json_file)
-        # create_source happy case
-        session.create_source(SOURCE_ID_WAVEFORM, meta)
-        yield SOURCE_ID_WAVEFORM
-    finally:
-        session.delete_source(SOURCE_ID_WAVEFORM)
-
-
 @pytest.fixture()
 def waveform_source_with_measurements(session, waveform_source):
     # get list of measurements
@@ -96,7 +61,7 @@ def waveform_source_with_measurements(session, waveform_source):
 
         # create
         session.create_measurement(
-            sid=SOURCE_ID_WAVEFORM,
+            sid=waveform_source,
             duration=duration,
             timestamp=ts_m,
             data=accs,
@@ -105,7 +70,7 @@ def waveform_source_with_measurements(session, waveform_source):
 
         # create again (ignore error)
         session.create_measurement(
-            sid=SOURCE_ID_WAVEFORM,
+            sid=waveform_source,
             duration=duration,
             timestamp=ts_m,
             data=accs,
@@ -117,17 +82,15 @@ def waveform_source_with_measurements(session, waveform_source):
 
 
 def test_kpidemo_analysis(session, waveform_source_with_measurements):
-    print(session.list_sources())
-    print(len(session.list_measurements(SOURCE_ID_WAVEFORM)))
     try:
-        kpi = session.request_analysis(SOURCE_ID_WAVEFORM, "KPIDemo")
+        kpi = session.request_analysis(waveform_source_with_measurements, "KPIDemo")
     except requests.HTTPError as exc:
         print(exc.response.content)
         raise
     print(kpi)
     assert kpi["request_id"]
     time.sleep(1)
-    #session.wait_for_analyses(kpi["request_id"])
+    # session.wait_for_analyses(kpi["request_id"])
     status = session.get_analysis_status(kpi["request_id"])
     assert status == "successful"
     results = session.get_analysis_results(kpi["request_id"])
