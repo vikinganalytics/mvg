@@ -81,7 +81,7 @@ def waveform_source_with_measurements(session, waveform_source):
 
 def test_kpidemo_analysis(session, waveform_source_with_measurements):
     kpi = session.request_analysis(waveform_source_with_measurements, "KPIDemo")
-    session.wait_for_analyses(kpi["request_id"])
+    session.wait_for_analyses([kpi["request_id"]])
     status = session.get_analysis_status(kpi["request_id"])
     assert status == "successful"
     results = session.get_analysis_results(kpi["request_id"])
