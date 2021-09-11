@@ -3,9 +3,10 @@ from pathlib import Path
 
 import pytest
 import requests
-from mvg import MVG
 import uuid
 import json
+import pandas as pd
+from mvg import MVG
 
 import argparse
 import sys

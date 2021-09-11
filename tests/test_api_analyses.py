@@ -8,11 +8,6 @@ Tests need to be run in order
 """
 from pathlib import Path
 
-import os
-import json
-import uuid
-import pandas as pd
-from requests import HTTPError
 import pytest
 from mvg import MVG
 
