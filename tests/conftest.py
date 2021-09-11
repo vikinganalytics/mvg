@@ -125,3 +125,59 @@ def waveform_source(session):
         yield SOURCE_ID_WAVEFORM
     finally:
         session.delete_source(SOURCE_ID_WAVEFORM)
+
+
+@pytest.fixture()
+def waveform_source_with_measurements(session, waveform_source):
+    # get list of measurements
+    src_path = REF_DB_PATH / "u0001"
+    meas = {f.split(".")[0] for f in os.listdir(src_path)}
+    meas.remove("meta")
+    meas = [int(m) for m in meas]
+    meas = list(meas)[0:40]
+
+    # iterate over 40 meas (m is timestamp)
+    for ts_m in meas:
+        # samples file for one measurement
+        ts_meas = str(ts_m) + ".csv"  # filename
+        ts_meas = REF_DB_PATH / "u0001" / ts_meas  # path to file
+        ts_df = pd.read_csv(
+            ts_meas, names=["acc"], float_precision="round_trip"
+        )  # read csv into df
+        accs = ts_df.iloc[:, 0].tolist()  # convert to list
+        print(f"Read {len(accs)} samples")
+
+        # meta information file for one measurement
+        ts_meta = str(ts_m) + ".json"  # filename
+        ts_meta = REF_DB_PATH / "u0001" / ts_meta  # path
+        with open(ts_meta, "r") as json_file:  # read json
+            meas_info = json.load(json_file)  # into dict
+            print(f"Read meta:{meas_info}")
+
+        # get duration and other meta info
+        duration = meas_info["duration"]
+        meta_info = meas_info["meta"]
+
+        # add sampling rate
+        meta_info["sampling_rate"] = len(accs) / duration
+
+        # create
+        session.create_measurement(
+            sid=waveform_source,
+            duration=duration,
+            timestamp=ts_m,
+            data=accs,
+            meta=meta_info,
+        )
+
+        # create again (ignore error)
+        session.create_measurement(
+            sid=waveform_source,
+            duration=duration,
+            timestamp=ts_m,
+            data=accs,
+            meta=meta_info,
+            exist_ok=True,
+        )
+
+    yield waveform_source
