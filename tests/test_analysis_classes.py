@@ -66,6 +66,60 @@ def test_RMS():
     assert feat.sources() == ["u0001"]
 
 
+def test_KPIDemo():
+    # read dict
+    with open("./tests/test_data/KPIDemo_results_dict.json") as json_file:
+        api_results = json.load(json_file)
+
+    # get object
+    feat = parse_results(api_results, t_zone=None, t_unit=None)
+
+    # Check dataframe conversion - columns
+    assert set(feat.to_df().columns.values) == set(api_results["results"].keys())
+
+    # Check dataframe conversion - length
+    assert len(feat.to_df()["timestamps"]) == len(api_results["results"]["timestamps"])
+
+    # Test datetime conversion
+    feat = analysis_classes.KPIDemo(api_results, t_zone="Europe/Stockholm", t_unit="s")
+    assert str(feat.to_df()["datetime"][0]) == "2019-10-04 13:01:00+02:00"
+
+    # test save as pickle file
+    pkl_file = feat.save_pkl()
+    assert pkl_file == "45f202227d51402eb7e71efd58370415.pkl"
+
+    assert os.path.exists(pkl_file)
+    os.remove(pkl_file)  # Cleanup
+
+    # Summary
+    assert set(feat.summary().index) == {
+        "mean",
+        "min",
+        "std",
+        "count",
+        "50%",
+        "75%",
+        "25%",
+        "max",
+    }
+
+    # Plot (not tested at all)
+    plt_file = feat.plot("rms", False)
+    assert plt_file is not None
+    assert os.path.exists(plt_file)
+    os.remove(plt_file)  # Cleanup
+
+    # Accessor functions (tested only in KPIDemo)
+    ts_sum = 73900313220
+    assert sum(feat.raw_results()["results"]["timestamps"]) == ts_sum
+    assert feat.request_id() == "45f202227d51402eb7e71efd58370415"
+    assert feat.feature() == "KPIDemo"
+    assert sum(feat.inputs()["timestamps"]) == ts_sum
+    assert sum(feat.results()["timestamps"]) == ts_sum
+    assert feat.status() == "successful"
+    assert feat.sources() == ["u0001"]
+
+
 def test_BlackSheep():
     # read dict
     with open("./tests/test_data/BlackSheep_results_dict.json") as json_file:
