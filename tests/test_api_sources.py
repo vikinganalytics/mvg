@@ -17,46 +17,16 @@ import pytest
 from mvg import MVG
 import numpy as np
 
-VALID_TOKEN = os.environ["TEST_TOKEN"]
-
 # Test data and session setup
 REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
-SOURCE_ID_WAVEFORM = uuid.uuid1().hex  # generate a unique source per testrun
+SOURCE_ID_WAVEFORM = uuid.uuid1().hex  # generate a unique source per test
+
 SOURCE_ID_TABULAR = uuid.uuid1().hex
 
 tabular_df = pd.read_csv(
     REF_DB_PATH.parent / "tabular_data.csv", float_precision="round_trip"
 )
 tabular_dict = tabular_df.to_dict("list")
-
-
-@pytest.fixture(scope="session")
-def session(vibium):
-
-    url = vibium
-    print("Overriding vibium function with url %s", url)
-    session = MVG(url, VALID_TOKEN)
-    # To make sure we start from a clean slate
-    # we delete our resource in case it exists
-    # All information including measurements
-    # will be removed
-    # TO DO delete all so, currently we only
-    # handle resource SOURCE_ID
-    try:
-        session.get_source(SOURCE_ID_WAVEFORM)
-        print(f"Deleting {SOURCE_ID_WAVEFORM}")
-        session.delete_source(SOURCE_ID_WAVEFORM)
-    except HTTPError:
-        print(f"Source {SOURCE_ID_WAVEFORM} does not exist")
-
-    try:
-        session.get_source(SOURCE_ID_TABULAR)
-        print(f"Deleting {SOURCE_ID_TABULAR}")
-        session.delete_source(SOURCE_ID_TABULAR)
-    except HTTPError:
-        print(f"Source {SOURCE_ID_TABULAR} does not exist")
-
-    return session
 
 
 @pytest.fixture()
@@ -148,7 +118,7 @@ def test_measurements_crud(session):
         ts_meta = REF_DB_PATH / "u0001" / ts_meta  # path
         with open(ts_meta, "r") as json_file:  # read json
             meas_info = json.load(json_file)  # into dict
-            print("Read meta:{meas_info}")
+            print(f"Read meta:{meas_info}")
 
         # get duration and other meta info
         duration = meas_info["duration"]
@@ -173,6 +143,7 @@ def test_measurements_crud(session):
             timestamp=ts_m,
             data=accs,
             meta=meta_info,
+            exist_ok=True,
         )
 
         # read back and check
@@ -274,10 +245,9 @@ def test_sources_cru_existing(session):
     assert src["meta"] == meta
 
     # create_source again (409 ignored)
-    session.create_source(SOURCE_ID_WAVEFORM, meta)
+    session.create_source(SOURCE_ID_WAVEFORM, meta, exist_ok=True)
 
     # create_source again (409 not ignored)
-    session.do_not_raise = []
     with pytest.raises(HTTPError):
         session.create_source(SOURCE_ID_WAVEFORM, meta)
 
@@ -340,25 +310,6 @@ def test_create_label(session, tabular_source_with_measurements):
     ]
     assert label1_ == label1
     assert label2_ == label2
-
-
-def test_update_label(session, tabular_source_with_measurements):
-    timestamps = tabular_dict["timestamp"]
-    session.create_label(
-        tabular_source_with_measurements,
-        timestamps[0],
-        "failure",
-        100,
-        "This is really bad!",
-    )
-
-    session.update_label(
-        tabular_source_with_measurements, timestamps[0], "normal", 0, "It wasn't so bad"
-    )
-
-    label1 = session.get_label(tabular_source_with_measurements, timestamps[0])
-
-    assert label1 == {"label": "normal", "severity": 0, "notes": "It wasn't so bad"}
 
 
 def test_update_label(session, tabular_source_with_measurements):
