@@ -569,6 +569,7 @@ class MVGAPI:
         logger.info("retrieving all measurements from source id=%s", sid)
 
         query_params_list = []
+        query_params_str = ""
 
         if start_timestamp is not None:
             query_params_list.append(f"start_timestamp={start_timestamp}")
@@ -579,7 +580,7 @@ class MVGAPI:
             query_params_str = f"?{'&'.join(query_params_list)}"
 
         response = self._request(
-            "get", f"/sources/{sid}/measurements/tabular/get{query_params_str}"
+            "get", f"/sources/{sid}/measurements/tabular{query_params_str}"
         )
 
         return response.json()
