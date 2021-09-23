@@ -27,6 +27,7 @@
    "outputs": [],
    "source": [
     "import json\n",
+    "import os\n",
     "import sys\n",
     "import logging\n",
     "from requests import HTTPError\n",
@@ -55,7 +56,7 @@
    },
    "outputs": [],
    "source": [
-    "TOKEN = \"NO TOKEN\"  # replace with your token"
+    "TOKEN = os.environ[\"TEST_TOKEN\"]  # replace with your token"
    ]
   },
   {
@@ -129,8 +130,8 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,009 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
-      "2021-03-18 11:13:44,137 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"GET / HTTP/1.1\" 200 465\n"
+      "2021-09-22 19:53:10,807 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
+      "2021-09-22 19:53:10,999 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"GET / HTTP/1.1\" 200 115\n"
      ]
     }
    ],
@@ -165,16 +166,16 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,141 - INFO - mvg.mvg - Getting API info for: https://api.beta.multiviz.com\n",
-      "2021-03-18 11:13:44,143 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
-      "2021-03-18 11:13:44,269 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"GET / HTTP/1.1\" 200 465\n"
+      "2021-09-22 19:53:11,007 - INFO - mvg.mvg - Getting API info for: https://api.beta.multiviz.com\n",
+      "2021-09-22 19:53:11,010 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
+      "2021-09-22 19:53:11,193 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"GET / HTTP/1.1\" 200 115\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "{\"api\": {\"name\": \"MultiViz Engine API\", \"version\": \"v0.0.13\"}, \"features\": {\"mode_id\": true, \"blacksheep\": false, \"emerging_mode\": false, \"on_off\": false, \"asset_type\": false, \"indicator_arrow\": false}, \"request_status\": [\"initialized\", \"accepted\", \"queued\", \"ongoing\", \"failed\", \"ready\"], \"traffic_limit\": 10000000, \"max_source_id_length\": 255, \"max_meta_size\": 50000, \"max_number_of_samples\": 400000, \"max_number_of_sources\": 100, \"max_number_of_measurements\": 1000, \"db_version\": \"1.0.0\"}\n"
+      "{\"api\": {\"name\": \"MultiViz Engine API\", \"version\": \"v0.2.0\", \"swagger\": \"http://api.beta.multiviz.com/docs\"}}\n"
      ]
     }
    ],
@@ -206,8 +207,8 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,274 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
-      "2021-03-18 11:13:44,393 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"GET / HTTP/1.1\" 200 465\n"
+      "2021-09-22 19:53:11,205 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
+      "2021-09-22 19:53:11,394 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"GET / HTTP/1.1\" 200 115\n"
      ]
     }
    ],
@@ -241,31 +242,17 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,398 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com\n",
-      "2021-03-18 11:13:44,399 - INFO - mvg.mvg - listing sources\n",
-      "2021-03-18 11:13:44,400 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n"
+      "2021-09-22 19:53:11,405 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com\n",
+      "2021-09-22 19:53:11,407 - INFO - mvg.mvg - listing sources\n",
+      "2021-09-22 19:53:11,409 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
+      "2021-09-22 19:53:11,598 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"GET /sources/ HTTP/1.1\" 401 25\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      ">>> Provoke Unathorized call\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "2021-03-18 11:13:44,544 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"GET /sources/ HTTP/1.1\" 401 25\n",
-      "2021-03-18 11:13:44,546 - DEBUG - mvg.mvg - 401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/\n",
-      "2021-03-18 11:13:44,546 - DEBUG - mvg.mvg - {\"detail\":\"Unauthorized\"}\n"
-     ]
-    },
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
+      ">>> Provoke Unathorized call\n",
       "OUCH\n",
       "401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/\n"
      ]
@@ -312,41 +299,27 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,551 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com\n",
-      "2021-03-18 11:13:44,551 - INFO - mvg.mvg - creating source with source id=illegal%name\n",
-      "2021-03-18 11:13:44,552 - INFO - mvg.mvg - metadata: {}\n",
-      "2021-03-18 11:13:44,553 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n"
+      "2021-09-22 19:53:11,611 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com\n",
+      "2021-09-22 19:53:11,614 - INFO - mvg.mvg - creating source with source id=illegal%name\n",
+      "2021-09-22 19:53:11,616 - INFO - mvg.mvg - metadata: {}\n",
+      "2021-09-22 19:53:11,619 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
+      "2021-09-22 19:53:11,797 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"POST /sources/ HTTP/1.1\" 422 120\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      ">>> Provoke illegal source Id name\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "2021-03-18 11:13:44,683 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"POST /sources/ HTTP/1.1\" 401 25\n",
-      "2021-03-18 11:13:44,684 - DEBUG - mvg.mvg - 401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/\n",
-      "2021-03-18 11:13:44,685 - DEBUG - mvg.mvg - {\"detail\":\"Unauthorized\"}\n"
-     ]
-    },
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
+      ">>> Provoke illegal source Id name\n",
       "OUCH\n",
-      "401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/\n"
+      "422 Client Error: Unprocessable Entity for url: https://api.beta.multiviz.com/sources/\n"
      ]
     }
    ],
    "source": [
     "try:\n",
     "    print(\">>> Provoke illegal source Id name\")\n",
-    "    session.create_source(\"illegal%name\", {})\n",
+    "    session.create_source(\"illegal%name\", {}, channels=[\"acc\"])\n",
     "except HTTPError as exc:\n",
     "    # As we have rouge token\n",
     "    # We'll end up here\n",
@@ -383,12 +356,9 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,689 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com\n",
-      "2021-03-18 11:13:44,689 - INFO - mvg.mvg - creating measurement from source id=\n",
-      "2021-03-18 11:13:44,690 - INFO - mvg.mvg -   duration:  -3\n",
-      "2021-03-18 11:13:44,690 - INFO - mvg.mvg -   timestamp: -5\n",
-      "2021-03-18 11:13:44,691 - INFO - mvg.mvg -   meta data: {}\n",
-      "2021-03-18 11:13:44,692 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n"
+      "2021-09-22 19:53:11,808 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com\n",
+      "2021-09-22 19:53:11,809 - INFO - mvg.mvg - creating measurement from source id=\n",
+      "2021-09-22 19:53:11,812 - INFO - mvg.mvg -   duration:  -3\n"
      ]
     },
     {
@@ -402,9 +372,10 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,825 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"POST /sources//measurements HTTP/1.1\" 404 22\n",
-      "2021-03-18 11:13:44,826 - DEBUG - mvg.mvg - 404 Client Error: Not Found for url: https://api.beta.multiviz.com/sources//measurements\n",
-      "2021-03-18 11:13:44,827 - DEBUG - mvg.mvg - {\"detail\":\"Not Found\"}\n"
+      "2021-09-22 19:53:11,815 - INFO - mvg.mvg -   timestamp: -5\n",
+      "2021-09-22 19:53:11,816 - INFO - mvg.mvg -   meta data: {}\n",
+      "2021-09-22 19:53:11,820 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
+      "2021-09-22 19:53:11,991 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"POST /sources//measurements HTTP/1.1\" 404 22\n"
      ]
     },
     {
@@ -458,12 +429,11 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,832 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com\n",
-      "2021-03-18 11:13:44,832 - INFO - mvg.mvg - creating measurement from source id=u0001\n",
-      "2021-03-18 11:13:44,833 - INFO - mvg.mvg -   duration:  -3\n",
-      "2021-03-18 11:13:44,833 - INFO - mvg.mvg -   timestamp: -5\n",
-      "2021-03-18 11:13:44,834 - INFO - mvg.mvg -   meta data: {}\n",
-      "2021-03-18 11:13:44,835 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n"
+      "2021-09-22 19:53:12,003 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com\n",
+      "2021-09-22 19:53:12,005 - INFO - mvg.mvg - creating measurement from source id=u0001\n",
+      "2021-09-22 19:53:12,007 - INFO - mvg.mvg -   duration:  -3\n",
+      "2021-09-22 19:53:12,008 - INFO - mvg.mvg -   timestamp: -5\n",
+      "2021-09-22 19:53:12,008 - INFO - mvg.mvg -   meta data: {}\n"
      ]
     },
     {
@@ -477,25 +447,24 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "2021-03-18 11:13:44,964 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"POST /sources/u0001/measurements HTTP/1.1\" 401 25\n",
-      "2021-03-18 11:13:44,966 - DEBUG - mvg.mvg - 401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/u0001/measurements\n",
-      "2021-03-18 11:13:44,966 - DEBUG - mvg.mvg - {\"detail\":\"Unauthorized\"}\n"
+      "2021-09-22 19:53:12,012 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443\n",
+      "2021-09-22 19:53:12,206 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 \"POST /sources/u0001/measurements HTTP/1.1\" 422 101\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/u0001/measurements\n",
+      "422 Client Error: Unprocessable Entity for url: https://api.beta.multiviz.com/sources/u0001/measurements\n",
       "Details on error\n",
-      "{'detail': 'Unauthorized'}\n"
+      "{'detail': [{'loc': ['body', 0, 'timestamp'], 'msg': 'Timestamp cannot be negative', 'type': 'value_error'}]}\n"
      ]
     }
    ],
    "source": [
     "try:\n",
     "    print(\">>> Parameter value out of range\")\n",
-    "    d = [1, 2, 3]\n",
+    "    d = {\"acc\": [1, 2, 3]}\n",
     "    session.create_measurement(sid=\"u0001\",\n",
     "                               duration=-3,\n",
     "                               timestamp=-5,\n",
@@ -570,7 +539,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.5"
+   "version": "3.8.10"
   },
   "toc": {
    "base_numbering": 1,

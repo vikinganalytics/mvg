@@ -378,6 +378,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
@@ -394,7 +395,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="s2">&quot;NO TOKEN&quot;</span>  <span class="c1"># replace with your token</span>
+<span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_TOKEN&quot;</span><span class="p">]</span>  <span class="c1"># replace with your token</span>
 </pre></div>
 </div>
 </div>
@@ -440,8 +441,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,009 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
-2021-03-18 11:13:44,137 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;GET / HTTP/1.1&#34; 200 465
+2021-09-22 19:53:10,807 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:10,999 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;GET / HTTP/1.1&#34; 200 115
 </pre></div></div>
 </div>
 <p>We now check if the server is alive. The hello message contains, amongst others the API version.</p>
@@ -460,9 +461,9 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,141 - INFO - mvg.mvg - Getting API info for: https://api.beta.multiviz.com
-2021-03-18 11:13:44,143 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
-2021-03-18 11:13:44,269 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;GET / HTTP/1.1&#34; 200 465
+2021-09-22 19:53:11,007 - INFO - mvg.mvg - Getting API info for: https://api.beta.multiviz.com
+2021-09-22 19:53:11,010 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:11,193 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;GET / HTTP/1.1&#34; 200 115
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -470,7 +471,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#34;api&#34;: {&#34;name&#34;: &#34;MultiViz Engine API&#34;, &#34;version&#34;: &#34;v0.0.13&#34;}, &#34;features&#34;: {&#34;mode_id&#34;: true, &#34;blacksheep&#34;: false, &#34;emerging_mode&#34;: false, &#34;on_off&#34;: false, &#34;asset_type&#34;: false, &#34;indicator_arrow&#34;: false}, &#34;request_status&#34;: [&#34;initialized&#34;, &#34;accepted&#34;, &#34;queued&#34;, &#34;ongoing&#34;, &#34;failed&#34;, &#34;ready&#34;], &#34;traffic_limit&#34;: 10000000, &#34;max_source_id_length&#34;: 255, &#34;max_meta_size&#34;: 50000, &#34;max_number_of_samples&#34;: 400000, &#34;max_number_of_sources&#34;: 100, &#34;max_number_of_measurements&#34;: 1000, &#34;db_version&#34;: &#34;1.0.0&#34;}
+{&#34;api&#34;: {&#34;name&#34;: &#34;MultiViz Engine API&#34;, &#34;version&#34;: &#34;v0.2.0&#34;, &#34;swagger&#34;: &#34;http://api.beta.multiviz.com/docs&#34;}}
 </pre></div></div>
 </div>
 <section id="Invalid-Token">
@@ -490,8 +491,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,274 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
-2021-03-18 11:13:44,393 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;GET / HTTP/1.1&#34; 200 465
+2021-09-22 19:53:11,205 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:11,394 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;GET / HTTP/1.1&#34; 200 115
 </pre></div></div>
 </div>
 <p>We need to call a method requiring authentication. Check <a class="reference external" href="http://endpoint/docs">http://endpoint/docs</a> to see which methods require authentication, they have a lock icon.</p>
@@ -520,27 +521,10 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,398 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
-2021-03-18 11:13:44,399 - INFO - mvg.mvg - listing sources
-2021-03-18 11:13:44,400 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&gt;&gt;&gt; Provoke Unathorized call
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-2021-03-18 11:13:44,544 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;GET /sources/ HTTP/1.1&#34; 401 25
-2021-03-18 11:13:44,546 - DEBUG - mvg.mvg - 401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/
-2021-03-18 11:13:44,546 - DEBUG - mvg.mvg - {&#34;detail&#34;:&#34;Unauthorized&#34;}
+2021-09-22 19:53:11,405 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-09-22 19:53:11,407 - INFO - mvg.mvg - listing sources
+2021-09-22 19:53:11,409 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:11,598 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;GET /sources/ HTTP/1.1&#34; 401 25
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -548,6 +532,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+&gt;&gt;&gt; Provoke Unathorized call
 OUCH
 401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/
 </pre></div></div>
@@ -564,7 +549,7 @@ OUCH
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">try</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; Provoke illegal source Id name&quot;</span><span class="p">)</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="s2">&quot;illegal%name&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="s2">&quot;illegal%name&quot;</span><span class="p">,</span> <span class="p">{},</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">])</span>
 <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="c1"># As we have rouge token</span>
     <span class="c1"># We&#39;ll end up here</span>
@@ -582,28 +567,11 @@ OUCH
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,551 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
-2021-03-18 11:13:44,551 - INFO - mvg.mvg - creating source with source id=illegal%name
-2021-03-18 11:13:44,552 - INFO - mvg.mvg - metadata: {}
-2021-03-18 11:13:44,553 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&gt;&gt;&gt; Provoke illegal source Id name
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-2021-03-18 11:13:44,683 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;POST /sources/ HTTP/1.1&#34; 401 25
-2021-03-18 11:13:44,684 - DEBUG - mvg.mvg - 401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/
-2021-03-18 11:13:44,685 - DEBUG - mvg.mvg - {&#34;detail&#34;:&#34;Unauthorized&#34;}
+2021-09-22 19:53:11,611 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-09-22 19:53:11,614 - INFO - mvg.mvg - creating source with source id=illegal%name
+2021-09-22 19:53:11,616 - INFO - mvg.mvg - metadata: {}
+2021-09-22 19:53:11,619 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:11,797 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;POST /sources/ HTTP/1.1&#34; 422 120
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -611,8 +579,9 @@ OUCH
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+&gt;&gt;&gt; Provoke illegal source Id name
 OUCH
-401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/
+422 Client Error: Unprocessable Entity for url: https://api.beta.multiviz.com/sources/
 </pre></div></div>
 </div>
 <p>We’ll show a couple of examples what can go wrong when creating a measurement</p>
@@ -645,12 +614,9 @@ OUCH
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,689 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
-2021-03-18 11:13:44,689 - INFO - mvg.mvg - creating measurement from source id=
-2021-03-18 11:13:44,690 - INFO - mvg.mvg -   duration:  -3
-2021-03-18 11:13:44,690 - INFO - mvg.mvg -   timestamp: -5
-2021-03-18 11:13:44,691 - INFO - mvg.mvg -   meta data: {}
-2021-03-18 11:13:44,692 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:11,808 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-09-22 19:53:11,809 - INFO - mvg.mvg - creating measurement from source id=
+2021-09-22 19:53:11,812 - INFO - mvg.mvg -   duration:  -3
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -666,9 +632,10 @@ OUCH
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,825 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;POST /sources//measurements HTTP/1.1&#34; 404 22
-2021-03-18 11:13:44,826 - DEBUG - mvg.mvg - 404 Client Error: Not Found for url: https://api.beta.multiviz.com/sources//measurements
-2021-03-18 11:13:44,827 - DEBUG - mvg.mvg - {&#34;detail&#34;:&#34;Not Found&#34;}
+2021-09-22 19:53:11,815 - INFO - mvg.mvg -   timestamp: -5
+2021-09-22 19:53:11,816 - INFO - mvg.mvg -   meta data: {}
+2021-09-22 19:53:11,820 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:11,991 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;POST /sources//measurements HTTP/1.1&#34; 404 22
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -691,7 +658,7 @@ Details on error
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">try</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; Parameter value out of range&quot;</span><span class="p">)</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;acc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
     <span class="n">session</span><span class="o">.</span><span class="n">create_measurement</span><span class="p">(</span><span class="n">sid</span><span class="o">=</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span>
                                <span class="n">duration</span><span class="o">=-</span><span class="mi">3</span><span class="p">,</span>
                                <span class="n">timestamp</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span>
@@ -710,12 +677,11 @@ Details on error
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,832 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
-2021-03-18 11:13:44,832 - INFO - mvg.mvg - creating measurement from source id=u0001
-2021-03-18 11:13:44,833 - INFO - mvg.mvg -   duration:  -3
-2021-03-18 11:13:44,833 - INFO - mvg.mvg -   timestamp: -5
-2021-03-18 11:13:44,834 - INFO - mvg.mvg -   meta data: {}
-2021-03-18 11:13:44,835 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:12,003 - INFO - mvg.mvg - endpoint https://api.beta.multiviz.com
+2021-09-22 19:53:12,005 - INFO - mvg.mvg - creating measurement from source id=u0001
+2021-09-22 19:53:12,007 - INFO - mvg.mvg -   duration:  -3
+2021-09-22 19:53:12,008 - INFO - mvg.mvg -   timestamp: -5
+2021-09-22 19:53:12,008 - INFO - mvg.mvg -   meta data: {}
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -731,9 +697,8 @@ Details on error
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2021-03-18 11:13:44,964 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;POST /sources/u0001/measurements HTTP/1.1&#34; 401 25
-2021-03-18 11:13:44,966 - DEBUG - mvg.mvg - 401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/u0001/measurements
-2021-03-18 11:13:44,966 - DEBUG - mvg.mvg - {&#34;detail&#34;:&#34;Unauthorized&#34;}
+2021-09-22 19:53:12,012 - DEBUG - urllib3.connectionpool - Starting new HTTPS connection (1): api.beta.multiviz.com:443
+2021-09-22 19:53:12,206 - DEBUG - urllib3.connectionpool - https://api.beta.multiviz.com:443 &#34;POST /sources/u0001/measurements HTTP/1.1&#34; 422 101
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -741,9 +706,9 @@ Details on error
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/u0001/measurements
+422 Client Error: Unprocessable Entity for url: https://api.beta.multiviz.com/sources/u0001/measurements
 Details on error
-{&#39;detail&#39;: &#39;Unauthorized&#39;}
+{&#39;detail&#39;: [{&#39;loc&#39;: [&#39;body&#39;, 0, &#39;timestamp&#39;], &#39;msg&#39;: &#39;Timestamp cannot be negative&#39;, &#39;type&#39;: &#39;value_error&#39;}]}
 </pre></div></div>
 </div>
 </section>
