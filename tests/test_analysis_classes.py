@@ -5,7 +5,6 @@ not relying on access to vibium-cloud API
 
 import json
 import os
-import tempfile
 import pandas as pd
 import pytest
 from mvg import analysis_classes
@@ -21,7 +20,9 @@ def test_RMS():
     feat = parse_results(api_results, t_zone=None, t_unit=None)
 
     # Check dataframe conversion - columns
-    assert set(feat.to_df().columns.values) == set(api_results["results"].keys())
+    assert set(feat.to_df().columns.values) == set(
+        api_results["results"]["acc"].keys()
+    ).union({"timestamps"})
 
     # Check dataframe conversion - length
     assert len(feat.to_df()["timestamps"]) == len(api_results["results"]["timestamps"])
