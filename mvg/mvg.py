@@ -101,6 +101,7 @@ class MVGAPI:
         if response.status_code in do_not_raise:
             logger.info(f"Ignoring error {response.status_code} - {response.text}")
         else:
+            logger.info(f"Error {response.status_code} - {response.text}")
             response.raise_for_status()
 
         return response
