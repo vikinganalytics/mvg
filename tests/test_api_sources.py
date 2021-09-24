@@ -293,6 +293,53 @@ def test_tabular_measurements(session, tabular_source):
     assert exc.value.response.status_code == 404
 
 
+def test_list_tabular_measurements(session, tabular_source):
+    columns = tabular_df.columns.tolist()
+
+    ts_0 = tabular_dict["timestamp"][0]
+    ts_1 = tabular_dict["timestamp"][1]
+    ts_n = tabular_dict["timestamp"][-1]
+
+    # Metadata for two timestamps
+    meta = {
+        f"{ts_0}": {"new": "meta for {ts_0}"},
+        f"{ts_1}": {"new": "meta for {ts_1}"},
+    }
+
+    # Create all measurements
+    session.create_tabular_measurement(tabular_source, tabular_dict, meta)
+
+    # Retrieve data for a segment (1..n)
+    response = session.list_tabular_measurements(tabular_source, ts_1, ts_n)
+    assert all(
+        tabular_dict[column][1:] == response["data"][column] for column in columns
+    )
+    assert len(response["meta"].keys()) == 1
+    assert response["meta"][f"{ts_1}"] == meta[f"{ts_1}"]
+
+    # Retrieve entire data (0..n)
+    response = session.list_tabular_measurements(tabular_source, None, None)
+    assert all(tabular_dict[column] == response["data"][column] for column in columns)
+    assert len(response["meta"].keys()) == 2
+    assert response["meta"][f"{ts_0}"] == meta[f"{ts_0}"]
+    assert response["meta"][f"{ts_1}"] == meta[f"{ts_1}"]
+
+    # Retrieve data that is beyond the range of the dataset timestamps
+    with pytest.raises(HTTPError) as exc:
+        session.list_tabular_measurements(tabular_source, ts_n + 1, ts_n + 2)
+    assert exc.value.response.status_code == 404
+
+    # Call API with negative timestamp
+    with pytest.raises(HTTPError) as exc:
+        session.list_tabular_measurements(tabular_source, -1)
+    assert exc.value.response.status_code == 422
+
+    # Call API with negative timestamp
+    with pytest.raises(HTTPError) as exc:
+        session.list_tabular_measurements(tabular_source, None, -1)
+    assert exc.value.response.status_code == 422
+
+
 def test_create_label(session, tabular_source_with_measurements):
     timestamps = tabular_dict["timestamp"]
     label1 = {"label": "normal", "severity": 0, "notes": ""}
