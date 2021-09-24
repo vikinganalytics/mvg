@@ -487,6 +487,28 @@ and a feature.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mvg.mvg.MVGAPI.list_tabular_measurements">
+<span class="sig-name descname"><span class="pre">list_tabular_measurements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.list_tabular_measurements" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves tabular measurements (including metadata) for a source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
+<li><p><strong>start_timestamp</strong> (<em>int</em>) – Measurements starting from a timestamp [optional].</p></li>
+<li><p><strong>end_timestamp</strong> (<em>int</em>) – Measurements ending at a timestamp [optional].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>An dict having a list of all timestamps, a list of all measurements grouped by</em></p></li>
+<li><p><em>KPI, and metadata corresponding to a measurement</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVGAPI.parse_version">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">parse_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vstr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">semver.VersionInfo</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.parse_version" title="Permalink to this definition"></a></dt>
 <dd><p>Parses the version string into an array</p>
