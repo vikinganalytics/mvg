@@ -66,7 +66,7 @@ def test_sources_cru(session):
     with open(m_file_name, "r") as json_file:
         meta = json.load(json_file)
     # create_source happy case
-    session.create_source(SOURCE_ID_WAVEFORM, meta)
+    session.create_source(SOURCE_ID_WAVEFORM, meta=meta, channels=["acc"])
     # list_source happy case
     src = session.get_source(SOURCE_ID_WAVEFORM)
     assert src["source_id"] == SOURCE_ID_WAVEFORM
@@ -132,7 +132,7 @@ def test_measurements_crud(session):
             sid=SOURCE_ID_WAVEFORM,
             duration=duration,
             timestamp=ts_m,
-            data=accs,
+            data={"acc": accs},
             meta=meta_info,
         )
 
@@ -141,14 +141,14 @@ def test_measurements_crud(session):
             sid=SOURCE_ID_WAVEFORM,
             duration=duration,
             timestamp=ts_m,
-            data=accs,
+            data={"acc": accs},
             meta=meta_info,
             exist_ok=True,
         )
 
         # read back and check
         m_back = session.read_single_measurement(SOURCE_ID_WAVEFORM, ts_m)
-        assert m_back["data"] == accs
+        assert m_back["data"] == {"acc": accs}
         assert m_back["meta"] == meta_info
         assert m_back["duration"] == duration
 
@@ -158,7 +158,7 @@ def test_measurements_crud(session):
 
         # read back and check
         m_back = session.read_single_measurement(SOURCE_ID_WAVEFORM, ts_m)
-        assert m_back["data"] == accs
+        assert m_back["data"] == {"acc": accs}
         assert m_back["meta"] == meta_info
         assert m_back["duration"] == duration
 
@@ -211,7 +211,7 @@ def test_failure_delete_source(session):
 # API POST   /sources/ [incorrect source name]
 def test_failure_create_source(session):
     with pytest.raises(HTTPError) as exc:
-        session.create_source("unacceptable&name", {})
+        session.create_source("unacceptable&name", meta={}, channels=["acc"])
     assert exc.value.response.status_code == 422
 
 
@@ -238,18 +238,20 @@ def test_sources_cru_existing(session):
     with open(m_file_name, "r") as json_file:
         meta = json.load(json_file)
     # create_source happy case
-    session.create_source(SOURCE_ID_WAVEFORM, meta)
+    session.create_source(SOURCE_ID_WAVEFORM, meta=meta, channels=["acc"])
     # list_source happy case
     src = session.get_source(SOURCE_ID_WAVEFORM)
     assert src["source_id"] == SOURCE_ID_WAVEFORM
     assert src["meta"] == meta
 
     # create_source again (409 ignored)
-    session.create_source(SOURCE_ID_WAVEFORM, meta, exist_ok=True)
+    session.create_source(
+        SOURCE_ID_WAVEFORM, meta=meta, channels=["acc"], exist_ok=True
+    )
 
     # create_source again (409 not ignored)
     with pytest.raises(HTTPError):
-        session.create_source(SOURCE_ID_WAVEFORM, meta)
+        session.create_source(SOURCE_ID_WAVEFORM, meta=meta, channels=["acc"])
 
 
 def test_tabular_sources(session, tabular_source):

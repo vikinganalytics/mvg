@@ -1,4 +1,5 @@
 """Analysis Class for RMS Feature"""
+import copy
 import pandas as pd
 import matplotlib.pyplot as plt
 from tabulate import tabulate
@@ -23,7 +24,21 @@ class RMS(Analysis):
             time unit for conversion from epoch time [ms].
         """
 
-        Analysis.__init__(self, results, t_zone, t_unit)
+        rsl = copy.deepcopy(results)
+        # Handle multi-channel waveform data.
+        channels = [k for k in rsl["results"] if k != "timestamps"]
+        if len(channels) == 1:
+            rsl["results"].update(rsl["results"].pop(channels[0]))
+        else:
+            # Prefix the KPIs with channel name
+            for chan in channels:
+                rch = rsl["results"].pop(chan)
+                rsl["results"].update(
+                    {chan + "_" + kpi: val for kpi, val in rch.items()}
+                )
+
+        Analysis.__init__(self, rsl, t_zone, t_unit)
+
         self._results_df = pd.DataFrame.from_dict(self.results())
         self.time_column = "timestamps"
         self._add_datetime()

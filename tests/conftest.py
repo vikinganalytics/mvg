@@ -122,7 +122,7 @@ def waveform_source(session):
         with open(m_file_name, "r") as json_file:
             meta = json.load(json_file)
         # create_source happy case
-        session.create_source(SOURCE_ID_WAVEFORM, meta)
+        session.create_source(SOURCE_ID_WAVEFORM, meta=meta, channels=["acc"])
         yield SOURCE_ID_WAVEFORM
     finally:
         session.delete_source(SOURCE_ID_WAVEFORM)
@@ -167,7 +167,7 @@ def waveform_source_with_measurements(session, waveform_source):
             sid=waveform_source,
             duration=duration,
             timestamp=ts_m,
-            data=accs,
+            data={"acc": accs},
             meta=meta_info,
         )
 
@@ -176,7 +176,7 @@ def waveform_source_with_measurements(session, waveform_source):
             sid=waveform_source,
             duration=duration,
             timestamp=ts_m,
-            data=accs,
+            data={"acc": accs},
             meta=meta_info,
             exist_ok=True,
         )
