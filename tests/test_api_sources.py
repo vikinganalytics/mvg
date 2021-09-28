@@ -6,6 +6,7 @@ relying on access to vibium-cloud API
 Tests need to be run in order
 -p no:randomly
 """
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import os
@@ -14,7 +15,6 @@ import uuid
 import pandas as pd
 from requests import HTTPError
 import pytest
-from mvg import MVG
 import numpy as np
 
 # Test data and session setup
@@ -348,36 +348,47 @@ def test_create_label(session, tabular_source_with_measurements):
     session.create_label(tabular_source_with_measurements, timestamps[0], **label1)
     session.create_label(tabular_source_with_measurements, timestamps[1], **label2)
 
-    label1_ = session.get_label(tabular_source_with_measurements, timestamps[0])
-    label2_ = session.get_label(tabular_source_with_measurements, timestamps[1])
+    label1_response = session.get_label(tabular_source_with_measurements, timestamps[0])
+    label2_response = session.get_label(tabular_source_with_measurements, timestamps[1])
 
     labels = session.list_labels(tabular_source_with_measurements)
 
+    # Remove timestamps
+    for label in labels:
+        label.pop("label_timestamp")
     assert labels == [
         dict(timestamp=timestamps[0], **label1),
         dict(timestamp=timestamps[1], **label2),
     ]
-    assert label1_ == label1
-    assert label2_ == label2
+    label1_timestamp = label1_response.pop("label_timestamp")
+    dtdiff1 = datetime.utcnow() - datetime.strptime(
+        label1_timestamp, "%Y-%m-%d %H:%M:%S"
+    )
+    assert label1_response == label1
+    assert dtdiff1 < timedelta(minutes=1)
+
+    label2_timestamp = label2_response.pop("label_timestamp")
+    dtdiff2 = datetime.utcnow() - datetime.strptime(
+        label2_timestamp, "%Y-%m-%d %H:%M:%S"
+    )
+    assert label2_response == label2
+    assert dtdiff2 < timedelta(minutes=1)
 
 
 def test_update_label(session, tabular_source_with_measurements):
     timestamps = tabular_dict["timestamp"]
-    session.create_label(
-        tabular_source_with_measurements,
-        timestamps[0],
-        "failure",
-        100,
-        "This is really bad!",
-    )
+    label_pre = {"label": "failure", "severity": 100, "notes": "This is really bad!"}
+    session.create_label(tabular_source_with_measurements, timestamps[0], **label_pre)
 
-    session.update_label(
-        tabular_source_with_measurements, timestamps[0], "normal", 0, "It wasn't so bad"
-    )
+    label_post = {"label": "normal", "severity": 0, "notes": "It wasn't so bad"}
+    session.update_label(tabular_source_with_measurements, timestamps[0], **label_post)
 
-    label1 = session.get_label(tabular_source_with_measurements, timestamps[0])
+    label_response = session.get_label(tabular_source_with_measurements, timestamps[0])
 
-    assert label1 == {"label": "normal", "severity": 0, "notes": "It wasn't so bad"}
+    label_timestamp = label_response.pop("label_timestamp")
+    dtdiff = datetime.utcnow() - datetime.strptime(label_timestamp, "%Y-%m-%d %H:%M:%S")
+    assert label_response == label_post
+    assert dtdiff < timedelta(minutes=1)
 
 
 def test_delete_label(session, tabular_source_with_measurements):
