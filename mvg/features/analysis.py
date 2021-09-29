@@ -42,13 +42,15 @@ class Analysis:
 
         self.time_column = None
 
-    def _render_plot(self, interactive):
+    def _render_plot(self, interactive, filename=""):
         """Render plot to screen (interactive) or file.
 
         Parameters
         ---------
         interactive: bool
             Wheter to display plot on screen (True) or to store to file (False).
+        filename: str
+            Filename for the plot
 
         Returns
         -------
@@ -59,11 +61,15 @@ class Analysis:
             plot_file = ""
             plt.show()
         else:
-            if len(self.sources()) > 1:
-                srcstr = self.sources()[0] + "_to_" + self.sources()[-1] + "_"
+            if filename == "" or filename is None:
+                if len(self.sources()) > 1:
+                    srcstr = self.sources()[0] + "_to_" + self.sources()[-1] + "_"
+                else:
+                    srcstr = self.sources()[0] + "_"
+                plot_file = srcstr + self.request_id() + ".png"
             else:
-                srcstr = self.sources()[0] + "_"
-            plot_file = srcstr + self.request_id() + ".png"
+                plot_file = filename
+
             plt.savefig(plot_file, dpi=600, bbox_inches="tight")
             print(f"saved plot to {plot_file}")
 
