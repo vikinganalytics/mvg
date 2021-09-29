@@ -1,3 +1,5 @@
+# pylint: disable=too-many-lines
+
 """
 MVG library
 -----------
@@ -12,6 +14,7 @@ import re
 import time
 import logging
 from typing import Dict, List, Optional
+from pandas import DataFrame
 import requests
 from requests.exceptions import RequestException
 
@@ -996,3 +999,34 @@ class MVG(MVGAPI):
                         logger.info("wait_for_analyses timed out")
                         break
                     time.sleep(min(min_wait, timeout - elapsed))
+
+    def get_labelled_measurements(self, source_id):
+        """Get all measurements of a source with label information.
+
+        Parameters
+        ----------
+        source_id : string
+            Id of the source for all measurements.
+
+        Returns
+        -------
+        Dataframe
+            A dataframe listing the label info for each measurement.
+            Columns: [timestamp, label, severity, notes]
+        """
+
+        measurements = self.list_measurements(source_id)
+        labels = self.list_labels(source_id)
+        labels_by_ts = {label["timestamp"]: label for label in labels}
+        labelled_measurements = []
+
+        for measurement in measurements:
+            timestamp = measurement["timestamp"]
+            if timestamp in labels_by_ts:
+                labelled_measurements.append(labels_by_ts[timestamp])
+            else:
+                labelled_measurements.append(
+                    {"timestamp": timestamp, "label": None, "severity": -1, "notes": ""}
+                )
+
+        return DataFrame(labelled_measurements)
