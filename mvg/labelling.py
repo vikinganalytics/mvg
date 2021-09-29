@@ -34,6 +34,7 @@ LABEL_COLOR_CODES = dict(
     )
 )
 
+
 # pylint: disable=too-many-locals
 def plot_labels_over_time(
     data,
