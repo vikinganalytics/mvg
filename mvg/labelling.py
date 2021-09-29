@@ -195,7 +195,7 @@ def plot_labels_over_time(
         else patches.Patch(
             color=colors[i], label=f"{data[data['label_idx'] == i].iloc[0]['label']}"
         )
-        for i in list(data["label_idx"].unique())
+        for i in set(datalist)
     ]
 
     axes.legend(handles=legend_labels, bbox_to_anchor=(1.05, 1), loc="upper left")

@@ -111,15 +111,19 @@ class ModeId(Analysis):
         ----------
         source_id : str
             ID of the source of labels
+
         data : Dataframe
             Labels data
+
         interactive : bool, optional
             Defaults to True.
             True: show plot, False: save plot
+
         time_format : str, optional
             Defaults to None.
             strftime format specifier for tick_x_lables. If not given
             only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
         filename: str, optional
             Filename for the plot
 
