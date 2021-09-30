@@ -406,6 +406,32 @@ only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.modeid.ModeId.plot_labels">
+<span class="sig-name descname"><span class="pre">plot_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.plot_labels" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a plot visualizing the labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_id</strong> (<em>str</em>) – ID of the source of labels</p></li>
+<li><p><strong>data</strong> (<em>Dataframe</em>) – Labels data</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em><em>, </em><em>optional</em>) – Defaults to True.
+True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Defaults to None.
+strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – Filename for the plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.modeid.ModeId.summary">
 <span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.summary" title="Permalink to this definition"></a></dt>
 <dd><p>Print summary on ModeId.</p>
