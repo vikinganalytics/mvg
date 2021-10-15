@@ -498,6 +498,7 @@ class MVGAPI:
         self._request(
             "post",
             f"/sources/{sid}/measurements/tabular",
+            do_not_raise,
             json=body,
         )
 
