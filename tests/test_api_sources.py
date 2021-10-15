@@ -256,8 +256,17 @@ def test_sources_cru_existing(session):
 
 def test_tabular_sources(session, tabular_source):
     columns = tabular_df.columns.tolist()
-    columns.remove("timestamp")
     meta = {"extra": "information"}
+
+    # create source again (409 ignored)
+    session.create_tabular_source(tabular_source, meta, columns, exist_ok=True)
+
+    # create source again (409 not ignored)
+    with pytest.raises(HTTPError) as exc:
+        session.create_tabular_source(tabular_source, meta, columns)
+    assert exc.value.response.status_code == 409
+
+    columns.remove("timestamp")
     src = session.get_source(tabular_source)
     assert src["source_id"] == tabular_source
     assert src["meta"] == meta
@@ -276,6 +285,14 @@ def test_tabular_measurements(session, tabular_source):
     columns = tabular_df.columns.tolist()
     columns.remove("timestamp")
     session.create_tabular_measurement(tabular_source, tabular_dict)
+
+    # create measurements again (409 ignored)
+    session.create_tabular_measurement(tabular_source, tabular_dict, exist_ok=True)
+
+    # create measurements again (409 not ignored)
+    with pytest.raises(HTTPError) as exc:
+        session.create_tabular_measurement(tabular_source, tabular_dict)
+    assert exc.value.response.status_code == 409
 
     ts0 = tabular_dict["timestamp"][0]
     meas = session.read_single_measurement(tabular_source, ts0)
