@@ -14,7 +14,6 @@ import re
 import time
 import logging
 from typing import Dict, List, Optional
-from pandas import DataFrame
 import requests
 from requests.exceptions import RequestException
 
@@ -919,7 +918,7 @@ class MVGAPI:
         ----------
         source_id : str
             Source ID of the source to get the labels from
-        exclude_unlabeled : bool, optional
+        include_unlabeled : bool
             Only returns the labeled times if True, by default False
 
         Returns

@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
-from mvg import plotting, labelling
+from mvg import plotting
 from mvg.features.analysis import Analysis
 
 
@@ -134,7 +134,7 @@ class ModeId(Analysis):
         """
 
         self.check_status()
-        labelling.plot_labels_over_time(
+        plotting.plot_labels_over_time(
             data=data,
             source_id=source_id,
             timeunit=self._t_unit,
