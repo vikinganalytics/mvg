@@ -75,8 +75,13 @@ class Analysis:
 
         return plot_file
 
-    def _add_datetime(self):
+    def _add_datetime(self, time_column="timestamps"):
         """
+        Parameters
+        ---------
+        time_column: str
+            Column name for the integer timestamps
+
         Convert EPOCH time to datetime with the
         timezone and time unit given in constructor. Will add
         an additional column "datetime" to the dataframe
@@ -84,8 +89,8 @@ class Analysis:
         Works on class object dframe and sets time column to
         datetime.
         """
-
-        self._results_df = self._add_datetime_df(self._results_df, "timestamps")
+        self.time_column = time_column
+        self._results_df = self._add_datetime_df(self._results_df, self.time_column)
 
     def _add_datetime_df(self, dframe, timecolumn):
         """
@@ -283,7 +288,7 @@ class Analysis:
         """
 
         self.check_status()
-        return self._results_df
+        return self._results_df.copy()
 
     # Save results to dataframe
     def save_df(self, file_name=None):
@@ -310,7 +315,7 @@ class Analysis:
             file_name = f"{self.request_id()}.csv"
 
         print(f"Saving {self.feature()} data frame results to", file_name)
-        self._results_df.copy().to_csv(file_name, index=False)
+        self.to_df().to_csv(file_name, index=False)
 
         return file_name
 
@@ -345,3 +350,9 @@ class Analysis:
         with open(file_name, "w") as json_file:
             json.dump(s_dict, json_file, indent=4)
         return file_name
+
+    def __repr__(self):
+        return (
+            f"<{self.__class__.__name__} - feaure='{self.feature()}'"
+            f" - request_id='{self.request_id()}'>"
+        )

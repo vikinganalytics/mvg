@@ -170,6 +170,18 @@ def test_ModeId():
     assert mt_correct_df.equals(mt_df.reset_index(drop=True))
 
 
+def test_labelprop():
+    # read dict
+    with open("./tests/test_data/ModeId_results_dict.json") as json_file:
+        api_results = json.load(json_file)
+
+    feature = parse_results(api_results, t_zone=None, t_unit=None)
+
+    # Check dataframe conversion
+    df = pd.read_csv("./tests/test_data/label_prop_results.csv")
+    pd.testing.assert_frame_equal(feature.to_df(), df, check_less_precise=True)
+
+
 def test_none_existing_feature():
     # read dict
     with open("./tests/test_data/Nonexisting_feature.json") as json_file:

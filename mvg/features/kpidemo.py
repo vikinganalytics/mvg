@@ -25,7 +25,6 @@ class KPIDemo(Analysis):
 
         Analysis.__init__(self, results, t_zone, t_unit)
         self._results_df = pd.DataFrame.from_dict(self.results())
-        self.time_column = "timestamps"
         self._add_datetime()
 
     def summary(self):
