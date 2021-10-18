@@ -27,9 +27,8 @@ FEATURES = {
     ModeId.__name__: ModeId,
     BlackSheep.__name__: BlackSheep,
     KPIDemo.__name__: KPIDemo,
-    LabelPropagation.__name__: LabelPropagation
+    LabelPropagation.__name__: LabelPropagation,
 }
-
 
 
 # Parser/Factory function

@@ -77,6 +77,8 @@ class Analysis:
 
     def _add_datetime(self, time_column="timestamps"):
         """
+        Add a datetime column to self._results_df
+
         Parameters
         ---------
         time_column: str
