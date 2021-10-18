@@ -14,7 +14,6 @@ import re
 import time
 import logging
 from typing import Dict, List, Optional
-from pandas import DataFrame
 import requests
 from requests.exceptions import RequestException
 
@@ -911,12 +910,53 @@ class MVGAPI:
         response = self._request("get", f"/sources/{sid}/labels/{timestamp}")
         return response.json()
 
-    def list_labels(self, source_id: str) -> List[dict]:
+    def list_labels(
+        self, source_id: str, include_unlabeled: bool = False
+    ) -> List[dict]:
+        """Get a list of all the labels for a source
+
+        Parameters
+        ----------
+        source_id : str
+            Source ID of the source to get the labels from
+        include_unlabeled : bool
+            Only returns the labeled times if True, by default False
+
+        Returns
+        -------
+        List[dict]
+            Label information for the different timestamps
+        """
         logger.info("endpoint %s", self.endpoint)
         logger.info("Getting labels")
 
         response = self._request("get", f"/sources/{source_id}/labels")
-        return response.json()
+        labels = response.json()
+
+        if not include_unlabeled:
+            return labels
+
+        # Inlcude the missing labels
+        measurements = self.list_measurements(source_id)
+        labels_by_ts = {label["timestamp"]: label for label in labels}
+        labelled_measurements = []
+
+        for measurement in measurements:
+            timestamp = measurement["timestamp"]
+            if timestamp in labels_by_ts:
+                labelled_measurements.append(labels_by_ts[timestamp])
+            else:
+                labelled_measurements.append(
+                    {
+                        "timestamp": timestamp,
+                        "label": None,
+                        "severity": -1,
+                        "notes": "",
+                        "label_timestamp": None,
+                    }
+                )
+
+        return labelled_measurements
 
     def update_label(
         self,
@@ -1000,34 +1040,3 @@ class MVG(MVGAPI):
                         logger.info("wait_for_analyses timed out")
                         break
                     time.sleep(min(min_wait, timeout - elapsed))
-
-    def get_labelled_measurements(self, source_id):
-        """Get all measurements of a source with label information.
-
-        Parameters
-        ----------
-        source_id : string
-            Id of the source for all measurements.
-
-        Returns
-        -------
-        Dataframe
-            A dataframe listing the label info for each measurement.
-            Columns: [timestamp, label, severity, notes]
-        """
-
-        measurements = self.list_measurements(source_id)
-        labels = self.list_labels(source_id)
-        labels_by_ts = {label["timestamp"]: label for label in labels}
-        labelled_measurements = []
-
-        for measurement in measurements:
-            timestamp = measurement["timestamp"]
-            if timestamp in labels_by_ts:
-                labelled_measurements.append(labels_by_ts[timestamp])
-            else:
-                labelled_measurements.append(
-                    {"timestamp": timestamp, "label": None, "severity": -1, "notes": ""}
-                )
-
-        return DataFrame(labelled_measurements)
