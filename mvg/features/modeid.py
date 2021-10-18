@@ -101,50 +101,6 @@ class ModeId(Analysis):
 
         return self._render_plot(interactive)
 
-    def plot_labels(
-        self, source_id, data, interactive=True, time_format=None, filename=None
-    ):
-        """
-        Generate a plot visualizing the labels
-
-        Parameters
-        ----------
-        source_id : str
-            ID of the source of labels
-
-        data : Dataframe
-            Labels data
-
-        interactive : bool, optional
-            Defaults to True.
-            True: show plot, False: save plot
-
-        time_format : str, optional
-            Defaults to None.
-            strftime format specifier for tick_x_lables. If not given
-            only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
-
-        filename: str, optional
-            Filename for the plot
-
-        Returns
-        -------
-        plot file name : str
-          name of plot file (or emtpy string in case of interactive plot)
-        """
-
-        self.check_status()
-        plotting.plot_labels_over_time(
-            data=data,
-            source_id=source_id,
-            timeunit=self._t_unit,
-            time_format=time_format,
-        )
-
-        save_as_file = f"{source_id}_labels.png" if filename is None else filename
-
-        return self._render_plot(interactive, save_as_file)
-
     def mode_table(self, show_uncertain=False):
         """
         Show mode table which gives start time for each consecutive period of
