@@ -9,6 +9,7 @@ import pandas as pd
 import pytest
 from mvg import analysis_classes
 from mvg.analysis_classes import parse_results
+from mvg.features.label_propagation import LabelPropagation
 
 
 def test_RMS():
@@ -168,18 +169,6 @@ def test_ModeId():
     mt_correct_df = pd.read_pickle("./tests/test_data/mode_table_wc.pkl")
     mt_correct_df = mt_correct_df.reset_index(drop=True)
     assert mt_correct_df.equals(mt_df.reset_index(drop=True))
-
-
-def test_labelprop():
-    # read dict
-    with open("./tests/test_data/ModeId_results_dict.json") as json_file:
-        api_results = json.load(json_file)
-
-    feature = parse_results(api_results, t_zone=None, t_unit=None)
-
-    # Check dataframe conversion
-    df = pd.read_csv("./tests/test_data/label_prop_results.csv")
-    pd.testing.assert_frame_equal(feature.to_df(), df, check_less_precise=True)
 
 
 def test_none_existing_feature():
