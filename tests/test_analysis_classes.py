@@ -171,6 +171,29 @@ def test_ModeId():
     assert mt_correct_df.equals(mt_df.reset_index(drop=True))
 
 
+def test_labelprop():
+
+    with open("./tests/test_data/label_prop_results.json") as json_file:
+        api_results = json.load(json_file)
+
+    labelprop: LabelPropagation = parse_results(api_results)
+
+    # Accessor functions
+    assert labelprop.feature() == "LabelPropagation"
+    assert labelprop.sources() == [api_results["inputs"]["UUID"]]
+    assert labelprop.request_id() == "208e5dfafaee0687d73dce036a42fd04"
+    assert labelprop.inputs() == api_results["inputs"]
+    assert labelprop.status() == api_results["status"]
+    assert labelprop.raw_results() == api_results
+    assert labelprop.results() == api_results["results"]["propagated_labels"]
+
+    # Plot (not tested at all)
+    plt_file = labelprop.plot(False)
+    assert plt_file is not None
+    assert os.path.exists(plt_file)
+    os.remove(plt_file)  # Cleanup
+
+
 def test_none_existing_feature():
     # read dict
     with open("./tests/test_data/Nonexisting_feature.json") as json_file:
@@ -196,3 +219,7 @@ def test_failed_run():
 
     with pytest.raises(ValueError):
         assert feat.to_df()
+
+
+if __name__ == "__main__":
+    test_labelprop()

@@ -6,7 +6,7 @@ from mvg.features.analysis import Analysis
 
 
 class LabelPropagation(Analysis):
-    def __init__(self, results, t_zone="Europe/Stockholm", t_unit="ms"):
+    def __init__(self, results, t_zone=None, t_unit=None):
         """Constructor
 
         Parameters

@@ -10,7 +10,7 @@ class Analysis:
     """Root class for analysis system classes."""
 
     # Init class with results
-    def __init__(self, results, t_zone="Europe/Stockholm", t_unit="ms"):
+    def __init__(self, results, t_zone=None, t_unit=None):
         """
         Constructor
         Called as super() from specific analysis class. Stores the results
@@ -32,8 +32,8 @@ class Analysis:
         self._raw_results = results
 
         # timezone and unit set in constructor
-        self._t_zone = t_zone
-        self._t_unit = t_unit
+        self._t_zone = t_zone or "Europe/Stockholm"
+        self._t_unit = t_unit or "ms"
 
         # Dataframe representation
         self._results_df = None

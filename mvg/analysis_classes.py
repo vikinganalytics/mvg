@@ -32,7 +32,7 @@ FEATURES = {
 
 
 # Parser/Factory function
-def parse_results(results, t_zone="Europe/Stockholm", t_unit="ms"):
+def parse_results(results, t_zone=None, t_unit=None):
     """Parses the result from a get_analysis_results call
     and returns an instance
     of the analysis class.
