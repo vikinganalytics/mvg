@@ -15,7 +15,7 @@ class LabelPropagation(Analysis):
             Dictionary with the server response from a get_analysis_results call.
 
         t_zone: str
-            timezone, if None, times will remain in epoch time [Europe/Stockholm].
+            timezone, if None, times will remain in epoch time [UTC].
 
         t_unit: str
             time unit for conversion from epoch time [ms].

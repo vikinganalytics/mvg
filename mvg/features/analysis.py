@@ -22,7 +22,7 @@ class Analysis:
         results: dict
             analysis results
         t_zone: t_zone
-            timezone, if None, times will remain in epoch time [Europe/Stockholm].
+            timezone, if None, times will remain in epoch time [UTC].
 
         t_unit: t_unit
             time unit for conversion from epoch time [ms].
@@ -32,7 +32,7 @@ class Analysis:
         self._raw_results = results
 
         # timezone and unit set in constructor
-        self._t_zone = t_zone or "Europe/Stockholm"
+        self._t_zone = t_zone or "UTC"
         self._t_unit = t_unit or "ms"
 
         # Dataframe representation
