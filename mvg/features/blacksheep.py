@@ -129,9 +129,7 @@ class BlackSheep(Analysis):
             pdfd.at[row.Index, "hash"] = hash(row[2:])
         ticktimes = pdfd.loc[pdfd["hash"].shift(1) != pdfd["hash"]]
 
-        # Convert EPOCH if t_zone given
-        if self._t_zone is not None:
-            ticktimes = self._add_datetime_df(ticktimes, "timestamps")
+        ticktimes = self._add_datetime_df(ticktimes, "timestamps")
 
         # select reasonable number of ticks
         # this could be improved to yield equidistant ticks

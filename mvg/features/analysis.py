@@ -113,18 +113,15 @@ class Analysis:
         DataFrame with added datetime colums
         """
 
-        # Check if there is info for conversion
-        if self._t_zone is not None:
+        # EPOCH to datetime considering time zone
+        dt_col = pd.to_datetime(
+            dframe[timecolumn], unit=self._t_unit, utc=True
+        ).dt.tz_convert(self._t_zone)
 
-            # EPOCH to datetime considering time zone
-            dt_col = pd.to_datetime(
-                dframe[timecolumn], unit=self._t_unit, utc=True
-            ).dt.tz_convert(self._t_zone)
+        dframe["datetime"] = dt_col
 
-            dframe["datetime"] = dt_col
-
-            # Mark timecolumn as available
-            self.time_column = "datetime"
+        # Mark timecolumn as available
+        self.time_column = "datetime"
 
         return dframe
 
