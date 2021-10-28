@@ -9,7 +9,7 @@ from mvg.features.analysis import Analysis
 class RMS(Analysis):
     """ Analysis class for RMS feature."""
 
-    def __init__(self, results, t_zone="Europe/Stockholm", t_unit="ms"):
+    def __init__(self, results, t_zone=None, t_unit=None):
         """Constructor
 
         Parameters
@@ -18,7 +18,7 @@ class RMS(Analysis):
             Dictionary with the server response form a get_analysis_results call.
 
         t_zone: str
-            timezone, if None, times will remain in epoch time [Europe/Stockholm].
+            timezone, if None, times will remain in epoch time [UTC].
 
         t_unit: str
             time unit for conversion from epoch time [ms].
@@ -40,7 +40,6 @@ class RMS(Analysis):
         Analysis.__init__(self, rsl, t_zone, t_unit)
 
         self._results_df = pd.DataFrame.from_dict(self.results())
-        self.time_column = "timestamps"
         self._add_datetime()
 
     def summary(self):

@@ -15,18 +15,20 @@ of the correct feature class.
 """
 
 # Import feature classes
-from mvg.features.analysis import Analysis  # Base Class
 from mvg.features.rms import RMS
 from mvg.features.modeid import ModeId
 from mvg.features.blacksheep import BlackSheep
 from mvg.features.kpidemo import KPIDemo
+from mvg.features.label_propagation import LabelPropagation
 
-# from mvg.features.envelope import Envelope
 
-_ = RMS  # avoid F401 linting error
-_ = ModeId  # avoid F401 linting error
-_ = BlackSheep  # avoid F401 linting error
-_ = KPIDemo  # avoid F401 linting error
+FEATURES = {
+    RMS.__name__: RMS,
+    ModeId.__name__: ModeId,
+    BlackSheep.__name__: BlackSheep,
+    KPIDemo.__name__: KPIDemo,
+    LabelPropagation.__name__: LabelPropagation,
+}
 
 
 # Parser/Factory function
@@ -41,7 +43,7 @@ def parse_results(results, t_zone=None, t_unit=None):
         Dictionary with the server response form a get_analysis_results call.
 
     t_zone: str
-        timezone, if None, times will remain in epoch time [Europe/Stockholm].
+        timezone, if None, times will remain in epoch time [UTC].
 
     t_unit: str
         time unit for conversion from epoch time [ms].
@@ -66,15 +68,10 @@ def parse_results(results, t_zone=None, t_unit=None):
             "Malformed input." "Check if input is result of a get_results call."
         )
 
-    # retrieve instance
-    res = None
-    for cls in Analysis.__subclasses__():
-        if cls.__name__ == feature:
-            res = cls(results, t_zone, t_unit)
-
-    # raise error if no instance can be instantiated
-    if res is None:
+    # Get the analysis class from the features dict
+    try:
+        feature_class = FEATURES[feature]
+    except KeyError:
         raise KeyError(f"Analysis class for: {feature} not implemented!")
 
-    # return analysis class
-    return res
+    return feature_class(results, t_zone, t_unit)

@@ -673,7 +673,7 @@ class MVGAPI:
         parameters: dict = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
-    ) -> str:
+    ) -> dict:
         """Request an analysis on the given endpoint with given parameters.
 
         Parameters

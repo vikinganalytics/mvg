@@ -9,7 +9,7 @@ from mvg.features.analysis import Analysis
 
 
 class BlackSheep(Analysis):
-    def __init__(self, results, t_zone="Europe/Stockholm", t_unit="ms"):
+    def __init__(self, results, t_zone=None, t_unit=None):
         """Constructor
 
         Parameters
@@ -18,7 +18,7 @@ class BlackSheep(Analysis):
             Dictionary with the server response form a get_analysis_results call.
 
         t_zone: str
-            timezone, if None, times will remain in epoch time [Europe/Stockholm].
+            timezone, if None, times will remain in epoch time [UTC].
 
         t_unit: str
             time unit for conversion from epoch time [ms].
@@ -129,9 +129,7 @@ class BlackSheep(Analysis):
             pdfd.at[row.Index, "hash"] = hash(row[2:])
         ticktimes = pdfd.loc[pdfd["hash"].shift(1) != pdfd["hash"]]
 
-        # Convert EPOCH if t_zone given
-        if self._t_zone is not None:
-            ticktimes = self._add_datetime_df(ticktimes, "timestamps")
+        ticktimes = self._add_datetime_df(ticktimes, "timestamps")
 
         # select reasonable number of ticks
         # this could be improved to yield equidistant ticks

@@ -10,7 +10,7 @@ class Analysis:
     """Root class for analysis system classes."""
 
     # Init class with results
-    def __init__(self, results, t_zone="Europe/Stockholm", t_unit="ms"):
+    def __init__(self, results, t_zone=None, t_unit=None):
         """
         Constructor
         Called as super() from specific analysis class. Stores the results
@@ -22,7 +22,7 @@ class Analysis:
         results: dict
             analysis results
         t_zone: t_zone
-            timezone, if None, times will remain in epoch time [Europe/Stockholm].
+            timezone, if None, times will remain in epoch time [UTC].
 
         t_unit: t_unit
             time unit for conversion from epoch time [ms].
@@ -32,8 +32,8 @@ class Analysis:
         self._raw_results = results
 
         # timezone and unit set in constructor
-        self._t_zone = t_zone
-        self._t_unit = t_unit
+        self._t_zone = t_zone or "UTC"
+        self._t_unit = t_unit or "ms"
 
         # Dataframe representation
         self._results_df = None
@@ -75,8 +75,15 @@ class Analysis:
 
         return plot_file
 
-    def _add_datetime(self):
+    def _add_datetime(self, time_column="timestamps"):
         """
+        Add a datetime column to self._results_df
+
+        Parameters
+        ---------
+        time_column: str
+            Column name for the integer timestamps
+
         Convert EPOCH time to datetime with the
         timezone and time unit given in constructor. Will add
         an additional column "datetime" to the dataframe
@@ -84,8 +91,8 @@ class Analysis:
         Works on class object dframe and sets time column to
         datetime.
         """
-
-        self._results_df = self._add_datetime_df(self._results_df, "timestamps")
+        self.time_column = time_column
+        self._results_df = self._add_datetime_df(self._results_df, self.time_column)
 
     def _add_datetime_df(self, dframe, timecolumn):
         """
@@ -106,18 +113,15 @@ class Analysis:
         DataFrame with added datetime colums
         """
 
-        # Check if there is info for conversion
-        if self._t_zone is not None:
+        # EPOCH to datetime considering time zone
+        dt_col = pd.to_datetime(
+            dframe[timecolumn], unit=self._t_unit, utc=True
+        ).dt.tz_convert(self._t_zone)
 
-            # EPOCH to datetime considering time zone
-            dt_col = pd.to_datetime(
-                dframe[timecolumn], unit=self._t_unit, utc=True
-            ).dt.tz_convert(self._t_zone)
+        dframe["datetime"] = dt_col
 
-            dframe["datetime"] = dt_col
-
-            # Mark timecolumn as available
-            self.time_column = "datetime"
+        # Mark timecolumn as available
+        self.time_column = "datetime"
 
         return dframe
 
@@ -283,7 +287,7 @@ class Analysis:
         """
 
         self.check_status()
-        return self._results_df
+        return self._results_df.copy()
 
     # Save results to dataframe
     def save_df(self, file_name=None):
@@ -310,7 +314,7 @@ class Analysis:
             file_name = f"{self.request_id()}.csv"
 
         print(f"Saving {self.feature()} data frame results to", file_name)
-        self._results_df.copy().to_csv(file_name, index=False)
+        self.to_df().to_csv(file_name, index=False)
 
         return file_name
 
@@ -345,3 +349,9 @@ class Analysis:
         with open(file_name, "w") as json_file:
             json.dump(s_dict, json_file, indent=4)
         return file_name
+
+    def __repr__(self):
+        return (
+            f"<{self.__class__.__name__} - feaure='{self.feature()}'"
+            f" - request_id='{self.request_id()}'>"
+        )

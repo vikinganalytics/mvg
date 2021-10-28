@@ -7,16 +7,16 @@ from mvg.features.analysis import Analysis
 
 
 class ModeId(Analysis):
-    def __init__(self, results, t_zone="Europe/Stockholm", t_unit="ms"):
+    def __init__(self, results, t_zone=None, t_unit=None):
         """Constructor
 
         Parameters
         ----------
         results: dict
-            Dictionary with the server response form a get_analysis_results call.
+            Dictionary with the server response from a get_analysis_results call.
 
         t_zone: str
-            timezone, if None, times will remain in epoch time [Europe/Stockholm].
+            timezone, if None, times will remain in epoch time [UTC].
 
         t_unit: str
             time unit for conversion from epoch time [ms].
@@ -30,7 +30,6 @@ class ModeId(Analysis):
             dict_for_emerging = dict_for_df.pop("mode_info")
             self.emerging_df = pd.DataFrame.from_dict(dict_for_emerging)
             self._results_df = pd.DataFrame.from_dict(dict_for_df)
-            self.time_column = "timestamps"
             self._add_datetime()
             self.emerging_df = self._add_datetime_df(self.emerging_df, "emerging_time")
 
