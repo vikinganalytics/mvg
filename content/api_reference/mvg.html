@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/analysis_visual.html">Analysis and Results Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/tabular_example.html">Working with Tabular Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/labeling.html">Labeling Measurements</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -129,24 +130,6 @@
 <dd><p>Bases: <a class="reference internal" href="#mvg.mvg.MVGAPI" title="mvg.mvg.MVGAPI"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.mvg.MVGAPI</span></code></a></p>
 <p>Class for a session providing an API to the vibium server.
 Contains additional functionality over API methods</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="mvg.mvg.MVG.get_labelled_measurements">
-<span class="sig-name descname"><span class="pre">get_labelled_measurements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.get_labelled_measurements" title="Permalink to this definition"></a></dt>
-<dd><p>Get all measurements of a source with label information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>source_id</strong> (<em>string</em>) – Id of the source for all measurements.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A dataframe listing the label info for each measurement.
-Columns: [timestamp, label, severity, notes]</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Dataframe</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVG.wait_for_analyses">
 <span class="sig-name descname"><span class="pre">wait_for_analyses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_id_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.mvg.MVG.wait_for_analyses" title="Permalink to this definition"></a></dt>
@@ -470,8 +453,23 @@ and a feature.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVGAPI.list_labels">
-<span class="sig-name descname"><span class="pre">list_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.list_labels" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">list_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_unlabeled</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.list_labels" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of all the labels for a source</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_id</strong> (<em>str</em>) – Source ID of the source to get the labels from</p></li>
+<li><p><strong>include_unlabeled</strong> (<em>bool</em>) – Only returns the labeled times if True, by default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Label information for the different timestamps</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[dict]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVGAPI.list_measurements">
@@ -569,7 +567,7 @@ subsequent values being the data (samples).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVGAPI.request_analysis">
-<span class="sig-name descname"><span class="pre">request_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.request_analysis" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">request_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.request_analysis" title="Permalink to this definition"></a></dt>
 <dd><p>Request an analysis on the given endpoint with given parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

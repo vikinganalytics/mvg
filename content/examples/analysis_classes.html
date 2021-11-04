@@ -78,6 +78,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tabular_example.html">Working with Tabular Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labeling.html">Labeling Measurements</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -389,7 +390,12 @@ div.rendered_html tbody tr:hover {
 <section id="Analysis-Classes---a-Unified-Interface-to-Analysis-Results">
 <h1>Analysis Classes - a Unified Interface to Analysis Results<a class="headerlink" href="#Analysis-Classes---a-Unified-Interface-to-Analysis-Results" title="Permalink to this headline"></a></h1>
 <p>MVG comes with a set of analysis classes which provide a unified interface to analysis results <em>irrespective of the specific feature</em>. Note that the analysis classes are helper classes, as such the mvg class does <em>not</em> depend on them.</p>
-<p>Except for step (1) requesting the specific feature analysis, the following generic workflow holds: - (1) Request a specific analysis - (2) Retrieve results and parse them into an analysis_class object - (3) Use generic methods like plot(), summary() or to_df()</p>
+<p>Except for step (1) requesting the specific feature analysis, the following generic workflow holds:</p>
+<ol class="arabic simple">
+<li><p>Request a specific analysis</p></li>
+<li><p>Retrieve results and parse them into an analysis_class object</p></li>
+<li><p>Use generic methods like plot(), summary() or to_df()</p></li>
+</ol>
 <p>One application is to use the analysis classes interactively from a Python REPL session.</p>
 <section id="Or-in-(pseudo)-code">
 <h2>Or in (pseudo) code<a class="headerlink" href="#Or-in-(pseudo)-code" title="Permalink to this headline"></a></h2>
@@ -402,7 +408,12 @@ div.rendered_html tbody tr:hover {
 </div>
 <section id="Prerequisites">
 <h3>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline"></a></h3>
-<p>For running the examples in this notebook: * Installed mvg package * A token for API access from Viking Analytics * The database needs to be populated with our example assets. This can be achieved by running the <a class="reference internal" href="sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example.</p>
+<p>For running the examples in this notebook:</p>
+<ol class="arabic simple">
+<li><p>Installed mvg package</p></li>
+<li><p>A token for API access from Viking Analytics</p></li>
+<li><p>The database needs to be populated with our example assets. This can be achieved by running the <a class="reference internal" href="sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example.</p></li>
+</ol>
 <section id="Example-flow">
 <h4>Example flow<a class="headerlink" href="#Example-flow" title="Permalink to this headline"></a></h4>
 </section>

@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/analysis_visual.html">Analysis and Results Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/tabular_example.html">Working with Tabular Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/labeling.html">Labeling Measurements</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -137,7 +138,7 @@ of the analysis class.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>results</strong> (<em>dict</em>) – Dictionary with the server response form a get_analysis_results call.</p></li>
-<li><p><strong>t_zone</strong> (<em>str</em>) – timezone, if None, times will remain in epoch time [Europe/Stockholm].</p></li>
+<li><p><strong>t_zone</strong> (<em>str</em>) – timezone, if None, times will remain in epoch time [UTC].</p></li>
 <li><p><strong>t_unit</strong> (<em>str</em>) – time unit for conversion from epoch time [ms].</p></li>
 </ul>
 </dd>
@@ -157,7 +158,7 @@ of the analysis class.</p>
 <span class="target" id="module-mvg.features.analysis"></span><p>Analysis Classes Base Class</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvg.features.analysis.Analysis">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.analysis.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.analysis.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Root class for analysis system classes.</p>
 <dl class="py method">
@@ -362,7 +363,7 @@ successful</p>
 <span class="target" id="module-mvg.features.modeid"></span><p>Analysis Class for ModeId Feature</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvg.features.modeid.ModeId">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.modeid.</span></span><span class="sig-name descname"><span class="pre">ModeId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.modeid.</span></span><span class="sig-name descname"><span class="pre">ModeId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.modeid.ModeId.mode_table">
@@ -406,32 +407,6 @@ only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mvg.features.modeid.ModeId.plot_labels">
-<span class="sig-name descname"><span class="pre">plot_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.plot_labels" title="Permalink to this definition"></a></dt>
-<dd><p>Generate a plot visualizing the labels</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>source_id</strong> (<em>str</em>) – ID of the source of labels</p></li>
-<li><p><strong>data</strong> (<em>Dataframe</em>) – Labels data</p></li>
-<li><p><strong>interactive</strong> (<em>bool</em><em>, </em><em>optional</em>) – Defaults to True.
-True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Defaults to None.
-strftime format specifier for tick_x_lables. If not given
-only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
-<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – Filename for the plot</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.modeid.ModeId.summary">
 <span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.summary" title="Permalink to this definition"></a></dt>
 <dd><p>Print summary on ModeId.</p>
@@ -450,7 +425,7 @@ only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
 <span class="target" id="module-mvg.features.blacksheep"></span><p>Analysis Class for BlackSheep Feature</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvg.features.blacksheep.BlackSheep">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.blacksheep.</span></span><span class="sig-name descname"><span class="pre">BlackSheep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.blacksheep.</span></span><span class="sig-name descname"><span class="pre">BlackSheep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.blacksheep.BlackSheep.plot">
@@ -494,7 +469,7 @@ only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
 <span class="target" id="module-mvg.features.rms"></span><p>Analysis Class for RMS Feature</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvg.features.rms.RMS">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.rms.</span></span><span class="sig-name descname"><span class="pre">RMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe/Stockholm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ms'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.rms.RMS" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mvg.features.rms.</span></span><span class="sig-name descname"><span class="pre">RMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.rms.RMS" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
 <p>Analysis class for RMS feature.</p>
 <dl class="py method">
