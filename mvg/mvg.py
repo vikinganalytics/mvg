@@ -723,7 +723,7 @@ class MVGAPI:
         }
         params = None
         if callback_url:
-            params = {"callaback_url": callback_url}
+            params = {"callback_url": callback_url}
         response = self._request(
             "post", "/analyses/requests/", json=analysis_info, params=params
         )
@@ -788,7 +788,7 @@ class MVGAPI:
 
         params = None
         if callback_url:
-            params = {"callaback_url": callback_url}
+            params = {"callback_url": callback_url}
         response = self._request(
             "post", "/analyses/requests/population/", json=analysis_info, params=params
         )
