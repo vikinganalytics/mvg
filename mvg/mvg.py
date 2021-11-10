@@ -53,8 +53,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.9.6")
-        self.tested_api_version = self.parse_version("v0.2.6")
+        self.mvg_version = self.parse_version("v0.9.7")
+        self.tested_api_version = self.parse_version("v0.2.7")
 
         # Get API version
         try:
@@ -673,6 +673,7 @@ class MVGAPI:
         parameters: dict = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
+        callback_url: str = None,
     ) -> dict:
         """Request an analysis on the given endpoint with given parameters.
 
@@ -692,6 +693,11 @@ class MVGAPI:
 
         end_timestamp : int
             start of analysis time window [optional].
+
+        callback_url : str
+            Base URL to receieve a notification when the analysis job ends.
+            A POST reuest will be made to {callback_url}/analyses with payload
+            that includes the request_id and request_status of the job [optional].
 
         Returns
         -------
@@ -715,8 +721,12 @@ class MVGAPI:
             "start_timestamp": start_timestamp,
             "end_timestamp": end_timestamp,
         }
-
-        response = self._request("post", "/analyses/requests/", json=analysis_info)
+        params = None
+        if callback_url:
+            params = {"callback_url": callback_url}
+        response = self._request(
+            "post", "/analyses/requests/", json=analysis_info, params=params
+        )
 
         return response.json()
 
@@ -727,6 +737,7 @@ class MVGAPI:
         parameters: dict = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
+        callback_url: str = None,
     ) -> str:
         """Request an population analysis on the given endpoint with given parameters.
 
@@ -746,6 +757,11 @@ class MVGAPI:
 
         end_timestamp : int
             start of analysis time window [optional].
+
+        callback_url : str
+            Base URL to receieve a notification when the analysis job ends.
+            A POST reuest will be made to {callback_url}/analyses with payload
+            that includes the request_id and request_status of the job [optional].
 
         Returns
         -------
@@ -770,8 +786,11 @@ class MVGAPI:
             "end_timestamp": end_timestamp,
         }
 
+        params = None
+        if callback_url:
+            params = {"callback_url": callback_url}
         response = self._request(
-            "post", "/analyses/requests/population/", json=analysis_info
+            "post", "/analyses/requests/population/", json=analysis_info, params=params
         )
         return response.json()
 
