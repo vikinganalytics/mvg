@@ -15,7 +15,6 @@ of the correct feature class.
 """
 
 # Import feature classes
-from mvg.features.rms import RMS
 from mvg.features.modeid import ModeId
 from mvg.features.blacksheep import BlackSheep
 from mvg.features.kpidemo import KPIDemo
@@ -23,7 +22,6 @@ from mvg.features.label_propagation import LabelPropagation
 
 
 FEATURES = {
-    RMS.__name__: RMS,
     ModeId.__name__: ModeId,
     BlackSheep.__name__: BlackSheep,
     KPIDemo.__name__: KPIDemo,

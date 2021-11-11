@@ -13,67 +13,6 @@ from mvg.features.label_propagation import LabelPropagation
 
 TZ = "Europe/Stockholm"
 
-
-def test_RMS():
-    # read dict
-    with open("./tests/test_data/RMS_results_dict.json") as json_file:
-        api_results = json.load(json_file)
-
-    # get object
-    feat = parse_results(api_results, t_zone=TZ, t_unit=None)
-
-    cols = feat.to_df().columns.tolist()
-    cols_without_datetime = cols.copy()  # Datetime is not part of the original data
-    cols_without_datetime.remove("datetime")
-
-    # Check dataframe conversion - columns
-    assert set(cols_without_datetime) == set(
-        api_results["results"]["acc"].keys()
-    ).union({"timestamps"})
-
-    # Check dataframe conversion - length
-    assert len(feat.to_df()["timestamps"]) == len(api_results["results"]["timestamps"])
-
-    # Test datetime conversion
-    feat = analysis_classes.RMS(api_results, t_zone="Europe/Stockholm", t_unit="s")
-    assert str(feat.to_df()["datetime"][0]) == "2019-10-04 13:01:00+02:00"
-
-    # test save as pickle file
-    pkl_file = feat.save_pkl()
-    assert pkl_file == "2f6dc5ae055f9e82f6f5311c23250f07.pkl"
-
-    assert os.path.exists(pkl_file)
-    os.remove(pkl_file)  # Cleanup
-
-    # Summary
-    assert set(feat.summary().index) == {
-        "mean",
-        "min",
-        "std",
-        "count",
-        "50%",
-        "75%",
-        "25%",
-        "max",
-    }
-
-    # Plot (not tested at all)
-    plt_file = feat.plot(False)
-    assert plt_file is not None
-    assert os.path.exists(plt_file)
-    os.remove(plt_file)  # Cleanup
-
-    # Accessor functions (tested only in RMS)
-    ts_sum = 78615280200
-    assert sum(feat.raw_results()["results"]["timestamps"]) == ts_sum
-    assert feat.request_id() == "2f6dc5ae055f9e82f6f5311c23250f07"
-    assert feat.feature() == "RMS"
-    assert sum(feat.inputs()["timestamps"]) == ts_sum
-    assert sum(feat.results()["timestamps"]) == ts_sum
-    assert feat.status() == "successful"
-    assert feat.sources() == ["u0001"]
-
-
 def test_KPIDemo():
     # read dict
     with open("./tests/test_data/KPIDemo_results_dict.json") as json_file:
@@ -87,7 +26,7 @@ def test_KPIDemo():
     cols_without_datetime.remove("datetime")
 
     # Check dataframe conversion - columns
-    assert set(cols_without_datetime) == set(api_results["results"].keys())
+    assert "peak2peak_acc" in set(cols_without_datetime)
 
     # Check dataframe conversion - length
     assert len(feat.to_df()["timestamps"]) == len(api_results["results"]["timestamps"])
@@ -95,13 +34,6 @@ def test_KPIDemo():
     # Test datetime conversion
     feat = analysis_classes.KPIDemo(api_results, t_zone=TZ, t_unit="s")
     assert str(feat.to_df()["datetime"][0]) == "2019-10-04 13:01:00+02:00"
-
-    # test save as pickle file
-    pkl_file = feat.save_pkl()
-    assert pkl_file == "45f202227d51402eb7e71efd58370415.pkl"
-
-    assert os.path.exists(pkl_file)
-    os.remove(pkl_file)  # Cleanup
 
     # Summary
     assert set(feat.summary().index) == {
@@ -116,15 +48,15 @@ def test_KPIDemo():
     }
 
     # Plot (not tested at all)
-    plt_file = feat.plot("rms", False)
+    plt_file = feat.plot("rms_acc", False)
     assert plt_file is not None
     assert os.path.exists(plt_file)
     os.remove(plt_file)  # Cleanup
 
     # Accessor functions (tested only in KPIDemo)
-    ts_sum = 73900313220
+    ts_sum = 78615280200
     assert sum(feat.raw_results()["results"]["timestamps"]) == ts_sum
-    assert feat.request_id() == "45f202227d51402eb7e71efd58370415"
+    assert feat.request_id() == "75fc046d1b6ca741cf442552f506f95b"
     assert feat.feature() == "KPIDemo"
     assert sum(feat.inputs()["timestamps"]) == ts_sum
     assert sum(feat.results()["timestamps"]) == ts_sum
