@@ -13,6 +13,7 @@ from mvg.features.label_propagation import LabelPropagation
 
 TZ = "Europe/Stockholm"
 
+
 def test_KPIDemo():
     # read dict
     with open("./tests/test_data/KPIDemo_results_dict.json") as json_file:

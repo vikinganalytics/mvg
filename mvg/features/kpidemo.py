@@ -8,7 +8,7 @@ from mvg.features.analysis import Analysis
 def unfold_result_to_df(result: dict) -> pd.DataFrame:
     unfolded_result = {}
     unfolded_result["timestamps"] = result.pop("timestamps")
-    
+
     for channel, kpis in result.items():
         for kpi, kpi_values in kpis.items():
             unfolded_result[f"{kpi}_{channel}"] = kpi_values
