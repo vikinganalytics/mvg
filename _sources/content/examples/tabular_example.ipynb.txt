@@ -1,30 +1,8 @@
 {
- "metadata": {
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.8.5"
-  },
-  "orig_nbformat": 4,
-  "kernelspec": {
-   "name": "python3",
-   "display_name": "Python 3.8.5  ('env': venv)"
-  },
-  "interpreter": {
-   "hash": "ee585b89b750dc1146ba89a2fe8627247123d548cada017644b010d09cffe3df"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 2,
  "cells": [
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "# Working with Tabular Data\n",
     "\n",
@@ -35,9 +13,7 @@
     "## Imports\n",
     "\n",
     "Beyond importing `MVG` and the `ModeId` analysis class we want to use `pandas` for loading and processing the data before the analysis."
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
@@ -55,47 +31,42 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
-    "After importing we create the `MVG` session that let's us communicate with the Vibium server. For that we need an endpoint url and a valid token. If you do not have a token, you can get one [here](https://vikinganalytics.se/multiviz-vibration-api/).\n",
+    "After importing we create the `MVG` session that let us communicate with the Vibium server. For that we need an endpoint URL and a valid token. If you do not have a token, you can get one [here](https://vikinganalytics.se/multiviz-vibration-api/).\n",
     "\n",
     ".. note:: Each token is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA vibration' service."
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 13,
    "metadata": {},
    "outputs": [],
    "source": [
-    "ENDPOINT = \"http://api.beta.multiviz.com\n",
+    "ENDPOINT = \"http://api.beta.multiviz.com\"\n",
     "TOKEN = \"\"\n",
     "session = MVG(ENDPOINT, TOKEN)"
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "We will use a dataset that is collected from a heat pump in the cellar of one of the employees at Viking Analytics. The data is available in [this git repository](https://github.com/vikinganalytics/tabular-example-data). We clone the repository to get access it. If you don't have git you can download the data from the link.\n"
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 14,
    "metadata": {},
    "outputs": [
     {
-     "output_type": "stream",
      "name": "stdout",
+     "output_type": "stream",
      "text": [
-      "Cloning into 'tabular-example-data'...\n",
-      "remote: Enumerating objects: 7, done.\u001b[K\n",
-      "remote: Counting objects: 100% (7/7), done.\u001b[K\n",
-      "remote: Compressing objects: 100% (7/7), done.\u001b[K\n",
-      "remote: Total 7 (delta 1), reused 3 (delta 0), pack-reused 0\u001b[K\n",
-      "Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.\n"
+      "fatal: destination path 'tabular-example-data' already exists and is not an empty directory.\n"
      ]
     }
    ],
@@ -105,12 +76,106 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 15,
    "metadata": {},
    "outputs": [
     {
-     "output_type": "execute_result",
      "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>timestamp</th>\n",
+       "      <th>T_out</th>\n",
+       "      <th>T_down</th>\n",
+       "      <th>T_kitchen</th>\n",
+       "      <th>WATT</th>\n",
+       "      <th>T_up</th>\n",
+       "      <th>T_brine_in</th>\n",
+       "      <th>T_brine_out</th>\n",
+       "      <th>T_cellar</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2018-02-01T00:00:00Z</td>\n",
+       "      <td>1.976053</td>\n",
+       "      <td>38.367181</td>\n",
+       "      <td>20.512105</td>\n",
+       "      <td>2.780167</td>\n",
+       "      <td>40.028018</td>\n",
+       "      <td>3.690000</td>\n",
+       "      <td>2.068514</td>\n",
+       "      <td>10.965206</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2018-02-01T01:40:00Z</td>\n",
+       "      <td>2.380000</td>\n",
+       "      <td>36.940000</td>\n",
+       "      <td>20.190000</td>\n",
+       "      <td>3.045333</td>\n",
+       "      <td>39.060000</td>\n",
+       "      <td>3.560000</td>\n",
+       "      <td>1.991486</td>\n",
+       "      <td>10.924431</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2018-02-01T03:25:00Z</td>\n",
+       "      <td>2.211223</td>\n",
+       "      <td>37.715920</td>\n",
+       "      <td>20.190000</td>\n",
+       "      <td>3.060000</td>\n",
+       "      <td>39.840240</td>\n",
+       "      <td>3.598392</td>\n",
+       "      <td>1.961608</td>\n",
+       "      <td>10.982982</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2018-02-01T05:10:00Z</td>\n",
+       "      <td>1.964956</td>\n",
+       "      <td>37.940000</td>\n",
+       "      <td>20.250000</td>\n",
+       "      <td>3.151579</td>\n",
+       "      <td>40.023789</td>\n",
+       "      <td>3.611330</td>\n",
+       "      <td>2.068670</td>\n",
+       "      <td>10.888049</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2018-02-01T06:55:00Z</td>\n",
+       "      <td>0.349134</td>\n",
+       "      <td>37.551293</td>\n",
+       "      <td>20.406457</td>\n",
+       "      <td>3.257167</td>\n",
+       "      <td>39.856860</td>\n",
+       "      <td>3.690000</td>\n",
+       "      <td>2.120000</td>\n",
+       "      <td>10.941380</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
       "text/plain": [
        "              timestamp     T_out     T_down  T_kitchen      WATT       T_up  \\\n",
        "0  2018-02-01T00:00:00Z  1.976053  38.367181  20.512105  2.780167  40.028018   \n",
@@ -125,11 +190,11 @@
        "2    3.598392     1.961608  10.982982  \n",
        "3    3.611330     2.068670  10.888049  \n",
        "4    3.690000     2.120000  10.941380  "
-      ],
-      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>timestamp</th>\n      <th>T_out</th>\n      <th>T_down</th>\n      <th>T_kitchen</th>\n      <th>WATT</th>\n      <th>T_up</th>\n      <th>T_brine_in</th>\n      <th>T_brine_out</th>\n      <th>T_cellar</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>2018-02-01T00:00:00Z</td>\n      <td>1.976053</td>\n      <td>38.367181</td>\n      <td>20.512105</td>\n      <td>2.780167</td>\n      <td>40.028018</td>\n      <td>3.690000</td>\n      <td>2.068514</td>\n      <td>10.965206</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>2018-02-01T01:40:00Z</td>\n      <td>2.380000</td>\n      <td>36.940000</td>\n      <td>20.190000</td>\n      <td>3.045333</td>\n      <td>39.060000</td>\n      <td>3.560000</td>\n      <td>1.991486</td>\n      <td>10.924431</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>2018-02-01T03:25:00Z</td>\n      <td>2.211223</td>\n      <td>37.715920</td>\n      <td>20.190000</td>\n      <td>3.060000</td>\n      <td>39.840240</td>\n      <td>3.598392</td>\n      <td>1.961608</td>\n      <td>10.982982</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>2018-02-01T05:10:00Z</td>\n      <td>1.964956</td>\n      <td>37.940000</td>\n      <td>20.250000</td>\n      <td>3.151579</td>\n      <td>40.023789</td>\n      <td>3.611330</td>\n      <td>2.068670</td>\n      <td>10.888049</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>2018-02-01T06:55:00Z</td>\n      <td>0.349134</td>\n      <td>37.551293</td>\n      <td>20.406457</td>\n      <td>3.257167</td>\n      <td>39.856860</td>\n      <td>3.690000</td>\n      <td>2.120000</td>\n      <td>10.941380</td>\n    </tr>\n  </tbody>\n</table>\n</div>"
+      ]
      },
+     "execution_count": 15,
      "metadata": {},
-     "execution_count": 4
+     "output_type": "execute_result"
     }
    ],
    "source": [
@@ -139,22 +204,124 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "We loaded the `.csv` file into a dataframe object and printed out the first five rows. The timestamp was read as string timestamps, but for the Vibium API we need the timestamps to be in milliseconds since EPOCH. So we need to do some data wrangling in order to get it to the correct data type.\n",
     "\n",
     "We can use the function `pandas.to_datetime()` to convert a column into datetime objects. Then we can convert the timestamps into integers, which will automatically get converted to nanoseconds since EPOCH. By dividing by 1e6 we get the same time in milliseconds. We can see that the conversion was successful by printing the first five rows again."
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 16,
    "metadata": {},
    "outputs": [
     {
-     "output_type": "execute_result",
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "<ipython-input-16-012b223473e2>:1: FutureWarning: casting datetime64[ns, UTC] values to int64 with .astype(...) is deprecated and will raise in a future version. Use .view(...) instead.\n",
+      "  data_df[\"timestamp\"] = pd.to_datetime(data_df[\"timestamp\"]).astype(\"int64\") // 1000000\n"
+     ]
+    },
+    {
      "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>timestamp</th>\n",
+       "      <th>T_out</th>\n",
+       "      <th>T_down</th>\n",
+       "      <th>T_kitchen</th>\n",
+       "      <th>WATT</th>\n",
+       "      <th>T_up</th>\n",
+       "      <th>T_brine_in</th>\n",
+       "      <th>T_brine_out</th>\n",
+       "      <th>T_cellar</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1517443200000</td>\n",
+       "      <td>1.976053</td>\n",
+       "      <td>38.367181</td>\n",
+       "      <td>20.512105</td>\n",
+       "      <td>2.780167</td>\n",
+       "      <td>40.028018</td>\n",
+       "      <td>3.690000</td>\n",
+       "      <td>2.068514</td>\n",
+       "      <td>10.965206</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1517449200000</td>\n",
+       "      <td>2.380000</td>\n",
+       "      <td>36.940000</td>\n",
+       "      <td>20.190000</td>\n",
+       "      <td>3.045333</td>\n",
+       "      <td>39.060000</td>\n",
+       "      <td>3.560000</td>\n",
+       "      <td>1.991486</td>\n",
+       "      <td>10.924431</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1517455500000</td>\n",
+       "      <td>2.211223</td>\n",
+       "      <td>37.715920</td>\n",
+       "      <td>20.190000</td>\n",
+       "      <td>3.060000</td>\n",
+       "      <td>39.840240</td>\n",
+       "      <td>3.598392</td>\n",
+       "      <td>1.961608</td>\n",
+       "      <td>10.982982</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1517461800000</td>\n",
+       "      <td>1.964956</td>\n",
+       "      <td>37.940000</td>\n",
+       "      <td>20.250000</td>\n",
+       "      <td>3.151579</td>\n",
+       "      <td>40.023789</td>\n",
+       "      <td>3.611330</td>\n",
+       "      <td>2.068670</td>\n",
+       "      <td>10.888049</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1517468100000</td>\n",
+       "      <td>0.349134</td>\n",
+       "      <td>37.551293</td>\n",
+       "      <td>20.406457</td>\n",
+       "      <td>3.257167</td>\n",
+       "      <td>39.856860</td>\n",
+       "      <td>3.690000</td>\n",
+       "      <td>2.120000</td>\n",
+       "      <td>10.941380</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
       "text/plain": [
        "       timestamp     T_out     T_down  T_kitchen      WATT       T_up  \\\n",
        "0  1517443200000  1.976053  38.367181  20.512105  2.780167  40.028018   \n",
@@ -169,11 +336,11 @@
        "2    3.598392     1.961608  10.982982  \n",
        "3    3.611330     2.068670  10.888049  \n",
        "4    3.690000     2.120000  10.941380  "
-      ],
-      "text/html": "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>timestamp</th>\n      <th>T_out</th>\n      <th>T_down</th>\n      <th>T_kitchen</th>\n      <th>WATT</th>\n      <th>T_up</th>\n      <th>T_brine_in</th>\n      <th>T_brine_out</th>\n      <th>T_cellar</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>1517443200000</td>\n      <td>1.976053</td>\n      <td>38.367181</td>\n      <td>20.512105</td>\n      <td>2.780167</td>\n      <td>40.028018</td>\n      <td>3.690000</td>\n      <td>2.068514</td>\n      <td>10.965206</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>1517449200000</td>\n      <td>2.380000</td>\n      <td>36.940000</td>\n      <td>20.190000</td>\n      <td>3.045333</td>\n      <td>39.060000</td>\n      <td>3.560000</td>\n      <td>1.991486</td>\n      <td>10.924431</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>1517455500000</td>\n      <td>2.211223</td>\n      <td>37.715920</td>\n      <td>20.190000</td>\n      <td>3.060000</td>\n      <td>39.840240</td>\n      <td>3.598392</td>\n      <td>1.961608</td>\n      <td>10.982982</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>1517461800000</td>\n      <td>1.964956</td>\n      <td>37.940000</td>\n      <td>20.250000</td>\n      <td>3.151579</td>\n      <td>40.023789</td>\n      <td>3.611330</td>\n      <td>2.068670</td>\n      <td>10.888049</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>1517468100000</td>\n      <td>0.349134</td>\n      <td>37.551293</td>\n      <td>20.406457</td>\n      <td>3.257167</td>\n      <td>39.856860</td>\n      <td>3.690000</td>\n      <td>2.120000</td>\n      <td>10.941380</td>\n    </tr>\n  </tbody>\n</table>\n</div>"
+      ]
      },
+     "execution_count": 16,
      "metadata": {},
-     "execution_count": 5
+     "output_type": "execute_result"
     }
    ],
    "source": [
@@ -182,33 +349,33 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "To upload the data to the API we need to convert the dataframe into a dictionary on the format {column: values}. Fortunately, dataframes have a method to do just that, called `to_dict()`. It has an argument for changing the orientation of the resulting dictionary. By using `to_dict(\"list\")` we will get it on the correct format. \n",
     "\n",
     ".. note:: The dictionary must have a `\"timestamp\"` key and at least one more column, corresponding to a tracked variable. The `to_dict(\"list\")` method will not include the index, so it is important to have the timestamp as a column in the data and not as an index."
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 6,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "data_dict = data_df.to_dict(\"list\")\n"
    ]
   },
   {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "data_dict = data_df.to_dict(\"list\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "Now that the data has been converted to the correct format we are ready to create the source and upload some measurements. When creating a tabular source, you must define the columns that the data will contain ahead of time. This is to prevent arbitrary data to be uploaded to the source. Besides the columns argument, creating a tabular source works the exact same way as creating a waveform source."
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 18,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -220,22 +387,32 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "We can check that the source was uploaded correctly by getting the source information."
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 19,
    "metadata": {},
    "outputs": [
     {
-     "output_type": "stream",
      "name": "stdout",
+     "output_type": "stream",
      "text": [
-      "{'meta': {'location': 'Molnlycke'},\n 'properties': {'columns': ['T_out',\n                            'T_down',\n                            'T_kitchen',\n                            'WATT',\n                            'T_up',\n                            'T_brine_in',\n                            'T_brine_out',\n                            'T_cellar'],\n                'data_class': 'tabular'},\n 'source_id': 'heatpump'}\n"
+      "{'meta': {'location': 'Molnlycke'},\n",
+      " 'properties': {'columns': ['T_out',\n",
+      "                            'T_down',\n",
+      "                            'T_kitchen',\n",
+      "                            'WATT',\n",
+      "                            'T_up',\n",
+      "                            'T_brine_in',\n",
+      "                            'T_brine_out',\n",
+      "                            'T_cellar'],\n",
+      "                'data_class': 'tabular'},\n",
+      " 'source_id': 'heatpump'}\n"
      ]
     }
    ],
@@ -245,15 +422,15 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "Next, let's upload the data we prepared to the source"
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 20,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -264,17 +441,17 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
-    "Now that we have a source with measurements we can request an analysis of the data from the server. Requesting analyses for tabular data works the same way as it does for waveform data. Although not all features will work for tabular data. The RMS feature for example will only work with waveform data. Another thing to keep in mind is that when requesting population analyses, all sources to be analyzed simultaneously must have the same data class.\n",
+    "Now that we have a source with measurements we can request an analysis of the data from the server. Requesting analyses for tabular data works the same way as it does for waveform data. Although not all features will work for tabular data. The KPIDemo feature for example will only work with waveform data. Another thing to keep in mind is that when requesting population analyses, all sources to be analyzed simultaneously must have the same data class.\n",
     "\n",
     "For now we will simply run the mode identification algorithm"
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 21,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -286,15 +463,15 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "To make the results easier to work with we can load them into an analysis class. There exists one for each analysis feature. Once the analysis is finished and we have received the results, we can instatiate the analysis class with the results dictionary."
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 22,
    "metadata": {
     "tags": []
    },
@@ -306,39 +483,86 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "\n",
     "The analysis class makes it very convenient to view the results. Let's use the `ModeId.plot()` method to get an overview of the results."
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 23,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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OXMOVLU1jpmNGD9+fP0TTzyxE+DUqVP07t07NHz48GPr16/f3t6y+vXrN6yysnJrUVFRu/pubmlp4TOf+Uy/J598siArK8vNnDnzjVj9OLdFibKIiIhIJ5HIJLm988vNzW3Ztm1bbmNjo11++eVuzZo1+X369DmVyDhi+d73vtdz9+7dXV555ZUt2dnZhJ/kFw81vRARERGRDlVWVnZ41apVVwIsX768cOLEifXhYXV1ddllZWUDi4uLh4RCoZKNGzfmAuzbty977NixNw4aNGjo5MmT+0c+JG/x4sWFw4YNG1xSUjJk6tSp/Zubzz3J/PDDD/desGDB3uzsbAD69evX7qcIhilRFhEREZEONX369PoVK1YUNDU12datW3uMGTPmWHjYnDlz+oZCoaaampqXFyxYUDtjxozrAebOndt3zJgxjdu3b39pwoQJDXv37u0KsHnz5u6rV68urKysrK6urn45KyvLLVmypGd0ma+//nq3H//4xwU33XTT4Pe85z03vvjii93ijVuJsoiIiIh0qNLS0uO7d+/utnTp0sKysrLDkcM2bdqUN2vWrIMA48ePP9rQ0JBTX1+ftWHDhryZM2ceBJgyZcrh/Pz80wDr1q3L27JlS49QKDS4pKRkyDPPPJO/Y8eOc5LgkydPWvfu3d2WLVu2zpo1640777xzQLxxq42yiIiIiHS48vLyhvnz51/71FNPbdu/f/8F56DOOZs0adLBRYsW1bY1Xp8+fU5+9KMfPQQwffr0hk996lMD4i1LZ5RFREREpMPNnj37wD333LNn1KhRxyM/Ly0tPbps2bKeAGvXrs0rKChoLiwsbBk9evTRioqKngArV67MP3LkSDZAeXn5kbVr1xaEb86rq6vLrqmp6Rpd3oc+9KGGdevW5QH88pe/zOvfv/+b8casM8oiIiIinURubs/mRHcP195xBw4ceCpW92wLFy7cM23atAHFxcVDcnNzWyoqKnYCPPDAA3smTpx4w6BBg4aOHDmysaio6CTAiBEjTsybN6923LhxxS0tLXTp0sU99NBDrxUXF5+MnO9Xv/rVfbfffvv1ixcv7tOjR4+WpUuX7op3+SzyDsK4J7aRDioveHrpeBdeuynmUUt2BOewqemzdt3T2k9Tgb13ZLJDOK9bFvwiKeXe3HJbQuc3/7702T+jpd63nVwYe845l/Sdvqqq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",
+      "text/plain": [
+       "<Figure size 720x216 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "''"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
    "source": [
     "analysis.plot()"
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     ".. note:: Gray stripes in the plot correspond to gaps in measurements and not a third mode.\n",
     "\n",
     "When you are finished with the example you can go ahead and delete the source"
-   ],
-   "cell_type": "markdown",
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 24,
    "metadata": {},
    "outputs": [],
    "source": [
     "session.delete_source(\"heatpump\")"
    ]
   }
- ]
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "ee585b89b750dc1146ba89a2fe8627247123d548cada017644b010d09cffe3df"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.2"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
 }

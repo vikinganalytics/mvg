@@ -19,7 +19,7 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -71,7 +71,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
@@ -410,7 +409,7 @@ div.rendered_html tbody tr:hover {
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the Viking Analytics MultiViz Vibration service.</p>
 <p><strong>You need to insert your token received from Viking Analytics here:</strong></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -423,14 +422,14 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;api_version&#39;: &#39;0.2.5&#39;,
- &#39;mvg_highest_tested_version&#39;: &#39;0.2.3&#39;,
- &#39;mvg_version&#39;: &#39;0.9.4&#39;}
+{&#39;api_version&#39;: &#39;0.2.7&#39;,
+ &#39;mvg_highest_tested_version&#39;: &#39;0.2.7&#39;,
+ &#39;mvg_version&#39;: &#39;0.9.7&#39;}
 </pre></div></div>
 </div>
 </section>
@@ -448,7 +447,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Once the API session is live, we start by checking if the source <code class="docutils literal notranslate"><span class="pre">u0001</span></code> we will use is available in the database.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -458,19 +457,22 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 {&#39;source_id&#39;: &#39;u0001&#39;,
- &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;},
+ &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetJ&#39;,
+  &#39;measPoint&#39;: &#39;mloc01&#39;,
+  &#39;location&#39;: &#39;cancun&#39;,
+  &#39;timezone&#39;: &#39;Europe/Stockholm&#39;},
  &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;, &#39;channels&#39;: [&#39;acc&#39;]}}
 </pre></div></div>
 </div>
-<p>Now that we know that the source exists we need to check it’s measurements to know which ones to label</p>
+<p>Now that we know that the source exists we need to check its measurements to know which ones to label.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -480,7 +482,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -492,7 +494,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>For this example let us say that there was a bearing failure of the machine in the first few measurements, so we will add some labels to the afflicted measurements. To do so we use the <code class="docutils literal notranslate"><span class="pre">MVG.create_label()</span></code> method.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -512,7 +514,7 @@ div.rendered_html tbody tr:hover {
 <h3>Reading Labels<a class="headerlink" href="#Reading-Labels" title="Permalink to this headline"></a></h3>
 <p>To get a list of all the labels for a source we use the <code class="docutils literal notranslate"><span class="pre">MVG.list_labels()</span></code> method.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -521,7 +523,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -530,22 +532,22 @@ div.rendered_html tbody tr:hover {
   &#39;label&#39;: &#39;bearing_failure&#39;,
   &#39;severity&#39;: 3,
   &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-10-20 07:18:02&#39;},
+  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;},
  {&#39;timestamp&#39;: 1570273260,
   &#39;label&#39;: &#39;bearing_failure&#39;,
   &#39;severity&#39;: 3,
   &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-10-20 07:18:02&#39;},
+  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;},
  {&#39;timestamp&#39;: 1570359660,
   &#39;label&#39;: &#39;bearing_failure&#39;,
   &#39;severity&#39;: 3,
   &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-10-20 07:18:02&#39;}]
+  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;}]
 </pre></div></div>
 </div>
 <p>As you can see the measurements that we just added labels too show up. To inspect the label of a specific measurement we use <code class="docutils literal notranslate"><span class="pre">MVG.get_label()</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -554,7 +556,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -562,7 +564,7 @@ div.rendered_html tbody tr:hover {
 {&#39;label&#39;: &#39;bearing_failure&#39;,
  &#39;severity&#39;: 3,
  &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
- &#39;label_timestamp&#39;: &#39;2021-10-20 07:18:02&#39;}
+ &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;}
 </pre></div></div>
 </div>
 </section>
@@ -570,7 +572,7 @@ div.rendered_html tbody tr:hover {
 <h3>Updating labels<a class="headerlink" href="#Updating-labels" title="Permalink to this headline"></a></h3>
 <p>Maybe we realized that the problem did not actually occur until the third timestamp and we want to change the labels for the first two. Then we use the <code class="docutils literal notranslate"><span class="pre">session.update_label()</span></code> method.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -590,7 +592,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -599,17 +601,17 @@ div.rendered_html tbody tr:hover {
   &#39;label&#39;: &#39;OK&#39;,
   &#39;severity&#39;: 0,
   &#39;notes&#39;: &#39;This was an OK measurement&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-10-20 07:18:02&#39;},
+  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;},
  {&#39;timestamp&#39;: 1570273260,
   &#39;label&#39;: &#39;OK&#39;,
   &#39;severity&#39;: 0,
   &#39;notes&#39;: &#39;This was an OK measurement&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-10-20 07:18:02&#39;},
+  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;},
  {&#39;timestamp&#39;: 1570359660,
   &#39;label&#39;: &#39;bearing_failure&#39;,
   &#39;severity&#39;: 3,
   &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-10-20 07:18:02&#39;}]
+  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;}]
 </pre></div></div>
 </div>
 </section>
@@ -617,7 +619,7 @@ div.rendered_html tbody tr:hover {
 <h3>Plotting labels<a class="headerlink" href="#Plotting-labels" title="Permalink to this headline"></a></h3>
 <p>To get an overview of the data and labels it can be very good to plot the labels over time. The <code class="docutils literal notranslate"><span class="pre">plotting</span></code> module of <code class="docutils literal notranslate"><span class="pre">mvg</span></code> contains the function <code class="docutils literal notranslate"><span class="pre">plot_labels_over_time</span></code> that does just that. The plot is very similar to that of the ModeId plots, so it is easy to compare results. We can add the <code class="docutils literal notranslate"><span class="pre">include_unlabeled=True</span></code> keyword to plot the unlabeled measurements as well.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -627,7 +629,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -648,7 +650,7 @@ div.rendered_html tbody tr:hover {
 <h3>Deleting labels<a class="headerlink" href="#Deleting-labels" title="Permalink to this headline"></a></h3>
 <p>To delete labels we use the <code class="docutils literal notranslate"><span class="pre">MVG.delete_label()</span></code> method. Let’s use that to remove our example labels to get back to a clean slate.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

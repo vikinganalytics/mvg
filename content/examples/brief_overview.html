@@ -19,7 +19,7 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -55,7 +55,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#Imports">Imports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Sources-and-Measurements">Sources and Measurements</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Creating-a-Source">Creating a Source</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Uploading-a-Measurement">Uploading a Measurement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Uploading-Measurements">Uploading Measurements</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#Analysis">Analysis</a><ul>
@@ -76,7 +76,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
@@ -393,8 +392,6 @@ div.rendered_html tbody tr:hover {
 <h3>Python Pre-requisites<a class="headerlink" href="#Python-Pre-requisites" title="Permalink to this headline"></a></h3>
 <ol class="arabic simple">
 <li><p>Make sure you have Python 3.6 or higher installed.</p></li>
-<li><p>Install the MVG package from <a class="reference external" href="https://pypi.org/project/va-mvg/">“https://pypi.org/project/va-mvg/”</a></p></li>
-<li><p>Make sure you have the following packages installed (json, matplotlib…)</p></li>
 </ol>
 <p>In the following section we will walk through the code needed for the API interaction</p>
 </section>
@@ -411,56 +408,27 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
 </pre></div>
 </div>
 </div>
 <p>We proceed by installing the MVG library in our project.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!{</span>sys.executable<span class="o">}</span> -m pip install --user va-mvg
+<span></span><span class="o">!{</span>sys.executable<span class="o">}</span> -m pip install va-mvg
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-/usr/lib/python3/dist-packages/secretstorage/dhcrypto.py:15: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
-  from cryptography.utils import int_from_bytes
-/usr/lib/python3/dist-packages/secretstorage/util.py:19: CryptographyDeprecationWarning: int_from_bytes is deprecated, use int.from_bytes instead
-  from cryptography.utils import int_from_bytes
-Requirement already satisfied: va-mvg in /home/tuix/.local/lib/python3.8/site-packages (0.0.0.dev0)
-Requirement already satisfied: pandas in /home/tuix/.local/lib/python3.8/site-packages (from va-mvg) (1.2.4)
-Requirement already satisfied: numpy in /home/tuix/.local/lib/python3.8/site-packages (from va-mvg) (1.20.2)
-Requirement already satisfied: typer in /home/tuix/.local/lib/python3.8/site-packages (from va-mvg) (0.3.2)
-Requirement already satisfied: requests in /home/tuix/.local/lib/python3.8/site-packages (from va-mvg) (2.25.1)
-Requirement already satisfied: semver in /home/tuix/.local/lib/python3.8/site-packages (from va-mvg) (2.13.0)
-Requirement already satisfied: tabulate in /home/tuix/.local/lib/python3.8/site-packages (from va-mvg) (0.8.9)
-Requirement already satisfied: matplotlib in /home/tuix/.local/lib/python3.8/site-packages (from va-mvg) (3.4.2)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /home/tuix/.local/lib/python3.8/site-packages (from matplotlib-&gt;va-mvg) (1.3.1)
-Requirement already satisfied: pyparsing&gt;=2.2.1 in /home/tuix/.local/lib/python3.8/site-packages (from matplotlib-&gt;va-mvg) (2.4.7)
-Requirement already satisfied: python-dateutil&gt;=2.7 in /home/tuix/.local/lib/python3.8/site-packages (from matplotlib-&gt;va-mvg) (2.8.1)
-Requirement already satisfied: cycler&gt;=0.10 in /home/tuix/.local/lib/python3.8/site-packages (from matplotlib-&gt;va-mvg) (0.10.0)
-Requirement already satisfied: pillow&gt;=6.2.0 in /home/tuix/.local/lib/python3.8/site-packages (from matplotlib-&gt;va-mvg) (8.1.0)
-Requirement already satisfied: six in /usr/lib/python3/dist-packages (from cycler&gt;=0.10-&gt;matplotlib-&gt;va-mvg) (1.14.0)
-Requirement already satisfied: pytz&gt;=2017.3 in /home/tuix/.local/lib/python3.8/site-packages (from pandas-&gt;va-mvg) (2020.5)
-Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /usr/lib/python3/dist-packages (from requests-&gt;va-mvg) (1.25.8)
-Requirement already satisfied: chardet&lt;5,&gt;=3.0.2 in /usr/lib/python3/dist-packages (from requests-&gt;va-mvg) (3.0.4)
-Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/lib/python3/dist-packages (from requests-&gt;va-mvg) (2.8)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/lib/python3/dist-packages (from requests-&gt;va-mvg) (2019.11.28)
-Requirement already satisfied: click&lt;7.2.0,&gt;=7.1.1 in /home/tuix/.local/lib/python3.8/site-packages (from typer-&gt;va-mvg) (7.1.2)
-</pre></div></div>
 </div>
 <p>We follow by importing the MVG library.</p>
 <p>The library documentation is available at <a class="reference external" href="https://vikinganalytics.github.io/mvg/index.html">https://vikinganalytics.github.io/mvg/index.html</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -471,7 +439,7 @@ Requirement already satisfied: click&lt;7.2.0,&gt;=7.1.1 in /home/tuix/.local/li
 <p>We begin by instantiating a “session” object with the MVG library. A session object basically caches the endpoint and the token, to simplify the calls to the MVG library.</p>
 <p>NOTE: Each TOKEN is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA-MVG’ service.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -482,7 +450,7 @@ Requirement already satisfied: click&lt;7.2.0,&gt;=7.1.1 in /home/tuix/.local/li
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -492,23 +460,23 @@ Requirement already satisfied: click&lt;7.2.0,&gt;=7.1.1 in /home/tuix/.local/li
 </div>
 <p>We now check if the server is alive. The hello message contains the API version:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">hello_message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">say_hello</span><span class="p">())</span>
-<span class="n">hello_message</span>
-
+<span></span><span class="n">session</span><span class="o">.</span><span class="n">say_hello</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;{&#34;api&#34;: {&#34;name&#34;: &#34;MultiViz Engine API&#34;, &#34;version&#34;: &#34;v0.2.0&#34;, &#34;swagger&#34;: &#34;http://api.beta.multiviz.com/docs&#34;}}&#39;
+{&#39;api&#39;: {&#39;name&#39;: &#39;MultiViz Engine API&#39;,
+  &#39;version&#39;: &#39;v0.2.7&#39;,
+  &#39;swagger&#39;: &#39;http://api.beta.multiviz.com/docs&#39;}}
 </pre></div></div>
 </div>
 </section>
@@ -516,15 +484,13 @@ Requirement already satisfied: click&lt;7.2.0,&gt;=7.1.1 in /home/tuix/.local/li
 <h2>Sources and Measurements<a class="headerlink" href="#Sources-and-Measurements" title="Permalink to this headline"></a></h2>
 <p>Before we begin, we will ensure there are no previously existing sources and if there are, we will delete them.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">sources</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Retrieved sources&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting </span><span class="si">{</span><span class="n">src</span><span class="p">[</span><span class="s1">&#39;source_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="n">src</span><span class="p">[</span><span class="s1">&#39;source_id&#39;</span><span class="p">])</span>
 </pre></div>
@@ -535,14 +501,14 @@ Requirement already satisfied: click&lt;7.2.0,&gt;=7.1.1 in /home/tuix/.local/li
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Retrieved sources
+Deleting u0001
 </pre></div></div>
 </div>
 <p>The example below revolves around a sources with source_id “u0001”.</p>
 <p>For convenience, this source and its measurements are available with the package distribution.</p>
 <p>You can retrieve the data from our public charlie repo <a class="reference external" href="https://github.com/vikinganalytics/va-data-charlie.git">https://github.com/vikinganalytics/va-data-charlie.git</a></p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -550,23 +516,8 @@ Retrieved sources
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Cloning into &#39;va-data-charlie&#39;...
-remote: Enumerating objects: 494, done.
-remote: Counting objects: 100% (494/494), done.
-remote: Compressing objects: 100% (403/403), done.
-remote: Total 494 (delta 96), reused 434 (delta 87), pack-reused 0
-Receiving objects: 100% (494/494), 70.52 MiB | 1.91 MiB/s, done.
-Resolving deltas: 100% (96/96), done.
-Updating files: 100% (955/955), done.
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -581,7 +532,7 @@ Updating files: 100% (955/955), done.
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -591,92 +542,79 @@ Updating files: 100% (955/955), done.
 </div>
 <section id="Creating-a-Source">
 <h3>Creating a Source<a class="headerlink" href="#Creating-a-Source" title="Permalink to this headline"></a></h3>
-<p>A source represents a vibration data source, typically a vibration sensor. Internally, in the analytics engine and data storage, all vibration data is stored under its source. In essence, a source is an identifier formed by - the source ID - metadata with required fields - optional arbitrary customer specific ‘free form’ data belonging to the source.</p>
+<p>A source represents a vibration data source, typically a vibration sensor. Internally, in the analytics engine and data storage, all vibration data is stored under its source. In essence, a source is an identifier formed by - the source ID - metadata with required fields - optional arbitrary customer specific ‘free form’ data belonging to the source. - channel definition as a list</p>
 <p>The vibration service will only rely on the required fields. The free form data is a possibility for the client side to keep together source information, measurements and metadata which may be interesting for the analytics built-in features in the service. Examples of the free form data include location of sensor or the name of the asset which is mounted on. As we will see later, timestamps are internally represented as milliseconds since EPOCH (Jan 1st 1970), for that reason it is good practice
-to include the timezone where the measurement originated in the metadata.</p>
-<p>There are two ways to create a source:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># OPTION 1: Writing the meta-data directly when creating the source</span>
-<span class="n">SOURCE_IDP</span> <span class="o">=</span> <span class="s2">&quot;u001&quot;</span>
-<span class="n">meta_information</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;assetId&#39;</span><span class="p">:</span> <span class="s1">&#39;assetJ&#39;</span><span class="p">,</span> <span class="s1">&#39;measPoint&#39;</span><span class="p">:</span> <span class="s1">&#39;mloc01&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;cancun&#39;</span><span class="p">,</span> <span class="s1">&#39;timezone&#39;</span><span class="p">:</span> <span class="s1">&#39;Europe/Stockholm&#39;</span><span class="p">}</span>
-<span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">SOURCE_IDP</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta_information</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">])</span>
-<span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_IDP</span><span class="p">)</span>
-<span class="c1"># We delete this first example source to show the second option</span>
-<span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="n">SOURCE_IDP</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
+to include the timezone where the measurement originated in the metadata. In addition, we provide the channel definition that contains the waveform data. Each channel represents a waveform. Thus, if the sensor only have one channel, we need to provide only the name given to the raw waveform for that channel. If the sensor has two or more channels, like ina tri-axial sensor, one needs to provide the name of the channels corresponding to the different waveforms that will be available in the
+measurements.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># OPTION 2: Uploading the metadata from a json file</span>
-<span class="n">src_path</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span>
-<span class="n">meta_filename</span> <span class="o">=</span> <span class="n">src_path</span> <span class="o">/</span> <span class="s2">&quot;meta.json&quot;</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">meta_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
-<span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">])</span>
+<span></span><span class="n">meta_information</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;assetId&#39;</span><span class="p">:</span> <span class="s1">&#39;assetJ&#39;</span><span class="p">,</span> <span class="s1">&#39;measPoint&#39;</span><span class="p">:</span> <span class="s1">&#39;mloc01&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;cancun&#39;</span><span class="p">,</span> <span class="s1">&#39;timezone&#39;</span><span class="p">:</span> <span class="s1">&#39;Europe/Stockholm&#39;</span><span class="p">}</span>
+<span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta_information</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">])</span>
 <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 {&#39;source_id&#39;: &#39;u0001&#39;,
- &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;},
+ &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetJ&#39;,
+  &#39;measPoint&#39;: &#39;mloc01&#39;,
+  &#39;location&#39;: &#39;cancun&#39;,
+  &#39;timezone&#39;: &#39;Europe/Stockholm&#39;},
  &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;, &#39;channels&#39;: [&#39;acc&#39;]}}
 </pre></div></div>
 </div>
 <p>List sources</p>
-<p>We can now check if our source actually has been created, by listing all the sources in the database. This function provides all the existing information about the source.</p>
+<p>We can now check if our source actually has been created, by listing all the sources in the database. This function provides all the existing information about the source. Notice how in the source properties, one can see that the type of data to be uploaded for the source will be a waveform given that when one passes a channel definition to the source. The server interprets this as expecting for each measurement to be waveform data with the names of channels listed by the channel variable.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">sources</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
-<span class="n">sources</span>
+<span></span><span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 [{&#39;source_id&#39;: &#39;u0001&#39;,
-  &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;},
+  &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetJ&#39;,
+   &#39;measPoint&#39;: &#39;mloc01&#39;,
+   &#39;location&#39;: &#39;cancun&#39;,
+   &#39;timezone&#39;: &#39;Europe/Stockholm&#39;},
   &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;, &#39;channels&#39;: [&#39;acc&#39;]}}]
 </pre></div></div>
 </div>
 </section>
-<section id="Uploading-a-Measurement">
-<h3>Uploading a Measurement<a class="headerlink" href="#Uploading-a-Measurement" title="Permalink to this headline"></a></h3>
+<section id="Uploading-Measurements">
+<h3>Uploading Measurements<a class="headerlink" href="#Uploading-Measurements" title="Permalink to this headline"></a></h3>
 <p>Now that we have created a source, we can upload vibration measurements related to the source. The information needed to create a measurement consists of - sid: name of the source ID to associate the measurement with a source. - duration: float value that represent the duration, in seconds, of the measurement to estimate the sampling frequency. - timestamp: integer representing the milliseconds since EPOCH of when the measurement was taken. - data: list of floating point values representing the
 raw data of the vibration measurement. - meta: additional meta information for later use by the client but not to be processed by the analytics engine.</p>
-<p>In this example, all the measurement data is stored as csv and json files, where the timestamp is the name of each of these files.</p>
+<p>In this example, all the measurement data is stored as csv and json files, where the timestamp is the name of each of these files. On the csv file, the header of the colum of data corresponds to the channel name.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># meas is a list of timestamps representing the measurements in our repo</span>
+<span class="n">src_path</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span>
 <span class="n">meas</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">stem</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.csv&quot;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -687,7 +625,7 @@ raw data of the vibration measurement. - meta: additional meta information for l
     <span class="n">TS_MEAS</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span>  <span class="c1"># filename</span>
     <span class="n">TS_MEAS</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span> <span class="o">/</span> <span class="n">TS_MEAS</span>  <span class="c1"># path to file</span>
     <span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">TS_MEAS</span><span class="p">)</span>  <span class="c1"># read csv into df</span>
-    <span class="n">accs</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>  <span class="c1"># convert to list</span>
+    <span class="n">accs</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># convert to list</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ts_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
 
     <span class="c1"># meta information file per measurement</span>
@@ -706,11 +644,11 @@ raw data of the vibration measurement. - meta: additional meta information for l
     <span class="k">try</span><span class="p">:</span>
         <span class="n">session</span><span class="o">.</span><span class="n">create_measurement</span><span class="p">(</span><span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
                                    <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span>
-                                   <span class="n">timestamp</span><span class="o">=</span><span class="n">m</span><span class="p">,</span>
-                                   <span class="n">data</span><span class="o">=</span><span class="n">accs</span><span class="p">,</span>
+                                   <span class="n">timestamp</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">),</span>
+                                   <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;acc&quot;</span><span class="p">:</span> <span class="n">accs</span><span class="p">},</span>
                                    <span class="n">meta</span><span class="o">=</span><span class="n">meta_info</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -719,167 +657,166 @@ raw data of the vibration measurement. - meta: additional meta information for l
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Read 40000 samples
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570186860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573646460.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570273260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570273260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570359660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571482860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570446060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574251260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570532460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571050860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570618860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574164860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570705260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573387260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570791660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570446060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570878060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572350460.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570964460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573041660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571050860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573905660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571137260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570964460.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571223660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573819260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571310060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573128060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571396460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573300860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571482860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573732860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571569260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571310060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571655660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570878060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571742060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573560060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571828460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572696060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571914860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572782460.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572001260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574078460.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572087660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571655660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572177660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572001260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572264060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571569260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572350460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571223660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572436860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570618860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572523260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570186860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572609660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571914860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572696060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570532460.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572782460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574337660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572868860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570791660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572955260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572609660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573041660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572177660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573128060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572264060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573214460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572868860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573300860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572955260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573387260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571828460.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573473660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572523260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573560060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570705260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573646460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571742060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573732860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571137260.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573819260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1570359660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573905660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574424060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573992060.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572436860.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574078460.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573473660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574164860.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1571396460.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574251260.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573992060.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574337660.csv
-Read 40000 samples
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1572087660.csv
+Read 39999 samples
 Read meta:{&#39;duration&#39;: 2.8672073400507907, &#39;meta&#39;: {}}
-Uploading ~/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1574424060.csv
+Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charlie/charlieDb/acc/u0001/1573214460.csv
 </pre></div></div>
 </div>
 <p>Check if we actually created the measurements by reading them.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">m</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="si">}</span><span class="s2"> stored measurements&quot;</span><span class="p">)</span>
-
+<span></span><span class="n">measurements</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">measurements</span><span class="p">)</span><span class="si">}</span><span class="s2"> stored measurements&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -897,7 +834,7 @@ Read 50 stored measurements
 <h2>Analysis<a class="headerlink" href="#Analysis" title="Permalink to this headline"></a></h2>
 <p>We begin by listing all the features available in the service.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -907,46 +844,49 @@ Read 50 stored measurements
 </div>
 </div>
 <div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;ModeId&#39;: &#39;0.1.1&#39;,
+ &#39;BlackSheep&#39;: &#39;1.0.0&#39;,
+ &#39;KPIDemo&#39;: &#39;1.0.0&#39;,
+ &#39;LabelPropagation&#39;: &#39;0.1.0&#39;}
+</pre></div></div>
+</div>
+<p>In this example, we will show how to request the KPIDemo and ModeId features to be applied to the previously defined SOURCE_ID. The BlackSheep feature is aimed to population analytics. You can read about how to use it in the <a class="reference internal" href="analysis_visual.html"><span class="doc">“Analysis and Results Visualization”</span></a> example.</p>
+<p>We will begin with the ‘KPIDemo’ feature, which provides KPIs, such as RMS, for each vibration measurement. We proceed to request the analysis to the MVG service.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">KPI_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s1">&#39;KPIDemo&#39;</span><span class="p">)</span>
+<span class="n">KPI_u0001</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;RMS&#39;: &#39;1.0.0&#39;, &#39;ModeId&#39;: &#39;0.1.1&#39;, &#39;BlackSheep&#39;: &#39;1.0.0&#39;, &#39;KPIDemo&#39;: &#39;1.0.0&#39;}
-</pre></div></div>
-</div>
-<p>In this example, we will show how to request the RMS and ModeId features to be applied to the previously defined SOURCE_ID. The BlackSheep feature is aimed to population analytics. You can read about how to use it in the <a class="reference internal" href="analysis_visual.html"><span class="doc">“Analysis and Results Visualization”</span></a> example.</p>
-<p>We will begin with the ‘RMS’ feature, which provides the RMS for each signal. We proceed to request the analysis to the MVG service.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">RMS_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s1">&#39;RMS&#39;</span><span class="p">)</span>
-<span class="n">RMS_u0001</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-{&#39;request_id&#39;: &#39;bc4ea1194b4929764a08e97c60360cb6&#39;, &#39;request_status&#39;: &#39;queued&#39;}
+{&#39;request_id&#39;: &#39;75fc046d1b6ca741cf442552f506f95b&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
 <p>The requested analysis will return a dictionary object with two elements. The first element is a <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> that can be used to retrieve the results after. The second element is <code class="docutils literal notranslate"><span class="pre">&quot;request_status&quot;</span></code> that provides the status right after placing the analysis request.</p>
 <p>Before we are able to get the analysis results, we need to wait until those results are successfully completed.</p>
 <p>We can query for the status of our requested analysis. The possible status are: - Queued: The analysis has not started in the remote server and it is in the queue to begin. - Ongoing: The analysis is been processed at this time. - Failed: The analysis is complete and failed to produce a result. - Successful: The analysis is complete and it successfully produced a result.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">REQUEST_ID_RMS_u0001</span> <span class="o">=</span> <span class="n">RMS_u0001</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">REQUEST_ID_RMS_u0001</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RMS Analysis: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span></span><span class="n">REQUEST_ID_KPI_u0001</span> <span class="o">=</span> <span class="n">KPI_u0001</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">REQUEST_ID_KPI_u0001</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;KPI Analysis: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -955,12 +895,12 @@ Read 50 stored measurements
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-RMS Analysis: successful
+KPI Analysis: successful
 </pre></div></div>
 </div>
 <p>The next feature is ‘ModeId’. The ‘ModeId’ feature displays all the operating modes over time of an individual asset. The similar procedure is repeated to request the analysis of the “ModeId” feature for our source “u0001”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -970,12 +910,12 @@ RMS Analysis: successful
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;request_id&#39;: &#39;fae66b2396b7dde3039a2f58e287686a&#39;, &#39;request_status&#39;: &#39;queued&#39;}
+{&#39;request_id&#39;: &#39;09fa086e2bcf4d25b2ad39a442d2c5ad&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
 <p>We also check the status for our second feature.</p>
@@ -995,22 +935,22 @@ RMS Analysis: successful
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-ModeId Analysis: successful
+ModeId Analysis: queued
 </pre></div></div>
 </div>
 <p>We can proceed to get the results by calling the corresponding requestIds for the feature of each source.</p>
-<p>The output of the get_analysis_results function is a dictionary and we show the keys of one those dictionaries. The keys are the same for all features and contains seven elements. These elements are: - <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> indicates if the analysis was successful. - <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> is the identifier of the requested analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;feature&quot;</span></code> is the name of the request feature. - <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> includes the numeric results. - <code class="docutils literal notranslate"><span class="pre">&quot;inputs&quot;</span></code> includes the input information for the request analysis. -
+<p>The output of the get_analysis_results function is a dictionary and we show the keys of one those dictionaries. The keys are the same for all features and contains seven elements. These elements are: - <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> indicates if the analysis was successful. - <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> is the identifier of the requested analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;feature&quot;</span></code> is the name of the requested feature. - <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> includes the numeric results. - <code class="docutils literal notranslate"><span class="pre">&quot;inputs&quot;</span></code> includes the input information for the request analysis. -
 <code class="docutils literal notranslate"><span class="pre">&quot;error_info&quot;</span></code> includes the error information in case the analysis fails and it is empty if the analysis is successful. - <code class="docutils literal notranslate"><span class="pre">&quot;debug_info&quot;</span></code> includes debuging (log) information related to the failed analysis.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">rms_results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_ID_RMS_u0001</span><span class="p">)</span>
+<span></span><span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">REQUEST_ID_ModeId_u0001</span><span class="p">,</span> <span class="n">REQUEST_ID_KPI_u0001</span><span class="p">])</span>
+<span class="n">kpi_results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_ID_KPI_u0001</span><span class="p">)</span>
 <span class="n">mode_results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_ID_ModeId_u0001</span><span class="p">)</span>
 
-<span class="n">rms_results</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-
+<span class="n">kpi_results</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1036,30 +976,29 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 </pre></div>
 </div>
 </div>
-<p>The first step requires parsing the results available from the analysis. We begin by showing how to do this with the RMS feature.</p>
+<p>The first step requires parsing the results available from the analysis. We begin by showing how to do this with the KPIDemo feature.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">rms_results_parsed</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">rms_results</span><span class="p">)</span>
+<span></span><span class="n">kpi_results_parsed</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">kpi_results</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <p>From here, we can call these results into a Pandas dataframe.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df_rms</span> <span class="o">=</span> <span class="n">rms_results_parsed</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
-<span class="n">df_rms</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-
+<span></span><span class="n">df_kpi</span> <span class="o">=</span> <span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<span class="n">df_kpi</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1082,66 +1021,89 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
     <tr style="text-align: right;">
       <th></th>
       <th>timestamps</th>
-      <th>rms</th>
-      <th>rms_dc</th>
-      <th>dc</th>
-      <th>utilization</th>
+      <th>rms_acc</th>
+      <th>peak_acc</th>
+      <th>peak2peak_acc</th>
+      <th>variance_acc</th>
+      <th>crest_factor_acc</th>
+      <th>utilization_acc</th>
+      <th>dc_component_acc</th>
+      <th>datetime</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>1570186860</td>
-      <td>0.647086</td>
-      <td>0.662108</td>
-      <td>-0.140237</td>
+      <td>0.647094</td>
+      <td>2.686565</td>
+      <td>5.313293</td>
+      <td>0.418730</td>
+      <td>4.151739</td>
       <td>1</td>
+      <td>-0.140239</td>
+      <td>1970-01-19 04:09:46.860000+00:00</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1570273260</td>
-      <td>0.647123</td>
-      <td>0.662183</td>
-      <td>-0.140420</td>
+      <td>0.647131</td>
+      <td>2.691755</td>
+      <td>5.367004</td>
+      <td>0.418778</td>
+      <td>4.159523</td>
       <td>1</td>
+      <td>-0.140425</td>
+      <td>1970-01-19 04:11:13.260000+00:00</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1570359660</td>
-      <td>0.646619</td>
-      <td>0.661652</td>
-      <td>-0.140239</td>
+      <td>0.646627</td>
+      <td>2.715255</td>
+      <td>5.414856</td>
+      <td>0.418126</td>
+      <td>4.199108</td>
       <td>1</td>
+      <td>-0.140243</td>
+      <td>1970-01-19 04:12:39.660000+00:00</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1570446060</td>
-      <td>0.646873</td>
-      <td>0.661923</td>
-      <td>-0.140347</td>
+      <td>0.646881</td>
+      <td>2.685151</td>
+      <td>5.351562</td>
+      <td>0.418455</td>
+      <td>4.150921</td>
       <td>1</td>
+      <td>-0.140351</td>
+      <td>1970-01-19 04:14:06.060000+00:00</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1570532460</td>
-      <td>0.646643</td>
-      <td>0.661714</td>
-      <td>-0.140423</td>
+      <td>0.646649</td>
+      <td>2.726611</td>
+      <td>5.395325</td>
+      <td>0.418155</td>
+      <td>4.216521</td>
       <td>1</td>
+      <td>-0.140429</td>
+      <td>1970-01-19 04:15:32.460000+00:00</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-<p>From the results, we can see that the RMS feature provides the rms value, the dc component and the rms without the dc component. All this is available for each timestamp.</p>
+<p>From the results, we can see that the KPIDemo feature provides some KPIs, e.g. rms and peak-to-peak. All this is available for each measurement.</p>
 <p>We can request to display a summary of the results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">rms_results_parsed</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-
+<span></span><span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1150,26 +1112,26 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-=== RMS ===
-request_id bc4ea1194b4929764a08e97c60360cb6
-from 1570186860 to 1574424060
+=== KPIDemo ===
+request_id 75fc046d1b6ca741cf442552f506f95b
+from 19700119-04:09.46 to 19700119-05:20.24
 
-+-------+--------------+------------+------------+------------+---------------+
-|       |   timestamps |        rms |     rms_dc |         dc |   utilization |
-|-------+--------------+------------+------------+------------+---------------|
-| count | 50           | 50         | 50         | 50         |            50 |
-| mean  |  1.57231e+09 |  0.611691  |  0.623692  | -0.120874  |             1 |
-| std   |  1.26105e+06 |  0.0565414 |  0.0563824 |  0.0141936 |             0 |
-| min   |  1.57019e+09 |  0.484564  |  0.497987  | -0.140524  |             1 |
-| 25%   |  1.57125e+09 |  0.627912  |  0.637381  | -0.140196  |             1 |
-| 50%   |  1.57231e+09 |  0.628307  |  0.6378    | -0.112316  |             1 |
-| 75%   |  1.57337e+09 |  0.64684   |  0.661892  | -0.10966   |             1 |
-| max   |  1.57442e+09 |  0.647694  |  0.662754  | -0.109065  |             1 |
-+-------+--------------+------------+------------+------------+---------------+
++-------+--------------+-----------+------------+-----------------+----------------+--------------------+-------------------+--------------------+
+|       |   timestamps |   rms_acc |   peak_acc |   peak2peak_acc |   variance_acc |   crest_factor_acc |   utilization_acc |   dc_component_acc |
+|-------+--------------+-----------+------------+-----------------+----------------+--------------------+-------------------+--------------------|
+| count | 50           | 50        |  50        |       50        |     50         |          50        |                50 |         50         |
+| mean  |  1.57231e+09 |  0.611699 |   2.81764  |        5.40059  |      0.377308  |           4.62971  |                 1 |         -0.120877  |
+| std   |  1.26105e+06 |  0.056542 |   0.278079 |        0.378225 |      0.0636187 |           0.333362 |                 0 |          0.0141939 |
+| min   |  1.57019e+09 |  0.484569 |   2.26056  |        4.55438  |      0.234808  |           4.12335  |                 1 |         -0.140529  |
+| 25%   |  1.57125e+09 |  0.627919 |   2.68338  |        5.31364  |      0.394283  |           4.20398  |                 1 |         -0.140198  |
+| 50%   |  1.57231e+09 |  0.628315 |   2.84999  |        5.52634  |      0.39478   |           4.80636  |                 1 |         -0.112321  |
+| 75%   |  1.57337e+09 |  0.646848 |   3.06662  |        5.69377  |      0.418413  |           4.8906   |                 1 |         -0.109663  |
+| max   |  1.57442e+09 |  0.647702 |   3.13609  |        5.79639  |      0.419518  |           4.9925   |                 1 |         -0.109068  |
++-------+--------------+-----------+------------+-----------------+----------------+--------------------+-------------------+--------------------+
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1192,10 +1154,13 @@ from 1570186860 to 1574424060
     <tr style="text-align: right;">
       <th></th>
       <th>timestamps</th>
-      <th>rms</th>
-      <th>rms_dc</th>
-      <th>dc</th>
-      <th>utilization</th>
+      <th>rms_acc</th>
+      <th>peak_acc</th>
+      <th>peak2peak_acc</th>
+      <th>variance_acc</th>
+      <th>crest_factor_acc</th>
+      <th>utilization_acc</th>
+      <th>dc_component_acc</th>
     </tr>
   </thead>
   <tbody>
@@ -1205,75 +1170,99 @@ from 1570186860 to 1574424060
       <td>50.000000</td>
       <td>50.000000</td>
       <td>50.000000</td>
+      <td>50.000000</td>
+      <td>50.000000</td>
       <td>50.0</td>
+      <td>50.000000</td>
     </tr>
     <tr>
       <th>mean</th>
       <td>1.572306e+09</td>
-      <td>0.611691</td>
-      <td>0.623692</td>
-      <td>-0.120874</td>
+      <td>0.611699</td>
+      <td>2.817644</td>
+      <td>5.400591</td>
+      <td>0.377308</td>
+      <td>4.629712</td>
       <td>1.0</td>
+      <td>-0.120877</td>
     </tr>
     <tr>
       <th>std</th>
       <td>1.261051e+06</td>
-      <td>0.056541</td>
-      <td>0.056382</td>
-      <td>0.014194</td>
+      <td>0.056542</td>
+      <td>0.278079</td>
+      <td>0.378225</td>
+      <td>0.063619</td>
+      <td>0.333362</td>
       <td>0.0</td>
+      <td>0.014194</td>
     </tr>
     <tr>
       <th>min</th>
       <td>1.570187e+09</td>
-      <td>0.484564</td>
-      <td>0.497987</td>
-      <td>-0.140524</td>
+      <td>0.484569</td>
+      <td>2.260563</td>
+      <td>4.554382</td>
+      <td>0.234808</td>
+      <td>4.123347</td>
       <td>1.0</td>
+      <td>-0.140529</td>
     </tr>
     <tr>
       <th>25%</th>
       <td>1.571245e+09</td>
-      <td>0.627912</td>
-      <td>0.637381</td>
-      <td>-0.140196</td>
+      <td>0.627919</td>
+      <td>2.683378</td>
+      <td>5.313644</td>
+      <td>0.394283</td>
+      <td>4.203977</td>
       <td>1.0</td>
+      <td>-0.140198</td>
     </tr>
     <tr>
       <th>50%</th>
       <td>1.572307e+09</td>
-      <td>0.628307</td>
-      <td>0.637800</td>
-      <td>-0.112316</td>
+      <td>0.628315</td>
+      <td>2.849992</td>
+      <td>5.526337</td>
+      <td>0.394780</td>
+      <td>4.806361</td>
       <td>1.0</td>
+      <td>-0.112321</td>
     </tr>
     <tr>
       <th>75%</th>
       <td>1.573366e+09</td>
-      <td>0.646840</td>
-      <td>0.661892</td>
-      <td>-0.109660</td>
+      <td>0.646848</td>
+      <td>3.066616</td>
+      <td>5.693771</td>
+      <td>0.418413</td>
+      <td>4.890599</td>
       <td>1.0</td>
+      <td>-0.109663</td>
     </tr>
     <tr>
       <th>max</th>
       <td>1.574424e+09</td>
-      <td>0.647694</td>
-      <td>0.662754</td>
-      <td>-0.109065</td>
+      <td>0.647702</td>
+      <td>3.136088</td>
+      <td>5.796387</td>
+      <td>0.419518</td>
+      <td>4.992498</td>
       <td>1.0</td>
+      <td>-0.109068</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
-<p>Finally, we can generate a plot that displays these results.</p>
+<p>Finally, we can generate a plot that displays these results. When plotting the results for the KPIDemo feature, one selects the KPI to be displayed by passing the parameter <code class="docutils literal notranslate"><span class="pre">&quot;kpi&quot;</span></code>. If this parameter is not included, the plot function will display the results of the first KPI after the timestamps, which is the RMS value.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">rms_results_parsed</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span></span><span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1281,11 +1270,11 @@ from 1570186860 to 1574424060
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_brief_overview_50_0.png" src="../../_images/content_examples_brief_overview_50_0.png" />
+<img alt="../../_images/content_examples_brief_overview_49_0.png" src="../../_images/content_examples_brief_overview_49_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1296,18 +1285,17 @@ from 1570186860 to 1574424060
 <p>All these functions are available for the ModeId feature as well. We proceed to repeat the same procedure for this other feature.</p>
 <p>We begin by parsing the results. In this particular case, we need to define the unit of time to perform the epoch conversion to datetime. The default unit is milliseconds, but we need seconds now. The timezone can also be defined, to increase the precision of these results.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">mode_results_parsed</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">mode_results</span><span class="p">,</span> <span class="n">t_unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
-
 </pre></div>
 </div>
 </div>
 <p>First, we generate the pandas dataframe of ModeId results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1317,7 +1305,7 @@ from 1570186860 to 1574424060
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1343,6 +1331,7 @@ from 1570186860 to 1574424060
       <th>labels</th>
       <th>uncertain</th>
       <th>mode_probability</th>
+      <th>datetime</th>
     </tr>
   </thead>
   <tbody>
@@ -1351,35 +1340,40 @@ from 1570186860 to 1574424060
       <td>1570186860</td>
       <td>0</td>
       <td>False</td>
-      <td>0.001262</td>
+      <td>0.939155</td>
+      <td>2019-10-04 11:01:00+00:00</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1570273260</td>
       <td>0</td>
       <td>False</td>
-      <td>0.001833</td>
+      <td>0.872610</td>
+      <td>2019-10-05 11:01:00+00:00</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1570359660</td>
       <td>0</td>
       <td>False</td>
-      <td>0.000154</td>
+      <td>0.982989</td>
+      <td>2019-10-06 11:01:00+00:00</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1570446060</td>
       <td>0</td>
       <td>False</td>
-      <td>0.000546</td>
+      <td>0.996053</td>
+      <td>2019-10-07 11:01:00+00:00</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1570532460</td>
       <td>0</td>
       <td>False</td>
-      <td>0.000025</td>
+      <td>0.921091</td>
+      <td>2019-10-08 11:01:00+00:00</td>
     </tr>
   </tbody>
 </table>
@@ -1388,7 +1382,7 @@ from 1570186860 to 1574424060
 <p>From the results, we can see that the ModeId feature provides a mode label for each timestamp, together with a boolean describing the certainty around this mode label and its probability.</p>
 <p>We can also request to display a summary of the results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1402,64 +1396,69 @@ from 1570186860 to 1574424060
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 === ModeId ===
-request_id fae66b2396b7dde3039a2f58e287686a
-from 1570186860 to 1574424060
+request_id 09fa086e2bcf4d25b2ad39a442d2c5ad
+from 20191004-11:01.00 to 20191122-12:01.00
 
 Labels
-+----------+----------+-----------+--------------------+
-|   labels |   counts |   portion |   mode_probability |
-|----------+----------+-----------+--------------------|
-|        0 |       17 |        34 |                 17 |
-|        1 |        8 |        16 |                  8 |
-|        2 |       25 |        50 |                 25 |
-+----------+----------+-----------+--------------------+
++----------+----------+-----------+--------------------+------------+
+|   labels |   counts |   portion |   mode_probability |   datetime |
+|----------+----------+-----------+--------------------+------------|
+|        0 |       17 |        34 |                 17 |         17 |
+|        1 |        8 |        16 |                  8 |          8 |
+|        2 |       25 |        50 |                 25 |         25 |
++----------+----------+-----------+--------------------+------------+
 
 Lables &amp; uncertain labels
-+------------+-----------+--------------------+----------+
-|            |   portion |   mode_probability |   counts |
-|------------+-----------+--------------------+----------|
-| (0, False) |        34 |                 17 |       17 |
-| (1, False) |        16 |                  8 |        8 |
-| (2, False) |        50 |                 25 |       25 |
-+------------+-----------+--------------------+----------+
++------------+-----------+--------------------+------------+----------+
+|            |   portion |   mode_probability |   datetime |   counts |
+|------------+-----------+--------------------+------------+----------|
+| (0, False) |        34 |                 17 |         17 |       17 |
+| (1, False) |        16 |                  8 |          8 |        8 |
+| (2, False) |        50 |                 25 |         25 |       25 |
++------------+-----------+--------------------+------------+----------+
 
 Emerging Modes
-+----+---------+-----------------+-----------------+-------------------+
-|    |   modes |   emerging_time |   max_prob_time |   max_probability |
-|----+---------+-----------------+-----------------+-------------------|
-|  0 |       0 |     1.57019e+09 |     1.57114e+09 |        0.00727616 |
-|  1 |       1 |     1.57166e+09 |     1.57166e+09 |        0.0230245  |
-|  2 |       2 |     1.57235e+09 |     1.57442e+09 |        0.0109123  |
-+----+---------+-----------------+-----------------+-------------------+
++----+---------+-----------------+-----------------+-------------------+---------------------------+
+|    |   modes |   emerging_time |   max_prob_time |   max_probability | datetime                  |
+|----+---------+-----------------+-----------------+-------------------+---------------------------|
+|  0 |       0 |      1570186860 |      1570446060 |          0.996053 | 2019-10-04 11:01:00+00:00 |
+|  1 |       1 |      1571655660 |      1572264060 |          0.997885 | 2019-10-21 11:01:00+00:00 |
+|  2 |       2 |      1572350460 |      1573646460 |          0.989592 | 2019-10-29 12:01:00+00:00 |
++----+---------+-----------------+-----------------+-------------------+---------------------------+
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[        counts  portion  mode_probability
+[        counts  portion  mode_probability  datetime
  labels
- 0           17     34.0              17.0
- 1            8     16.0               8.0
- 2           25     50.0              25.0,
-                   portion  mode_probability  counts
+ 0           17     34.0                17        17
+ 1            8     16.0                 8         8
+ 2           25     50.0                25        25,
+                   portion  mode_probability  datetime  counts
  labels uncertain
- 0      False         34.0              17.0      17
- 1      False         16.0               8.0       8
- 2      False         50.0              25.0      25,
-    modes  emerging_time  max_prob_time  max_probability
- 0      0     1570186860     1571137260         0.007276
- 1      1     1571655660     1571655660         0.023025
- 2      2     1572350460     1574424060         0.010912]
+ 0      False         34.0                17        17      17
+ 1      False         16.0                 8         8       8
+ 2      False         50.0                25        25      25,
+    modes  emerging_time  max_prob_time  max_probability  \
+ 0      0     1570186860     1570446060         0.996053
+ 1      1     1571655660     1572264060         0.997885
+ 2      2     1572350460     1573646460         0.989592
+
+                    datetime
+ 0 2019-10-04 11:01:00+00:00
+ 1 2019-10-21 11:01:00+00:00
+ 2 2019-10-29 12:01:00+00:00  ]
 </pre></div></div>
 </div>
 <p>The summary of the results describes the number of timestamps for each mode and how many of these timestamps are uncertain. Uncertain areas appear as a gray rectangle above the corresponding periods in the modes plot.</p>
 <p>In addition, it provides information on the emerging modes. Emerging modes describes the time (timestamp) each one of the modes first appeared. This information can be useful to identify if a new mode is affecting or appearing in the asset.</p>
 <p>Finally, we can generate a plot that displays display the different modes over time.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1471,11 +1470,11 @@ Emerging Modes
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_brief_overview_58_0.png" src="../../_images/content_examples_brief_overview_58_0.png" />
+<img alt="../../_images/content_examples_brief_overview_57_0.png" src="../../_images/content_examples_brief_overview_57_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1483,20 +1482,20 @@ Emerging Modes
 &#39;&#39;
 </pre></div></div>
 </div>
-<p>Lastly, we can combine the information from the RMS and ModeId features to display a boxplot of the “RMS” for each one of the operating modes.</p>
-<p>First, we merge the “RMS” and “ModeId” dataframes.</p>
+<p>Lastly, we can combine the information from the KPIDemo and ModeId features to display a boxplot of the “RMS” for each one of the operating modes.</p>
+<p>First, we merge the “KPI” and “ModeId” dataframes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df_u0001</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_rms</span><span class="p">,</span> <span class="n">df_mode</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;timestamps&quot;</span><span class="p">)</span>
+<span></span><span class="n">df_u0001</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_kpi</span><span class="p">,</span> <span class="n">df_mode</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;timestamps&quot;</span><span class="p">)</span>
 <span class="n">df_u0001</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1519,76 +1518,100 @@ Emerging Modes
     <tr style="text-align: right;">
       <th></th>
       <th>timestamps</th>
-      <th>rms</th>
-      <th>rms_dc</th>
-      <th>dc</th>
-      <th>utilization</th>
+      <th>rms_acc</th>
+      <th>peak_acc</th>
+      <th>peak2peak_acc</th>
+      <th>variance_acc</th>
+      <th>crest_factor_acc</th>
+      <th>utilization_acc</th>
+      <th>dc_component_acc</th>
+      <th>datetime_x</th>
       <th>labels</th>
       <th>uncertain</th>
       <th>mode_probability</th>
-      <th>Date</th>
+      <th>datetime_y</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>1570186860</td>
-      <td>0.647086</td>
-      <td>0.662108</td>
-      <td>-0.140237</td>
+      <td>0.647094</td>
+      <td>2.686565</td>
+      <td>5.313293</td>
+      <td>0.418730</td>
+      <td>4.151739</td>
       <td>1</td>
+      <td>-0.140239</td>
+      <td>1970-01-19 04:09:46.860000+00:00</td>
       <td>0</td>
       <td>False</td>
-      <td>0.001262</td>
-      <td>2019-10-04 11:01:00</td>
+      <td>0.939155</td>
+      <td>2019-10-04 11:01:00+00:00</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1570273260</td>
-      <td>0.647123</td>
-      <td>0.662183</td>
-      <td>-0.140420</td>
+      <td>0.647131</td>
+      <td>2.691755</td>
+      <td>5.367004</td>
+      <td>0.418778</td>
+      <td>4.159523</td>
       <td>1</td>
+      <td>-0.140425</td>
+      <td>1970-01-19 04:11:13.260000+00:00</td>
       <td>0</td>
       <td>False</td>
-      <td>0.001833</td>
-      <td>2019-10-05 11:01:00</td>
+      <td>0.872610</td>
+      <td>2019-10-05 11:01:00+00:00</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1570359660</td>
-      <td>0.646619</td>
-      <td>0.661652</td>
-      <td>-0.140239</td>
+      <td>0.646627</td>
+      <td>2.715255</td>
+      <td>5.414856</td>
+      <td>0.418126</td>
+      <td>4.199108</td>
       <td>1</td>
+      <td>-0.140243</td>
+      <td>1970-01-19 04:12:39.660000+00:00</td>
       <td>0</td>
       <td>False</td>
-      <td>0.000154</td>
-      <td>2019-10-06 11:01:00</td>
+      <td>0.982989</td>
+      <td>2019-10-06 11:01:00+00:00</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1570446060</td>
-      <td>0.646873</td>
-      <td>0.661923</td>
-      <td>-0.140347</td>
+      <td>0.646881</td>
+      <td>2.685151</td>
+      <td>5.351562</td>
+      <td>0.418455</td>
+      <td>4.150921</td>
       <td>1</td>
+      <td>-0.140351</td>
+      <td>1970-01-19 04:14:06.060000+00:00</td>
       <td>0</td>
       <td>False</td>
-      <td>0.000546</td>
-      <td>2019-10-07 11:01:00</td>
+      <td>0.996053</td>
+      <td>2019-10-07 11:01:00+00:00</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1570532460</td>
-      <td>0.646643</td>
-      <td>0.661714</td>
-      <td>-0.140423</td>
+      <td>0.646649</td>
+      <td>2.726611</td>
+      <td>5.395325</td>
+      <td>0.418155</td>
+      <td>4.216521</td>
       <td>1</td>
+      <td>-0.140429</td>
+      <td>1970-01-19 04:15:32.460000+00:00</td>
       <td>0</td>
       <td>False</td>
-      <td>0.000025</td>
-      <td>2019-10-08 11:01:00</td>
+      <td>0.921091</td>
+      <td>2019-10-08 11:01:00+00:00</td>
     </tr>
   </tbody>
 </table>
@@ -1596,7 +1619,7 @@ Emerging Modes
 </div>
 <p>The MVG library provides additional visualization functions that can help towards this goal. Thus, we import the visualization module</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1606,28 +1629,37 @@ Emerging Modes
 </div>
 <p>Now, we can proceed to plot the boxplot.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">plotting</span><span class="o">.</span><span class="n">modes_boxplot</span><span class="p">(</span><span class="n">df_u0001</span><span class="p">,</span> <span class="s2">&quot;rms&quot;</span><span class="p">,</span> <span class="n">SOURCE_ID</span><span class="p">)</span>
+<span></span><span class="n">plotting</span><span class="o">.</span><span class="n">modes_boxplot</span><span class="p">(</span><span class="n">df_u0001</span><span class="p">,</span> <span class="s2">&quot;rms_acc&quot;</span><span class="p">,</span> <span class="n">SOURCE_ID</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/oskar/viking_unix/mvg/env/lib/python3.8/site-packages/pandas/core/arrays/categorical.py:2630: FutureWarning: The `inplace` parameter in pandas.Categorical.set_categories is deprecated and will be removed in a future version. Removing unused categories will always return a new Categorical object.
+  res = method(*args, **kwargs)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;AxesSubplot:title={&#39;center&#39;:&#39;Boxplot for u0001&#39;}, xlabel=&#39;Modes&#39;, ylabel=&#39;rms&#39;&gt;
+&lt;AxesSubplot:title={&#39;center&#39;:&#39;Boxplot for u0001&#39;}, xlabel=&#39;Modes&#39;, ylabel=&#39;rms_acc&#39;&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_brief_overview_64_1.png" src="../../_images/content_examples_brief_overview_64_1.png" />
+<img alt="../../_images/content_examples_brief_overview_63_2.png" src="../../_images/content_examples_brief_overview_63_2.png" />
 </div>
 </div>
 <p>Here we conclude our brief overview to begin using the MultiViz Analytics Engine (MVG) Library.</p>

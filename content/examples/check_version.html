@@ -19,7 +19,7 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -59,7 +59,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
@@ -370,8 +369,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="c1"># import mvg library with python bindings to mvg-API</span>
@@ -396,7 +394,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="s2">&quot;NO TOKEN&quot;</span>  <span class="c1"># no token is needed for querying the version</span>
+<span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="s2">&quot;NO TOKEN&quot;</span>
 <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
 </pre></div>
@@ -408,21 +406,29 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">version</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">check_version</span><span class="p">())</span>
-
-
-
+<span></span><span class="n">session</span><span class="o">.</span><span class="n">check_version</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 Checking versions for:https://api.beta.multiviz.com
-mvg version: 0.9.0
-Highest tested API version: 0.2.0
+mvg version: 0.9.7
+Highest tested API version: 0.2.7
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;api_version&#39;: &#39;0.2.7&#39;,
+ &#39;mvg_highest_tested_version&#39;: &#39;0.2.7&#39;,
+ &#39;mvg_version&#39;: &#39;0.9.7&#39;}
 </pre></div></div>
 </div>
 </section>

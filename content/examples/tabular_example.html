@@ -19,7 +19,7 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -62,7 +62,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../features/RMS.html">Root Mean Square (RMS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
@@ -387,17 +386,17 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<p>After importing we create the <code class="docutils literal notranslate"><span class="pre">MVG</span></code> session that let’s us communicate with the Vibium server. For that we need an endpoint url and a valid token. If you do not have a token, you can get one <a class="reference external" href="https://vikinganalytics.se/multiviz-vibration-api/">here</a>.</p>
+<p>After importing we create the <code class="docutils literal notranslate"><span class="pre">MVG</span></code> session that let us communicate with the Vibium server. For that we need an endpoint URL and a valid token. If you do not have a token, you can get one <a class="reference external" href="https://vikinganalytics.se/multiviz-vibration-api/">here</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Each token is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA vibration’ service.</p>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;http://api.beta.multiviz.com</span>
+<span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;http://api.beta.multiviz.com&quot;</span>
 <span class="n">TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
 </pre></div>
@@ -405,7 +404,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>We will use a dataset that is collected from a heat pump in the cellar of one of the employees at Viking Analytics. The data is available in <a class="reference external" href="https://github.com/vikinganalytics/tabular-example-data">this git repository</a>. We clone the repository to get access it. If you don’t have git you can download the data from the link.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -418,16 +417,11 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Cloning into &#39;tabular-example-data&#39;...
-remote: Enumerating objects: 7, done.
-remote: Counting objects: 100% (7/7), done.
-remote: Compressing objects: 100% (7/7), done.
-remote: Total 7 (delta 1), reused 3 (delta 0), pack-reused 0
-Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
+fatal: destination path &#39;tabular-example-data&#39; already exists and is not an empty directory.
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -438,7 +432,7 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -539,7 +533,7 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 <p>We loaded the <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file into a dataframe object and printed out the first five rows. The timestamp was read as string timestamps, but for the Vibium API we need the timestamps to be in milliseconds since EPOCH. So we need to do some data wrangling in order to get it to the correct data type.</p>
 <p>We can use the function <code class="docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> to convert a column into datetime objects. Then we can convert the timestamps into integers, which will automatically get converted to nanoseconds since EPOCH. By dividing by 1e6 we get the same time in milliseconds. We can see that the conversion was successful by printing the first five rows again.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -548,8 +542,17 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+&lt;ipython-input-16-012b223473e2&gt;:1: FutureWarning: casting datetime64[ns, UTC] values to int64 with .astype(...) is deprecated and will raise in a future version. Use .view(...) instead.
+  data_df[&#34;timestamp&#34;] = pd.to_datetime(data_df[&#34;timestamp&#34;]).astype(&#34;int64&#34;) // 1000000
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -653,18 +656,17 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 <p>The dictionary must have a <code class="docutils literal notranslate"><span class="pre">&quot;timestamp&quot;</span></code> key and at least one more column, corresponding to a tracked variable. The <code class="docutils literal notranslate"><span class="pre">to_dict(&quot;list&quot;)</span></code> method will not include the index, so it is important to have the timestamp as a column in the data and not as an index.</p>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">data_dict</span> <span class="o">=</span> <span class="n">data_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
-
 </pre></div>
 </div>
 </div>
 <p>Now that the data has been converted to the correct format we are ready to create the source and upload some measurements. When creating a tabular source, you must define the columns that the data will contain ahead of time. This is to prevent arbitrary data to be uploaded to the source. Besides the columns argument, creating a tabular source works the exact same way as creating a waveform source.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -678,7 +680,7 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 </div>
 <p>We can check that the source was uploaded correctly by getting the source information.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -707,7 +709,7 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 </div>
 <p>Next, let’s upload the data we prepared to the source</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -718,10 +720,10 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 </pre></div>
 </div>
 </div>
-<p>Now that we have a source with measurements we can request an analysis of the data from the server. Requesting analyses for tabular data works the same way as it does for waveform data. Although not all features will work for tabular data. The RMS feature for example will only work with waveform data. Another thing to keep in mind is that when requesting population analyses, all sources to be analyzed simultaneously must have the same data class.</p>
+<p>Now that we have a source with measurements we can request an analysis of the data from the server. Requesting analyses for tabular data works the same way as it does for waveform data. Although not all features will work for tabular data. The KPIDemo feature for example will only work with waveform data. Another thing to keep in mind is that when requesting population analyses, all sources to be analyzed simultaneously must have the same data class.</p>
 <p>For now we will simply run the mode identification algorithm</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -735,7 +737,7 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 </div>
 <p>To make the results easier to work with we can load them into an analysis class. There exists one for each analysis feature. Once the analysis is finished and we have received the results, we can instatiate the analysis class with the results dictionary.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -746,8 +748,8 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 </div>
 </div>
 <p>The analysis class makes it very convenient to view the results. Let’s use the <code class="docutils literal notranslate"><span class="pre">ModeId.plot()</span></code> method to get an overview of the results.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -755,13 +757,29 @@ Unpacking objects: 100% (7/7), 259.88 KiB | 2.65 MiB/s, done.
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/content_examples_tabular_example_22_0.png" src="../../_images/content_examples_tabular_example_22_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;&#39;
+</pre></div></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Gray stripes in the plot correspond to gaps in measurements and not a third mode.</p>
 </div>
 <p>When you are finished with the example you can go ahead and delete the source</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
