@@ -5,6 +5,17 @@ from tabulate import tabulate
 from mvg.features.analysis import Analysis
 
 
+def unfold_result_to_df(result: dict) -> pd.DataFrame:
+    unfolded_result = {}
+    unfolded_result["timestamps"] = result.pop("timestamps")
+
+    for channel, kpis in result.items():
+        for kpi, kpi_values in kpis.items():
+            unfolded_result[f"{kpi}_{channel}"] = kpi_values
+
+    return pd.DataFrame.from_dict(unfolded_result)
+
+
 class KPIDemo(Analysis):
     """ Analysis class for KPIDemo feature."""
 
@@ -23,8 +34,8 @@ class KPIDemo(Analysis):
             time unit for conversion from epoch time [ms].
         """
 
-        Analysis.__init__(self, results, t_zone, t_unit)
-        self._results_df = pd.DataFrame.from_dict(self.results())
+        super().__init__(results, t_zone, t_unit)
+        self._results_df = unfold_result_to_df(self.results())
         self._add_datetime()
 
     def summary(self):
@@ -37,12 +48,12 @@ class KPIDemo(Analysis):
 
         super().summary()
         print()
-        tab = self._results_df.describe()
+        tab = self.to_df().describe()
         print(tabulate(tab, headers="keys", tablefmt="psql"))
         return tab
 
     def plot(
-        self, kpi="rms", interactive=True, time_format=None
+        self, kpi=None, interactive=True, time_format=None
     ):  # pylint: disable=arguments-differ
         """
         Generate a basic plot on KPIs.
@@ -57,6 +68,7 @@ class KPIDemo(Analysis):
             True: show plot, False: save plot
 
         time_format: str, optional
+
             strftime format specifier for tick_x_lables. If not given
             only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
@@ -66,8 +78,12 @@ class KPIDemo(Analysis):
         plot file name : str
           name of plot file (or emtpy string in case of interactive plot)
         """
+        result_df = self.to_df()
+
+        # Select the default column as the one after timestamps which is first
+        kpi = kpi if kpi is not None else result_df.columns[1]
 
         self.check_status()
-        self._results_df.plot(x=self.time_column, y=kpi)
+        result_df.plot(x=self.time_column, y=kpi)
         plt.title(f"{kpi} Summary plot for request {self.request_id()}")
         return self._render_plot(interactive)

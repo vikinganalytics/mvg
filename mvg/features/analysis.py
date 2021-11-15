@@ -133,7 +133,7 @@ class Analysis:
         raw_results: dict
         """
 
-        return self._raw_results
+        return self._raw_results.copy()
 
     def request_id(self):
         """request_id from request
@@ -163,7 +163,7 @@ class Analysis:
         results: dict
         """
 
-        return self._raw_results["results"]
+        return self._raw_results["results"].copy()
 
     def status(self):
         """status from request
