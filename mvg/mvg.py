@@ -671,6 +671,8 @@ class MVGAPI:
         sid: str,
         feature: str,
         parameters: dict = None,
+        selected_channels: List[str] = None,
+        selected_columns: List[str] = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
         callback_url: str = None,
@@ -687,6 +689,14 @@ class MVGAPI:
 
         parameters : dict
             name value pairs of parameters [optional].
+
+        selected_channels : List[str]
+            Subset of Waveform Data channels for analysis.
+            Empty list means selection of all available channels [optional].
+
+        selected_columns : List[str]
+            Subset of Tabular Data columns for analysis.
+            Empty list means selection of all available columns [optional].
 
         start_timestamp : int
             start of analysis time window [optional].
@@ -712,6 +722,14 @@ class MVGAPI:
 
         if parameters is None:
             parameters = dict()
+
+        # Update parameters with certain method parameters
+        parameters.update(
+            {
+                "selected_channels": selected_channels or [],
+                "selected_columns": selected_columns or [],
+            }
+        )
 
         # Package info for db to be submitted
         analysis_info = {
