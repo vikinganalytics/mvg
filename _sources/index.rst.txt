@@ -25,8 +25,8 @@
    :caption: Features
 
    content/features/general
+   content/features/kpidemo
    content/features/ModeId
-   content/features/RMS
    content/features/blacksheep
 	    
 .. toctree::

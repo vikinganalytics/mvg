@@ -23,7 +23,9 @@
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Automatic Mode Identification (ModeID)" href="ModeId.html" />
+    <link rel="prev" title="Using MVG features" href="general.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,8 +56,27 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/labeling.html">Labeling Measurements</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="general.html">Using MVG features</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">KPI Demo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-does-kpidemo-do">What does KPIDemo do?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-cases-for-the-feature">Use cases for the feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-the-kpis-work">How the KPIs work</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rms">RMS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#peak">Peak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#peak-to-peak">Peak to peak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variance">Variance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#crest-factor">Crest factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utilization">Utilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dc-component">DC component</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-algorithm-via-mvg">Using the algorithm via mvg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-parameters">Analysis Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structure-of-the-results">Structure of the Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="ModeId.html">Automatic Mode Identification (ModeID)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
 </ul>
@@ -184,7 +205,7 @@ calculated RMS.</p>
 <h3>DC component<a class="headerlink" href="#dc-component" title="Permalink to this headline"></a></h3>
 <p>The DC bias of the signal is estimated as the mean value of the signal.</p>
 <div class="math notranslate nohighlight">
-\[\frac{1}{n} \sum_{i=1}^{n}a_{i} = \frac {a_{1} + a_{2} + \dots + a_{n}}{n}\]</div>
+\[\frac{1}{n} \sum_{i=1}^{n}x_{i} = \frac {x_{1} + x_{2} + \dots + x_{n}}{n}\]</div>
 </section>
 </section>
 <section id="using-the-algorithm-via-mvg">
@@ -230,7 +251,10 @@ scale for all measurements needs to be consistent.</p></li>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="general.html" class="btn btn-neutral float-left" title="Using MVG features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ModeId.html" class="btn btn-neutral float-right" title="Automatic Mode Identification (ModeID)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
