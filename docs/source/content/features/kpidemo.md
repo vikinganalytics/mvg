@@ -72,7 +72,7 @@ Where $t$ is the utilization threshold and $\theta$ is the heaviside step functi
 
 The DC bias of the signal is estimated as the mean value of the signal.
 
-.. math:: \frac{1}{n} \sum_{i=1}^{n}a_{i} = \frac {a_{1} + a_{2} + \dots + a_{n}}{n}
+.. math:: \frac{1}{n} \sum_{i=1}^{n}x_{i} = \frac {x_{1} + x_{2} + \dots + x_{n}}{n}
 
 ## Using the algorithm via mvg
 
