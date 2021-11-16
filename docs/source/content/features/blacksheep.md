@@ -20,7 +20,7 @@ population.
 
 ### Illustrative Example
 
-The figure below shows a population of 6 sources. I total 4 modes are
+The figure below shows a population of 6 sources. In total 4 modes are
 identified over all sources. The "red" mode is the most uncommon mode,
 and the two sources which exhibit the uncommon mode are labeled as
 Black Sheep.
@@ -33,7 +33,7 @@ Black Sheep.
 
 2. Request an analysis for the population of sources.
 
-3. Read the results(see below).
+3. Read the results (see below).
 
 ## Analysis Parameters
 
