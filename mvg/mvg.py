@@ -53,8 +53,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.10.1")
-        self.tested_api_version = self.parse_version("v0.2.7")
+        self.mvg_version = self.parse_version("v0.10.2")
+        self.tested_api_version = self.parse_version("v0.2.8")
 
         # Get API version
         try:
@@ -671,6 +671,8 @@ class MVGAPI:
         sid: str,
         feature: str,
         parameters: dict = None,
+        selected_channels: List[str] = None,
+        selected_columns: List[str] = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
         callback_url: str = None,
@@ -687,6 +689,14 @@ class MVGAPI:
 
         parameters : dict
             name value pairs of parameters [optional].
+
+        selected_channels : List[str]
+            Subset of Waveform Data channels for analysis.
+            This cannot be used in conjuction with selected_columns [optional].
+
+        selected_columns : List[str]
+            Subset of Tabular Data columns for analysis.
+            This cannot be used in conjuction with selected_channels [optional].
 
         start_timestamp : int
             start of analysis time window [optional].
@@ -713,6 +723,12 @@ class MVGAPI:
         if parameters is None:
             parameters = dict()
 
+        # Update parameters with certain method parameters
+        if selected_channels:
+            parameters["selected_channels"] = selected_channels
+        if selected_columns:
+            parameters["selected_columns"] = selected_columns
+
         # Package info for db to be submitted
         analysis_info = {
             "source_id": sid,
@@ -735,6 +751,8 @@ class MVGAPI:
         sids: List[str],
         feature: str,
         parameters: dict = None,
+        selected_channels: List[str] = None,
+        selected_columns: List[str] = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
         callback_url: str = None,
@@ -751,6 +769,14 @@ class MVGAPI:
 
         parameters : dict
             name value pairs of parameters [optional].
+
+        selected_channels : List[str]
+            Subset of Waveform Data channels for analysis.
+            This cannot be used in conjuction with selected_columns [optional].
+
+        selected_columns : List[str]
+            Subset of Tabular Data columns for analysis.
+            This cannot be used in conjuction with selected_channels [optional].
 
         start_timestamp : int
             start of analysis time window [optional].
@@ -776,6 +802,12 @@ class MVGAPI:
 
         if parameters is None:
             parameters = dict()
+
+        # Update parameters with certain method parameters
+        if selected_channels:
+            parameters["selected_channels"] = selected_channels
+        if selected_columns:
+            parameters["selected_columns"] = selected_columns
 
         # Package info for db to be submitted
         analysis_info = {
