@@ -140,7 +140,7 @@
 <section id="what-does-kpidemo-do">
 <h2>What does KPIDemo do?<a class="headerlink" href="#what-does-kpidemo-do" title="Permalink to this headline"></a></h2>
 <p>The KPIDemo feature calculates a set of Key Performance Indicators (KPIs) of vibration measurements. The calculated KPIs are</p>
-<ul class="simple">
+<ol class="arabic simple">
 <li><p>RMS - Estimate of vibration amplitude</p></li>
 <li><p>Peak - Maximum acceleration value</p></li>
 <li><p>Peak to peak - Difference between maximum and minimum acceleration value</p></li>
@@ -148,16 +148,16 @@
 <li><p>Crest factor - Ratio of the peak value of the waveform to its RMS value</p></li>
 <li><p>Utilization - Boolean value if vibration RMS is above a given utilization threshold, default to 0.1</p></li>
 <li><p>DC component - Estimated value for the DC bias of the signal</p></li>
-</ul>
+</ol>
 </section>
 <section id="use-cases-for-the-feature">
 <h2>Use cases for the feature<a class="headerlink" href="#use-cases-for-the-feature" title="Permalink to this headline"></a></h2>
-<ul class="simple">
+<ol class="arabic simple">
 <li><p>Determining trends in the vibration level over time. An increasing
 trend may indicate a developing failure.</p></li>
 <li><p>Comparing similar assets in terms of their RMS (or other KPI) value.</p></li>
 <li><p>High level visualization of vibration measurements.</p></li>
-</ul>
+</ol>
 </section>
 <section id="how-the-kpis-work">
 <h2>How the KPIs work<a class="headerlink" href="#how-the-kpis-work" title="Permalink to this headline"></a></h2>
@@ -188,7 +188,7 @@ calculated RMS.</p>
 <p>The statistical variance of the measurement values.</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{n}\sum_{i=1}^{n}(x_i - \mu)^2\]</div>
-<p>Where $n$ is the number of samples in the measurement and $mu$ is the average measurement value.</p>
+<p>Where <span class="math notranslate nohighlight">\(n\)</span> is the number of samples in the measurement and <span class="math notranslate nohighlight">\(\mu\)</span> is the average measurement value.</p>
 </section>
 <section id="crest-factor">
 <h3>Crest factor<a class="headerlink" href="#crest-factor" title="Permalink to this headline"></a></h3>
@@ -199,7 +199,7 @@ calculated RMS.</p>
 <h3>Utilization<a class="headerlink" href="#utilization" title="Permalink to this headline"></a></h3>
 <div class="math notranslate nohighlight">
 \[\theta(\text{RMS(x)} - t)\]</div>
-<p>Where $t$ is the utilization threshold and $theta$ is the heaviside step function.</p>
+<p>Where <span class="math notranslate nohighlight">\(t\)</span> is the utilization threshold and <span class="math notranslate nohighlight">\(\theta\)</span> is the heaviside step function.</p>
 </section>
 <section id="dc-component">
 <h3>DC component<a class="headerlink" href="#dc-component" title="Permalink to this headline"></a></h3>

@@ -91,8 +91,8 @@ result, the optimizer can be disabled and a specific number of modes
 ## Structure of the Results
 
 The result returned by the analysis call will be a dictionary
-containing four lists: the _timestamps_, the _label_ (aka operational
-modes), the _mode_probability_ and _uncertain_ where a logical value of `True` indicates an
+containing four lists: the *timestamps*, the *label* (aka operational
+modes), the *mode_probability* and *uncertain* where a logical value of `True` indicates an
 uncertain assignment to the mode, which could be an indication of an anomaly.
 ```
 { 
@@ -105,9 +105,9 @@ uncertain assignment to the mode, which could be an indication of an anomaly.
 
 In addition, the results returned by the analysis include an additional dictionary with the "Emerging Modes".
 "Emerging Modes" is an additional result output that describes the first appearance of each mode.
-The dictionary contains four lists: the _modes_, the _emerging_time_ corresponding to the epoch of first appearance of
-each mode , the _max_prob_time_ corresponding to the epoch with the largest mode probability and
-_max_probability_ for each mode.
+The dictionary contains four lists: the *modes*, the *emerging_time* corresponding to the epoch of first appearance of
+each mode , the *max_prob_time* corresponding to the epoch with the largest mode probability and
+*max_probability* for each mode.
 
 ```
 { 

@@ -23,7 +23,7 @@ MutliViz Analysis Classes
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: mvg.features.rms
+.. automodule:: mvg.features.kpidemo
    :members:
    :undoc-members:
    :show-inheritance:

@@ -466,6 +466,56 @@ only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
 
 </dd></dl>
 
+<span class="target" id="module-mvg.features.kpidemo"></span><p>Analysis Class for KPIDemo Feature</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvg.features.kpidemo.KPIDemo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvg.features.kpidemo.</span></span><span class="sig-name descname"><span class="pre">KPIDemo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.kpidemo.KPIDemo" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
+<p>Analysis class for KPIDemo feature.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.kpidemo.KPIDemo.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.kpidemo.KPIDemo.plot" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a basic plot on KPIs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kpi</strong> (<em>str</em>) – sting that describes the KPI to be displayed.
+Default kpi is RMS</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.kpidemo.KPIDemo.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.kpidemo.KPIDemo.summary" title="Permalink to this definition"></a></dt>
+<dd><p>Print summary information on RMS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>summary table</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mvg.features.kpidemo.unfold_result_to_df">
+<span class="sig-prename descclassname"><span class="pre">mvg.features.kpidemo.</span></span><span class="sig-name descname"><span class="pre">unfold_result_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="headerlink" href="#mvg.features.kpidemo.unfold_result_to_df" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </section>
 
 
