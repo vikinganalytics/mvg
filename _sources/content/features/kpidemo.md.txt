@@ -23,7 +23,7 @@ The KPIDemo feature calculates a set of Key Performance Indicators (KPIs) of vib
 
 ## How the KPIs work
 
-Each KPI attempts to summarize some behaviour of the vibration measurement into a single number. Below are the formulas for each of the KPIs where $x \in \mathbb{R}^n$ is the vibration measurement vector.
+Each KPI attempts to summarize some behaviour of the vibration measurement into a single number. Below are the formulas for each of the KPIs where :math:`x \in \mathbb{R}^n` is the vibration measurement vector.
 
 ### RMS
 
