@@ -215,9 +215,7 @@ def test_sources_cru_existing(session):
     assert src["meta"] == meta
 
     # create_source again (409 ignored)
-    session.create_source(
-        source, meta=meta, channels=["acc"], exist_ok=True
-    )
+    session.create_source(source, meta=meta, channels=["acc"], exist_ok=True)
 
     # create_source again (409 not ignored)
     with pytest.raises(HTTPError):
@@ -258,7 +256,7 @@ def test_tabular_measurements(session, tabular_source):
     columns = list(tabular_dict.keys())
     columns.remove("timestamp")
     tabular_df = pd.DataFrame(tabular_dict)
-    
+
     # Create tabular measurement
     session.create_tabular_measurement(source_id, tabular_dict)
 

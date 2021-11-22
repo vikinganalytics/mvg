@@ -3,12 +3,15 @@ from itertools import cycle
 
 from mvg.mvg import MVG
 
+
 def upload_measurements(session: MVG, sid: str, data: list):
     """Upload measurements for a source"""
     timestamps = list(data.keys())
     for ts in timestamps:
         ts_data = data[ts]
-        session.create_measurement(sid, ts_data["meta"]["duration"], ts, ts_data["data"], ts_data["meta"])
+        session.create_measurement(
+            sid, ts_data["meta"]["duration"], ts, ts_data["data"], ts_data["meta"]
+        )
 
 
 def stub_multiaxial_data(samp_freq=3000, duration=3.0, pattern={}):

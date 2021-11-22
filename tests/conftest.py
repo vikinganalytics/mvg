@@ -193,7 +193,9 @@ def waveform_source_with_measurements(session, waveform_source):
 def waveform_source_multiaxial(session):
     source_id = "multiaxial_source_001"
     try:
-        session.create_source(source_id, meta={"type": "pump"}, channels=["acc_x", "acc_y", "acc_z"])
+        session.create_source(
+            source_id, meta={"type": "pump"}, channels=["acc_x", "acc_y", "acc_z"]
+        )
         yield source_id
     finally:
         session.delete_source(source_id)
@@ -202,7 +204,11 @@ def waveform_source_multiaxial(session):
 @pytest.fixture
 def waveform_source_multiaxial_with_measurements(session, waveform_source_multiaxial):
     source_id = waveform_source_multiaxial
-    pattern = {"acc_x": [0] * 13 + [1] * 7, "acc_y": [0] * 6 + [1] * 14, "acc_z": [0] * 13 + [1] * 7}
+    pattern = {
+        "acc_x": [0] * 13 + [1] * 7,
+        "acc_y": [0] * 6 + [1] * 14,
+        "acc_z": [0] * 13 + [1] * 7,
+    }
     timestamps, data, _ = stub_multiaxial_data(pattern=pattern)
     upload_measurements(session, source_id, data)
 
