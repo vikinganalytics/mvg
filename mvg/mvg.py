@@ -751,8 +751,6 @@ class MVGAPI:
         sids: List[str],
         feature: str,
         parameters: dict = None,
-        selected_channels: List[str] = None,
-        selected_columns: List[str] = None,
         start_timestamp: int = None,
         end_timestamp: int = None,
         callback_url: str = None,
