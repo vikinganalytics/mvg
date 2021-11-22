@@ -12,7 +12,11 @@ import argparse
 import sys
 from requests import HTTPError
 
-from tests.helpers import generate_sources_patterns, stub_multiaxial_data, upload_measurements
+from tests.helpers import (
+    generate_sources_patterns,
+    stub_multiaxial_data,
+    upload_measurements,
+)
 
 # This version of conftest.py adds some really ugly code to
 # run the tests as integration tests by running like
@@ -188,14 +192,15 @@ def waveform_source_with_measurements(session, waveform_source):
 
     yield waveform_source
 
+
 def waveform_source_multiaxial_fixture_creator(source_id, pattern):
     @pytest.fixture
     def fixture(session):
         try:
             timestamps, data, _ = stub_multiaxial_data(pattern=pattern)
             session.create_source(
-            source_id, meta={"type": "pump"}, channels=list(pattern.keys())
-        )
+                source_id, meta={"type": "pump"}, channels=list(pattern.keys())
+            )
             upload_measurements(session, source_id, data)
             yield source_id, timestamps
         finally:

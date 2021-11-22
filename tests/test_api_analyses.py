@@ -112,9 +112,7 @@ def test_modeid_analysis_selected_columns(session, tabular_source_with_measureme
     assert_results(None)
 
 
-def test_modeid_analysis_selected_channels(
-    session, waveform_source_multiaxial_001
-):
+def test_modeid_analysis_selected_channels(session, waveform_source_multiaxial_001):
     source_id, _ = waveform_source_multiaxial_001
     source_info = session.get_source(source_id)
     channels = source_info["properties"]["channels"]
