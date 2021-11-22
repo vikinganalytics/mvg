@@ -12,7 +12,7 @@ import argparse
 import sys
 from requests import HTTPError
 
-from tests.helpers import stub_multiaxial_data, upload_measurements
+from tests.helpers import generate_sources_patterns, stub_multiaxial_data, upload_measurements
 
 # This version of conftest.py adds some really ugly code to
 # run the tests as integration tests by running like
@@ -188,31 +188,29 @@ def waveform_source_with_measurements(session, waveform_source):
 
     yield waveform_source
 
-
-@pytest.fixture
-def waveform_source_multiaxial(session):
-    source_id = "multiaxial_source_001"
-    try:
-        session.create_source(
-            source_id, meta={"type": "pump"}, channels=["acc_x", "acc_y", "acc_z"]
+def waveform_source_multiaxial_fixture_creator(source_id, pattern):
+    @pytest.fixture
+    def fixture(session):
+        try:
+            timestamps, data, _ = stub_multiaxial_data(pattern=pattern)
+            session.create_source(
+            source_id, meta={"type": "pump"}, channels=list(pattern.keys())
         )
-        yield source_id
-    finally:
-        session.delete_source(source_id)
+            upload_measurements(session, source_id, data)
+            yield source_id, timestamps
+        finally:
+            session.delete_source(source_id)
+
+    return fixture
 
 
-@pytest.fixture
-def waveform_source_multiaxial_with_measurements(session, waveform_source_multiaxial):
-    source_id = waveform_source_multiaxial
-    pattern = {
-        "acc_x": [0] * 13 + [1] * 7,
-        "acc_y": [0] * 6 + [1] * 14,
-        "acc_z": [0] * 13 + [1] * 7,
-    }
-    timestamps, data, _ = stub_multiaxial_data(pattern=pattern)
-    upload_measurements(session, source_id, data)
-
-    yield source_id, timestamps
+"""
+Create multiaxial sources with generated measurements based on a pattern
+"""
+sources_pattern = generate_sources_patterns()
+waveform_source_multiaxial_001 = waveform_source_multiaxial_fixture_creator(
+    *sources_pattern[0]
+)
 
 
 @pytest.fixture()

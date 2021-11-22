@@ -84,3 +84,17 @@ def stub_multiaxial_data(samp_freq=3000, duration=3.0, pattern={}):
         }
 
     return timestamps, data, duration
+
+def generate_sources_patterns():
+    """Generate a list of multiaxial sources with axis-based patterns"""
+    sources_patterns = [
+        (
+            "multiaxial_source_001",
+            {
+                "acc_x": [0] * 6 + [1] * 14 + [0] * 5,
+                "acc_y": [0] * 6 + [1] * 14 + [0] * 5,
+                "acc_z": [0] * 6 + [1] * 14 + [0] * 5,
+            },
+        )
+    ]
+    return sources_patterns

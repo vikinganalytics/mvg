@@ -113,9 +113,9 @@ def test_modeid_analysis_selected_columns(session, tabular_source_with_measureme
 
 
 def test_modeid_analysis_selected_channels(
-    session, waveform_source_multiaxial_with_measurements
+    session, waveform_source_multiaxial_001
 ):
-    source_id, _ = waveform_source_multiaxial_with_measurements
+    source_id, _ = waveform_source_multiaxial_001
     source_info = session.get_source(source_id)
     channels = source_info["properties"]["channels"]
 
