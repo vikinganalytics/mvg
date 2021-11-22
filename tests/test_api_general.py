@@ -11,8 +11,8 @@ from requests import HTTPError
 import requests
 from mvg import MVG
 
-VALID_TOKEN = os.environ["TEST_TOKEN"]
-
+# MVG Token
+VALID_TOKEN = pytest.VALID_TOKEN
 
 # API        /
 def test_say_hello(vibium):
