@@ -28,7 +28,9 @@ class ModeId(Analysis):
         else:
             dict_for_df = self.results().copy()
             dict_for_emerging = dict_for_df.pop("mode_info")
+            dict_for_mode_proba = dict_for_df.pop("mode_probabilities", {})
             self.emerging_df = pd.DataFrame.from_dict(dict_for_emerging)
+            self.probabilities = pd.DataFrame.from_dict(dict_for_mode_proba)
             self._results_df = pd.DataFrame.from_dict(dict_for_df)
             self._add_datetime()
             self.emerging_df = self._add_datetime_df(self.emerging_df, "emerging_time")
