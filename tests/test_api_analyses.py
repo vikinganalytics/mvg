@@ -91,3 +91,40 @@ def test_callback_server_failure(
     )
     session.wait_for_analyses([req["request_id"]])
     assert "400 Bad Request" in LOG_FILE.read_text()
+
+def test_modeid_analysis_selected_columns(session, tabular_source_with_measurements):
+    source_id, tabular_dict = tabular_source_with_measurements
+    columns = list(tabular_dict.keys())
+
+    # Test with defined selected_columns
+    selected_columns = columns[1:3]
+    req = session.request_analysis(source_id, "ModeId", selected_columns=selected_columns)
+    session.wait_for_analyses([req["request_id"]])
+    results = session.get_analysis_results(req["request_id"])
+    assert results["inputs"]["selected_columns"] == selected_columns
+
+    # Test with undefined selected_columns
+    selected_columns = None
+    req = session.request_analysis(source_id, "ModeId", selected_columns=selected_columns)
+    session.wait_for_analyses([req["request_id"]])
+    results = session.get_analysis_results(req["request_id"])
+    assert results["inputs"]["selected_columns"] == []
+
+def test_modeid_analysis_selected_channels(session, waveform_source_multiaxial_with_measurements):
+    source_id, _ = waveform_source_multiaxial_with_measurements
+    source_info = session.get_source(source_id)
+    channels = source_info["properties"]["channels"]
+
+    # Test with defined selected_channels
+    selected_channels = channels[:2]
+    req = session.request_analysis(source_id, "ModeId", selected_channels=selected_channels)
+    session.wait_for_analyses([req["request_id"]])
+    results = session.get_analysis_results(req["request_id"])
+    assert results["inputs"]["selected_channels"] == selected_channels
+
+    # Test with undefined selected_channels
+    selected_channels = None
+    req = session.request_analysis(source_id, "ModeId", selected_channels=selected_channels)
+    session.wait_for_analyses([req["request_id"]])
+    results = session.get_analysis_results(req["request_id"])
+    assert results["inputs"]["selected_channels"] == []
