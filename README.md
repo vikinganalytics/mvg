@@ -1,4 +1,4 @@
-# MVG: MultiViz Analytics Engine Library
+# MVG: MultiViz Analytics Engine Client Library
 
 A Python library to interface the the **M**ulti**V**iz Analytics En**G**ine ('MVG')
 
@@ -6,6 +6,9 @@ A Python library to interface the the **M**ulti**V**iz Analytics En**G**ine ('MV
 
 * interface the services by means of API calls. [API documentation](https://api.beta.multiviz.com/docs).
 
+## Documentation
+
+Usage of the library and several examples can be found [here](https://vikinganalytics.github.io/mvg/).
 ## Obtaining the library
 
 ```
