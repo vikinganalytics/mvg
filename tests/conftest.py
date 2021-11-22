@@ -12,6 +12,8 @@ import argparse
 import sys
 from requests import HTTPError
 
+from tests.helpers import stub_multiaxial_data, upload_measurements
+
 # This version of conftest.py adds some really ugly code to
 # run the tests as integration tests by running like
 # > pytest -s  tests --host http://127.0.0.1:8000
@@ -41,12 +43,12 @@ sys.argv[1:] = notknownargs
 version_session = MVG("https://api.beta.multiviz.com", "NO TOKEN")
 VIBIUM_VERSION = "v" + str(version_session.tested_api_version)
 
-VALID_TOKEN = os.environ["TEST_TOKEN"]
-
-# Test data and session setup
-REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
-SOURCE_ID_WAVEFORM = uuid.uuid1().hex  # generate a unique source per testrun
-
+# Pytest initial configuration
+def pytest_configure():
+    pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
+    pytest.REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
+    pytest.SOURCE_ID_TABULAR = uuid.uuid1().hex
+    pytest.VALID_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MjA4MDg2NTMsImV4cCI6MTY1MjM5OTEwMCwiY2xpZW50X2lkIjoidmEiLCJzaXRlX2lkIjoidmlzaG51In0.eOCT-UbAf3sXLTgGwzCT75NeXbw5J2Sy0MSuZpZXltQfyLj3NzDfCOJR6k4fdZKhSCYcgLbEuSng8CNyjlGyYfzzZcVdgoye13n0X6lBP6Xti8ePvLHUPGxoNiBV0eTSVzK5gIMp3k7RCAEKdlBqUXy-nnx1SY_1VAv86rIiqV0"
 
 def is_responsive(url):
     try:
@@ -94,23 +96,24 @@ else:
 
 
 @pytest.fixture(scope="session")
-def session(vibium):
+def session(vibium) -> MVG:
 
     url = vibium
     print("Overriding vibium function with url %s", url)
-    session = MVG(url, VALID_TOKEN)
+    session = MVG(url, pytest.VALID_TOKEN)
     # To make sure we start from a clean slate
     # we delete our resource in case it exists
     # All information including measurements
     # will be removed
     # TO DO delete all so, currently we only
     # handle resource SOURCE_ID
+    source = pytest.SOURCE_ID_WAVEFORM
     try:
-        session.get_source(SOURCE_ID_WAVEFORM)
-        print(f"Deleting {SOURCE_ID_WAVEFORM}")
-        session.delete_source(SOURCE_ID_WAVEFORM)
+        session.get_source(source)
+        print(f"Deleting {source}")
+        session.delete_source(source)
     except HTTPError:
-        print(f"Source {SOURCE_ID_WAVEFORM} does not exist")
+        print(f"Source {source} does not exist")
 
     return session
 
@@ -118,20 +121,21 @@ def session(vibium):
 @pytest.fixture()
 def waveform_source(session):
     try:
-        m_file_name = REF_DB_PATH / "u0001" / "meta.json"
+        source = pytest.SOURCE_ID_WAVEFORM
+        m_file_name = pytest.REF_DB_PATH / "u0001" / "meta.json"
         with open(m_file_name, "r") as json_file:
             meta = json.load(json_file)
         # create_source happy case
-        session.create_source(SOURCE_ID_WAVEFORM, meta=meta, channels=["acc"])
-        yield SOURCE_ID_WAVEFORM
+        session.create_source(source, meta=meta, channels=["acc"])
+        yield source
     finally:
-        session.delete_source(SOURCE_ID_WAVEFORM)
+        session.delete_source(source)
 
 
 @pytest.fixture()
 def waveform_source_with_measurements(session, waveform_source):
     # get list of measurements
-    src_path = REF_DB_PATH / "u0001"
+    src_path = pytest.REF_DB_PATH / "u0001"
     meas = {f.split(".")[0] for f in os.listdir(src_path)}
     meas.remove("meta")
     meas = [int(m) for m in meas]
@@ -141,7 +145,7 @@ def waveform_source_with_measurements(session, waveform_source):
     for ts_m in meas:
         # samples file for one measurement
         ts_meas = str(ts_m) + ".csv"  # filename
-        ts_meas = REF_DB_PATH / "u0001" / ts_meas  # path to file
+        ts_meas = src_path / ts_meas  # path to file
         ts_df = pd.read_csv(
             ts_meas, names=["acc"], float_precision="round_trip"
         )  # read csv into df
@@ -150,7 +154,7 @@ def waveform_source_with_measurements(session, waveform_source):
 
         # meta information file for one measurement
         ts_meta = str(ts_m) + ".json"  # filename
-        ts_meta = REF_DB_PATH / "u0001" / ts_meta  # path
+        ts_meta = src_path / ts_meta  # path
         with open(ts_meta, "r") as json_file:  # read json
             meas_info = json.load(json_file)  # into dict
             print(f"Read meta:{meas_info}")
@@ -182,3 +186,45 @@ def waveform_source_with_measurements(session, waveform_source):
         )
 
     yield waveform_source
+
+
+@pytest.fixture
+def waveform_source_multiaxial(session):
+    source_id = "multiaxial_source_001"
+    try:
+        session.create_source(source_id, meta={"type": "pump"}, channels=["acc_x", "acc_y", "acc_z"])
+        yield source_id
+    finally:
+        session.delete_source(source_id)
+
+
+@pytest.fixture
+def waveform_source_multiaxial_with_measurements(session, waveform_source_multiaxial):
+    source_id = waveform_source_multiaxial
+    pattern = {"acc_x": [0] * 13 + [1] * 7, "acc_y": [0] * 6 + [1] * 14, "acc_z": [0] * 13 + [1] * 7}
+    timestamps, data, _ = stub_multiaxial_data(pattern=pattern)
+    upload_measurements(session, source_id, data)
+
+    yield source_id, timestamps
+
+
+@pytest.fixture()
+def tabular_source(session):
+    source_id = pytest.SOURCE_ID_TABULAR
+    try:
+        tabular_df = pd.read_csv(
+            pytest.REF_DB_PATH.parent / "tabular_data.csv", float_precision="round_trip"
+        )
+        columns = tabular_df.columns.tolist()
+        meta = {"extra": "information"}
+        session.create_tabular_source(source_id, meta, columns)
+        yield source_id, tabular_df.to_dict("list")
+    finally:
+        session.delete_source(source_id)
+
+
+@pytest.fixture()
+def tabular_source_with_measurements(session, tabular_source):
+    source_id, tabular_dict = tabular_source
+    session.create_tabular_measurement(source_id, tabular_dict)
+    yield tabular_source
