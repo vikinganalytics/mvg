@@ -31,6 +31,12 @@
 	    
 .. toctree::
    :maxdepth: 2
+   :caption: Advanced usage
+
+   content/advanced/callback
+
+.. toctree::
+   :maxdepth: 2
    :caption: API Reference
 
    content/api_reference/mvg
