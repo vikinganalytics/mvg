@@ -2,10 +2,9 @@
 # the server side
 
 import os
-from requests import HTTPError
 from mvg import MVG
-from mvg import analysis_classes
 from mvg.analysis_classes import parse_results
+from mvg.exceptions import MVGAPIError
 
 ## Preprartions
 import pandas as pd
@@ -40,10 +39,8 @@ try:
         ana_res = ses.get_analysis_results(REQ_ID)
         print(ana_res)
 
-except HTTPError as exc:
+except MVGAPIError as exc:
     print(exc)
-    print("Details on error")
-    print(exc.response.json())
 
 ana = parse_results(ana_res, t_zone="Europe/Stockholm", t_unit="s")
 ana.plot()

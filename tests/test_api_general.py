@@ -4,12 +4,10 @@
 Tests in this file shall test general API functionality
 """
 
-import os
 import pytest
 import semver
-from requests import HTTPError
-import requests
 from mvg import MVG
+from mvg.exceptions import MVGAPIError, MVGConnectionError
 
 # MVG Token
 VALID_TOKEN = pytest.VALID_TOKEN
@@ -67,12 +65,12 @@ def test_supported_features(vibium):
 def test_failure_authorization(vibium):
     unauth_session = MVG(vibium, "NO TOKEN")
 
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         unauth_session.supported_features()
 
     assert exc.value.response.status_code == 401
 
 
-def test_create_session_invalid_url():
-    with pytest.raises(requests.ConnectionError):
+def test_invalid_url_connection_error():
+    with pytest.raises(MVGConnectionError):
         MVG("invalidurl", "NO TOKEN")

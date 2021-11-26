@@ -19,6 +19,8 @@ from requests.exceptions import RequestException
 
 import semver
 
+from mvg.exceptions import MVGConnectionError, raise_for_status
+
 logger = logging.getLogger(__name__)
 
 
@@ -60,7 +62,7 @@ class MVGAPI:
         try:
             response = self._request("get", "")
         except RequestException:
-            raise requests.ConnectionError("Could not connect to the API.")
+            raise MVGConnectionError("Could not connect to the API.")
 
         api_vstr = response.json()["message"]["api"]["version"]
         self.api_version = self.parse_version(api_vstr)
@@ -103,7 +105,7 @@ class MVGAPI:
         if response.status_code in do_not_raise:
             logger.info(f"Ignoring error {response.status_code} - {response.text}")
         else:
-            response.raise_for_status()
+            raise_for_status(response)
 
         return response
 
