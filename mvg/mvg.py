@@ -47,7 +47,7 @@ class MVGAPI:
 
         Raises
         ------
-        ConnectionError
+        MVGConnectionError
             If a connection to the API cannot be established.
 
         """
