@@ -22,14 +22,6 @@ class MockResponse:
             raise requests.HTTPError()
 
 
-def mock_fail_request(json_body):
-    return MockResponse(400, "Bad Request", json_body)
-
-
-def assert_fail_response(msg, detail="No error message"):
-    assert msg == f"400 - Bad Request: {detail}"
-
-
 def test_raise_for_status_not_raises():
     response = MockResponse(200, "OK", {})
     raise_for_status(response)
