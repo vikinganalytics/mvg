@@ -15,8 +15,8 @@ class MVGAPIError(MVGError):
 
     def __init__(self, response: Response):
         self.response = response
-        msg = self._get_error_message()
-        super().__init__(f"{self.response.status_code} - {self.response.reason}: {msg}")
+        self.msg = self._get_error_message()
+        super().__init__(f"{self.response.status_code} - {self.response.reason}: {self.msg}")
 
     def _get_error_message(self):
         default_error_msg = "No error detail"
