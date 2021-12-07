@@ -92,7 +92,7 @@ class BlackSheep(Analysis):
         return [self.typicality, tbl]
 
     # pylint: disable=too-many-locals
-    def plot(self, interactive=True, time_format=None):
+    def plot(self, interactive=True, time_format=None, filename=None):
         """Generate a (not so) basic plot for BlackSheep
         Will show per atypical asset changes to and from
         atypical modes
@@ -106,6 +106,10 @@ class BlackSheep(Analysis):
             strftime format specifier for tick_x_lables. If not given
             only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
+        filename: str, optional
+            filename for the plot. If interactive is True, filename will be
+            ignored. If interactive is False, default filename will be of the format
+            "{source_1_name}_to_{source_n_name}_{analysis_request_id}.png".
 
         Returns
         -------
@@ -178,4 +182,4 @@ class BlackSheep(Analysis):
         bsd_plt.imshow(plotmx, aspect="auto", cmap=mcm)
 
         # Display plot
-        return self._render_plot(interactive)
+        return self._render_plot(interactive, filename)

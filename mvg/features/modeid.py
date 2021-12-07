@@ -73,7 +73,7 @@ class ModeId(Analysis):
 
         return [tbl, tbl2, self.emerging_df]
 
-    def plot(self, interactive=True, time_format=None):
+    def plot(self, interactive=True, time_format=None, filename=None):
         """
         Generate a basic plot on ModeId.
 
@@ -85,6 +85,11 @@ class ModeId(Analysis):
         time_format: str, optional
             strftime format specifier for tick_x_lables. If not given
             only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
+        filename: str, optional
+            filename for the plot. If interactive is True, filename will be
+            ignored. If interactive is False, default filename will be of the
+            format "{source_name}_{analysis_request_id}.png".
 
         Returns
         -------
@@ -100,7 +105,7 @@ class ModeId(Analysis):
             time_format=time_format,
         )
 
-        return self._render_plot(interactive)
+        return self._render_plot(interactive, filename)
 
     def mode_table(self, show_uncertain=False):
         """

@@ -42,7 +42,7 @@ class Analysis:
 
         self.time_column = None
 
-    def _render_plot(self, interactive, filename=""):
+    def _render_plot(self, interactive, filename=None):
         """Render plot to screen (interactive) or file.
 
         Parameters
@@ -61,7 +61,7 @@ class Analysis:
             plot_file = ""
             plt.show()
         else:
-            if filename == "" or filename is None:
+            if not filename:
                 if len(self.sources()) > 1:
                     srcstr = self.sources()[0] + "_to_" + self.sources()[-1] + "_"
                 else:
@@ -231,7 +231,7 @@ class Analysis:
 
     # Default method
     def plot(
-        self, interactive=True, time_format=None
+        self, interactive=True, time_format=None, filename=None
     ):  # pylint: disable=unused-argument
         """Pro forma ancestor function.
 
@@ -241,8 +241,11 @@ class Analysis:
             True: show plot, False: save plot
 
         time_format: str, optional
-            strftime format specifier for tick_x_lables. If not given
+            strftime format specifier for tick_x_labels. If not given
             only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
+        filename: str, optional
+            filename for the plot.
 
         Returns
         -------
