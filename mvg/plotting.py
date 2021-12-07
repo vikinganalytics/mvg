@@ -331,14 +331,15 @@ def modes_probabilities_over_time(
     Parameters
     ----------
     data: dataframe
-        a dataframe with timestamps as the index column and an additional column (named as "mode {mode number}") for every mode.
+        a dataframe with timestamps as the index column and an
+        additional column (named as "mode {mode number}") for every mode.
 
     title: string
         plot title
 
     colors: dictionary, optional
         color code for each mode.
-        the dictionary keys should be of the form "mode {mode number}"
+        the dictionary keys should be of the form "mode {mode number}".
 
     height: int, optional
         height of plot used in figsize.
@@ -359,8 +360,8 @@ def modes_probabilities_over_time(
         the angle of time tick texts.
 
     time_format: str, optional
-        strftime format specifier for tick_x_labels. If not given, dates will be shown in locale format.
-        To show dates and time use %y%m%d-%H:%M:%S
+        strftime format specifier for tick_x_labels. If not given, dates will be shown
+        in locale format. To show dates and time use %y%m%d-%H:%M:%S
 
     Returns
     ----------

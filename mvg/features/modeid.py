@@ -119,7 +119,8 @@ class ModeId(Analysis):
 
         time_format: str, optional
             strftime format specifier for x-axis tick labels.
-            If not given, dates will be shown in locale format. To show dates and time use %y%m%d-%H:%M:%S
+            If not given, dates will be shown in locale format.
+            To show dates and time use %y%m%d-%H:%M:%S.
 
         Returns
         -------
