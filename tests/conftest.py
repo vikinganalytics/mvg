@@ -7,10 +7,10 @@ import uuid
 import json
 import pandas as pd
 from mvg import MVG
+from mvg.exceptions import MVGAPIError
 
 import argparse
 import sys
-from requests import HTTPError
 
 from tests.helpers import (
     generate_sources_patterns,
@@ -117,7 +117,7 @@ def session(vibium) -> MVG:
         session.get_source(source)
         print(f"Deleting {source}")
         session.delete_source(source)
-    except HTTPError:
+    except MVGAPIError:
         print(f"Source {source} does not exist")
 
     return session

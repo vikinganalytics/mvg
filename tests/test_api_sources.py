@@ -11,8 +11,9 @@ import os
 import json
 import numpy as np
 import pandas as pd
-from requests import HTTPError
 import pytest
+
+from mvg.exceptions import MVGAPIError
 
 # Just to check if API is live
 def test_say_hello(session):
@@ -142,7 +143,7 @@ def test_measurements_crud(session):
 # API POST   /sources/{source_id}/measurements [non-existing source]
 def test_failure_create_measurement(session):
 
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         data = [1, 2, 3]
         session.create_measurement(
             sid="", duration=-3, timestamp=-5, data=data, meta={}
@@ -153,7 +154,7 @@ def test_failure_create_measurement(session):
 # API GET    /sources/{source_id}//measurements/{timestamp} [non-existing meas]
 def test_failure_get_measurement(session):
 
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.delete_measurement(pytest.SOURCE_ID_WAVEFORM, 314152)
 
     assert exc.value.response.status_code == 404
@@ -162,7 +163,7 @@ def test_failure_get_measurement(session):
 # API GET    /sources/{source_id} [non-existing source]
 def test_failure_get_source(session):
 
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.get_source(sid="THE_VOID")
 
     assert exc.value.response.status_code == 404
@@ -171,7 +172,7 @@ def test_failure_get_source(session):
 # API DELETE /sources/{source_id} [non-existing source]
 def test_failure_delete_source(session):
 
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.delete_source(sid="THE_VOID")
 
     assert exc.value.response.status_code == 404
@@ -179,7 +180,7 @@ def test_failure_delete_source(session):
 
 # API POST   /sources/ [incorrect source name]
 def test_failure_create_source(session):
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.create_source("unacceptable&name", meta={}, channels=["acc"])
     assert exc.value.response.status_code == 422
 
@@ -189,7 +190,7 @@ def test_failure_create_source(session):
 def test_sources_d(session):
 
     session.delete_source(pytest.SOURCE_ID_WAVEFORM)
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.get_source(sid=pytest.SOURCE_ID_WAVEFORM)
 
     assert exc.value.response.status_code == 404
@@ -218,7 +219,7 @@ def test_sources_cru_existing(session):
     session.create_source(source, meta=meta, channels=["acc"], exist_ok=True)
 
     # create_source again (409 not ignored)
-    with pytest.raises(HTTPError):
+    with pytest.raises(MVGAPIError):
         session.create_source(source, meta=meta, channels=["acc"])
 
 
@@ -231,7 +232,7 @@ def test_tabular_sources(session, tabular_source):
     session.create_tabular_source(source_id, meta, columns, exist_ok=True)
 
     # create source again (409 not ignored)
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.create_tabular_source(source_id, meta, columns)
     assert exc.value.response.status_code == 409
 
@@ -243,7 +244,7 @@ def test_tabular_sources(session, tabular_source):
 
 
 def test_tabular_measurements_float_timestamps(session, tabular_source):
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         source_id, tabular_dict = tabular_source
         tabular_dict_float = tabular_dict.copy()
         tabular_dict_float["timestamp"] = [ts + 0.1 for ts in tabular_dict["timestamp"]]
@@ -264,7 +265,7 @@ def test_tabular_measurements(session, tabular_source):
     session.create_tabular_measurement(source_id, tabular_dict, exist_ok=True)
 
     # create measurements again (409 not ignored)
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.create_tabular_measurement(source_id, tabular_dict)
     assert exc.value.response.status_code == 409
 
@@ -282,7 +283,7 @@ def test_tabular_measurements(session, tabular_source):
 
     # Validate delete measurement
     session.delete_measurement(source_id, ts0)
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.read_single_measurement(source_id, ts0)
     assert exc.value.response.status_code == 404
 
@@ -320,17 +321,17 @@ def test_list_tabular_measurements(session, tabular_source):
     assert response["meta"][f"{ts_1}"] == meta[f"{ts_1}"]
 
     # Retrieve data that is beyond the range of the dataset timestamps
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.list_tabular_measurements(source_id, ts_n + 1, ts_n + 2)
     assert exc.value.response.status_code == 404
 
     # Call API with negative timestamp
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.list_tabular_measurements(source_id, -1)
     assert exc.value.response.status_code == 422
 
     # Call API with negative timestamp
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.list_tabular_measurements(source_id, None, -1)
     assert exc.value.response.status_code == 422
 
@@ -400,7 +401,7 @@ def test_delete_label(session, tabular_source_with_measurements):
     )
 
     session.delete_label(source_id, timestamps[0])
-    with pytest.raises(HTTPError) as exc:
+    with pytest.raises(MVGAPIError) as exc:
         session.get_label(source_id, timestamps[0])
         assert exc.value.response.status_code == 404
 
