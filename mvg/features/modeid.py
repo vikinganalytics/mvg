@@ -63,7 +63,7 @@ class ModeId(Analysis):
         tbl2 = tbl2.rename(columns={"timestamps": "portion"})
         tbl2["portion"] = tbl2["portion"] / sum(tbl2["portion"]) * 100
         print()
-        print("Lables & uncertain labels")
+        print("Labels & uncertain labels")
         print(tabulate(tbl2, headers="keys", tablefmt="psql"))
 
         # Emerging
