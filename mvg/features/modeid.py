@@ -102,6 +102,52 @@ class ModeId(Analysis):
 
         return self._render_plot(interactive)
 
+    def plot_probabilities(
+        self, selected_modes=None, interactive=True, time_format=None
+    ):
+        """
+        Generate a basic plot on mode probabilites over time.
+
+        Parameters
+        ----------
+        interactive : bool
+            True: show plot, False: save plot
+
+        selected_modes : List[int]
+            Plot the mode probabilities for a list of modes.
+            By default, the probability of all modes will be plotted.
+
+        time_format: str, optional
+            strftime format specifier for x-axis tick labels.
+            If not given, dates will be shown in locale format. To show dates and time use %y%m%d-%H:%M:%S
+
+        Returns
+        -------
+        plot file name : str
+          name of plot file (or emtpy string in case of interactive plot)
+        """
+
+        self.check_status()
+        # Append timestamps column taken from results
+        data = self.probabilities.assign(timestamps=self._results_df.timestamps.values)
+        data.set_index("timestamps", inplace=True)
+        # Replace 0 values with NAN
+        data.replace(to_replace=0, value=np.NAN, inplace=True, method="pad")
+
+        # Dataframe should only contain data for the requested modes
+        if selected_modes:
+            modes_list = [f"mode {n}" for n in selected_modes]
+            data = data[modes_list]
+
+        plotting.modes_probabilities_over_time(
+            data=data,
+            title=f"Probability of modes over time for {self.request_id()}",
+            timeunit=self._t_unit,
+            time_format=time_format,
+        )
+
+        return self._render_plot(interactive)
+
     def mode_table(self, show_uncertain=False):
         """
         Show mode table which gives start time for each consecutive period of

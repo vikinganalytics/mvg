@@ -194,7 +194,7 @@ def modes_over_time(
         the angle of time tick texts.
 
     time_format: str, optional
-        strftime format specifier for tick_x_lables. If not given
+        strftime format specifier for tick_x_labels. If not given
         only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
     Returns
@@ -309,6 +309,102 @@ def modes_over_time(
 
     axes.legend(handles=legend_labels, bbox_to_anchor=(1.05, 1), loc="upper left")
     axes.set_title("Modes over time for {}".format(request_id))
+    plt.tight_layout()
+
+    return image
+
+
+def modes_probabilities_over_time(
+    data,
+    title,
+    colors=None,
+    height=12,
+    width=4,
+    timeticks_interval=None,
+    timeunit="ms",
+    axes=None,
+    timetick_angle=45,
+    time_format=None,
+):
+    """Creates a line chart depecting the change of mode probability over time.
+
+    Parameters
+    ----------
+    data: dataframe
+        a dataframe with timestamps as the index column and an additional column (named as "mode {mode number}") for every mode.
+
+    title: string
+        plot title
+
+    colors: dictionary, optional
+        color code for each mode.
+        the dictionary keys should be of the form "mode {mode number}"
+
+    height: int, optional
+        height of plot used in figsize.
+
+    width: int, optional
+        width of plot used in figsize.
+
+    timeticks_interval: int, optional
+        time interval (in days) to separate the X-ticks.
+
+    timeunit: str, optional
+        unit of time corresponding to the timestamp epoch
+
+    axes: object of class matplotlib.axes, optional
+        the axes to be used by plot.
+
+    timetick_angle: float, optional
+        the angle of time tick texts.
+
+    time_format: str, optional
+        strftime format specifier for tick_x_labels. If not given, dates will be shown in locale format.
+        To show dates and time use %y%m%d-%H:%M:%S
+
+    Returns
+    ----------
+    image: object of class matplotlib.axes
+
+    """
+
+    # Colors for the line chart
+    colors = colors or {
+        f"mode {x}": MODE_COLOR_CODES[x] for x in MODE_COLOR_CODES.keys()
+    }
+
+    # Create figure with blank plot
+    if axes is None:
+        fig = plt.figure(figsize=(height, width))
+        axes = fig.add_subplot(111)
+    image = axes.plot()
+
+    # Set timetick interval
+    if not timeticks_interval:
+        timeticks_interval = round(len(data) / 10)
+
+    # Format the timestamps based on timeunit and time_format
+    if time_format:
+        data_index_formatted = [
+            pd.to_datetime(dt, unit=timeunit).strftime(time_format) for dt in data.index
+        ]
+    else:
+        data_index_formatted = [
+            str(pd.to_datetime(dt, unit=timeunit)) for dt in data.index
+        ]
+
+    # Form and set the tick positions and the tick labels
+    tick_positions = list(range(0, len(data), timeticks_interval))
+    tick_x_labels = [data_index_formatted[t] for t in tick_positions]
+    axes.set_xticks(tick_positions)
+    axes.set_xticklabels(tick_x_labels, rotation=timetick_angle, ha="right")
+
+    # Plot line chart for each mode
+    for col in data.columns:
+        axes.plot(data_index_formatted, data[col], label=col, color=colors[col])
+
+    axes.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+    axes.set_title(title)
     plt.tight_layout()
 
     return image
@@ -451,7 +547,7 @@ def plot_labels_over_time(
         the angle of time tick texts.
 
     time_format: str, optional
-        strftime format specifier for tick_x_lables. If not given
+        strftime format specifier for tick_x_labels. If not given
         only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
     Returns
