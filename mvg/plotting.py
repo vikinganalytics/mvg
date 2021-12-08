@@ -194,7 +194,7 @@ def modes_over_time(
         the angle of time tick texts.
 
     time_format: str, optional
-        strftime format specifier for tick_x_lables. If not given
+        strftime format specifier for tick_x_labels. If not given
         only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
     Returns
@@ -451,7 +451,7 @@ def plot_labels_over_time(
         the angle of time tick texts.
 
     time_format: str, optional
-        strftime format specifier for tick_x_lables. If not given
+        strftime format specifier for tick_x_labels. If not given
         only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
     Returns

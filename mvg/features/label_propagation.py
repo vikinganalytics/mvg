@@ -40,7 +40,7 @@ class LabelPropagation(Analysis):
         tbl["count"] = result_df.groupby("label").count()["severity"]
         print(tabulate(tbl, headers="keys", tablefmt="psql"))
 
-    def plot(self, interactive=True, time_format=None):
+    def plot(self, interactive=True, time_format=None, filename=None):
         """
         Generate a label plot for the propagated labels
 
@@ -50,8 +50,15 @@ class LabelPropagation(Analysis):
             True: show plot, False: save plot
 
         time_format: str, optional
-            strftime format specifier for tick_x_lables. If not given
+            strftime format specifier for tick_x_labels. If not given
             only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
+        filename: str, optional
+            filename for the plot. If interactive is True, filename will be
+            ignored. If interactive is False, default filename will be of the
+            format "{source_1_name}_to_{source_n_name}_{analysis_request_id}.png"
+            for multiple sources, and "{source_name}_{analysis_request_id}.png"
+            for a single source.
 
         Returns
         -------
@@ -62,4 +69,4 @@ class LabelPropagation(Analysis):
         sources = ", ".join(self.sources())
         plotting.plot_labels_over_time(self.results(), sources, time_format=time_format)
 
-        return self._render_plot(interactive)
+        return self._render_plot(interactive, filename)

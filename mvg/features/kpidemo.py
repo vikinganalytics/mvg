@@ -53,7 +53,7 @@ class KPIDemo(Analysis):
         return tab
 
     def plot(
-        self, kpi=None, interactive=True, time_format=None
+        self, kpi=None, interactive=True, time_format=None, filename=None
     ):  # pylint: disable=arguments-differ
         """
         Generate a basic plot on KPIs.
@@ -68,10 +68,13 @@ class KPIDemo(Analysis):
             True: show plot, False: save plot
 
         time_format: str, optional
-
-            strftime format specifier for tick_x_lables. If not given
+            strftime format specifier for tick_x_labels. If not given
             only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
 
+        filename: str, optional
+            filename for the plot. If interactive is True, filename will be
+            ignored. If interactive is False, default filename will be of the
+            format "{source_name}_{analysis_request_id}.png".
 
         Returns
         -------
@@ -86,4 +89,4 @@ class KPIDemo(Analysis):
         self.check_status()
         result_df.plot(x=self.time_column, y=kpi)
         plt.title(f"{kpi} Summary plot for request {self.request_id()}")
-        return self._render_plot(interactive)
+        return self._render_plot(interactive, filename)
