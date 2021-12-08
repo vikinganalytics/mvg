@@ -402,9 +402,9 @@ def modes_probabilities_over_time(
 
     # Plot line chart for each mode
     for col in data.columns:
-        axes.plot(data_index_formatted, data[col], label=col, color=colors[col])
+        axes.scatter(data_index_formatted, data[col], label=col, c=colors[col], s=10)
 
-    axes.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+    axes.legend(bbox_to_anchor=(1.05, 1), loc="upper left", markerscale=3)
     axes.set_title(title)
     plt.tight_layout()
 
