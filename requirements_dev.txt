@@ -18,3 +18,4 @@ m2r2
 uvicorn
 fastapi
 ipywidgets
+tqdm
