@@ -11,12 +11,16 @@ concurrency:
 jobs:
     run-notebooks:
         runs-on: [ ubuntu-latest ]
-        name: "running black"
+        name: "running notebooks"
         steps: 
         -   uses: actions/checkout@v2
         - name: "Install dependencies"
           run: |
-            pip install notebook
+            pip install notebook tqdm ipywidgets
+            pip install -r requirements.txt
+        - name: "Setup MVG"
+          run: |
+            pip install .
         - name: "Run notebooks containing examples"
           env:
             TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
@@ -26,10 +30,20 @@ jobs:
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/brief_overview.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/check_version.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/sources_and_measurements.ipynb
-            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_class.ipynb
-            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_visual.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/tabular_example.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/error_handling.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_classes.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_visual.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/labeling.ipynb
+        - name: Check for modified files
+          uses: tj-actions/verify-changed-files@v8.8
+          id: git-check
+          with:
+            files: |
+                docs/source/content/examples/*.ipynb
+        - name: Push changes
+          if: steps.git-check.outputs.files_changed == 'true'
+          run: |
             git config user.name vnadhan
             git config user.email nadhan.vishnu@gmail.com
             git add .
