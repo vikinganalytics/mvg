@@ -1,0 +1,38 @@
+name: update-examples
+
+on:
+  pull_request:
+    branches: [ master ]
+
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    run-notebooks:
+        runs-on: [ ubuntu-latest ]
+        name: "running black"
+        steps: 
+        -   uses: actions/checkout@v2
+        - name: "Install dependencies"
+          run: |
+            pip install notebook
+        - name: "Run notebooks containing examples"
+          env:
+            TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            echo "Executing notebooks"
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/brief_overview.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/check_version.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/sources_and_measurements.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_class.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_visual.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/error_handling.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/labeling.ipynb
+            git config user.name vnadhan
+            git config user.email nadhan.vishnu@gmail.com
+            git add .
+            git commit -m "GitHub Actions: Updated examples"
+            git push
+            echo "Done"
