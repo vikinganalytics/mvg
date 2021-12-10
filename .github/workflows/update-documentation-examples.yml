@@ -1,0 +1,65 @@
+name: update-documentation-examples
+
+on:
+  pull_request:
+    branches: [ master ]
+
+concurrency:
+    group: ${{ github.head_ref }}
+    cancel-in-progress: true
+
+jobs:
+    update-examples:
+        runs-on: [ ubuntu-latest ]
+        name: "Update examples in documentation"
+        steps:
+        - uses: actions/checkout@v2
+          with:
+            ref: ${{ github.head_ref }}
+        - name: "Install dependencies"
+          run: |
+            pip install notebook tqdm ipywidgets
+            pip install -r requirements.txt
+        - name: "Setup MVG"
+          run: |
+            pip install .
+        - name: "Run all examples"
+          env:
+            TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            echo "Executing jupyter notebooks"
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/brief_overview.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/check_version.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/sources_and_measurements.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/tabular_example.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/error_handling.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_classes.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_visual.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/labeling.ipynb
+            echo "Done"
+        - name: Check for modified files
+          uses: tj-actions/verify-changed-files@v8.8
+          id: git-check
+          with:
+            files: |
+                docs/source/content/examples/brief_overview.ipynb
+                docs/source/content/examples/check_version.ipynb
+                docs/source/content/examples/sources_and_measurements.ipynb
+                docs/source/content/examples/tabular_example.ipynb
+                docs/source/content/examples/error_handling.ipynb
+                docs/source/content/examples/analysis_classes.ipynb
+                docs/source/content/examples/analysis_visual.ipynb
+                docs/source/content/examples/labeling.ipynb
+        - name: Push changes
+          if: steps.git-check.outputs.files_changed == 'true'
+          run: |
+            echo "Committing changes to branch"
+            # git config user.name vnadhan
+            # git config user.email nadhan.vishnu@gmail.com
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add .
+            git commit -m "GitHub Actions: Updated examples in documentation"
+            git push
+            echo "Done"
