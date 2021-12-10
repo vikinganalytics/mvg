@@ -5,15 +5,17 @@ on:
     branches: [ master ]
 
 concurrency:
-    group: ${{ github.ref }}
+    ref: ${{ github.head_ref }}
     cancel-in-progress: true
 
 jobs:
     update-examples:
         runs-on: [ ubuntu-latest ]
         name: "Update examples in documentation"
-        steps: 
-        -   uses: actions/checkout@v2
+        steps:
+        - uses: actions/checkout@v2
+          with:
+            ref: ${{ github.head_ref }}
         - name: "Install dependencies"
           run: |
             pip install notebook tqdm ipywidgets
@@ -49,10 +51,6 @@ jobs:
                 docs/source/content/examples/analysis_classes.ipynb
                 docs/source/content/examples/analysis_visual.ipynb
                 docs/source/content/examples/labeling.ipynb
-        - name: Checkout PR branch
-          uses: actions/checkout@v2
-          with:
-            ref: ${{ github.head_ref }}
         - name: Push changes
           if: steps.git-check.outputs.files_changed == 'true'
           run: |
