@@ -49,10 +49,11 @@ jobs:
                 docs/source/content/examples/analysis_classes.ipynb
                 docs/source/content/examples/analysis_visual.ipynb
                 docs/source/content/examples/labeling.ipynb
-        - name: Push changes
+        - name: Checkout PR branch
           uses: actions/checkout@v2
           with:
             ref: ${{ github.head_ref }}
+        - name: Push changes
           if: steps.git-check.outputs.files_changed == 'true'
           run: |
             echo "Committing changes to branch"
