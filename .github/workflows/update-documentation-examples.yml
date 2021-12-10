@@ -41,8 +41,18 @@ jobs:
           id: git-check
           with:
             files: |
+                docs/source/content/examples/brief_overview.ipynb
+                docs/source/content/examples/check_version.ipynb
                 docs/source/content/examples/sources_and_measurements.ipynb
+                docs/source/content/examples/tabular_example.ipynb
+                docs/source/content/examples/error_handling.ipynb
+                docs/source/content/examples/analysis_classes.ipynb
+                docs/source/content/examples/analysis_visual.ipynb
+                docs/source/content/examples/labeling.ipynb
         - name: Push changes
+          uses: actions/checkout@v2
+          with:
+            ref: ${{ github.head_ref }}
           if: steps.git-check.outputs.files_changed == 'true'
           run: |
             echo "Committing changes to branch"
@@ -50,5 +60,5 @@ jobs:
             git config user.email nadhan.vishnu@gmail.com
             git add .
             git commit -m "GitHub Actions: Updated examples in documentation"
-            git push
+            git push 
             echo "Done"
