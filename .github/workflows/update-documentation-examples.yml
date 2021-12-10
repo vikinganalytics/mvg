@@ -61,5 +61,5 @@ jobs:
             git config user.email nadhan.vishnu@gmail.com
             git add .
             git commit -m "GitHub Actions: Updated examples in documentation"
-            git push 
+            git push
             echo "Done"
