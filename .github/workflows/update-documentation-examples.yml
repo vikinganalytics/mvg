@@ -1,4 +1,4 @@
-name: update-examples
+name: update-documentation-examples
 
 on:
   pull_request:
@@ -9,9 +9,9 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    run-notebooks:
+    update-examples:
         runs-on: [ ubuntu-latest ]
-        name: "running notebooks"
+        name: "Update examples in documentation"
         steps: 
         -   uses: actions/checkout@v2
         - name: "Install dependencies"
@@ -21,12 +21,12 @@ jobs:
         - name: "Setup MVG"
           run: |
             pip install .
-        - name: "Run notebooks containing examples"
+        - name: "Run all examples"
           env:
             TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
-            echo "Executing notebooks"
+            echo "Executing jupyter notebooks"
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/brief_overview.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/check_version.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/sources_and_measurements.ipynb
@@ -35,18 +35,20 @@ jobs:
             # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_classes.ipynb
             # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_visual.ipynb
             # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/labeling.ipynb
+            echo "Done"
         - name: Check for modified files
           uses: tj-actions/verify-changed-files@v8.8
           id: git-check
           with:
             files: |
-                docs/source/content/examples/*.ipynb
+                docs/source/content/examples/sources_and_measurements.ipynb
         - name: Push changes
           if: steps.git-check.outputs.files_changed == 'true'
           run: |
+            echo "Committing changes to branch"
             git config user.name vnadhan
             git config user.email nadhan.vishnu@gmail.com
             git add .
-            git commit -m "GitHub Actions: Updated examples"
+            git commit -m "GitHub Actions: Updated examples in documentation"
             git push
             echo "Done"
