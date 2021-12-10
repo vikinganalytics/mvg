@@ -30,11 +30,11 @@ jobs:
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/brief_overview.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/check_version.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/sources_and_measurements.ipynb
-            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/tabular_example.ipynb
-            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/error_handling.ipynb
-            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_classes.ipynb
-            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_visual.ipynb
-            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/labeling.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/tabular_example.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/error_handling.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_classes.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_visual.ipynb
+            # jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/labeling.ipynb
         - name: Check for modified files
           uses: tj-actions/verify-changed-files@v8.8
           id: git-check
