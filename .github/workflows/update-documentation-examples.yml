@@ -18,7 +18,7 @@ concurrency:
 jobs:
     update-examples:
         runs-on: [ ubuntu-latest ]
-        if: ${{ github.event.workflow_run.conclusion == 'success' and github.event_name == 'pull_request' }}
+        # if: ${{ github.event.workflow_run.conclusion == 'success' and github.event_name == 'pull_request' }}
         name: "Update examples in documentation"
         steps:
         - uses: actions/checkout@v2
