@@ -1,20 +1,21 @@
 name: update-documentation-examples
 
+# Dependency workflow
 on:
-  pull_request:
-    branches: [ master ]
   workflow_run:
     workflows: ["ci-checks"]
     types: [completed]
 
+# Prevent concurrent runs
 concurrency:
     group: ${{ github.head_ref }}
     cancel-in-progress: true
 
+# A set of tasks that represents the workflow
 jobs:
     update-examples:
         runs-on: [ ubuntu-latest ]
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        if: ${{ github.event.workflow_run.conclusion == 'success' and github.event_name == 'pull_request' }}
         name: "Update examples in documentation"
         steps:
         - uses: actions/checkout@v2
@@ -33,8 +34,8 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
             echo "Executing jupyter notebooks"
-            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/brief_overview.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/check_version.ipynb
+            jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/brief_overview.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/sources_and_measurements.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/tabular_example.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/error_handling.ipynb
@@ -42,26 +43,12 @@ jobs:
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/analysis_visual.ipynb
             jupyter nbconvert --execute --to notebook --inplace docs/source/content/examples/labeling.ipynb
             echo "Done"
-        - name: Check for modified files
-          uses: tj-actions/verify-changed-files@v8.8
-          id: git-check
-          with:
-            files: |
-                docs/source/content/examples/brief_overview.ipynb
-                docs/source/content/examples/check_version.ipynb
-                docs/source/content/examples/sources_and_measurements.ipynb
-                docs/source/content/examples/tabular_example.ipynb
-                docs/source/content/examples/error_handling.ipynb
-                docs/source/content/examples/analysis_classes.ipynb
-                docs/source/content/examples/analysis_visual.ipynb
-                docs/source/content/examples/labeling.ipynb
         - name: Push changes
-          if: steps.git-check.outputs.files_changed == 'true'
           run: |
-            echo "Committing changes to PR"
+            echo "Add and commit changes"
             git config user.name github-actions
             git config user.email github-actions@github.com
-            git add .
+            git add docs/source/content/examples/*.ipynb
             git commit -m "GitHub Actions: Updated examples in documentation"
             git push
             echo "Done"
