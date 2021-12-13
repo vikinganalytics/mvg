@@ -1,10 +1,13 @@
 name: update-documentation-examples
 
 # Dependency workflow
+# on:
+#   workflow_run:
+#     workflows: ["ci-checks"]
+#     types: [completed]
 on:
-  workflow_run:
-    workflows: ["ci-checks"]
-    types: [completed]
+  pull_request:
+    branches: [ master ]
 
 # Prevent concurrent runs
 concurrency:
