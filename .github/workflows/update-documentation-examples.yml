@@ -1,5 +1,4 @@
 name: update-documentation-examples
-
 # Dependency workflow
 # on:
 #   workflow_run:
