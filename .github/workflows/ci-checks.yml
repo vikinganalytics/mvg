@@ -94,15 +94,15 @@ jobs:
         -   name: "Run all examples"
             env:
                 TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
-                EXAMPLES_DIR: docs/source/content/examples
+                EXAMPLES_DIR: 'docs/source/content/examples'
             run: |
                 echo "Running notebooks containing examples"
-                jupyter nbconvert --execute --to notebook --inplace ${{EXAMPLES_DIR}}/check_version.ipynb \
-                                                                    ${{EXAMPLES_DIR}}/brief_overview.ipynb \
-                                                                    ${{EXAMPLES_DIR}}/sources_and_measurements.ipynb \
-                                                                    ${{EXAMPLES_DIR}}/tabular_example.ipynb \
-                                                                    ${{EXAMPLES_DIR}}/error_handling.ipynb \
-                                                                    ${{EXAMPLES_DIR}}/analysis_classes.ipynb \
-                                                                    ${{EXAMPLES_DIR}}/analysis_visual.ipynb \
-                                                                    ${{EXAMPLES_DIR}}/labeling.ipynb
+                jupyter nbconvert --execute --to notebook --inplace ${{env.EXAMPLES_DIR}}/check_version.ipynb \
+                                                                    ${{env.EXAMPLES_DIR}}/brief_overview.ipynb \
+                                                                    ${{env.EXAMPLES_DIR}}/sources_and_measurements.ipynb \
+                                                                    ${{env.EXAMPLES_DIR}}/tabular_example.ipynb \
+                                                                    ${{env.EXAMPLES_DIR}}/error_handling.ipynb \
+                                                                    ${{env.EXAMPLES_DIR}}/analysis_classes.ipynb \
+                                                                    ${{env.EXAMPLES_DIR}}/analysis_visual.ipynb \
+                                                                    ${{env.EXAMPLES_DIR}}/labeling.ipynb
                 echo "Done"
