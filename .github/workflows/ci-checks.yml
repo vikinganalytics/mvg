@@ -80,7 +80,7 @@ jobs:
             run: "python -m pytest --verbose tests/"
     validate-documentation-examples:
         runs-on: [ ubuntu-latest ]
-        needs: [pytest]
+        needs: [black, pylint, flake8]
         name: "Validate examples in documentation"
         steps:
         -   uses: actions/checkout@v2
