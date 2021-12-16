@@ -66,7 +66,7 @@ jobs:
                 python-version: "${{ matrix.python-version }}"
         -   name: "Install dependencies"
             run: |
-                pip install -r requirements.txt 
+                pip install -r requirements.txt
                 pip install -r requirements_dev.txt
         -   name: Login to GHCR
             uses: docker/login-action@v1
@@ -78,3 +78,31 @@ jobs:
             env:
                 TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
             run: "python -m pytest --verbose tests/"
+    validate-documentation-examples:
+        runs-on: [ ubuntu-latest ]
+        needs: [pytest]
+        name: "Validate examples in documentation"
+        steps:
+        -   uses: actions/checkout@v2
+        -   name: "Install dependencies"
+            run: |
+                pip install notebook tqdm ipywidgets
+                pip install -r requirements.txt
+        -   name: "Setup MVG"
+            run: |
+                pip install .
+        -   name: "Run all examples"
+            env:
+                TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
+                EXAMPLES_DIR: docs/source/content/examples
+            run: |
+                echo "Running notebooks containing examples"
+                jupyter nbconvert --execute --to notebook --inplace ${{EXAMPLES_DIR}}/check_version.ipynb \
+                                                                    ${{EXAMPLES_DIR}}/brief_overview.ipynb \
+                                                                    ${{EXAMPLES_DIR}}/sources_and_measurements.ipynb \
+                                                                    ${{EXAMPLES_DIR}}/tabular_example.ipynb \
+                                                                    ${{EXAMPLES_DIR}}/error_handling.ipynb \
+                                                                    ${{EXAMPLES_DIR}}/analysis_classes.ipynb \
+                                                                    ${{EXAMPLES_DIR}}/analysis_visual.ipynb \
+                                                                    ${{EXAMPLES_DIR}}/labeling.ipynb
+                echo "Done"
