@@ -386,10 +386,10 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
 
 <span class="c1"># import mvg library with python bindings to mvg-API</span>
 <span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
+<span class="kn">from</span> <span class="nn">mvg.exceptions</span> <span class="kn">import</span> <span class="n">MVGAPIError</span>
 </pre></div>
 </div>
 </div>
@@ -406,7 +406,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>This is Viking Analytics default logging setup and can be adapted to suit your needs. Log messages are printed from <code class="docutils literal notranslate"><span class="pre">mvg</span></code> library, see the source code for details.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -422,7 +422,7 @@ div.rendered_html tbody tr:hover {
 <p>As we are interested in error handling we set the logger level to <code class="docutils literal notranslate"><span class="pre">logging.DEBUG</span></code>. That will trace out the detailed information on exceptions provided by the server.</p>
 <p>Set log level to <code class="docutils literal notranslate"><span class="pre">logging.ERROR</span></code> to just see the results of proper error handling in the code <code class="docutils literal notranslate"><span class="pre">root_logger.setLevel(logging.ERROR)</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -432,7 +432,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Instantiate a session object with mvg library a session object basically caches the endpoint and the token, to simplify the the calls to the mvg library.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -443,7 +443,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>We now check if the server is alive. The hello message contains, amongst others the API version.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -464,7 +464,7 @@ div.rendered_html tbody tr:hover {
 <h2>Invalid Token<a class="headerlink" href="#Invalid-Token" title="Permalink to this headline"></a></h2>
 <p>Lets provoke an error by creating a session with a non-valid token.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -474,24 +474,18 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>We need to call a method requiring authentication. Check <a class="reference external" href="https://api.beta.multiviz.com/docs">https://api.beta.multiviz.com/docs</a> to see which methods require authentication, they have a lock icon.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">try</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; Provoke Unathorized call&quot;</span><span class="p">)</span>
     <span class="n">sources</span> <span class="o">=</span> <span class="n">unauth_session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
-<span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="c1"># As we have rouge token</span>
     <span class="c1"># We&#39;ll end up here</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OUCH&quot;</span><span class="p">)</span>
-    <span class="c1"># The exception will be risen by</span>
-    <span class="c1"># raise_for_status from the requests</span>
-    <span class="c1"># We&#39;ll print it and see that it</span>
-    <span class="c1"># states an authorization error (401)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
-    <span class="c1"># Get more info about the error from the response attribute</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -502,8 +496,7 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 &gt;&gt;&gt; Provoke Unathorized call
 OUCH
-401 Client Error: Unauthorized for url: https://api.beta.multiviz.com/sources/
-{&#34;detail&#34;:&#34;Unauthorized&#34;}
+401 - Unauthorized: Unauthorized
 </pre></div></div>
 </div>
 <p>We’ll now return to the original session and show how to get details when the server internally rejected a request for other reasons.</p>
@@ -512,24 +505,18 @@ OUCH
 <h2>Illegal source_id<a class="headerlink" href="#Illegal-source_id" title="Permalink to this headline"></a></h2>
 <p>We provoke the service using an illegal string for the <code class="docutils literal notranslate"><span class="pre">source_id</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">try</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; Provoke illegal source Id name&quot;</span><span class="p">)</span>
     <span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="s2">&quot;illegal%name&quot;</span><span class="p">,</span> <span class="p">{},</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">])</span>
-<span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="c1"># As we have rouge token</span>
     <span class="c1"># We&#39;ll end up here</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OUCH&quot;</span><span class="p">)</span>
-    <span class="c1"># The exception will be risen by</span>
-    <span class="c1"># raise_for_status from the requests</span>
-    <span class="c1"># We&#39;ll print it and see that it</span>
-    <span class="c1"># states an authorization error (401)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
-    <span class="c1"># Get more info about the error from the response attribute</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -540,8 +527,7 @@ OUCH
 <div class="highlight"><pre>
 &gt;&gt;&gt; Provoke illegal source Id name
 OUCH
-422 Client Error: Unprocessable Entity for url: https://api.beta.multiviz.com/sources/
-{&#34;detail&#34;:[{&#34;loc&#34;:[&#34;body&#34;,&#34;source_id&#34;],&#34;msg&#34;:&#34;can only contain letters, numbers and underscores&#34;,&#34;type&#34;:&#34;value_error&#34;}]}
+422 - Unprocessable Entity: [{&#39;loc&#39;: [&#39;body&#39;, &#39;source_id&#39;], &#39;msg&#39;: &#39;string does not match regex &#34;^[\\w-]+$&#34;&#39;, &#39;type&#39;: &#39;value_error.str.regex&#39;, &#39;ctx&#39;: {&#39;pattern&#39;: &#39;^[\\w-]+$&#39;}}]
 </pre></div></div>
 </div>
 <p>We’ll show a couple of examples what can go wrong when creating a measurement</p>
@@ -550,7 +536,7 @@ OUCH
 <h2>Non-existing Source<a class="headerlink" href="#Non-existing-Source" title="Permalink to this headline"></a></h2>
 <p>In some cases where there is detailed information provided by the server, we can retrieve it by inspecting the exception object <code class="docutils literal notranslate"><span class="pre">exc</span></code>, which actually contains all information about the request.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -562,11 +548,8 @@ OUCH
                                <span class="n">timestamp</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span>
                                <span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">,</span>
                                <span class="n">meta</span><span class="o">=</span><span class="p">{})</span>
-<span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Details on error&quot;</span><span class="p">)</span>
-    <span class="c1"># Get more info about the error from the response attribute</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -576,9 +559,7 @@ OUCH
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 &gt;&gt;&gt; Non existing source
-404 Client Error: Not Found for url: https://api.beta.multiviz.com/sources//measurements
-Details on error
-{&#34;detail&#34;:&#34;Not Found&#34;}
+404 - Not Found: Not Found
 </pre></div></div>
 </div>
 </section>
@@ -586,7 +567,7 @@ Details on error
 <h2>Parameter Value Out of Range<a class="headerlink" href="#Parameter-Value-Out-of-Range" title="Permalink to this headline"></a></h2>
 <p>Sometimes, it is possible to pass a value that it is out of range of the expected, as in this example where the values for the duration and timestamp parameters are negative values.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -598,12 +579,8 @@ Details on error
                                <span class="n">timestamp</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span>
                                <span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">,</span>
                                <span class="n">meta</span><span class="o">=</span><span class="p">{})</span>
-<span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
-    <span class="c1"># Retrieve details</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Details on error&quot;</span><span class="p">)</span>
-    <span class="c1"># Get more info about the error from the response attribute</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -613,17 +590,15 @@ Details on error
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 &gt;&gt;&gt; Parameter value out of range
-422 Client Error: Unprocessable Entity for url: https://api.beta.multiviz.com/sources/u0001/measurements
-Details on error
-{&#34;detail&#34;:[{&#34;loc&#34;:[&#34;body&#34;,0,&#34;timestamp&#34;],&#34;msg&#34;:&#34;ensure this value is greater than or equal to 0&#34;,&#34;type&#34;:&#34;value_error.number.not_ge&#34;,&#34;ctx&#34;:{&#34;limit_value&#34;:0}}]}
+422 - Unprocessable Entity: [{&#39;loc&#39;: [&#39;body&#39;, 0, &#39;duration&#39;], &#39;msg&#39;: &#39;ensure this value is greater than 0.0&#39;, &#39;type&#39;: &#39;value_error.number.not_gt&#39;, &#39;ctx&#39;: {&#39;limit_value&#39;: 0.0}}, {&#39;loc&#39;: [&#39;body&#39;, 0, &#39;timestamp&#39;], &#39;msg&#39;: &#39;ensure this value is greater than or equal to 0&#39;, &#39;type&#39;: &#39;value_error.number.not_ge&#39;, &#39;ctx&#39;: {&#39;limit_value&#39;: 0}}]
 </pre></div></div>
 </div>
 </section>
 <section id="Missing-Parameter">
 <h2>Missing Parameter<a class="headerlink" href="#Missing-Parameter" title="Permalink to this headline"></a></h2>
-<p>In this case we have an error on the client side. This means that the data is never sent to the server so we do not get an <code class="docutils literal notranslate"><span class="pre">HTTPError</span></code>, but a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> instead. Only the <code class="docutils literal notranslate"><span class="pre">HTTPError</span></code> contains any details from the server, so to be on the safe side we should catch them separately.</p>
+<p>In this case we have an error on the client side. This means that the data is never sent to the server so we do not get an <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code>, but a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> instead. Only the <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code> contains any details from the server, so to be on the safe side we should catch them separately.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -633,10 +608,8 @@ Details on error
                                <span class="n">duration</span><span class="o">=-</span><span class="mi">3</span><span class="p">,</span>
                                <span class="n">timestamp</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span>
                                <span class="n">meta</span><span class="o">=</span><span class="p">{})</span>
-<span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Details on error&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No details from server available&quot;</span><span class="p">)</span>

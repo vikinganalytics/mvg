@@ -388,10 +388,10 @@ div.rendered_html tbody tr:hover {
 
 <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
 
 <span class="c1"># import mvg library with python bindings to mvg-API</span>
 <span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
+<span class="kn">from</span> <span class="nn">mvg.exceptions</span> <span class="kn">import</span> <span class="n">MVGAPIError</span>
 </pre></div>
 </div>
 </div>
@@ -470,7 +470,7 @@ div.rendered_html tbody tr:hover {
 <h2>Check Database<a class="headerlink" href="#Check-Database" title="Permalink to this headline"></a></h2>
 <p>We start by seeing if there are any sources in the database. A source represents a measurement source e.g. one specific channel of a measurement sensor. Note that sources cannot be used to represent a sensor with several channels. If this is required, the client side needs to take care of it.</p>
 <p>Because we want to start at a clean slate we will list all sources (potentially none) and delete all of them</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
@@ -486,9 +486,19 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Source info retrieved:
+{&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetJ&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;cancun&#39;, &#39;timezone&#39;: &#39;Europe/Stockholm&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;, &#39;channels&#39;: [&#39;acc&#39;]}}
+
+</pre></div></div>
+</div>
 <p>The example below revolves around a source with source id u0001</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -498,7 +508,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>To make sure we start from a clean slate we delete our resource in case it exists.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -506,7 +516,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">source</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
     <span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source </span><span class="si">{</span><span class="n">SOURCE_ID</span><span class="si">}</span><span class="s2"> deleted&quot;</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+<span class="k">except</span> <span class="n">MVGAPIError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source </span><span class="si">{</span><span class="n">SOURCE_ID</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -516,7 +526,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Source u0001 does not exist
+Source u0001 deleted
 </pre></div></div>
 </div>
 </section>
@@ -524,7 +534,7 @@ Source u0001 does not exist
 <h2>Build measurements<a class="headerlink" href="#Build-measurements" title="Permalink to this headline"></a></h2>
 <p>Now we want to (re) build the source and the attached measurements from scratch. In this example, we have a json file with all the information needed to create each source.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -548,7 +558,7 @@ Creating meta info
 </div>
 <p>Create the source and check for it</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -570,7 +580,7 @@ Recreated source info:
 </div>
 <p>Update the source</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -599,7 +609,7 @@ Updated source info
 <li><p>meta information to be stored along the measurement</p></li>
 </ul>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -609,7 +619,7 @@ Updated source info
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">meas</span></code> now contains a list of timestamps representing the measurements in our repo we upload from iterate over all of them.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -645,10 +655,8 @@ Updated source info
                                    <span class="n">timestamp</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">),</span>
                                    <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;acc&quot;</span><span class="p">:</span> <span class="n">accs</span><span class="p">},</span>
                                    <span class="n">meta</span><span class="o">=</span><span class="n">meta_info</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OUCH&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -664,14 +672,14 @@ Uploading measurements to source u0001
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "b490d8ad7129476db88072eb28e25f45", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "600687e54afd458da0bc60e74475cf6f", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 </section>
 <section id="Read-the-Measurements">
 <h2>Read the Measurements<a class="headerlink" href="#Read-the-Measurements" title="Permalink to this headline"></a></h2>
 <p>Check if we actually created the measurements by reading them</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -690,7 +698,7 @@ Read 50 stored measurements
 </div>
 <p>It is also possible to read a specific measurement at a single timestamp. Let’s get the timestamp of the first measurement.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -719,7 +727,7 @@ data:      [-0.55078125, -1.332275390625]...
 </div>
 <p>We can update the meta information for a measurement at a single timestamp let’s get the timestamp of the first measurement</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -752,7 +760,7 @@ data:      [-0.55078125, -1.332275390625]...
 </div>
 <p>Finally we delete the measurement</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -762,13 +770,13 @@ data:      [-0.55078125, -1.332275390625]...
 </div>
 <p>We check if it’s actually deleted</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">try</span><span class="p">:</span>
     <span class="n">meas_0</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">read_single_measurement</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">ts_0</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+<span class="k">except</span> <span class="n">MVGAPIError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Previously deleted measurement does not exist&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -787,7 +795,7 @@ Previously deleted measurement does not exist
 <h2>Uploading additional sources<a class="headerlink" href="#Uploading-additional-sources" title="Permalink to this headline"></a></h2>
 <p>Here we show how to upload additional sources in a more compact way.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -798,7 +806,7 @@ Previously deleted measurement does not exist
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="n">source_id</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="k">pass</span>  <span class="c1"># Source didnt exist</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Creating source </span><span class="si">{</span><span class="n">source_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -836,8 +844,8 @@ Previously deleted measurement does not exist
                                        <span class="n">timestamp</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">),</span>
                                        <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;acc&quot;</span><span class="p">:</span> <span class="n">accs</span><span class="p">},</span>
                                        <span class="n">meta</span><span class="o">=</span><span class="n">meta_info</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
             <span class="k">raise</span>
 </pre></div>
 </div>
@@ -854,7 +862,7 @@ Uploading sources u0002, u0003, u0004, u0005, u0006 from CharlieDb
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "e0cfd4c096aa4dc89ef1d5337e40fa6e", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "2f87a5d6866b4f6ab023567577daa6af", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -869,7 +877,7 @@ Uploading measurements to source u0002
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1eb1ec1c0a9642d292cc3fbcf881fae4", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a89062e4edb747dfa73d8a97ca9b87f2", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -884,7 +892,7 @@ Uploading measurements to source u0003
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "9eca3d68182a416ab88f257444879b60", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "6ec67787de634b46b65cfa2f81f74cd1", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -899,7 +907,7 @@ Uploading measurements to source u0004
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "45dda982b5084eb9ae46f6767facf91a", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "25ad9979ad244110a2c82f99b555d04b", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -914,7 +922,7 @@ Uploading measurements to source u0005
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "157ae65bbbd9496c9ed9dbb7efe347b7", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c35a320df1b145b0909ec1ff5c78255c", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -929,7 +937,7 @@ Uploading measurements to source u0006
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c2ef4e4f10d04298ad14bd243a9d2012", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "48f5ac69394f480db5f1236a3d315734", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 </section>
 </section>

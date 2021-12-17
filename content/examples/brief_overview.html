@@ -414,9 +414,7 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
 </pre></div>
 </div>
 </div>
@@ -438,6 +436,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
+<span class="kn">from</span> <span class="nn">mvg.exceptions</span> <span class="kn">import</span> <span class="n">MVGAPIError</span>
 </pre></div>
 </div>
 </div>
@@ -480,8 +479,8 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 {&#39;api&#39;: {&#39;name&#39;: &#39;MultiViz Engine API&#39;,
-  &#39;version&#39;: &#39;v0.2.7&#39;,
-  &#39;swagger&#39;: &#39;http://api.beta.multiviz.com/docs&#39;}}
+  &#39;version&#39;: &#39;0.0.0-dev0&#39;,
+  &#39;swagger&#39;: &#39;http://localhost:8000/docs&#39;}}
 </pre></div></div>
 </div>
 </section>
@@ -506,7 +505,12 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+Deleting 625d56104ea711ec943c00155da2e1da
+Deleting string
+Deleting test_source_1
+Deleting test_tab_1
 Deleting u0001
+Deleting zeros
 </pre></div></div>
 </div>
 <p>The example below revolves around a sources with source_id “u0001”.</p>
@@ -652,8 +656,8 @@ raw data of the vibration measurement. - meta: additional meta information for l
                                    <span class="n">timestamp</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">),</span>
                                    <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;acc&quot;</span><span class="p">:</span> <span class="n">accs</span><span class="p">},</span>
                                    <span class="n">meta</span><span class="o">=</span><span class="n">meta_info</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -816,7 +820,7 @@ Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charl
 </div>
 <p>Check if we actually created the measurements by reading them.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -839,7 +843,7 @@ Read 50 stored measurements
 <h2>Analysis<a class="headerlink" href="#Analysis" title="Permalink to this headline"></a></h2>
 <p>We begin by listing all the features available in the service.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -849,7 +853,7 @@ Read 50 stored measurements
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -863,7 +867,7 @@ Read 50 stored measurements
 <p>In this example, we will show how to request the KPIDemo and ModeId features to be applied to the previously defined SOURCE_ID. The BlackSheep feature is aimed to population analytics. You can read about how to use it in the <a class="reference internal" href="analysis_visual.html"><span class="doc">“Analysis and Results Visualization”</span></a> example.</p>
 <p>We will begin with the ‘KPIDemo’ feature, which provides KPIs, such as RMS, for each vibration measurement. We proceed to request the analysis to the MVG service.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -873,7 +877,7 @@ Read 50 stored measurements
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -885,7 +889,7 @@ Read 50 stored measurements
 <p>Before we are able to get the analysis results, we need to wait until those results are successfully completed.</p>
 <p>We can query for the status of our requested analysis. The possible status are: - Queued: The analysis has not started in the remote server and it is in the queue to begin. - Ongoing: The analysis is been processed at this time. - Failed: The analysis is complete and failed to produce a result. - Successful: The analysis is complete and it successfully produced a result.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -905,7 +909,7 @@ KPI Analysis: successful
 </div>
 <p>The next feature is ‘ModeId’. The ‘ModeId’ feature displays all the operating modes over time of an individual asset. The similar procedure is repeated to request the analysis of the “ModeId” feature for our source “u0001”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -915,7 +919,7 @@ KPI Analysis: successful
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -925,7 +929,7 @@ KPI Analysis: successful
 </div>
 <p>We also check the status for our second feature.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -947,7 +951,7 @@ ModeId Analysis: queued
 <p>The output of the get_analysis_results function is a dictionary and we show the keys of one those dictionaries. The keys are the same for all features and contains seven elements. These elements are: - <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> indicates if the analysis was successful. - <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> is the identifier of the requested analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;feature&quot;</span></code> is the name of the requested feature. - <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> includes the numeric results. - <code class="docutils literal notranslate"><span class="pre">&quot;inputs&quot;</span></code> includes the input information for the request analysis. -
 <code class="docutils literal notranslate"><span class="pre">&quot;error_info&quot;</span></code> includes the error information in case the analysis fails and it is empty if the analysis is successful. - <code class="docutils literal notranslate"><span class="pre">&quot;debug_info&quot;</span></code> includes debuging (log) information related to the failed analysis.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -960,7 +964,7 @@ ModeId Analysis: queued
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -973,7 +977,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <p>The MVG Library incorporates a module that facilitates the handling of the results and its visualization. Using this module, it becomes easier to convert the results into a Pandas dataframe for ease of manipulation. In addition, it enables to quickly evaluate the results by getting a summary of them or visualize them.</p>
 <p>The name of this module is <code class="docutils literal notranslate"><span class="pre">&quot;analysis_classes&quot;</span></code> and we begin by calling it.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -983,7 +987,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 </div>
 <p>The first step requires parsing the results available from the analysis. We begin by showing how to do this with the KPIDemo feature.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -993,7 +997,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 </div>
 <p>From here, we can call these results into a Pandas dataframe.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1003,7 +1007,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1104,7 +1108,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <p>From the results, we can see that the KPIDemo feature provides some KPIs, e.g. rms and peak-to-peak. All this is available for each measurement.</p>
 <p>We can request to display a summary of the results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1136,7 +1140,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1263,7 +1267,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 </div>
 <p>Finally, we can generate a plot that displays these results. When plotting the results for the KPIDemo feature, one selects the KPI to be displayed by passing the parameter <code class="docutils literal notranslate"><span class="pre">&quot;kpi&quot;</span></code>. If this parameter is not included, the plot function will display the results of the first KPI after the timestamps, which is the RMS value.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1279,7 +1283,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1290,7 +1294,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 <p>All these functions are available for the ModeId feature as well. We proceed to repeat the same procedure for this other feature.</p>
 <p>We begin by parsing the results. In this particular case, we need to define the unit of time to perform the epoch conversion to datetime. The default unit is milliseconds, but we need seconds now. The timezone can also be defined, to increase the precision of these results.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1300,7 +1304,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 </div>
 <p>First, we generate the pandas dataframe of ModeId results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1310,7 +1314,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1343,7 +1347,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
     <tr>
       <th>0</th>
       <td>1570186860</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.939155</td>
       <td>2019-10-04 11:01:00+00:00</td>
@@ -1351,7 +1355,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
     <tr>
       <th>1</th>
       <td>1570273260</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.872610</td>
       <td>2019-10-05 11:01:00+00:00</td>
@@ -1359,7 +1363,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
     <tr>
       <th>2</th>
       <td>1570359660</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.982989</td>
       <td>2019-10-06 11:01:00+00:00</td>
@@ -1367,7 +1371,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
     <tr>
       <th>3</th>
       <td>1570446060</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.996053</td>
       <td>2019-10-07 11:01:00+00:00</td>
@@ -1375,7 +1379,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
     <tr>
       <th>4</th>
       <td>1570532460</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.921091</td>
       <td>2019-10-08 11:01:00+00:00</td>
@@ -1387,7 +1391,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 <p>From the results, we can see that the ModeId feature provides a mode label for each timestamp, together with a boolean describing the certainty around this mode label and its probability.</p>
 <p>We can also request to display a summary of the results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1408,50 +1412,50 @@ Labels
 +----------+----------+-----------+--------------------+------------+
 |   labels |   counts |   portion |   mode_probability |   datetime |
 |----------+----------+-----------+--------------------+------------|
-|        0 |       17 |        34 |                 17 |         17 |
-|        1 |        8 |        16 |                  8 |          8 |
-|        2 |       25 |        50 |                 25 |         25 |
+|        0 |        8 |        16 |                  8 |          8 |
+|        1 |       25 |        50 |                 25 |         25 |
+|        2 |       17 |        34 |                 17 |         17 |
 +----------+----------+-----------+--------------------+------------+
 
 Lables &amp; uncertain labels
 +------------+-----------+--------------------+------------+----------+
 |            |   portion |   mode_probability |   datetime |   counts |
 |------------+-----------+--------------------+------------+----------|
-| (0, False) |        34 |                 17 |         17 |       17 |
-| (1, False) |        16 |                  8 |          8 |        8 |
-| (2, False) |        50 |                 25 |         25 |       25 |
+| (0, False) |        16 |                  8 |          8 |        8 |
+| (1, False) |        50 |                 25 |         25 |       25 |
+| (2, False) |        34 |                 17 |         17 |       17 |
 +------------+-----------+--------------------+------------+----------+
 
 Emerging Modes
 +----+---------+-----------------+-----------------+-------------------+---------------------------+
 |    |   modes |   emerging_time |   max_prob_time |   max_probability | datetime                  |
 |----+---------+-----------------+-----------------+-------------------+---------------------------|
-|  0 |       0 |      1570186860 |      1570446060 |          0.996053 | 2019-10-04 11:01:00+00:00 |
-|  1 |       1 |      1571655660 |      1572264060 |          0.997885 | 2019-10-21 11:01:00+00:00 |
-|  2 |       2 |      1572350460 |      1573646460 |          0.989592 | 2019-10-29 12:01:00+00:00 |
+|  0 |       2 |      1570186860 |      1570446060 |          0.996053 | 2019-10-04 11:01:00+00:00 |
+|  1 |       0 |      1571655660 |      1572264060 |          0.997885 | 2019-10-21 11:01:00+00:00 |
+|  2 |       1 |      1572350460 |      1573646460 |          0.989592 | 2019-10-29 12:01:00+00:00 |
 +----+---------+-----------------+-----------------+-------------------+---------------------------+
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 [        counts  portion  mode_probability  datetime
  labels
- 0           17     34.0                17        17
- 1            8     16.0                 8         8
- 2           25     50.0                25        25,
+ 0            8     16.0                 8         8
+ 1           25     50.0                25        25
+ 2           17     34.0                17        17,
                    portion  mode_probability  datetime  counts
  labels uncertain
- 0      False         34.0                17        17      17
- 1      False         16.0                 8         8       8
- 2      False         50.0                25        25      25,
+ 0      False         16.0                 8         8       8
+ 1      False         50.0                25        25      25
+ 2      False         34.0                17        17      17,
     modes  emerging_time  max_prob_time  max_probability  \
- 0      0     1570186860     1570446060         0.996053
- 1      1     1571655660     1572264060         0.997885
- 2      2     1572350460     1573646460         0.989592
+ 0      2     1570186860     1570446060         0.996053
+ 1      0     1571655660     1572264060         0.997885
+ 2      1     1572350460     1573646460         0.989592
 
                     datetime
  0 2019-10-04 11:01:00+00:00
@@ -1463,7 +1467,7 @@ Emerging Modes
 <p>In addition, it provides information on the emerging modes. Emerging modes describes the time (timestamp) each one of the modes first appeared. This information can be useful to identify if a new mode is affecting or appearing in the asset.</p>
 <p>Finally, we can generate a plot that displays display the different modes over time.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1479,7 +1483,7 @@ Emerging Modes
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1490,7 +1494,7 @@ Emerging Modes
 <p>Lastly, we can combine the information from the KPIDemo and ModeId features to display a boxplot of the “RMS” for each one of the operating modes.</p>
 <p>First, we merge the “KPI” and “ModeId” dataframes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1500,7 +1504,7 @@ Emerging Modes
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1549,7 +1553,7 @@ Emerging Modes
       <td>1</td>
       <td>-0.140239</td>
       <td>1970-01-19 04:09:46.860000+00:00</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.939155</td>
       <td>2019-10-04 11:01:00+00:00</td>
@@ -1565,7 +1569,7 @@ Emerging Modes
       <td>1</td>
       <td>-0.140425</td>
       <td>1970-01-19 04:11:13.260000+00:00</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.872610</td>
       <td>2019-10-05 11:01:00+00:00</td>
@@ -1581,7 +1585,7 @@ Emerging Modes
       <td>1</td>
       <td>-0.140243</td>
       <td>1970-01-19 04:12:39.660000+00:00</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.982989</td>
       <td>2019-10-06 11:01:00+00:00</td>
@@ -1597,7 +1601,7 @@ Emerging Modes
       <td>1</td>
       <td>-0.140351</td>
       <td>1970-01-19 04:14:06.060000+00:00</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.996053</td>
       <td>2019-10-07 11:01:00+00:00</td>
@@ -1613,7 +1617,7 @@ Emerging Modes
       <td>1</td>
       <td>-0.140429</td>
       <td>1970-01-19 04:15:32.460000+00:00</td>
-      <td>0</td>
+      <td>2</td>
       <td>False</td>
       <td>0.921091</td>
       <td>2019-10-08 11:01:00+00:00</td>
@@ -1624,7 +1628,7 @@ Emerging Modes
 </div>
 <p>The MVG library provides additional visualization functions that can help towards this goal. Thus, we import the visualization module</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1634,7 +1638,7 @@ Emerging Modes
 </div>
 <p>Now, we can proceed to plot the boxplot.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1652,7 +1656,7 @@ Emerging Modes
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
