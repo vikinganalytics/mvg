@@ -200,14 +200,15 @@ of the analysis class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.analysis.Analysis.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.plot" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.analysis.Analysis.plot" title="Permalink to this definition"></a></dt>
 <dd><p>Pro forma ancestor function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_labels. If not given
 only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – filename for the plot.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -391,14 +392,44 @@ class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.modeid.ModeId.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.plot" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.plot" title="Permalink to this definition"></a></dt>
 <dd><p>Generate a basic plot on ModeId.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_labels. If not given
 only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – filename for the plot. If interactive is True, filename will be
+ignored. If interactive is False, default filename will be of the
+format “{source_name}_{analysis_request_id}.png”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>plot file name</strong> – name of plot file (or emtpy string in case of interactive plot)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.features.modeid.ModeId.plot_probabilities">
+<span class="sig-name descname"><span class="pre">plot_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_modes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.plot_probabilities" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a basic plot on mode probabilites over time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
+<li><p><strong>selected_modes</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – Plot the mode probabilities for a list of modes.
+By default, the probability of all modes will be plotted.</p></li>
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for x-axis tick labels.
+If not given, dates will be shown in locale format.
+To show dates and time use %y%m%d-%H:%M:%S.</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – filename for the plot. If interactive is True, filename will be
+ignored. If interactive is False, default filename will be of the
+format “{source_name}_{analysis_request_id}.png”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -433,7 +464,7 @@ only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
 <dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.blacksheep.BlackSheep.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep.plot" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep.plot" title="Permalink to this definition"></a></dt>
 <dd><p>Generate a (not so) basic plot for BlackSheep
 Will show per atypical asset changes to and from
 atypical modes</p>
@@ -441,8 +472,11 @@ atypical modes</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_labels. If not given
 only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – filename for the plot. If interactive is True, filename will be
+ignored. If interactive is False, default filename will be of the format
+“{source_1_name}_to_{source_n_name}_{analysis_request_id}.png”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -478,7 +512,7 @@ only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
 <p>Analysis class for KPIDemo feature.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.kpidemo.KPIDemo.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.kpidemo.KPIDemo.plot" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.kpidemo.KPIDemo.plot" title="Permalink to this definition"></a></dt>
 <dd><p>Generate a basic plot on KPIs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -486,8 +520,11 @@ only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
 <li><p><strong>kpi</strong> (<em>str</em>) – sting that describes the KPI to be displayed.
 Default kpi is RMS</p></li>
 <li><p><strong>interactive</strong> (<em>bool</em>) – True: show plot, False: save plot</p></li>
-<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_lables. If not given
+<li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – strftime format specifier for tick_x_labels. If not given
 only dates are shown. To show dates and time use %y%m%d-%H:%M:%S</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – filename for the plot. If interactive is True, filename will be
+ignored. If interactive is False, default filename will be of the
+format “{source_name}_{analysis_request_id}.png”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
