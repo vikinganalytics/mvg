@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Using MVG features &mdash; MultiViz Analytics Engine Library  documentation</title>
+  <title>Callback on Analysis Completion &mdash; MultiViz Analytics Engine Library  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -22,8 +22,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="KPI Demo" href="kpidemo.html" />
-    <link rel="prev" title="Labeling Measurements" href="../examples/labeling.html" /> 
+    <link rel="next" title="MutliViz Analytics Engine" href="../api_reference/mvg.html" />
+    <link rel="prev" title="Population Based Anomaly Detection (BlackSheep)" href="../features/blacksheep.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,19 +54,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/labeling.html">Labeling Measurements</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Using MVG features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#how-to-use-features-via-mvg">How to use features via MVG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="kpidemo.html">KPI Demo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ModeId.html">Automatic Mode Identification (ModeID)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../features/general.html">Using MVG features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/kpidemo.html">KPI Demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Advanced usage</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../advanced/callback.html">Callback on Analysis Completion</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Callback on Analysis Completion</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
@@ -88,9 +84,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Using MVG features</li>
+      <li>Callback on Analysis Completion</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/content/features/general.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/content/advanced/callback.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -122,69 +118,18 @@
     text-align: unset;
 }
 </style>
-<section id="using-mvg-features">
-<h1>Using MVG features<a class="headerlink" href="#using-mvg-features" title="Permalink to this headline"></a></h1>
-<p>MVG provides a set of analytics features for analysis of
-vibration data. The documentation in the FEATURES section
-focuses mostly on description of
-the features, for detailed information on how to invoke the features
-via the API, consult the <a class="reference external" href="../api_reference/mvg.html">API Reference</a> or
-the <a class="reference external" href="../examples/analysis_visual.html">Examples</a>.</p>
-<section id="how-to-use-features-via-mvg">
-<h2>How to use features via MVG<a class="headerlink" href="#how-to-use-features-via-mvg" title="Permalink to this headline"></a></h2>
-<ol class="arabic simple">
-<li><p>All features require data for the sources to be uploaded prior to invocation.</p></li>
-<li><p>Features are invoked via the
-<a class="reference external" href="../api_reference/mvg.html#mvg.mvg.MVG.request_analysis">request_analysis</a> or the
-<a class="reference external" href="../api_reference/mvg.html#mvg.mvg.MVG.request_population_analysis">request_population_analysis</a>
-methods. The former are features related
-to a single source (which is specified via the source id
-parameter, while the latter are features which operate on a population
-of sources, which are provided in the sids (source ids) parameter; a
-list holding the source ids defining the population. Which feature to
-run is specified by the <code class="docutils literal notranslate"><span class="pre">feature</span></code> argument.  In case additional parameters are required or supported they are
-documented under the specific feature. On invoking a feature the
-analytics engine will queue the analysis and then execute it.</p></li>
-<li><p>After invocation the status of the analysis can be queried via the
-<a class="reference external" href="../api_reference/mvg.html#mvg.mvg.MVG.get_analysis_status">get_analysis_status</a>
-method.</p></li>
-<li><p>Once the returned status is “successful”, the analysis results can be
-retrieved using the
-<a class="reference external" href="../api_reference/mvg.html?highlight=sis_res#mvg.mvg.MVG.get_analysis_results">get_analysis_results</a>
-method.</p></li>
-<li><p>The results are returned as a dictionary of the following
-structure:</p></li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s2">&quot;&lt;if call was successful&gt;&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">&lt;</span><span class="nb">dict</span> <span class="k">with</span> <span class="n">actual</span> <span class="n">results</span><span class="o">&gt;</span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>The format of the actual results in the <code class="docutils literal notranslate"><span class="pre">results</span></code> section is documented under respective feature.</p>
-</section>
-<section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline"></a></h2>
-<ol class="arabic simple">
-<li><p>The time until the analytics server has finished will vary
-depending on feature, amount of data to be processed and server
-load. Although normally analyses will complete in less than
-a minute, under extreme conditions that could take as long as 15 minutes.</p></li>
-<li><p>Analyses may fail. Typically these failures are due to the
-algorithm not being able to be run due to the supplied input data
-(e.g. due to singular  matrices if data is too highly correlated).</p></li>
-<li><p>If you suspect a bug, please place an issue in our
-<a class="reference external" href="https://github.com/vikinganalytics/mvg/issues">issue tracking on GitHub</a>.</p></li>
-</ol>
-</section>
+<section id="callback-on-analysis-completion">
+<h1>Callback on Analysis Completion<a class="headerlink" href="#callback-on-analysis-completion" title="Permalink to this headline"></a></h1>
+<p>The MVG API has support for OpenAPI callbacks, meaning that you could create an API on your own and have MVG trigger a request to it when an analysis is completed.</p>
+<p>The request analysis methods of the MVG object have a keyword argument for a <code class="docutils literal notranslate"><span class="pre">callback_url</span></code> to an HTTP server with an <code class="docutils literal notranslate"><span class="pre">{$callback_url}/analysis</span></code> endpoint. The endpoint should have a POST method with two JSON body arguments, a string <code class="docutils literal notranslate"><span class="pre">request_status</span></code> and a string <code class="docutils literal notranslate"><span class="pre">request_id</span></code>. The format of the endpoint you need to implement is documented in the <a class="reference external" href="https://api.beta.multiviz.com/docs#//request_notification__callback_url__analyses_post">MVG API documentation</a> under the Callbacks tab of the POST <code class="docutils literal notranslate"><span class="pre">analyses/requests</span></code> methods.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../examples/labeling.html" class="btn btn-neutral float-left" title="Labeling Measurements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kpidemo.html" class="btn btn-neutral float-right" title="KPI Demo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../features/blacksheep.html" class="btn btn-neutral float-left" title="Population Based Anomaly Detection (BlackSheep)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api_reference/mvg.html" class="btn btn-neutral float-right" title="MutliViz Analytics Engine" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
