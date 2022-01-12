@@ -87,4 +87,4 @@ jobs:
         -   name: "Run all examples"
             env:
                 TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
-            run: ./regenerate-examples.sh
+            run: bash ./regenerate-examples.sh
