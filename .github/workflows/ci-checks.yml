@@ -84,25 +84,7 @@ jobs:
         name: "Validate examples in documentation"
         steps:
         -   uses: actions/checkout@v2
-        -   name: "Install dependencies"
-            run: |
-                pip install notebook tqdm ipywidgets
-                pip install -r requirements.txt
-        -   name: "Setup MVG"
-            run: |
-                pip install .
         -   name: "Run all examples"
             env:
                 TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
-                EXAMPLES_DIR: 'docs/source/content/examples'
-            run: |
-                echo "Running notebooks containing examples"
-                jupyter nbconvert --execute --to notebook --inplace ${{env.EXAMPLES_DIR}}/check_version.ipynb \
-                                                                    ${{env.EXAMPLES_DIR}}/brief_overview.ipynb \
-                                                                    ${{env.EXAMPLES_DIR}}/sources_and_measurements.ipynb \
-                                                                    ${{env.EXAMPLES_DIR}}/tabular_example.ipynb \
-                                                                    ${{env.EXAMPLES_DIR}}/error_handling.ipynb \
-                                                                    ${{env.EXAMPLES_DIR}}/analysis_classes.ipynb \
-                                                                    ${{env.EXAMPLES_DIR}}/analysis_visual.ipynb \
-                                                                    ${{env.EXAMPLES_DIR}}/labeling.ipynb
-                echo "Done"
+            run: ./regenerate-examples.sh
