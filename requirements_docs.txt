@@ -1,4 +1,4 @@
-pygments==2.11.1
+papermill
 sphinx
 sphinx-rtd-theme
 nbsphinx

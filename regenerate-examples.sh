@@ -1,30 +1,29 @@
 #!/bin/bash
+set -e
 
 # Setup requirements for executing jupyter notebooks
 python -m pip install -r requirements.txt
 python -m pip install -r requirements_docs.txt
 
 # Cleanup
-cleanup() {
-    echo "Performing cleanup"
-    rm .??*.ipynb
+do_cleanup() {
+    echo "Performing cleanup of temporary resources"
     rm -rf ./va-data-charlie
     kill $$
 }
 
-# Run examples
-run_examples() {
+# Execute notebooks containing examples
+exec_examples() {
     echo "Running notebooks containing examples"
     for file in ./docs/source/content/examples/*.ipynb; do
-        filename="${file##*/}"
-        cp "$file" ".$filename"
-        jupyter nbconvert --execute --to notebook --ExecutePreprocessor.timeout=-1 --inplace ".$filename" --output "$file"
+        papermill "$file" "$file"
     done
+    do_cleanup
     echo "Done"
 }
 
-# Set up SIGINT trap to call function.
-trap "cleanup" INT
+# Setup SIGINT, EXIT trap to finish the script with cleanup
+trap do_cleanup INT EXIT
 
-# Run examples and run cleanup function on error
-run_examples || cleanup
+# Execute main function
+exec_examples
