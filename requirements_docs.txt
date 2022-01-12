@@ -1,4 +1,4 @@
-pygments
+pygments==2.11.1
 sphinx
 sphinx-rtd-theme
 nbsphinx
