@@ -2,7 +2,7 @@ sphinx
 sphinx-rtd-theme
 nbsphinx
 sphinx-copybutton
-pygments
 ipywidgets
 tqdm
 notebook
+nbconvert==6.3.0
