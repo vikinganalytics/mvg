@@ -1,4 +1,8 @@
 # MVG: MultiViz Analytics Engine Client Library
+<a href="https://pypi.org/project/va-mvg/">
+    <img src="https://badge.fury.io/py/va-mvg.svg" alt="Package version">
+</a>
+<img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/va-mvg.svg?style=flat-square">
 
 A Python library to interface the the **M**ulti**V**iz Analytics En**G**ine ('MVG')
 
