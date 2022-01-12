@@ -1,8 +1,7 @@
 papermill
+ipywidgets
+tqdm
 sphinx
 sphinx-rtd-theme
 nbsphinx
 sphinx-copybutton
-ipywidgets
-tqdm
-notebook
