@@ -14,11 +14,11 @@ do_cleanup() {
 # Execute notebooks containing examples
 exec_examples() {
     echo "Running notebooks containing examples"
-    for file in ./docs/source/content/examples/*.ipynb; do
+    local _d="./docs/source/content/examples"
+    for file in `ls -v $_d/*.ipynb`; do
         papermill "$file" "$file"
     done
-    do_cleanup
-    echo "Done"
+    echo "Finished executing examples"
 }
 
 # Setup SIGINT, EXIT trap to finish the script with cleanup
