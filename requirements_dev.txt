@@ -10,5 +10,5 @@ pytest
 pytest-docker
 m2r2
 # for callback test server
-uvicorn
+uvicorn==0.16.0
 fastapi
