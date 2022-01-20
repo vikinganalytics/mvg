@@ -81,7 +81,7 @@ v{MAJOR}.{MINOR}.{PATCH}.
 An increase of MAJOR means an incompatible change which requires an
 upgrade of mvg, an increase in MINOR does not require an upgrade of
 mvg, but may then not allow to access new features of the API. See mvg
-documentation and examples/check_version.py for details.
+documentation and examples/0-check_version.ipynb for details.
 
 ## Additional Documentation
 
