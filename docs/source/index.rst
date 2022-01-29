@@ -19,6 +19,7 @@
    content/examples/5-analysis_classes
    content/examples/3-tabular_example
    content/examples/7-labeling
+   content/examples/8-inference
 
 .. toctree::
    :maxdepth: 2
