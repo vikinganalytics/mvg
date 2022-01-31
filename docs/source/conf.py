@@ -20,7 +20,7 @@ sys.path.insert(0, str(REPO_ROOT.resolve()))
 # -- Project information -----------------------------------------------------
 
 project = "MultiViz Analytics Engine Library"
-copyright = "2021, Viking Analytics AB"
+copyright = "2022, Viking Analytics AB"
 author = "Viking Analytics AB"
 
 

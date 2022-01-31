@@ -11,14 +11,15 @@
    :maxdepth: 2
    :caption: Examples
 
-   content/examples/brief_overview
-   content/examples/check_version
-   content/examples/error_handling
-   content/examples/sources_and_measurements
-   content/examples/analysis_visual
-   content/examples/analysis_classes
-   content/examples/tabular_example
-   content/examples/labeling
+   content/examples/1-brief_overview
+   content/examples/0-check_version
+   content/examples/4-error_handling
+   content/examples/2-sources_and_measurements
+   content/examples/6-analysis_visual
+   content/examples/5-analysis_classes
+   content/examples/3-tabular_example
+   content/examples/7-labeling
+   content/examples/8-inference
 
 .. toctree::
    :maxdepth: 2
