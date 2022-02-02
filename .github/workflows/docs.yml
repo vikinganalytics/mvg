@@ -21,7 +21,7 @@ jobs:
         - name: "Install dependencies"
           run: |
             pip install -r requirements.txt 
-            pip install -r requirements_dev.txt
+            pip install -r requirements_docs.txt
             wget https://github.com/jgm/pandoc/releases/download/2.11.4/pandoc-2.11.4-1-amd64.deb
             sudo dpkg -i pandoc-2.11.4-1-amd64.deb
             rm pandoc-2.11.4-1-amd64.deb

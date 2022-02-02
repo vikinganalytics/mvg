@@ -5,4 +5,5 @@ sphinx
 sphinx-rtd-theme
 nbsphinx
 sphinx-copybutton
+m2r2
 sklearn
