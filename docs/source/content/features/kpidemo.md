@@ -1,6 +1,6 @@
 # KPI Demo
 
-.. image:: ../img/rms_sales.png
+.. image:: ../img/kpidemo_sales.png
 
 ## What does KPIDemo do?
 
