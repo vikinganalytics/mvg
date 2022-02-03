@@ -19,13 +19,13 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Labeling Measurements" href="labeling.html" />
-    <link rel="prev" title="Analysis Classes - a Unified Interface to Analysis Results" href="analysis_classes.html" /> 
+    <link rel="next" title="Labeling Measurements" href="7-labeling.html" />
+    <link rel="prev" title="Analysis Classes - a Unified Interface to Analysis Results" href="5-analysis_classes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,17 +46,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sources_and_measurements.html">Sources and Measurements Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Working with Tabular Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Imports">Imports</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="labeling.html">Labeling Measurements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling Measurements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -91,7 +92,7 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Working with Tabular Data</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/content/examples/tabular_example.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/content/examples/3-tabular_example.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -309,7 +310,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -380,8 +381,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -400,9 +401,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;http://api.beta.multiviz.com&quot;</span>
-<span class="n">TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;http://api.beta.multiviz.com&quot;</span>
+<span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TEST_TOKEN&#39;</span><span class="p">]</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -412,8 +412,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>git clone https://github.com/vikinganalytics/tabular-example-data.git
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/vikinganalytics/tabular-example-data.git
 </pre></div>
 </div>
 </div>
@@ -429,8 +428,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;tabular-example-data&quot;</span> <span class="o">/</span> <span class="s2">&quot;heatpump.csv&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;tabular-example-data&quot;</span> <span class="o">/</span> <span class="s2">&quot;heatpump.csv&quot;</span>
 <span class="n">data_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
 <span class="n">data_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -541,8 +539,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="mi">1000000</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="mi">1000000</span>
 <span class="n">data_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -664,8 +661,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data_dict</span> <span class="o">=</span> <span class="n">data_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dict</span> <span class="o">=</span> <span class="n">data_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -674,8 +670,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">create_tabular_source</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">create_tabular_source</span><span class="p">(</span>
     <span class="n">sid</span><span class="o">=</span><span class="s2">&quot;heatpump&quot;</span><span class="p">,</span>
     <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;Molnlycke&quot;</span><span class="p">},</span>
     <span class="n">columns</span><span class="o">=</span><span class="n">data_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -688,8 +683,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">source</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s2">&quot;heatpump&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s2">&quot;heatpump&quot;</span><span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -717,8 +711,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">create_tabular_measurement</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">create_tabular_measurement</span><span class="p">(</span>
     <span class="n">sid</span><span class="o">=</span><span class="s2">&quot;heatpump&quot;</span><span class="p">,</span>
     <span class="n">data</span><span class="o">=</span><span class="n">data_dict</span>
 <span class="p">)</span>
@@ -731,8 +724,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span>
     <span class="n">sid</span><span class="o">=</span><span class="s2">&quot;heatpump&quot;</span><span class="p">,</span>
     <span class="n">feature</span><span class="o">=</span><span class="s2">&quot;ModeId&quot;</span><span class="p">,</span>
 <span class="p">)</span>
@@ -745,8 +737,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">request_id</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">request_id</span><span class="p">])</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
 <span class="n">analysis</span> <span class="o">=</span> <span class="n">ModeId</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre></div>
@@ -757,8 +748,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">analysis</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analysis</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -766,7 +756,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_tabular_example_22_0.png" src="../../_images/content_examples_tabular_example_22_0.png" />
+<img alt="../../_images/content_examples_3-tabular_example_22_0.png" src="../../_images/content_examples_3-tabular_example_22_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -787,8 +777,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="s2">&quot;heatpump&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="s2">&quot;heatpump&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -799,14 +788,14 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="analysis_classes.html" class="btn btn-neutral float-left" title="Analysis Classes - a Unified Interface to Analysis Results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="labeling.html" class="btn btn-neutral float-right" title="Labeling Measurements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="5-analysis_classes.html" class="btn btn-neutral float-left" title="Analysis Classes - a Unified Interface to Analysis Results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="7-labeling.html" class="btn btn-neutral float-right" title="Labeling Measurements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Viking Analytics AB.</p>
+    <p>&#169; Copyright 2022, Viking Analytics AB.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

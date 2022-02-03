@@ -734,7 +734,7 @@
    "source": [
     "In this example, we will show how to request the KPIDemo and ModeId features to be applied to the previously defined SOURCE_ID.\n",
     "The BlackSheep feature is aimed to population analytics.\n",
-    "You can read about how to use it in the [\"Analysis and Results Visualization\"](analysis_visual.ipynb) example.\n",
+    "You can read about how to use it in the [\"Analysis and Results Visualization\"](6-analysis_visual.ipynb) example.\n",
     "\n",
     "We will begin with the 'KPIDemo' feature, which provides KPIs, such as RMS, for each vibration measurement.\n",
     "We proceed to request the analysis to the MVG service."

@@ -19,13 +19,13 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Error Handling Example" href="error_handling.html" />
-    <link rel="prev" title="Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library" href="brief_overview.html" /> 
+    <link rel="next" title="Error Handling Example" href="4-error_handling.html" />
+    <link rel="prev" title="Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library" href="1-brief_overview.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,14 +46,15 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sources_and_measurements.html">Sources and Measurements Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tabular_example.html">Working with Tabular Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="labeling.html">Labeling Measurements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling Measurements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -88,7 +89,7 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Check Version Example</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/content/examples/check_version.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/content/examples/0-check_version.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -306,7 +307,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -373,8 +374,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="c1"># import mvg library with python bindings to mvg-API</span>
@@ -386,8 +386,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
 <span class="n">root_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
 <span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 <span class="n">root_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span>
@@ -398,8 +397,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="s2">&quot;NO TOKEN&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="s2">&quot;NO TOKEN&quot;</span>
 <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
 </pre></div>
@@ -410,8 +408,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">check_version</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">check_version</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -442,14 +439,14 @@ Highest tested API version: 0.2.7
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="brief_overview.html" class="btn btn-neutral float-left" title="Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="error_handling.html" class="btn btn-neutral float-right" title="Error Handling Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="1-brief_overview.html" class="btn btn-neutral float-left" title="Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="4-error_handling.html" class="btn btn-neutral float-right" title="Error Handling Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Viking Analytics AB.</p>
+    <p>&#169; Copyright 2022, Viking Analytics AB.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

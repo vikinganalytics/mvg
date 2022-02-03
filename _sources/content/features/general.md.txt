@@ -5,7 +5,7 @@ vibration data. The documentation in the FEATURES section
 focuses mostly on description of
 the features, for detailed information on how to invoke the features
 via the API, consult the [API Reference](../api_reference/mvg.html) or
-the [Examples](../examples/analysis_visual.html).
+the [Examples](../examples/6-analysis_visual.html).
 
 ## How to use features via MVG
 

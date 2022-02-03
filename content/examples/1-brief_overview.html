@@ -19,12 +19,12 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Check Version Example" href="check_version.html" />
+    <link rel="next" title="Check Version Example" href="0-check_version.html" />
     <link rel="prev" title="MVG: MultiViz Analytics Engine Client Library" href="../../index.html" /> 
 </head>
 
@@ -64,13 +64,14 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sources_and_measurements.html">Sources and Measurements Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tabular_example.html">Working with Tabular Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="labeling.html">Labeling Measurements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling Measurements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -105,7 +106,7 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/content/examples/brief_overview.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/content/examples/1-brief_overview.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -323,7 +324,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -408,8 +409,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -423,8 +423,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!{</span>sys.executable<span class="o">}</span> -m pip install va-mvg
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!{</span>sys.executable<span class="o">}</span> -m pip install va-mvg
 </pre></div>
 </div>
 </div>
@@ -434,8 +433,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
 <span class="kn">from</span> <span class="nn">mvg.exceptions</span> <span class="kn">import</span> <span class="n">MVGAPIError</span>
 </pre></div>
 </div>
@@ -446,8 +444,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
 <span class="c1"># Replace by your own Token</span>
 <span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TEST_TOKEN&#39;</span><span class="p">]</span>
 </pre></div>
@@ -457,8 +454,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">VALID_TOKEN</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">VALID_TOKEN</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -467,8 +463,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">say_hello</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">say_hello</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -491,8 +486,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">sources</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sources</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting </span><span class="si">{</span><span class="n">src</span><span class="p">[</span><span class="s1">&#39;source_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -520,8 +514,7 @@ Deleting zeros
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>git clone --depth<span class="o">=</span><span class="m">1</span> https://github.com/vikinganalytics/va-data-charlie.git
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone --depth<span class="o">=</span><span class="m">1</span> https://github.com/vikinganalytics/va-data-charlie.git
 </pre></div>
 </div>
 </div>
@@ -529,15 +522,13 @@ Deleting zeros
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Path to the source folder</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Path to the source folder</span>
 <span class="n">REF_DB_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;va-data-charlie&quot;</span> <span class="o">/</span> <span class="s2">&quot;charlieDb&quot;</span> <span class="o">/</span> <span class="s2">&quot;acc&quot;</span>
 <span class="n">REF_DB_PATH</span>
 <span class="c1"># Definition of the source_id</span>
 <span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
 <span class="n">SOURCE_ID</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -559,8 +550,7 @@ measurements.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">meta_information</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;assetId&#39;</span><span class="p">:</span> <span class="s1">&#39;assetJ&#39;</span><span class="p">,</span> <span class="s1">&#39;measPoint&#39;</span><span class="p">:</span> <span class="s1">&#39;mloc01&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;cancun&#39;</span><span class="p">,</span> <span class="s1">&#39;timezone&#39;</span><span class="p">:</span> <span class="s1">&#39;Europe/Stockholm&#39;</span><span class="p">}</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">meta_information</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;assetId&#39;</span><span class="p">:</span> <span class="s1">&#39;assetJ&#39;</span><span class="p">,</span> <span class="s1">&#39;measPoint&#39;</span><span class="p">:</span> <span class="s1">&#39;mloc01&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;cancun&#39;</span><span class="p">,</span> <span class="s1">&#39;timezone&#39;</span><span class="p">:</span> <span class="s1">&#39;Europe/Stockholm&#39;</span><span class="p">}</span>
 <span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta_information</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">])</span>
 <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
 </pre></div>
@@ -586,8 +576,7 @@ measurements.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -615,8 +604,7 @@ raw data of the vibration measurement. - meta: additional meta information for l
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># meas is a list of timestamps representing the measurements in our repo</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># meas is a list of timestamps representing the measurements in our repo</span>
 <span class="n">src_path</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span>
 <span class="n">meas</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">stem</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.csv&quot;</span><span class="p">)]</span>
 </pre></div>
@@ -626,8 +614,7 @@ raw data of the vibration measurement. - meta: additional meta information for l
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># We iterate over all of elements in this list</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We iterate over all of elements in this list</span>
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">meas</span><span class="p">:</span>
 
     <span class="c1"># raw data per measurement</span>
@@ -823,8 +810,7 @@ Uploading /home/oskar/viking_unix/mvg/docs/source/content/examples/va-data-charl
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">measurements</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measurements</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">measurements</span><span class="p">)</span><span class="si">}</span><span class="s2"> stored measurements&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -846,8 +832,7 @@ Read 50 stored measurements
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">available_features</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">supported_features</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">available_features</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">supported_features</span><span class="p">()</span>
 <span class="n">available_features</span>
 </pre></div>
 </div>
@@ -864,14 +849,13 @@ Read 50 stored measurements
  &#39;LabelPropagation&#39;: &#39;0.1.0&#39;}
 </pre></div></div>
 </div>
-<p>In this example, we will show how to request the KPIDemo and ModeId features to be applied to the previously defined SOURCE_ID. The BlackSheep feature is aimed to population analytics. You can read about how to use it in the <a class="reference internal" href="analysis_visual.html"><span class="doc">“Analysis and Results Visualization”</span></a> example.</p>
+<p>In this example, we will show how to request the KPIDemo and ModeId features to be applied to the previously defined SOURCE_ID. The BlackSheep feature is aimed to population analytics. You can read about how to use it in the <a class="reference internal" href="6-analysis_visual.html"><span class="doc">“Analysis and Results Visualization”</span></a> example.</p>
 <p>We will begin with the ‘KPIDemo’ feature, which provides KPIs, such as RMS, for each vibration measurement. We proceed to request the analysis to the MVG service.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">KPI_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s1">&#39;KPIDemo&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">KPI_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s1">&#39;KPIDemo&#39;</span><span class="p">)</span>
 <span class="n">KPI_u0001</span>
 </pre></div>
 </div>
@@ -892,8 +876,7 @@ Read 50 stored measurements
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">REQUEST_ID_KPI_u0001</span> <span class="o">=</span> <span class="n">KPI_u0001</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">REQUEST_ID_KPI_u0001</span> <span class="o">=</span> <span class="n">KPI_u0001</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span>
 <span class="n">status</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">REQUEST_ID_KPI_u0001</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;KPI Analysis: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -912,8 +895,7 @@ KPI Analysis: successful
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">ModeId_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s1">&#39;ModeId&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ModeId_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s1">&#39;ModeId&#39;</span><span class="p">)</span>
 <span class="n">ModeId_u0001</span>
 </pre></div>
 </div>
@@ -932,8 +914,7 @@ KPI Analysis: successful
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">REQUEST_ID_ModeId_u0001</span> <span class="o">=</span> <span class="n">ModeId_u0001</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">REQUEST_ID_ModeId_u0001</span> <span class="o">=</span> <span class="n">ModeId_u0001</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span>
 <span class="n">status</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">REQUEST_ID_ModeId_u0001</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ModeId Analysis: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -954,8 +935,7 @@ ModeId Analysis: queued
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">REQUEST_ID_ModeId_u0001</span><span class="p">,</span> <span class="n">REQUEST_ID_KPI_u0001</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">REQUEST_ID_ModeId_u0001</span><span class="p">,</span> <span class="n">REQUEST_ID_KPI_u0001</span><span class="p">])</span>
 <span class="n">kpi_results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_ID_KPI_u0001</span><span class="p">)</span>
 <span class="n">mode_results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">REQUEST_ID_ModeId_u0001</span><span class="p">)</span>
 
@@ -980,8 +960,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">analysis_classes</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">analysis_classes</span>
 </pre></div>
 </div>
 </div>
@@ -990,8 +969,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">kpi_results_parsed</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">kpi_results</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kpi_results_parsed</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">kpi_results</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1000,8 +978,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df_kpi</span> <span class="o">=</span> <span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_kpi</span> <span class="o">=</span> <span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
 <span class="n">df_kpi</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1111,8 +1088,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1270,8 +1246,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kpi_results_parsed</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1279,7 +1254,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_brief_overview_49_0.png" src="../../_images/content_examples_brief_overview_49_0.png" />
+<img alt="../../_images/content_examples_1-brief_overview_49_0.png" src="../../_images/content_examples_1-brief_overview_49_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1297,8 +1272,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">mode_results_parsed</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">mode_results</span><span class="p">,</span> <span class="n">t_unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mode_results_parsed</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">mode_results</span><span class="p">,</span> <span class="n">t_unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1307,8 +1281,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df_mode</span> <span class="o">=</span> <span class="n">mode_results_parsed</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_mode</span> <span class="o">=</span> <span class="n">mode_results_parsed</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
 <span class="n">df_mode</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1394,8 +1367,7 @@ from 19700119-04:09.46 to 19700119-05:20.24
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">mode_results_parsed</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mode_results_parsed</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1470,8 +1442,7 @@ Emerging Modes
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">mode_results_parsed</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mode_results_parsed</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1479,7 +1450,7 @@ Emerging Modes
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_brief_overview_57_0.png" src="../../_images/content_examples_brief_overview_57_0.png" />
+<img alt="../../_images/content_examples_1-brief_overview_57_0.png" src="../../_images/content_examples_1-brief_overview_57_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1497,8 +1468,7 @@ Emerging Modes
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df_u0001</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_kpi</span><span class="p">,</span> <span class="n">df_mode</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;timestamps&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_u0001</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_kpi</span><span class="p">,</span> <span class="n">df_mode</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;timestamps&quot;</span><span class="p">)</span>
 <span class="n">df_u0001</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1631,8 +1601,7 @@ Emerging Modes
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">plotting</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">plotting</span>
 </pre></div>
 </div>
 </div>
@@ -1641,8 +1610,7 @@ Emerging Modes
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">plotting</span><span class="o">.</span><span class="n">modes_boxplot</span><span class="p">(</span><span class="n">df_u0001</span><span class="p">,</span> <span class="s2">&quot;rms_acc&quot;</span><span class="p">,</span> <span class="n">SOURCE_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting</span><span class="o">.</span><span class="n">modes_boxplot</span><span class="p">(</span><span class="n">df_u0001</span><span class="p">,</span> <span class="s2">&quot;rms_acc&quot;</span><span class="p">,</span> <span class="n">SOURCE_ID</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1668,7 +1636,7 @@ Emerging Modes
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_brief_overview_63_2.png" src="../../_images/content_examples_brief_overview_63_2.png" />
+<img alt="../../_images/content_examples_1-brief_overview_63_2.png" src="../../_images/content_examples_1-brief_overview_63_2.png" />
 </div>
 </div>
 <p>Here we conclude our brief overview to begin using the MultiViz Analytics Engine (MVG) Library.</p>
@@ -1681,13 +1649,13 @@ Emerging Modes
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../../index.html" class="btn btn-neutral float-left" title="MVG: MultiViz Analytics Engine Client Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="check_version.html" class="btn btn-neutral float-right" title="Check Version Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="0-check_version.html" class="btn btn-neutral float-right" title="Check Version Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Viking Analytics AB.</p>
+    <p>&#169; Copyright 2022, Viking Analytics AB.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

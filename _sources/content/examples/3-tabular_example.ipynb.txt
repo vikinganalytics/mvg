@@ -21,6 +21,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
+    "import os\n",
     "from pprint import pprint\n",
     "from pathlib import Path\n",
     "\n",
@@ -46,7 +47,7 @@
    "outputs": [],
    "source": [
     "ENDPOINT = \"http://api.beta.multiviz.com\"\n",
-    "TOKEN = \"\"\n",
+    "TOKEN = os.environ['TEST_TOKEN']\n",
     "session = MVG(ENDPOINT, TOKEN)"
    ]
   },

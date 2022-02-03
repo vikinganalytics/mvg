@@ -19,13 +19,13 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Using MVG features" href="../features/general.html" />
-    <link rel="prev" title="Working with Tabular Data" href="tabular_example.html" /> 
+    <link rel="next" title="Model Inference for New Data" href="8-inference.html" />
+    <link rel="prev" title="Working with Tabular Data" href="3-tabular_example.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,13 +46,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sources_and_measurements.html">Sources and Measurements Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tabular_example.html">Working with Tabular Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Labeling Measurements</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Import-the-required-packages-and-functions">Import the required packages and functions</a></li>
@@ -66,6 +66,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -100,7 +101,7 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Labeling Measurements</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/content/examples/labeling.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/content/examples/7-labeling.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -318,7 +319,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -393,7 +394,7 @@ div.rendered_html tbody tr:hover {
 <ol class="arabic simple">
 <li><p>Installed <code class="docutils literal notranslate"><span class="pre">mvg</span></code> package</p></li>
 <li><p>A token for API access from Viking Analytics</p></li>
-<li><p>The database needs to be populated with our example assets. This can be achieved by running the <a class="reference internal" href="sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example.</p></li>
+<li><p>The database needs to be populated with our example assets. This can be achieved by running the <a class="reference internal" href="2-sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example.</p></li>
 </ol>
 <section id="Import-the-required-packages-and-functions">
 <h3>Import the required packages and functions<a class="headerlink" href="#Import-the-required-packages-and-functions" title="Permalink to this headline"></a></h3>
@@ -401,8 +402,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
 <span class="kn">from</span> <span class="nn">mvg.plotting</span> <span class="kn">import</span> <span class="n">plot_labels_over_time</span>
 </pre></div>
@@ -417,8 +417,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_TOKEN&quot;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_TOKEN&quot;</span><span class="p">]</span>
 <span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
 
@@ -455,8 +454,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
 <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -480,8 +478,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">measurements</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measurements</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
 <span class="n">measurements</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -502,8 +499,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">for</span> <span class="n">measurement</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">measurement</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
     <span class="n">session</span><span class="o">.</span><span class="n">create_label</span><span class="p">(</span>
         <span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
         <span class="n">timestamp</span><span class="o">=</span><span class="n">measurement</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">],</span>
@@ -522,8 +518,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -555,8 +550,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">session</span><span class="o">.</span><span class="n">get_label</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">measurements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">get_label</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">measurements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -580,8 +574,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">for</span> <span class="n">measurement</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">[:</span><span class="mi">2</span><span class="p">]:</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">measurement</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">[:</span><span class="mi">2</span><span class="p">]:</span>
     <span class="n">session</span><span class="o">.</span><span class="n">update_label</span><span class="p">(</span>
         <span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
         <span class="n">timestamp</span><span class="o">=</span><span class="n">measurement</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">],</span>
@@ -627,8 +620,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">include_unlabeled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">include_unlabeled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plot_labels_over_time</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">timeunit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -646,7 +638,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_labeling_18_1.png" src="../../_images/content_examples_labeling_18_1.png" />
+<img alt="../../_images/content_examples_7-labeling_18_1.png" src="../../_images/content_examples_7-labeling_18_1.png" />
 </div>
 </div>
 <p>As you can see we only labeled a small subset of the data. The idea is not to label all the measurements, but to label a part and then use that information to make inference about the unlabeled measurements.</p>
@@ -658,8 +650,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
     <span class="n">session</span><span class="o">.</span><span class="n">delete_label</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">label</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removed </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="si">}</span><span class="s2"> labels&quot;</span><span class="p">)</span>
@@ -682,14 +673,14 @@ Removed 3 labels
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="tabular_example.html" class="btn btn-neutral float-left" title="Working with Tabular Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../features/general.html" class="btn btn-neutral float-right" title="Using MVG features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="3-tabular_example.html" class="btn btn-neutral float-left" title="Working with Tabular Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="8-inference.html" class="btn btn-neutral float-right" title="Model Inference for New Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Viking Analytics AB.</p>
+    <p>&#169; Copyright 2022, Viking Analytics AB.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

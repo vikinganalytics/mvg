@@ -19,13 +19,13 @@
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Working with Tabular Data" href="tabular_example.html" />
-    <link rel="prev" title="Analysis and Results Visualization" href="analysis_visual.html" /> 
+    <link rel="next" title="Working with Tabular Data" href="3-tabular_example.html" />
+    <link rel="prev" title="Analysis and Results Visualization" href="6-analysis_visual.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,11 +46,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="check_version.html">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="error_handling.html">Error Handling Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sources_and_measurements.html">Sources and Measurements Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Analysis Classes - a Unified Interface to Analysis Results</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Or-in-(pseudo)-code">Or in (pseudo) code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Prerequisites">Prerequisites</a><ul>
@@ -77,8 +77,9 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tabular_example.html">Working with Tabular Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="labeling.html">Labeling Measurements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling Measurements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -113,7 +114,7 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Analysis Classes - a Unified Interface to Analysis Results</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/content/examples/analysis_classes.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/content/examples/5-analysis_classes.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -331,7 +332,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -416,7 +417,7 @@ div.rendered_html tbody tr:hover {
 <ol class="arabic simple">
 <li><p>Installed mvg package</p></li>
 <li><p>A token for API access from Viking Analytics</p></li>
-<li><p>The database needs to be populated with our example assets. This can be achieved by running the <a class="reference internal" href="sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example.</p></li>
+<li><p>The database needs to be populated with our example assets. This can be achieved by running the <a class="reference internal" href="2-sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example.</p></li>
 </ol>
 <section id="Example-flow">
 <h4>Example flow<a class="headerlink" href="#Example-flow" title="Permalink to this headline"></a></h4>
@@ -428,8 +429,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span><span class="p">,</span> <span class="n">analysis_classes</span>  <span class="c1"># mvg library with python bindings to mvg-API</span>
 <span class="kn">from</span> <span class="nn">mvg.analysis_classes</span> <span class="kn">import</span> <span class="n">parse_results</span>  <span class="c1"># analysis classes</span>
@@ -445,8 +445,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Replace by your own Token</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace by your own Token</span>
 <span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_TOKEN&quot;</span><span class="p">]</span> <span class="c1"># use our own token</span>
 <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
@@ -473,8 +472,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
 <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -502,8 +500,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Specifc part : Select one of two anlysis here by un/commenting</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specifc part : Select one of two anlysis here by un/commenting</span>
 <span class="n">selected_feature</span> <span class="o">=</span> <span class="s2">&quot;KPIDemo&quot;</span>
 <span class="c1"># selected_feature = &quot;ModeId&quot;</span>
 
@@ -1002,8 +999,7 @@ Waiting for {&#39;request_id&#39;: &#39;6ca83f696c2c9c7852db61292b7b9c76&#39;, &
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Parse</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parse</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">parse_results</span><span class="p">(</span><span class="n">raw_result</span><span class="p">,</span> <span class="s2">&quot;Europe/Stockholm&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="c1"># result = parse_results(raw_result) # show only raw timestamps</span>
 <span class="c1"># Show summary</span>
@@ -1042,8 +1038,7 @@ from 20191005-13:01.00 to 20191122-13:01.00
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1051,7 +1046,7 @@ from 20191005-13:01.00 to 20191122-13:01.00
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_analysis_classes_12_0.png" src="../../_images/content_examples_analysis_classes_12_0.png" />
+<img alt="../../_images/content_examples_5-analysis_classes_12_0.png" src="../../_images/content_examples_5-analysis_classes_12_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1071,8 +1066,7 @@ from 20191005-13:01.00 to 20191122-13:01.00
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1711,8 +1705,7 @@ from 20191005-13:01.00 to 20191122-13:01.00
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2123,8 +2116,7 @@ from 20191005-13:01.00 to 20191122-13:01.00
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Specific signature for BlackSheep</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specific signature for BlackSheep</span>
 <span class="n">POPULATION_SOURCES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0004&quot;</span><span class="p">,</span><span class="s2">&quot;u0002&quot;</span><span class="p">,</span><span class="s2">&quot;u0003&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">]</span>
 <span class="n">analysis_request</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_population_analysis</span><span class="p">(</span><span class="n">POPULATION_SOURCES</span><span class="p">,</span> <span class="s2">&quot;BlackSheep&quot;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;atypical_threshold&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">})</span>
 
@@ -4774,8 +4766,7 @@ Waiting for {&#39;request_id&#39;: &#39;023d673646aaa34407bc9cbcc4f078c8&#39;, &
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Parse</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parse</span>
 <span class="n">blacksheep_result</span> <span class="o">=</span> <span class="n">analysis_classes</span><span class="o">.</span><span class="n">parse_results</span><span class="p">(</span><span class="n">raw_result</span><span class="p">,</span> <span class="s2">&quot;Europe/Stockholm&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="c1"># Show summary</span>
 <span class="n">blacksheep_result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
@@ -4820,7 +4811,7 @@ request_id 023d673646aaa34407bc9cbcc4f078c8
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_analysis_classes_20_1.png" src="../../_images/content_examples_analysis_classes_20_1.png" />
+<img alt="../../_images/content_examples_5-analysis_classes_20_1.png" src="../../_images/content_examples_5-analysis_classes_20_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -4840,8 +4831,7 @@ request_id 023d673646aaa34407bc9cbcc4f078c8
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">blacksheep_result</span><span class="o">.</span><span class="n">save_pkl</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blacksheep_result</span><span class="o">.</span><span class="n">save_pkl</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -4870,14 +4860,14 @@ Saving BlackSheep object to 023d673646aaa34407bc9cbcc4f078c8.pkl
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="analysis_visual.html" class="btn btn-neutral float-left" title="Analysis and Results Visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="tabular_example.html" class="btn btn-neutral float-right" title="Working with Tabular Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="6-analysis_visual.html" class="btn btn-neutral float-left" title="Analysis and Results Visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="3-tabular_example.html" class="btn btn-neutral float-right" title="Working with Tabular Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Viking Analytics AB.</p>
+    <p>&#169; Copyright 2022, Viking Analytics AB.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
