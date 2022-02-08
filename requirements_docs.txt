@@ -4,6 +4,8 @@ tqdm
 sphinx
 sphinx-rtd-theme
 nbsphinx
+# Added to avoid AssertionError in pygments package
+pygments>=2.6.1
 sphinx-copybutton
 m2r2
 sklearn
