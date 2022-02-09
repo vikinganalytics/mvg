@@ -28,7 +28,7 @@ The figure below shows the results of a ModeId analysis where a total of three o
 This is followed by a plot showing the initial labeled measurements, which correspond to three measurements per mode.
 Finally, it shows how all the labels had been propagated to all the measurements after using the LabelPropagation feature.
 
-.. image:: ../img/BLABLABLA_plot.png
+.. image:: ../img/labelpropagation_plots.png
 
 ## Using the algorithm via mvg
 
@@ -38,7 +38,7 @@ For code example see the ["Labeling and Label Propagation"](../examples/7-labeli
 
 2. Request an analysis for the source and pass the request_id as a analysis parameter.
 
-3. Readd the results (see below).
+3. Read the results (see below).
 
 ## Analysis Parameters
 
@@ -60,16 +60,25 @@ If, however, these parameters want to be modified, these are the parameters that
 
 ## Structure of the Results
 
-BLIBLIBLI
+The results returned by the analysis call will be a dictionary called `propagated_labels`, 
+which contains a list equal to the number of measurements in the source.
+Each item on this list is a dictionary with five elements, the keys of these elements are: *label*, *severity*, *notes*, *label_timestamp*, and *timestamp*.
+This final item refers to the timestamp of the measurement.
+
+
 ```
 { 
-	'atypical_assets': ['source 2', 'source 3']
+    'propagated_labels': [... list of measurement results ...],
 }
 ```
 
 ## Notes
 
-1. XXXXXXXXXXXXXXXXX.
+1. The label identification string is unique for each label and is case and spelling sensitive, i.e. `"failure"` and `"Failure"` are not interpreted as the same label. 
+   
+2. The propagated severity level is used to indicate whether the label was added by the user or propagated by the algorithm. A value of -1 means that the label was propagated by the algorithm.
+   
+3. The notes exist for the end user to add extra information to a certain label and is not used by MVG in any way.
 
-2. YYYYYYYYYYYYYYYYY.
+
    
