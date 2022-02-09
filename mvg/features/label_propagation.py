@@ -40,7 +40,7 @@ class LabelPropagation(Analysis):
         tbl["count"] = result_df.groupby("label").count()["severity"]
         print(tabulate(tbl, headers="keys", tablefmt="psql"))
 
-    def plot(self, interactive=True, time_format=None, timeunit="ms", filename=None):
+    def plot(self, interactive=True, time_format=None, timeunit=None, filename=None):
         """
         Generate a label plot for the propagated labels
 
@@ -52,6 +52,9 @@ class LabelPropagation(Analysis):
         time_format: str, optional
             strftime format specifier for tick_x_labels. If not given
             only dates are shown. To show dates and time use %y%m%d-%H:%M:%S
+
+        timeunit: str, optional
+            unit of time corresponding to the timestamp epoch
 
         filename: str, optional
             filename for the plot. If interactive is True, filename will be
