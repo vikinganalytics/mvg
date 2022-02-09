@@ -40,7 +40,7 @@ class LabelPropagation(Analysis):
         tbl["count"] = result_df.groupby("label").count()["severity"]
         print(tabulate(tbl, headers="keys", tablefmt="psql"))
 
-    def plot(self, interactive=True, time_format=None, filename=None):
+    def plot(self, interactive=True, time_format=None, timeunit="ms", filename=None):
         """
         Generate a label plot for the propagated labels
 
@@ -67,6 +67,8 @@ class LabelPropagation(Analysis):
         """
         self.check_status()
         sources = ", ".join(self.sources())
-        plotting.plot_labels_over_time(self.results(), sources, time_format=time_format)
+        plotting.plot_labels_over_time(
+            self.results(), sources, timeunit=timeunit, time_format=time_format
+        )
 
         return self._render_plot(interactive, filename)
