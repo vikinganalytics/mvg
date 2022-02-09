@@ -24,21 +24,38 @@ The end result is a label attached to each individual measurement.
 
 ### Illustrative Example
 
-BLABLABLA
+The figure below shows the results of a ModeId analysis where a total of three operational modes has been identified.
+This is followed by a plot showing the initial labeled measurements, which correspond to three measurements per mode.
+Finally, it shows how all the labels had been propagated to all the measurements after using the LabelPropagation feature.
 
 .. image:: ../img/BLABLABLA_plot.png
 
 ## Using the algorithm via mvg
 
-1. AAAAAAAAAAAAA.
+For code example see the ["Labeling and Label Propagation"](../examples/7-labeling.ipynb) example.
 
-2. BBBBBBBBBBBBBBBB.
+1. Identify the request_id of a successful ModeId analysis.
 
-3. CCCCCCCCCCCCCCC.
+2. Request an analysis for the source and pass the request_id as a analysis parameter.
+
+3. Readd the results (see below).
 
 ## Analysis Parameters
 
-BLEBLEBLE
+The LabelPropagation feature requires to know the source id (`sid`) of the asset to analyze and the `request_id` of a successful "ModeId" analysis.
+
+By default, LabelPropagation will not require any additional, algorithmic input parameters,
+given that the optimal parameters had been thoroughly tested and are used as the default settings.
+
+If, however, these parameters want to be modified, these are the parameters that can updated.
+
+```
+"propagation_params":
+{
+	'n_neighbours': 7,
+	'clamping_factor': 0.2
+}
+```
 
 
 ## Structure of the Results
