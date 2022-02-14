@@ -8,7 +8,7 @@ The label propagation feature spreads existing ground truth labels to unlabelled
 
 ## Use case for the algorithm
 
-Provide with labels to all individual measurements without 
+Associate labels to all individual measurements without 
 an expert having to manually provide with a label to every single measurement.
 
 
@@ -34,9 +34,9 @@ Finally, it shows how all the labels had been propagated to all the measurements
 
 For code example see the ["Labeling and Label Propagation"](../examples/7-labeling.ipynb) example.
 
-1. Identify the request_id of a successful ModeId analysis.
+1. Identify the `request_id` of a successful ModeId analysis.
 
-2. Request an analysis for the source and pass the request_id as a analysis parameter.
+2. Request an analysis for the source and pass the `request_id` as an analysis parameter.
 
 3. Read the results (see below).
 
@@ -46,16 +46,6 @@ The LabelPropagation feature requires to know the source id (`sid`) of the asset
 
 By default, LabelPropagation will not require any additional, algorithmic input parameters,
 given that the optimal parameters had been thoroughly tested and are used as the default settings.
-
-If, however, these parameters want to be modified, these are the parameters that can updated.
-
-```
-"propagation_params":
-{
-	'n_neighbours': 7,
-	'clamping_factor': 0.2
-}
-```
 
 
 ## Structure of the Results
