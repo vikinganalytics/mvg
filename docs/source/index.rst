@@ -29,6 +29,7 @@
    content/features/kpidemo
    content/features/ModeId
    content/features/blacksheep
+   content/features/label_propagation
 	    
 .. toctree::
    :maxdepth: 2

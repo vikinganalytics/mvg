@@ -67,6 +67,8 @@ class LabelPropagation(Analysis):
         """
         self.check_status()
         sources = ", ".join(self.sources())
-        plotting.plot_labels_over_time(self.results(), sources, time_format=time_format)
+        plotting.plot_labels_over_time(
+            self.results(), sources, timeunit=self._t_unit, time_format=time_format
+        )
 
         return self._render_plot(interactive, filename)
