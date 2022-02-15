@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Labeling Measurements &mdash; MultiViz Analytics Engine Library  documentation</title>
+  <title>Labeling of Measurements and Label Propagation &mdash; MultiViz Analytics Engine Library  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -53,15 +53,19 @@
 <li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Labeling Measurements</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Labeling of Measurements and Label Propagation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Import-the-required-packages-and-functions">Import the required packages and functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Create-a-session-for-API-access">Create a session for API access</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Retrieve-ModeId-results">Retrieve ModeId results</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Adding-labels">Adding labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Reading-Labels">Reading Labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Updating-labels">Updating labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Plotting-labels">Plotting labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Deleting-labels">Deleting labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Label-Propagation">Label Propagation</a></li>
 </ul>
 </li>
 </ul>
@@ -74,6 +78,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../features/kpidemo.html">KPI Demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/ModeId.html">Automatic Mode Identification (ModeID)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features/blacksheep.html">Population Based Anomaly Detection (BlackSheep)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/label_propagation.html">Label Propagation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Advanced usage</span></p>
 <ul>
@@ -99,7 +104,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Labeling Measurements</li>
+      <li>Labeling of Measurements and Label Propagation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/content/examples/7-labeling.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -379,15 +384,16 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="Labeling-Measurements">
-<h1>Labeling Measurements<a class="headerlink" href="#Labeling-Measurements" title="Permalink to this headline"></a></h1>
+<section id="Labeling-of-Measurements-and-Label-Propagation">
+<h1>Labeling of Measurements and Label Propagation<a class="headerlink" href="#Labeling-of-Measurements-and-Label-Propagation" title="Permalink to this headline"></a></h1>
 <p>MVG comes with a labeling API that allows a user to store important information about a measurement. There are multiple reasons why you would want to label measurements and some of the benefits include</p>
 <ol class="arabic simple">
 <li><p>Additional information about modes. For example, a mode with multiple critical measurements is likely a failure mode</p></li>
 <li><p>Improved mode detection</p></li>
 <li><p>As personal notes for keeping track of interesting events in the data</p></li>
 </ol>
-<p>This example will go through how what a label is in MVG and how the labeling API functions.</p>
+<p>In addition, the LabelPropagation feature enables to propagate those labels to the measurements that do not contain any labels.</p>
+<p>This example will go through what a label is in MVG, how the labeling API functions, and how to utilize the LabelPropagation feature.</p>
 <section id="Prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline"></a></h2>
 <p>To follow this example you need to have</p>
@@ -395,6 +401,7 @@ div.rendered_html tbody tr:hover {
 <li><p>Installed <code class="docutils literal notranslate"><span class="pre">mvg</span></code> package</p></li>
 <li><p>A token for API access from Viking Analytics</p></li>
 <li><p>The database needs to be populated with our example assets. This can be achieved by running the <a class="reference internal" href="2-sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example.</p></li>
+<li><p>Use of the LabelPropagation feature requires the results from ModeId. We can use the results available after running the <a class="reference internal" href="6-analysis_visual.html"><span class="doc">“Analysis and Results Visualization”</span></a> example.</p></li>
 </ol>
 <section id="Import-the-required-packages-and-functions">
 <h3>Import the required packages and functions<a class="headerlink" href="#Import-the-required-packages-and-functions" title="Permalink to this headline"></a></h3>
@@ -404,6 +411,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">mvg</span> <span class="kn">import</span> <span class="n">MVG</span>
+<span class="kn">from</span> <span class="nn">mvg.analysis_classes</span> <span class="kn">import</span> <span class="n">parse_results</span>
 <span class="kn">from</span> <span class="nn">mvg.plotting</span> <span class="kn">import</span> <span class="n">plot_labels_over_time</span>
 </pre></div>
 </div>
@@ -431,12 +439,152 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;api_version&#39;: &#39;0.2.7&#39;,
- &#39;mvg_highest_tested_version&#39;: &#39;0.2.7&#39;,
- &#39;mvg_version&#39;: &#39;0.9.7&#39;}
+{&#39;api_version&#39;: &#39;0.3.0&#39;,
+ &#39;mvg_highest_tested_version&#39;: &#39;0.3.0&#39;,
+ &#39;mvg_version&#39;: &#39;0.11.5&#39;}
 </pre></div></div>
 </div>
 </section>
+</section>
+<section id="Retrieve-ModeId-results">
+<h2>Retrieve ModeId results<a class="headerlink" href="#Retrieve-ModeId-results" title="Permalink to this headline"></a></h2>
+<p>Once the API session is live, we start by checking if the source <code class="docutils literal notranslate"><span class="pre">u0001</span></code> we will use is available in the database.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
+<span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;source_id&#39;: &#39;u0001&#39;,
+ &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;,
+  &#39;measPoint&#39;: &#39;mloc01&#39;,
+  &#39;location&#39;: &#39;paris&#39;,
+  &#39;updated&#39;: &#39;YES! I have been updated&#39;},
+ &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;, &#39;channels&#39;: [&#39;acc&#39;]}}
+</pre></div></div>
+</div>
+<p>Now that we know that the source exists we need to check its measurements to know which ones to label.</p>
+<p>In this example, the ModeId results are used to select the measurements to label and to compare with the results from the LabelPropagation feature. The ModeId results are NOT needed to add a label to the measurements.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ModeId_request_id</span> <span class="o">=</span> <span class="s2">&quot;5649faa234642e7207fd9800481bcb6e&quot;</span>
+<span class="n">raw_result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">ModeId_request_id</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">parse_results</span><span class="p">(</span><span class="n">raw_result</span><span class="p">,</span> <span class="s2">&quot;Europe/Stockholm&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">u0001_df</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<span class="n">u0001_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>timestamps</th>
+      <th>labels</th>
+      <th>uncertain</th>
+      <th>mode_probability</th>
+      <th>datetime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1570273260</td>
+      <td>0</td>
+      <td>False</td>
+      <td>0.966994</td>
+      <td>2019-10-05 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1570359660</td>
+      <td>0</td>
+      <td>False</td>
+      <td>0.931219</td>
+      <td>2019-10-06 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1570446060</td>
+      <td>0</td>
+      <td>False</td>
+      <td>0.999575</td>
+      <td>2019-10-07 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1570532460</td>
+      <td>0</td>
+      <td>False</td>
+      <td>0.979806</td>
+      <td>2019-10-08 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1570618860</td>
+      <td>0</td>
+      <td>False</td>
+      <td>0.885940</td>
+      <td>2019-10-09 13:01:00+02:00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/content_examples_7-labeling_9_0.png" src="../../_images/content_examples_7-labeling_9_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;&#39;
+</pre></div></div>
+</div>
 <section id="Adding-labels">
 <h3>Adding labels<a class="headerlink" href="#Adding-labels" title="Permalink to this headline"></a></h3>
 <p>A label in MVG relates to a specific measurement, which are identifiable by the source ID and the timestamp. Each measurement can only have one label. The label itself has three components</p>
@@ -449,65 +597,165 @@ div.rendered_html tbody tr:hover {
 <p class="admonition-title">Note</p>
 <p>The label identification string is unique for each label and is case and spelling sensitive, i.e. <code class="docutils literal notranslate"><span class="pre">&quot;failure&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Failure&quot;</span></code> are not interpreted as the same label. The severity level is an integer where a larger number indicates a more severe problem. They do not need to be the same for different instances of the same label. The notes exist for the end user to add extra information to a certain label and is not used by MVG in any way.</p>
 </div>
-<p>Once the API session is live, we start by checking if the source <code class="docutils literal notranslate"><span class="pre">u0001</span></code> we will use is available in the database.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
-<span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-{&#39;source_id&#39;: &#39;u0001&#39;,
- &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetJ&#39;,
-  &#39;measPoint&#39;: &#39;mloc01&#39;,
-  &#39;location&#39;: &#39;cancun&#39;,
-  &#39;timezone&#39;: &#39;Europe/Stockholm&#39;},
- &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;, &#39;channels&#39;: [&#39;acc&#39;]}}
-</pre></div></div>
-</div>
-<p>Now that we know that the source exists we need to check its measurements to know which ones to label.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measurements</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
-<span class="n">measurements</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[{&#39;timestamp&#39;: 1570186860, &#39;meta&#39;: {}, &#39;duration&#39;: 2.8672073400507907},
- {&#39;timestamp&#39;: 1570273260, &#39;meta&#39;: {}, &#39;duration&#39;: 2.8672073400507907},
- {&#39;timestamp&#39;: 1570359660, &#39;meta&#39;: {}, &#39;duration&#39;: 2.8672073400507907}]
-</pre></div></div>
-</div>
-<p>For this example let us say that there was a bearing failure of the machine in the first few measurements, so we will add some labels to the afflicted measurements. To do so we use the <code class="docutils literal notranslate"><span class="pre">MVG.create_label()</span></code> method.</p>
+<p>For this example, let us say that there was a bearing failure of the machine in the first measurement of the source, so we will add a label to the afflicted measurements. To do so, we use the <code class="docutils literal notranslate"><span class="pre">MVG.create_label()</span></code> method.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">measurement</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">create_label</span><span class="p">(</span>
-        <span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
-        <span class="n">timestamp</span><span class="o">=</span><span class="n">measurement</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">],</span>
-        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;bearing_failure&quot;</span><span class="p">,</span>
-        <span class="n">severity</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;Imaginary bearing failure&quot;</span>
-    <span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_measurement</span> <span class="o">=</span> <span class="mi">1570273260</span>
+<span class="n">session</span><span class="o">.</span><span class="n">create_label</span><span class="p">(</span>
+    <span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
+    <span class="n">timestamp</span><span class="o">=</span><span class="mi">1570273260</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;bearing_failure&quot;</span><span class="p">,</span>
+    <span class="n">severity</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;Imaginary bearing failure&quot;</span>
+<span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<p>We just added one label to one of the measurements of the source. However, just one label for the entire source might not be enough especially if the modeId results show more than one mode. Therefore, it might be a good idea to add more labels. Thus, we proceed to attach a label to the top 3 measurements with the largest mode probability of mode from the ModeId feature results. First, we create a dataframe to identify these measurements.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Top3meas_df</span> <span class="o">=</span> <span class="n">u0001_df</span><span class="p">[</span><span class="n">u0001_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;labels&#39;</span><span class="p">)[</span><span class="s1">&#39;mode_probability&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">Top3meas_df</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>timestamps</th>
+      <th>labels</th>
+      <th>uncertain</th>
+      <th>mode_probability</th>
+      <th>datetime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>1570446060</td>
+      <td>0</td>
+      <td>False</td>
+      <td>0.999575</td>
+      <td>2019-10-07 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1570878060</td>
+      <td>0</td>
+      <td>False</td>
+      <td>0.996115</td>
+      <td>2019-10-12 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1570964460</td>
+      <td>0</td>
+      <td>False</td>
+      <td>0.980702</td>
+      <td>2019-10-13 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1571742060</td>
+      <td>1</td>
+      <td>False</td>
+      <td>0.996703</td>
+      <td>2019-10-22 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1572177660</td>
+      <td>1</td>
+      <td>False</td>
+      <td>0.996604</td>
+      <td>2019-10-27 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>1572264060</td>
+      <td>1</td>
+      <td>False</td>
+      <td>0.996323</td>
+      <td>2019-10-28 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>1573041660</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.999899</td>
+      <td>2019-11-06 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>1573387260</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.999897</td>
+      <td>2019-11-10 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>1573646460</td>
+      <td>2</td>
+      <td>False</td>
+      <td>0.999187</td>
+      <td>2019-11-13 13:01:00+01:00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>There are three modes on the ModeId results. We will label measurements from mode 0 as “Healthy”, measurements from mode 1 as “Transition”, measurements from mode 2 as “Faulty”.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">modes</span> <span class="o">=</span> <span class="n">Top3meas_df</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">mode_dfs</span> <span class="o">=</span> <span class="p">{</span><span class="n">mode</span><span class="p">:</span> <span class="n">Top3meas_df</span><span class="p">[</span><span class="n">Top3meas_df</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">mode</span><span class="p">]</span> <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">mode_dfs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">label_to_add</span> <span class="o">=</span> <span class="s2">&quot;Healthy&quot;</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">label_to_add</span> <span class="o">=</span> <span class="s2">&quot;Transition&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">label_to_add</span> <span class="o">=</span> <span class="s2">&quot;Faulty&quot;</span>
+    <span class="n">case_df</span> <span class="o">=</span> <span class="n">mode_dfs</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">case_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">create_label</span><span class="p">(</span>
+            <span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label_to_add</span><span class="p">,</span>
+            <span class="n">severity</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;This is a demo.&quot;</span>
+        <span class="p">)</span>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -515,7 +763,7 @@ div.rendered_html tbody tr:hover {
 <h3>Reading Labels<a class="headerlink" href="#Reading-Labels" title="Permalink to this headline"></a></h3>
 <p>To get a list of all the labels for a source we use the <code class="docutils literal notranslate"><span class="pre">MVG.list_labels()</span></code> method.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
@@ -523,39 +771,74 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;timestamp&#39;: 1570186860,
+[{&#39;timestamp&#39;: 1570273260,
   &#39;label&#39;: &#39;bearing_failure&#39;,
   &#39;severity&#39;: 3,
   &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;},
- {&#39;timestamp&#39;: 1570273260,
-  &#39;label&#39;: &#39;bearing_failure&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:08:51&#39;},
+ {&#39;timestamp&#39;: 1570446060,
+  &#39;label&#39;: &#39;Healthy&#39;,
+  &#39;severity&#39;: 1,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1570878060,
+  &#39;label&#39;: &#39;Healthy&#39;,
+  &#39;severity&#39;: 1,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1570964460,
+  &#39;label&#39;: &#39;Healthy&#39;,
+  &#39;severity&#39;: 1,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1571742060,
+  &#39;label&#39;: &#39;Transition&#39;,
+  &#39;severity&#39;: 2,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1572177660,
+  &#39;label&#39;: &#39;Transition&#39;,
+  &#39;severity&#39;: 2,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1572264060,
+  &#39;label&#39;: &#39;Transition&#39;,
+  &#39;severity&#39;: 2,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1573041660,
+  &#39;label&#39;: &#39;Faulty&#39;,
   &#39;severity&#39;: 3,
-  &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;},
- {&#39;timestamp&#39;: 1570359660,
-  &#39;label&#39;: &#39;bearing_failure&#39;,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:07&#39;},
+ {&#39;timestamp&#39;: 1573387260,
+  &#39;label&#39;: &#39;Faulty&#39;,
   &#39;severity&#39;: 3,
-  &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;}]
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:07&#39;},
+ {&#39;timestamp&#39;: 1573646460,
+  &#39;label&#39;: &#39;Faulty&#39;,
+  &#39;severity&#39;: 3,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:07&#39;}]
 </pre></div></div>
 </div>
-<p>As you can see the measurements that we just added labels too show up. To inspect the label of a specific measurement we use <code class="docutils literal notranslate"><span class="pre">MVG.get_label()</span></code></p>
+<p>As you can see, the measurements that we just added labels show up. To inspect the label of a specific measurement we use <code class="docutils literal notranslate"><span class="pre">MVG.get_label()</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">get_label</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">measurements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">get_label</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">first_measurement</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -563,25 +846,24 @@ div.rendered_html tbody tr:hover {
 {&#39;label&#39;: &#39;bearing_failure&#39;,
  &#39;severity&#39;: 3,
  &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
- &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;}
+ &#39;label_timestamp&#39;: &#39;2022-02-09 14:08:51&#39;}
 </pre></div></div>
 </div>
 </section>
 <section id="Updating-labels">
 <h3>Updating labels<a class="headerlink" href="#Updating-labels" title="Permalink to this headline"></a></h3>
-<p>Maybe we realized that the problem did not actually occur until the third timestamp and we want to change the labels for the first two. Then we use the <code class="docutils literal notranslate"><span class="pre">session.update_label()</span></code> method.</p>
+<p>Now we realize that the label we had in the first measurement correspond to mode 0 and the label that we originally added is incorrect. Then we use the <code class="docutils literal notranslate"><span class="pre">session.update_label()</span></code> method to change the label.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">measurement</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">[:</span><span class="mi">2</span><span class="p">]:</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">update_label</span><span class="p">(</span>
-        <span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
-        <span class="n">timestamp</span><span class="o">=</span><span class="n">measurement</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">],</span>
-        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span>
-        <span class="n">severity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;This was an OK measurement&quot;</span>
-    <span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="n">session</span><span class="o">.</span><span class="n">update_label</span><span class="p">(</span>
+    <span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span>
+    <span class="n">timestamp</span><span class="o">=</span><span class="n">first_measurement</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;healthy&quot;</span><span class="p">,</span>
+    <span class="n">severity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;This was an OK measurement&quot;</span>
+<span class="p">)</span>
 
 <span class="c1"># List the labels again</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
@@ -590,34 +872,69 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;timestamp&#39;: 1570186860,
-  &#39;label&#39;: &#39;OK&#39;,
+[{&#39;timestamp&#39;: 1570273260,
+  &#39;label&#39;: &#39;healthy&#39;,
   &#39;severity&#39;: 0,
   &#39;notes&#39;: &#39;This was an OK measurement&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;},
- {&#39;timestamp&#39;: 1570273260,
-  &#39;label&#39;: &#39;OK&#39;,
-  &#39;severity&#39;: 0,
-  &#39;notes&#39;: &#39;This was an OK measurement&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;},
- {&#39;timestamp&#39;: 1570359660,
-  &#39;label&#39;: &#39;bearing_failure&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:08:51&#39;},
+ {&#39;timestamp&#39;: 1570446060,
+  &#39;label&#39;: &#39;Healthy&#39;,
+  &#39;severity&#39;: 1,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1570878060,
+  &#39;label&#39;: &#39;Healthy&#39;,
+  &#39;severity&#39;: 1,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1570964460,
+  &#39;label&#39;: &#39;Healthy&#39;,
+  &#39;severity&#39;: 1,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1571742060,
+  &#39;label&#39;: &#39;Transition&#39;,
+  &#39;severity&#39;: 2,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1572177660,
+  &#39;label&#39;: &#39;Transition&#39;,
+  &#39;severity&#39;: 2,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1572264060,
+  &#39;label&#39;: &#39;Transition&#39;,
+  &#39;severity&#39;: 2,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:06&#39;},
+ {&#39;timestamp&#39;: 1573041660,
+  &#39;label&#39;: &#39;Faulty&#39;,
   &#39;severity&#39;: 3,
-  &#39;notes&#39;: &#39;Imaginary bearing failure&#39;,
-  &#39;label_timestamp&#39;: &#39;2021-11-11 15:56:50&#39;}]
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:07&#39;},
+ {&#39;timestamp&#39;: 1573387260,
+  &#39;label&#39;: &#39;Faulty&#39;,
+  &#39;severity&#39;: 3,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:07&#39;},
+ {&#39;timestamp&#39;: 1573646460,
+  &#39;label&#39;: &#39;Faulty&#39;,
+  &#39;severity&#39;: 3,
+  &#39;notes&#39;: &#39;This is a demo.&#39;,
+  &#39;label_timestamp&#39;: &#39;2022-02-09 14:09:07&#39;}]
 </pre></div></div>
 </div>
 </section>
 <section id="Plotting-labels">
 <h3>Plotting labels<a class="headerlink" href="#Plotting-labels" title="Permalink to this headline"></a></h3>
-<p>To get an overview of the data and labels it can be very good to plot the labels over time. The <code class="docutils literal notranslate"><span class="pre">plotting</span></code> module of <code class="docutils literal notranslate"><span class="pre">mvg</span></code> contains the function <code class="docutils literal notranslate"><span class="pre">plot_labels_over_time</span></code> that does just that. The plot is very similar to that of the ModeId plots, so it is easy to compare results. We can add the <code class="docutils literal notranslate"><span class="pre">include_unlabeled=True</span></code> keyword to plot the unlabeled measurements as well.</p>
+<p>To get an overview of the data and labels it can be very good to plot the labels over time. The <code class="docutils literal notranslate"><span class="pre">plotting</span></code> module of <code class="docutils literal notranslate"><span class="pre">mvg</span></code> contains the function <code class="docutils literal notranslate"><span class="pre">plot_labels_over_time</span></code> that does just that. The plot is very similar to that of the ModeId plots, so it is easy to compare results. We can add the <code class="docutils literal notranslate"><span class="pre">include_unlabeled=True</span></code> keyword to plot the unlabeled measurements as well. Please note how “healthy” and “Healthy” was interpreted as two different labels.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">include_unlabeled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -626,7 +943,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -638,22 +955,20 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_7-labeling_18_1.png" src="../../_images/content_examples_7-labeling_18_1.png" />
+<img alt="../../_images/content_examples_7-labeling_24_1.png" src="../../_images/content_examples_7-labeling_24_1.png" />
 </div>
 </div>
 <p>As you can see we only labeled a small subset of the data. The idea is not to label all the measurements, but to label a part and then use that information to make inference about the unlabeled measurements.</p>
 </section>
 <section id="Deleting-labels">
 <h3>Deleting labels<a class="headerlink" href="#Deleting-labels" title="Permalink to this headline"></a></h3>
-<p>To delete labels we use the <code class="docutils literal notranslate"><span class="pre">MVG.delete_label()</span></code> method. Let’s use that to remove our example labels to get back to a clean slate.</p>
+<p>Now, we check the total number of existing labels in our source.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">delete_label</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">label</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removed </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="si">}</span><span class="s2"> labels&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Currently, there are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="si">}</span><span class="s2"> labels&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -662,9 +977,622 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Removed 3 labels
+Currently, there are 10 labels
 </pre></div></div>
 </div>
+<p>To delete labels we use the <code class="docutils literal notranslate"><span class="pre">MVG.delete_label()</span></code> method. Let’s use that to remove the label from the first measurement and keep only three labels per mode.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">delete_label</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">first_measurement</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_labels</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Currently, there are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="si">}</span><span class="s2"> labels&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Currently, there are 9 labels
+</pre></div></div>
+</div>
+</section>
+<section id="Label-Propagation">
+<h3>Label Propagation<a class="headerlink" href="#Label-Propagation" title="Permalink to this headline"></a></h3>
+<p>Until this point, we had added labels to some of our measurements but we might be interested on adding the labels to the rest of the measurements. We use the <code class="docutils literal notranslate"><span class="pre">`LabelPropagation</span></code> &lt;../features/label_propagation.md&gt;`__ feature to achieve this.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">LabelPropagation</span></code> feature uses the results from the ModeId feature to propagate the labels. However, the labels are attached to each measurement individually and not to the modes as a whole.</p>
+<p>To use the <code class="docutils literal notranslate"><span class="pre">LabelPropagation</span></code> feature, we need to know which source is to be used and the <code class="docutils literal notranslate"><span class="pre">request_id</span></code> that holds the results of the ModeId feature. Then, we can request the analysis.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model_ref&quot;</span><span class="p">:</span> <span class="n">ModeId_request_id</span><span class="p">}</span>
+<span class="n">labelProp_u0001</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="s2">&quot;LabelPropagation&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">labelProp_request_id</span> <span class="o">=</span> <span class="n">labelProp_u0001</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">]</span>
+<span class="n">labelProp_u0001</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;request_id&#39;: &#39;a36badb8f2788c247ae193acb3eaeb3e&#39;, &#39;request_status&#39;: &#39;queued&#39;}
+</pre></div></div>
+</div>
+<p>We check the status of the analysis to ensure the analysis is finished.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_status</span> <span class="o">=</span>  <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">labelProp_request_id</span><span class="p">)</span>
+<span class="n">out_status</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;successful&#39;
+</pre></div></div>
+</div>
+<p>Before we are able to get the analysis results, we need to wait until those analyses are successfully completed. Once the analysis is complete, one gets the results by calling the corresponding “request_id” for the LabelPropagation analysis. The raw results can be retrieved by calling the <code class="docutils literal notranslate"><span class="pre">get_analysis_results</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labelprop_output</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">labelProp_request_id</span><span class="p">)</span>
+<span class="n">labelprop_output</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;results&#39;, &#39;inputs&#39;, &#39;error_info&#39;, &#39;debug_info&#39;])
+</pre></div></div>
+</div>
+<p>The output is a dictionary that contains seven key elements. These elements are: - <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span></code> indicates if the analysis was successful. - <code class="docutils literal notranslate"><span class="pre">&quot;request_id&quot;</span></code> is the identifier of the requested analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;feature&quot;</span></code> is the name of the request feature. - <code class="docutils literal notranslate"><span class="pre">&quot;results&quot;</span></code> includes the numeric results. - <code class="docutils literal notranslate"><span class="pre">&quot;inputs&quot;</span></code> includes the input information for the request analysis. - <code class="docutils literal notranslate"><span class="pre">&quot;error_info&quot;</span></code> includes the error information in case the analysis fails and it is empty if the analysis is successful. -
+<code class="docutils literal notranslate"><span class="pre">&quot;debug_info&quot;</span></code> includes debugging (log) information related to the failed analysis.</p>
+<p>To make the results more accessible, we’ll use the analysis_classes. The <code class="docutils literal notranslate"><span class="pre">parse_results</span></code> function will take the raw_results of (any) analysis and represent them in a python object with a number of convenience methods for plotting and exporting. The parse function will automatically determine the kind (feature) of analysis based on the raw_results and based on the defined timezone convert the epoch into actual dates.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labelprop_results</span> <span class="o">=</span> <span class="n">parse_results</span><span class="p">(</span><span class="n">labelprop_output</span><span class="p">,</span> <span class="s2">&quot;Europe/Stockholm&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<p>Once we had parsed the results, we can export them to a dataframe for ease of manipulation</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labelprop_results</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>severity</th>
+      <th>notes</th>
+      <th>label_timestamp</th>
+      <th>timestamp</th>
+      <th>datetime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1570273260</td>
+      <td>2019-10-05 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1570359660</td>
+      <td>2019-10-06 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Healthy</td>
+      <td>1</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:06</td>
+      <td>1570446060</td>
+      <td>2019-10-07 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1570532460</td>
+      <td>2019-10-08 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1570618860</td>
+      <td>2019-10-09 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1570705260</td>
+      <td>2019-10-10 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1570791660</td>
+      <td>2019-10-11 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Healthy</td>
+      <td>1</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:06</td>
+      <td>1570878060</td>
+      <td>2019-10-12 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Healthy</td>
+      <td>1</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:06</td>
+      <td>1570964460</td>
+      <td>2019-10-13 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571050860</td>
+      <td>2019-10-14 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571137260</td>
+      <td>2019-10-15 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571223660</td>
+      <td>2019-10-16 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571310060</td>
+      <td>2019-10-17 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571396460</td>
+      <td>2019-10-18 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571482860</td>
+      <td>2019-10-19 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Healthy</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571569260</td>
+      <td>2019-10-20 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Transition</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571655660</td>
+      <td>2019-10-21 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Transition</td>
+      <td>2</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:06</td>
+      <td>1571742060</td>
+      <td>2019-10-22 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Transition</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571828460</td>
+      <td>2019-10-23 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Transition</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1571914860</td>
+      <td>2019-10-24 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Transition</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572001260</td>
+      <td>2019-10-25 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Transition</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572087660</td>
+      <td>2019-10-26 13:01:00+02:00</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Transition</td>
+      <td>2</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:06</td>
+      <td>1572177660</td>
+      <td>2019-10-27 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Transition</td>
+      <td>2</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:06</td>
+      <td>1572264060</td>
+      <td>2019-10-28 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572350460</td>
+      <td>2019-10-29 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572436860</td>
+      <td>2019-10-30 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572523260</td>
+      <td>2019-10-31 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572609660</td>
+      <td>2019-11-01 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572696060</td>
+      <td>2019-11-02 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572782460</td>
+      <td>2019-11-03 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572868860</td>
+      <td>2019-11-04 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1572955260</td>
+      <td>2019-11-05 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Faulty</td>
+      <td>3</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:07</td>
+      <td>1573041660</td>
+      <td>2019-11-06 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573128060</td>
+      <td>2019-11-07 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573214460</td>
+      <td>2019-11-08 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573300860</td>
+      <td>2019-11-09 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Faulty</td>
+      <td>3</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:07</td>
+      <td>1573387260</td>
+      <td>2019-11-10 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573473660</td>
+      <td>2019-11-11 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573560060</td>
+      <td>2019-11-12 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Faulty</td>
+      <td>3</td>
+      <td>This is a demo.</td>
+      <td>2022-02-09 14:09:07</td>
+      <td>1573646460</td>
+      <td>2019-11-13 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573732860</td>
+      <td>2019-11-14 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573819260</td>
+      <td>2019-11-15 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573905660</td>
+      <td>2019-11-16 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1573992060</td>
+      <td>2019-11-17 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1574078460</td>
+      <td>2019-11-18 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1574164860</td>
+      <td>2019-11-19 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1574251260</td>
+      <td>2019-11-20 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1574337660</td>
+      <td>2019-11-21 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Faulty</td>
+      <td>-1</td>
+      <td>Added by label propagation</td>
+      <td>2022-02-09 14:09:52</td>
+      <td>1574424060</td>
+      <td>2019-11-22 13:01:00+01:00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>We can also display the results and visualize the labels given to the different measurements.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labelprop_results</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/content_examples_7-labeling_43_0.png" src="../../_images/content_examples_7-labeling_43_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;&#39;
+</pre></div></div>
+</div>
+<p>As you can see from the results, it is easier to appreciate now which measurements have a healthy behavior, which measurements have a faulty behavior and which measurements have a transition behavior from healthy to faulty.</p>
 </section>
 </section>
 </section>
