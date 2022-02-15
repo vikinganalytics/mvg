@@ -16,7 +16,7 @@ exec_examples() {
     echo "Running notebooks containing examples"
     local _d="./docs/source/content/examples"
     for file in `ls -v $_d/*.ipynb`; do
-        papermill "$file" "$file"
+        papermill "$file" "$file" -p ENDPOINT http://127.0.0.1:8000
     done
     echo "Finished executing examples"
 }
