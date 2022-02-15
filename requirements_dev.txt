@@ -11,3 +11,7 @@ pytest-docker
 # for callback test server
 uvicorn==0.16.0
 fastapi
+# for testing notebooks
+papermill
+notebook
+ipywidgets
