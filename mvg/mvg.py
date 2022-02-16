@@ -237,7 +237,11 @@ class MVGAPI:
         return response.json()["message"]
 
     def create_source(
-        self, sid: str, meta: dict, channels: List[str], exist_ok: bool = False
+        self,
+        sid: str,
+        meta: dict = None,
+        channels: List[str] = None,
+        exist_ok: bool = False,
     ):
         """
         Creates a source on the server side.
@@ -245,24 +249,28 @@ class MVGAPI:
         Parameters
         ----------
         sid : str
-            source Id
+            Source ID
 
         meta : dict
-            meta information
+            Meta information of source [optional].
 
         channels : List[str]
             Channels of waveform Data. For instance axial, vertical and horizontal
-            measurments for the source.
+            measurements for the source.
             Cannot be updated after creating source.
 
         exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
-            caused by trying to create an existing source. Defaults to False
+            caused by trying to create an existing source. Defaults to False.
         """
 
         logger.info("endpoint %s", self.endpoint)
         logger.info("creating source with source id=%s", sid)
         logger.info("metadata: %s", meta)
+        logger.info("channels: %s", channels)
+
+        if meta is None:
+            meta = {}
 
         do_not_raise = []
         if exist_ok:
@@ -273,7 +281,11 @@ class MVGAPI:
         self._request("post", "/sources/", do_not_raise, json=source_info)
 
     def create_tabular_source(
-        self, sid: str, meta: dict, columns: List[str], exist_ok: bool = False
+        self,
+        sid: str,
+        meta: dict = None,
+        columns: List[str] = None,
+        exist_ok: bool = False,
     ):
         """
         Creates a tabular source on the server side.
@@ -284,7 +296,7 @@ class MVGAPI:
             Source ID
 
         meta : dict
-            Meta information of source
+            Meta information of source [optional].
 
         columns : List[str]
             Data variables. Currently supports numerical data.
@@ -292,13 +304,16 @@ class MVGAPI:
 
         exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
-            caused by trying to create an existing source. Defaults to False
+            caused by trying to create an existing source. Defaults to False.
         """
 
         logger.info("endpoint %s", self.endpoint)
         logger.info("creating tabular source with source id=%s", sid)
         logger.info("metadata: %s", meta)
         logger.info("columns: %s", columns)
+
+        if meta is None:
+            meta = {}
 
         do_not_raise = []
         if exist_ok:
@@ -393,7 +408,7 @@ class MVGAPI:
         duration: float,
         timestamp: int,
         data: Dict[str, List[float]],
-        meta: dict,
+        meta: dict = None,
         exist_ok: bool = False,
     ):
         """Stores a measurement on the server side.
@@ -433,6 +448,9 @@ class MVGAPI:
         logger.info("  duration:  %s", duration)
         logger.info("  timestamp: %s", timestamp)
         logger.info("  meta data: %s", meta)
+
+        if meta is None:
+            meta = {}
 
         do_not_raise = []
         if exist_ok:
