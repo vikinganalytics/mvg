@@ -2,7 +2,7 @@ from pathlib import Path
 import papermill as pm
 
 
-def test_notebook0(vibium):
+def test_notebooks(vibium):
     notebooks_path = (
         Path(__file__).parents[1] / "docs" / "source" / "content" / "examples"
     )

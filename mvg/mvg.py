@@ -55,8 +55,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.11.6")
-        self.tested_api_version = self.parse_version("v0.3.0")
+        self.mvg_version = self.parse_version("v0.11.7")
+        self.tested_api_version = self.parse_version("v0.3.1")
 
         # Get API version
         try:
