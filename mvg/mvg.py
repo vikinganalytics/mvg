@@ -239,8 +239,8 @@ class MVGAPI:
     def create_source(
         self,
         sid: str,
+        channels: List[str],
         meta: dict = None,
-        channels: List[str] = None,
         exist_ok: bool = False,
     ):
         """
@@ -251,13 +251,13 @@ class MVGAPI:
         sid : str
             Source ID
 
-        meta : dict
-            Meta information of source [optional].
-
         channels : List[str]
             Channels of waveform Data. For instance axial, vertical and horizontal
             measurements for the source.
             Cannot be updated after creating source.
+
+        meta : dict
+            Meta information of source [optional].
 
         exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
@@ -283,8 +283,8 @@ class MVGAPI:
     def create_tabular_source(
         self,
         sid: str,
+        columns: List[str],
         meta: dict = None,
-        columns: List[str] = None,
         exist_ok: bool = False,
     ):
         """
@@ -295,12 +295,12 @@ class MVGAPI:
         sid : str
             Source ID
 
-        meta : dict
-            Meta information of source [optional].
-
         columns : List[str]
             Data variables. Currently supports numerical data.
             Cannot be updated after creating source.
+
+        meta : dict
+            Meta information of source [optional].
 
         exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
