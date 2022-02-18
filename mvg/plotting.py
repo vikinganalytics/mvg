@@ -8,7 +8,7 @@ For more information see README.md.
 import logging
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+from matplotlib import patches
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +86,7 @@ def modes_boxplot(data, feature, request_id, total_modes=None, axes=None):
     # Plot and format figure
     image = data.boxplot(column=feature, by="Modes", ax=axes)
     image.get_figure().suptitle("")
-    image.get_figure().gca().set_title("Boxplot for {}".format(request_id))
+    image.get_figure().gca().set_title(f"Boxplot for {request_id}")
     image.get_figure().gca().set_ylabel(feature)
 
     return image
@@ -130,7 +130,7 @@ def modes_group_boxplot(dfs, feature, request_ids):
             total_modes=max_no_modes,
             axes=axes[count],
         )
-        axp.set_title("Boxplot for {}".format(request_ids[count]))
+        axp.set_title(f"Boxplot for {request_ids[count]}")
         axp.set_ylabel(feature)
         if count + 1 != len(dfs):
             axp.set_xlabel("")
@@ -303,12 +303,12 @@ def modes_over_time(
     legend_labels = [
         patches.Patch(facecolor=colors[i], edgecolor="black", label="No data")
         if i == -1
-        else patches.Patch(color=colors[i], label="Mode {}".format(int(i)))
+        else patches.Patch(color=colors[i], label=f"Mode {int(i)}")
         for i in list(data["labels"].unique())
     ]
 
     axes.legend(handles=legend_labels, bbox_to_anchor=(1.05, 1), loc="upper left")
-    axes.set_title("Modes over time for {}".format(request_id))
+    axes.set_title(f"Modes over time for {request_id}")
     plt.tight_layout()
 
     return image
@@ -371,7 +371,7 @@ def modes_probabilities_over_time(
 
     # Colors for the line chart
     colors = colors or {
-        f"mode {x}": MODE_COLOR_CODES[x] for x in MODE_COLOR_CODES.keys()
+        f"mode {mode}": color for mode, color in MODE_COLOR_CODES.items()
     }
 
     # Create figure with blank plot
@@ -664,7 +664,7 @@ def plot_labels_over_time(
     ]
 
     axes.legend(handles=legend_labels, bbox_to_anchor=(1.05, 1), loc="upper left")
-    axes.set_title("Labels over time for {}".format(source_id))
+    axes.set_title(f"Labels over time for {source_id}")
     plt.tight_layout()
 
     return image

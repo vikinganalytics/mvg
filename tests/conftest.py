@@ -90,7 +90,6 @@ if args.host == "":
         )
         return url
 
-
 else:
 
     @pytest.fixture(scope="session")

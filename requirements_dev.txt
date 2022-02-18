@@ -2,10 +2,10 @@ setuptools
 packaging
 wheel
 twine
-black==20.8b1
+black
 flake8
 darglint
-pylint==2.8.3
+pylint
 pytest
 pytest-docker
 # for callback test server
