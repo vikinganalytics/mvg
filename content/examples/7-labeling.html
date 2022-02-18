@@ -421,13 +421,20 @@ div.rendered_html tbody tr:hover {
 <h3>Create a session for API access<a class="headerlink" href="#Create-a-session-for-API-access" title="Permalink to this headline"></a></h3>
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the Viking Analytics MultiViz Vibration service.</p>
 <p><strong>You need to insert your token received from Viking Analytics here:</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_TOKEN&quot;</span><span class="p">]</span>
+<span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
+</pre></div>
+</div>
+</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_TOKEN&quot;</span><span class="p">]</span>
-<span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
 
 <span class="n">session</span><span class="o">.</span><span class="n">check_version</span><span class="p">()</span>
 </pre></div>
@@ -478,7 +485,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ModeId_request_id</span> <span class="o">=</span> <span class="s2">&quot;5649faa234642e7207fd9800481bcb6e&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ModeId_request_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_analyses</span><span class="p">(</span><span class="n">sid</span><span class="o">=</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">&quot;ModeId&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">raw_result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">ModeId_request_id</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">parse_results</span><span class="p">(</span><span class="n">raw_result</span><span class="p">,</span> <span class="s2">&quot;Europe/Stockholm&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="n">u0001_df</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
@@ -573,7 +580,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_7-labeling_9_0.png" src="../../_images/content_examples_7-labeling_9_0.png" />
+<img alt="../../_images/content_examples_7-labeling_10_0.png" src="../../_images/content_examples_7-labeling_10_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -955,7 +962,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_7-labeling_24_1.png" src="../../_images/content_examples_7-labeling_24_1.png" />
+<img alt="../../_images/content_examples_7-labeling_25_1.png" src="../../_images/content_examples_7-labeling_25_1.png" />
 </div>
 </div>
 <p>As you can see we only labeled a small subset of the data. The idea is not to label all the measurements, but to label a part and then use that information to make inference about the unlabeled measurements.</p>
@@ -1037,7 +1044,8 @@ Currently, there are 9 labels
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_status</span> <span class="o">=</span>  <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">labelProp_request_id</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">labelProp_request_id</span><span class="p">])</span>
+<span class="n">out_status</span> <span class="o">=</span>  <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_status</span><span class="p">(</span><span class="n">labelProp_request_id</span><span class="p">)</span>
 <span class="n">out_status</span>
 </pre></div>
 </div>
@@ -1580,7 +1588,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_7-labeling_43_0.png" src="../../_images/content_examples_7-labeling_43_0.png" />
+<img alt="../../_images/content_examples_7-labeling_44_0.png" src="../../_images/content_examples_7-labeling_44_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">

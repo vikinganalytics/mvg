@@ -442,14 +442,21 @@ div.rendered_html tbody tr:hover {
 <h3>Create a Session and test API access<a class="headerlink" href="#Create-a-Session-and-test-API-access" title="Permalink to this headline"></a></h3>
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the Viking Analytics MultiViz Vibration service.</p>
 <p><strong>You need to insert your token received from Viking Analytics here:</strong></p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace by your own Token</span>
 <span class="n">TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TEST_TOKEN&quot;</span><span class="p">]</span> <span class="c1"># use our own token</span>
 <span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
 <span class="n">session</span><span class="o">.</span><span class="n">check_version</span><span class="p">()</span> <span class="c1"># Check if API is accessible</span>
 </pre></div>
 </div>
@@ -1047,7 +1054,7 @@ from 20191005-13:01.00 to 20191122-13:01.00
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_5-analysis_classes_12_0.png" src="../../_images/content_examples_5-analysis_classes_12_0.png" />
+<img alt="../../_images/content_examples_5-analysis_classes_13_0.png" src="../../_images/content_examples_5-analysis_classes_13_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -4812,7 +4819,7 @@ request_id 023d673646aaa34407bc9cbcc4f078c8
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/content_examples_5-analysis_classes_20_1.png" src="../../_images/content_examples_5-analysis_classes_20_1.png" />
+<img alt="../../_images/content_examples_5-analysis_classes_21_1.png" src="../../_images/content_examples_5-analysis_classes_21_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
