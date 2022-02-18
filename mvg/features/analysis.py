@@ -349,7 +349,7 @@ class Analysis:
         else:
             s_dict = self.results()
 
-        with open(file_name, "w") as json_file:
+        with open(file_name, "w", encoding="utf-8") as json_file:
             json.dump(s_dict, json_file, indent=4)
         return file_name
 

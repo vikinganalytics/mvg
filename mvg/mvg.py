@@ -55,7 +55,7 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.11.7")
+        self.mvg_version = self.parse_version("v0.11.8")
         self.tested_api_version = self.parse_version("v0.3.1")
 
         # Get API version
@@ -723,7 +723,7 @@ class MVGAPI:
         logger.info("from %s to %s ", start_timestamp, end_timestamp)
 
         if parameters is None:
-            parameters = dict()
+            parameters = {}
 
         # Update parameters with certain method parameters
         if selected_channels:
@@ -793,7 +793,7 @@ class MVGAPI:
         logger.info("from %s to %s ", start_timestamp, end_timestamp)
 
         if parameters is None:
-            parameters = dict()
+            parameters = {}
 
         # Package info for db to be submitted
         analysis_info = {

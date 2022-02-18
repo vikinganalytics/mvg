@@ -17,7 +17,7 @@ def unfold_result_to_df(result: dict) -> pd.DataFrame:
 
 
 class KPIDemo(Analysis):
-    """ Analysis class for KPIDemo feature."""
+    """Analysis class for KPIDemo feature."""
 
     def __init__(self, results, t_zone=None, t_unit=None):
         """Constructor

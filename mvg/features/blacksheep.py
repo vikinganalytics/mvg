@@ -169,7 +169,9 @@ class BlackSheep(Analysis):
         # Colors for plot and legend
         cmap = {0: mcm(0), 1: mcm(1)}
         labels = {0: "normal", 1: "atypical"}
-        patches = [mpatches.Patch(color=cmap[i], label=labels[i]) for i in cmap]
+        patches = [
+            mpatches.Patch(color=color, label=labels[i]) for i, color in cmap.items()
+        ]
         plt.legend(handles=patches, loc=4, borderaxespad=0.0)
 
         # The plot (need to remove na)
