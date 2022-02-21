@@ -130,7 +130,7 @@ def waveform_source(session):
         with open(m_file_name, "r") as json_file:
             meta = json.load(json_file)
         # create_source happy case
-        session.create_source(source, meta=meta, channels=["acc"])
+        session.create_source(source, channels=["acc"], meta=meta)
         yield source
     finally:
         session.delete_source(source)
@@ -226,7 +226,7 @@ def tabular_source(session):
         )
         columns = tabular_df.columns.tolist()
         meta = {"extra": "information"}
-        session.create_tabular_source(source_id, meta, columns)
+        session.create_tabular_source(source_id, columns=columns, meta=meta)
         yield source_id, tabular_df.to_dict("list")
     finally:
         session.delete_source(source_id)

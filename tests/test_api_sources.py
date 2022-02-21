@@ -229,11 +229,11 @@ def test_tabular_sources(session, tabular_source):
     meta = {"extra": "information"}
 
     # create source again (409 ignored)
-    session.create_tabular_source(source_id, meta, columns, exist_ok=True)
+    session.create_tabular_source(source_id, columns, meta, exist_ok=True)
 
     # create source again (409 not ignored)
     with pytest.raises(MVGAPIError) as exc:
-        session.create_tabular_source(source_id, meta, columns)
+        session.create_tabular_source(source_id, columns, meta)
     assert exc.value.response.status_code == 409
 
     columns.remove("timestamp")
