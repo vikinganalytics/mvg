@@ -20,6 +20,12 @@ def test_say_hello(vibium):
     assert session.say_hello() is not None
 
 
+# Ensure tested version is the production version
+def test_check_prod_version(vibium_prod):
+    session = MVG(vibium_prod, "")
+    assert session.api_version == session.tested_api_version
+
+
 # API        /
 # Test version handling
 def test_check_version(vibium):

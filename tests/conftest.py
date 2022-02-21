@@ -18,6 +18,9 @@ from tests.helpers import (
     upload_measurements,
 )
 
+VIBIUM_PROD_URL = "https://api.beta.multiviz.com/"
+
+
 # This version of conftest.py adds some really ugly code to
 # run the tests as integration tests by running like
 # > pytest -s  tests --host http://127.0.0.1:8000
@@ -70,6 +73,11 @@ def docker_compose_file(pytestconfig):
     return pytestconfig.rootdir / "tests" / "docker-compose.yml"
 
 
+@pytest.fixture()
+def vibium_prod():
+    return VIBIUM_PROD_URL
+
+
 # ugly vibium fixture configuration
 # Here we need to switch between vibium fixture
 # for docker-run (--host not set)
@@ -84,7 +92,7 @@ if args.host == "":
         """Ensure that HTTP service is up and responsive."""
         # `port_for` takes a container port and returns the corresponding host port
         port = docker_services.port_for("vibium", 8000)
-        url = "http://{}:{}".format(docker_ip, port)
+        url = f"http://{docker_ip}:{port}"
         docker_services.wait_until_responsive(
             timeout=30.0, pause=0.1, check=lambda: is_responsive(url)
         )
