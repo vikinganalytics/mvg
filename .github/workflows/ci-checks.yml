@@ -84,7 +84,7 @@ jobs:
         strategy:
             matrix:
               python-version: [3.6,3.7,3.8,3.9,"3.10"]
-        steps: 
+        steps:
         -   uses: actions/checkout@v2
         -   name: "Set up Python ${{ matrix.python-version }}"
             uses: actions/setup-python@v2
@@ -102,6 +102,7 @@ jobs:
                 username: vagrinder
                 password: ${{ secrets.VAGRINDER_GITHUB_PKG_TOKEN }}
         -   name: "Running tests with pytest"
+            timeout-minutes: 120
             env:
                 TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
             run: "python -m pytest --verbose tests/test_notebooks.py"
