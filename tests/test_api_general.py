@@ -8,6 +8,7 @@ import pytest
 import semver
 from mvg import MVG
 from mvg.exceptions import MVGAPIError, MVGConnectionError
+from mvg.plotting import MODE_COLOR_CODES, LABEL_COLOR_CODES
 
 # MVG Token
 VALID_TOKEN = pytest.VALID_TOKEN
@@ -65,6 +66,16 @@ def test_supported_features(vibium):
     resp = session.supported_features()
     print(resp)
     assert resp["ModeId"]
+
+
+def test_color_scheme(vibium):
+    # Get current API version for testing
+    session = MVG(vibium, "NO TOKEN")
+    color_scheme = session.api_content["color_scheme"]
+
+    # Verify if the same color scheme is exposed by both the API and MVG package
+    assert MODE_COLOR_CODES == {int(k): v for k, v in color_scheme["modes"].items()}
+    assert LABEL_COLOR_CODES == {int(k): v for k, v in color_scheme["labels"].items()}
 
 
 # API GET    /analyses [unauthorized]

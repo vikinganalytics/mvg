@@ -64,8 +64,10 @@ class MVGAPI:
         except RequestException:
             raise MVGConnectionError("Could not connect to the API.")
 
-        api_vstr = response.json()["message"]["api"]["version"]
+        api_root = response.json()["message"]
+        api_vstr = api_root["api"]["version"]
         self.api_version = self.parse_version(api_vstr)
+        self.api_content = api_root["content"]
 
     def _request(self, method, path, do_not_raise=None, **kwargs) -> requests.Response:
         """Helper function for removing duplicate code on API requests.
