@@ -55,7 +55,7 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.12.0")
+        self.mvg_version = self.parse_version("v0.12.1")
         self.tested_api_version = self.parse_version("v0.3.2")
 
         # Get API version
@@ -236,7 +236,7 @@ class MVGAPI:
         response = self._request("get", "")
 
         # return list of IDs
-        return response.json()["message"]
+        return response.json()["message"]["api"]
 
     def create_source(
         self,
