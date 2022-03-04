@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 pd.options.mode.chained_assignment = None
 
+
 # Base class for analyses
 class Analysis:
     """Root class for analysis system classes."""
