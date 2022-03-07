@@ -34,7 +34,14 @@ VIBIUM_PROD_URL = "https://api.beta.multiviz.com/"
 # Stuff for --host
 # needed, otherwise --host will fail pytest
 def pytest_addoption(parser):
+    """Add CLI options"""
     parser.addoption("--host")
+    parser.addoption(
+        "--skipintegration",
+        action="store_true",
+        default=False,
+        help="ignore certain tests not meant for mvg-integration in the backend",
+    )
 
 
 # consume --host via argparse
@@ -50,12 +57,31 @@ sys.argv[1:] = notknownargs
 version_session = MVG("https://api.beta.multiviz.com", "NO TOKEN")
 VIBIUM_VERSION = "v" + str(version_session.tested_api_version)
 
+
 # Pytest initial configuration
-def pytest_configure():
+def pytest_configure(config):
+    """Global variables"""
     pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
     pytest.REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
     pytest.SOURCE_ID_TABULAR = uuid.uuid1().hex
     pytest.VALID_TOKEN = os.environ["TEST_TOKEN"]
+
+    """Adds @pytest.mark.skipintegration marker to skip tests for integration runs"""
+    config.addinivalue_line(
+        "markers",
+        "skipintegration: mark tests to be skipped for mvg-integration task in CI/CD",
+    )
+
+
+def pytest_collection_modifyitems(config, items):
+    # Skip tests marked with @pytest.mark.skipintegration if --skipintegration is set
+    if config.getoption("--skipintegration"):
+        skip_test = pytest.mark.skip(
+            reason="Option `--skipintegration` skips this test"
+        )
+        for item in items:
+            if "skipintegration" in item.keywords:
+                item.add_marker(skip_test)
 
 
 def is_responsive(url):

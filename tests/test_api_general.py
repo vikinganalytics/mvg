@@ -22,6 +22,7 @@ def test_say_hello(vibium):
 
 
 # Ensure tested version is the production version
+@pytest.mark.skipintegration
 def test_check_prod_version(vibium_prod):
     session = MVG(vibium_prod, "")
     assert session.api_version == session.tested_api_version
@@ -29,6 +30,7 @@ def test_check_prod_version(vibium_prod):
 
 # API        /
 # Test version handling
+@pytest.mark.skipintegration
 def test_check_version(vibium):
 
     # Get current API version for testing
