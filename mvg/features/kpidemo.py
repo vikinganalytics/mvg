@@ -82,6 +82,7 @@ class KPIDemo(Analysis):
           name of plot file (or emtpy string in case of interactive plot)
         """
         result_df = self.to_df()
+        print("columns", result_df.columns)
 
         # Select the default column as the one after timestamps which is first
         kpi = kpi if kpi is not None else result_df.columns[1]
