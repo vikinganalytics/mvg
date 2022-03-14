@@ -94,7 +94,7 @@ class Analysis:
         self.time_column = time_column
         self._results_df = self._add_datetime_df(self._results_df, self.time_column)
 
-    def _add_datetime_df(self, dframe, timecolumn):
+    def _add_datetime_df(self, dframe: pd.DataFrame, timecolumn):
         """
         Convert EPOCH time to datetime with the
         timezone and time unit given in constructor. Will add
@@ -110,7 +110,7 @@ class Analysis:
 
         Returns
         -------
-        DataFrame with added datetime colums
+        DataFrame with added datetime column
         """
 
         # EPOCH to datetime considering time zone
@@ -118,7 +118,8 @@ class Analysis:
             dframe[timecolumn], unit=self._t_unit, utc=True
         ).dt.tz_convert(self._t_zone)
 
-        dframe["datetime"] = dt_col
+        timecolumn_idx = dframe.columns.get_loc(timecolumn)
+        dframe.insert(loc=timecolumn_idx, column="datetime", value=dt_col)
 
         # Mark timecolumn as available
         self.time_column = "datetime"

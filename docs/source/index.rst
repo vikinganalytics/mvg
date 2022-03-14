@@ -13,13 +13,13 @@
 
    content/examples/1-brief_overview
    content/examples/0-check_version
-   content/examples/4-error_handling
    content/examples/2-sources_and_measurements
    content/examples/6-analysis_visual
    content/examples/5-analysis_classes
    content/examples/3-tabular_example
    content/examples/7-labeling
    content/examples/8-inference
+   content/examples/4-error_handling
 
 .. toctree::
    :maxdepth: 2
