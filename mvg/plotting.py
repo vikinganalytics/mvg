@@ -527,7 +527,6 @@ LABEL_COLOR_CODES = dict(
 )
 
 
-# pylint: disable=too-many-locals
 def plot_labels_over_time(
     data,
     source_id,
@@ -540,7 +539,7 @@ def plot_labels_over_time(
     only_start_end_timeticks=False,
     timetick_angle=85,
     time_format=None,
-):
+):  # pylint: disable=too-many-locals
     """Creates a rectangular timeline of labels.
 
     The rectangle presents the timeline of the labels for a source.
