@@ -25,7 +25,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Analysis and Results Visualization" href="6-analysis_visual.html" />
-    <link rel="prev" title="Error Handling Example" href="4-error_handling.html" /> 
+    <link rel="prev" title="Check Version" href="0-check_version.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,23 +46,25 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview - How to use the MVG library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Sources and Measurements Example</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Downloading-the-Data">Downloading the Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Connect-to-the-API">Connect to the API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Check-Database">Check Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Build-measurements">Build measurements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Read-the-Measurements">Read the Measurements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Uploading-additional-sources">Uploading additional sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Downloading-the-Data">Downloading the Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Connect-to-the-API">Connect to the API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Check-Database">Check Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Build-measurements">Build measurements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Read-the-Measurements">Read the Measurements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Uploading-additional-sources">Uploading additional sources</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - Unified Interface to Analysis Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling of Measurements and Label Propagation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -396,8 +398,11 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the VA service.</p>
-<p><strong>You need to insert your token received from Viking Analytics here:</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the VA-MVG’ service.</p>
+</div>
+<p><strong>You need to insert your token received from Viking Analytics here:</strong> Just replace <code class="docutils literal notranslate"><span class="pre">&quot;os.environ['TEST_TOKEN']&quot;</span></code> by your token as a string.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -429,10 +434,9 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-</section>
 <section id="Connect-to-the-API">
-<h2>Connect to the API<a class="headerlink" href="#Connect-to-the-API" title="Permalink to this headline"></a></h2>
-<p>Instantiate a session object with mvg library a session object basically caches the endpoint and the token, to simplify the calls to the MVG library.</p>
+<h3>Connect to the API<a class="headerlink" href="#Connect-to-the-API" title="Permalink to this headline"></a></h3>
+<p>Instantiate a session object with MVG library. A session object basically catches the endpoint and the token, to simplify the calls to the MVG library.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -456,15 +460,15 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;api&#39;: {&#39;name&#39;: &#39;MultiViz Engine API&#39;,
-  &#39;version&#39;: &#39;v0.2.7&#39;,
-  &#39;swagger&#39;: &#39;http://api.beta.multiviz.com/docs&#39;}}
+{&#39;name&#39;: &#39;MultiViz Engine API&#39;,
+ &#39;version&#39;: &#39;v0.3.2&#39;,
+ &#39;swagger&#39;: &#39;http://api.beta.multiviz.com/docs&#39;}
 </pre></div></div>
 </div>
 </section>
 <section id="Check-Database">
-<h2>Check Database<a class="headerlink" href="#Check-Database" title="Permalink to this headline"></a></h2>
-<p>We start by seeing if there are any sources in the database. A source represents a measurement source e.g. one specific channel of a measurement sensor. Note that sources cannot be used to represent a sensor with several channels. If this is required, the client side needs to take care of it.</p>
+<h3>Check Database<a class="headerlink" href="#Check-Database" title="Permalink to this headline"></a></h3>
+<p>We start by seeing if there are any sources in the database. A source represents a measurement source e.g. a measurement sensor. Note that sources can be used to represent a sensor with several channels.</p>
 <p>Because we want to start at a clean slate we will list all sources (potentially none) and delete all of them</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -493,16 +497,16 @@ Source info retrieved:
 </div>
 <p>The example below revolves around a source with source id u0001</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
-<p>To make sure we start from a clean slate we delete our resource in case it exists.</p>
+<p>To make sure we start from a clean slate we delete our source in case it exists.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -524,10 +528,10 @@ Source u0001 deleted
 </div>
 </section>
 <section id="Build-measurements">
-<h2>Build measurements<a class="headerlink" href="#Build-measurements" title="Permalink to this headline"></a></h2>
+<h3>Build measurements<a class="headerlink" href="#Build-measurements" title="Permalink to this headline"></a></h3>
 <p>Now we want to (re) build the source and the attached measurements from scratch. In this example, we have a json file with all the information needed to create each source.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">src_path</span> <span class="o">=</span> <span class="n">REF_DB_PATH</span> <span class="o">/</span> <span class="n">SOURCE_ID</span>
@@ -548,9 +552,9 @@ Creating meta info
 {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}
 </pre></div></div>
 </div>
-<p>Create the source and check for it</p>
+<p>Create the source and check for it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">create_source</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">],</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">)</span>  <span class="c1"># create</span>
@@ -569,9 +573,9 @@ Recreated source info:
 {&#39;source_id&#39;: &#39;u0001&#39;, &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;, &#39;measPoint&#39;: &#39;mloc01&#39;, &#39;location&#39;: &#39;paris&#39;}, &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;, &#39;channels&#39;: [&#39;acc&#39;]}}
 </pre></div></div>
 </div>
-<p>Update the source</p>
+<p><strong>Update</strong> the source in case it is necessary.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;YES! I have been updated&quot;</span>
@@ -599,16 +603,16 @@ Updated source info
 <li><p>meta information to be stored along the measurement</p></li>
 </ul>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">meas</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">stem</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.csv&quot;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">meas</span></code> now contains a list of timestamps representing the measurements in our repo we upload from iterate over all of them.</p>
+<p><code class="docutils literal notranslate"><span class="pre">meas</span></code> now contains a list of timestamps representing the measurements in our repo we upload from. We proceed to iterate over all of them.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Uploading measurements to source </span><span class="si">{</span><span class="n">SOURCE_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -660,14 +664,14 @@ Uploading measurements to source u0001
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "600687e54afd458da0bc60e74475cf6f", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "6daae2e2565b4aefa879c83640d15b96"}</script></div>
 </div>
 </section>
 <section id="Read-the-Measurements">
-<h2>Read the Measurements<a class="headerlink" href="#Read-the-Measurements" title="Permalink to this headline"></a></h2>
-<p>Check if we actually created the measurements by reading them</p>
+<h3>Read the Measurements<a class="headerlink" href="#Read-the-Measurements" title="Permalink to this headline"></a></h3>
+<p>Check if we actually created the measurements by reading them.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_measurements</span><span class="p">(</span><span class="n">SOURCE_ID</span><span class="p">)</span>
@@ -685,7 +689,7 @@ Read 50 stored measurements
 </div>
 <p>It is also possible to read a specific measurement at a single timestamp. Let’s get the timestamp of the first measurement.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts_0</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
@@ -707,13 +711,13 @@ Read 50 stored measurements
 source_id: u0001
 timestamp: 1570186860
 duration:  2.8672073400507907
-meta:      {&#39;sampling_rate&#39;: 13950.50837142857}
-data:      [-0.55078125, -1.332275390625]...
+meta:      {&#39;sampling_rate&#39;: 13950.857142857141}
+data:      [0.63897705078125, -0.55078125]...
 </pre></div></div>
 </div>
-<p>We can update the meta information for a measurement at a single timestamp let’s get the timestamp of the first measurement</p>
+<p>We can update the meta information for a measurement at a single timestamp. Let’s get the timestamp of the first measurement.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts_0</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
@@ -739,11 +743,11 @@ data:      [-0.55078125, -1.332275390625]...
 source_id: u0001
 timestamp: 1570186860
 duration:  2.8672073400507907
-meta:      {&#39;sampling_rate&#39;: 13950.50837142857, &#39;updated&#39;: &#39;YES!&#39;}
-data:      [-0.55078125, -1.332275390625]...
+meta:      {&#39;sampling_rate&#39;: 13950.857142857141, &#39;updated&#39;: &#39;YES!&#39;}
+data:      [0.63897705078125, -0.55078125]...
 </pre></div></div>
 </div>
-<p>Finally we delete the measurement</p>
+<p>Finally, we delete the measurement.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
@@ -753,8 +757,8 @@ data:      [-0.55078125, -1.332275390625]...
 </div>
 </div>
 <p>We check if it’s actually deleted</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -764,21 +768,13 @@ data:      [-0.55078125, -1.332275390625]...
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Previously deleted measurement does not exist
-</pre></div></div>
-</div>
 <p>If all went well we end up here now. The source u0001 is in the database along with a number of its measurements.</p>
 </section>
 <section id="Uploading-additional-sources">
-<h2>Uploading additional sources<a class="headerlink" href="#Uploading-additional-sources" title="Permalink to this headline"></a></h2>
+<h3>Uploading additional sources<a class="headerlink" href="#Uploading-additional-sources" title="Permalink to this headline"></a></h3>
 <p>Here we show how to upload additional sources in a more compact way.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sources</span> <span class="o">=</span> <span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
@@ -829,7 +825,7 @@ Previously deleted measurement does not exist
         <span class="k">except</span> <span class="n">MVGAPIError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
             <span class="k">raise</span>
-</pre></div>
+<br/><br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -844,7 +840,7 @@ Uploading sources u0002, u0003, u0004, u0005, u0006 from CharlieDb
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "2f87a5d6866b4f6ab023567577daa6af", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "bdc97293850b4e4c97bb2b75dcf79bb2"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -859,7 +855,7 @@ Uploading measurements to source u0002
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a89062e4edb747dfa73d8a97ca9b87f2", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "b7db68b9080d438b84ea6df3411be8f4"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -874,7 +870,7 @@ Uploading measurements to source u0003
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "6ec67787de634b46b65cfa2f81f74cd1", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "8f301abe49564c6594e8bf503a2bf7c0"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -889,7 +885,7 @@ Uploading measurements to source u0004
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "25ad9979ad244110a2c82f99b555d04b", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "56ec663ca8754cdbac4cecadc82f8331"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -904,7 +900,7 @@ Uploading measurements to source u0005
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c35a320df1b145b0909ec1ff5c78255c", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "2fbd54fb56b247ef9aa74368fd9b4a84"}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -919,8 +915,9 @@ Uploading measurements to source u0006
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "48f5ac69394f480db5f1236a3d315734", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "f0544174950e4962a4c132408958a826"}</script></div>
 </div>
+</section>
 </section>
 </section>
 
@@ -928,7 +925,7 @@ Uploading measurements to source u0006
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="4-error_handling.html" class="btn btn-neutral float-left" title="Error Handling Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="0-check_version.html" class="btn btn-neutral float-left" title="Check Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="6-analysis_visual.html" class="btn btn-neutral float-right" title="Analysis and Results Visualization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

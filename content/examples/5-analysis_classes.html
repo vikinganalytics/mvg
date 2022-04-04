@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Analysis Classes - a Unified Interface to Analysis Results &mdash; MultiViz Analytics Engine Library  documentation</title>
+  <title>Analysis Classes - Unified Interface to Analysis Results &mdash; MultiViz Analytics Engine Library  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -46,40 +46,38 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview - How to use the MVG library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Analysis Classes - a Unified Interface to Analysis Results</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Or-in-(pseudo)-code">Or in (pseudo) code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Prerequisites">Prerequisites</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#Example-flow">Example flow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Analysis Classes - Unified Interface to Analysis Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Or-in-(pseudo)-code">Or in (pseudo) code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Importing-the-required-packages,-classes-and-functions">Importing the required packages, classes and functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Create-a-Session-and-test-API-access">Create a Session and test API access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Request-an-analysis">Request an analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Parse-Results">Parse Results</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#Importing-the-required-packages,-classes-and-functions">Importing the required packages, classes and functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Create-a-Session-and-test-API-access">Create a Session and test API access</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Running-the-Analyses">Running the Analyses</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Requsting-the-Analysis">Requsting the Analysis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Showing-and-Browsing-the-results-using-analysis_classes">Showing and Browsing the results using analysis_classes</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#Showing-and-Browsing-the-results-using-analysis_classes">Showing and Browsing the results using analysis_classes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Timestamps">Timestamps</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Plotting">Plotting</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Export-results-to-DataFrame">Export results to DataFrame</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Full-results">Full results</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#Black-Sheep-Analysis-example">Black Sheep Analysis example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Use-Generic-Methods">Use Generic Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#Using-the-analysis-classes">Using the analysis classes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Serializing">Serializing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Plotting">Plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Export-results-to-DataFrame">Export results to DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Full-results">Full results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Black-Sheep-Analysis-example">Black Sheep Analysis example</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#Using-the-analysis-classes">Using the analysis classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Serializing">Serializing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling of Measurements and Label Propagation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -113,7 +111,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Analysis Classes - a Unified Interface to Analysis Results</li>
+      <li>Analysis Classes - Unified Interface to Analysis Results</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/content/examples/5-analysis_classes.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -393,8 +391,8 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="Analysis-Classes---a-Unified-Interface-to-Analysis-Results">
-<h1>Analysis Classes - a Unified Interface to Analysis Results<a class="headerlink" href="#Analysis-Classes---a-Unified-Interface-to-Analysis-Results" title="Permalink to this headline"></a></h1>
+<section id="Analysis-Classes---Unified-Interface-to-Analysis-Results">
+<h1>Analysis Classes - Unified Interface to Analysis Results<a class="headerlink" href="#Analysis-Classes---Unified-Interface-to-Analysis-Results" title="Permalink to this headline"></a></h1>
 <p>MVG comes with a set of analysis classes which provide a unified interface to analysis results <em>irrespective of the specific feature</em>. Note that the analysis classes are helper classes, as such the mvg class does <em>not</em> depend on them.</p>
 <p>Except for step (1) requesting the specific feature analysis, the following generic workflow holds:</p>
 <ol class="arabic simple">
@@ -412,20 +410,18 @@ div.rendered_html tbody tr:hover {
 <span class="n">result</span><span class="o">.</span><span class="n">save_pkl</span><span class="p">()</span> <span class="c1"># save to pickle file</span>
 </pre></div>
 </div>
+</section>
 <section id="Prerequisites">
-<h3>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline"></a></h3>
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this headline"></a></h2>
 <p>For running the examples in this notebook:</p>
 <ol class="arabic simple">
 <li><p>Installed mvg package</p></li>
 <li><p>A token for API access from Viking Analytics</p></li>
 <li><p>The database needs to be populated with our example assets. This can be achieved by running the <a class="reference internal" href="2-sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example.</p></li>
 </ol>
-<section id="Example-flow">
-<h4>Example flow<a class="headerlink" href="#Example-flow" title="Permalink to this headline"></a></h4>
-</section>
 </section>
 <section id="Importing-the-required-packages,-classes-and-functions">
-<h3>Importing the required packages, classes and functions<a class="headerlink" href="#Importing-the-required-packages,-classes-and-functions" title="Permalink to this headline"></a></h3>
+<h2>Importing the required packages, classes and functions<a class="headerlink" href="#Importing-the-required-packages,-classes-and-functions" title="Permalink to this headline"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -439,11 +435,14 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Create-a-Session-and-test-API-access">
-<h3>Create a Session and test API access<a class="headerlink" href="#Create-a-Session-and-test-API-access" title="Permalink to this headline"></a></h3>
-<p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the Viking Analytics MultiViz Vibration service.</p>
-<p><strong>You need to insert your token received from Viking Analytics here:</strong></p>
+<h2>Create a Session and test API access<a class="headerlink" href="#Create-a-Session-and-test-API-access" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each token is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA-MVG’ service.</p>
+</div>
+<p><strong>You need to insert your token received from Viking Analytics here:</strong> Just replace <code class="docutils literal notranslate"><span class="pre">&quot;os.environ['TEST_TOKEN']&quot;</span></code> by your token as a string.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace by your own Token</span>
@@ -453,7 +452,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
@@ -462,22 +461,21 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;api_version&#39;: &#39;0.2.7&#39;,
- &#39;mvg_highest_tested_version&#39;: &#39;0.2.7&#39;,
- &#39;mvg_version&#39;: &#39;0.9.7&#39;}
+{&#39;api_version&#39;: &#39;0.3.3&#39;,
+ &#39;mvg_highest_tested_version&#39;: &#39;0.3.3&#39;,
+ &#39;mvg_version&#39;: &#39;0.12.2&#39;}
 </pre></div></div>
 </div>
-</section>
-<section id="Running-the-Analyses">
-<h3>Running the Analyses<a class="headerlink" href="#Running-the-Analyses" title="Permalink to this headline"></a></h3>
+<section id="Request-an-analysis">
+<h3>Request an analysis<a class="headerlink" href="#Request-an-analysis" title="Permalink to this headline"></a></h3>
 <p>Once the API session is live, we start by checking if the source u0001 we will use is available in the database:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SOURCE_ID</span> <span class="o">=</span> <span class="s2">&quot;u0001&quot;</span>
@@ -486,29 +484,26 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 {&#39;source_id&#39;: &#39;u0001&#39;,
- &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetA&#39;,
+ &#39;meta&#39;: {&#39;assetId&#39;: &#39;assetJ&#39;,
   &#39;measPoint&#39;: &#39;mloc01&#39;,
-  &#39;location&#39;: &#39;paris&#39;,
-  &#39;updated&#39;: &#39;YES! I have been updated&#39;},
+  &#39;location&#39;: &#39;cancun&#39;,
+  &#39;timezone&#39;: &#39;Europe/Stockholm&#39;},
  &#39;properties&#39;: {&#39;data_class&#39;: &#39;waveform&#39;, &#39;channels&#39;: [&#39;acc&#39;]}}
 </pre></div></div>
 </div>
-</section>
-<section id="Requsting-the-Analysis">
-<h3>Requsting the Analysis<a class="headerlink" href="#Requsting-the-Analysis" title="Permalink to this headline"></a></h3>
 <p>We will now request an analysis (first two lines, uncomment one of them) and wait for the results to become available.</p>
 <p>The results as returned will be stored in a dictionary named <code class="docutils literal notranslate"><span class="pre">raw_result</span></code>. The raw results are shown in the results cell, mainly to show that they are not optimized for readability or interpretation.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specifc part : Select one of two anlysis here by un/commenting</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specifc part : Select one of two analysis here by un/commenting</span>
 <span class="n">selected_feature</span> <span class="o">=</span> <span class="s2">&quot;KPIDemo&quot;</span>
 <span class="c1"># selected_feature = &quot;ModeId&quot;</span>
 
@@ -517,494 +512,34 @@ div.rendered_html tbody tr:hover {
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waiting for </span><span class="si">{</span><span class="n">analysis_request</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">analysis_request</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">]])</span>
 
-<span class="c1"># Generic Part: Displaying unparsed results</span>
+<span class="c1"># Generic Part: Retrieve unparsed results</span>
 <span class="n">raw_result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">analysis_request</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">])</span>
-<span class="n">raw_result</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Waiting for {&#39;request_id&#39;: &#39;6ca83f696c2c9c7852db61292b7b9c76&#39;, &#39;request_status&#39;: &#39;queued&#39;}
+Waiting for {&#39;request_id&#39;: &#39;9fa506fd651f10b05401840edf9f33cb&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-{&#39;status&#39;: &#39;successful&#39;,
- &#39;request_id&#39;: &#39;6ca83f696c2c9c7852db61292b7b9c76&#39;,
- &#39;feature&#39;: &#39;KPIDemo&#39;,
- &#39;results&#39;: {&#39;acc&#39;: {&#39;rms&#39;: [0.6471306969644414,
-    0.6466266944439302,
-    0.6468806720402722,
-    0.6466493957387159,
-    0.6467249872072451,
-    0.647100732403723,
-    0.6474297483216226,
-    0.6468977699997093,
-    0.6477017500152474,
-    0.6470887870500318,
-    0.647212859812641,
-    0.6467505833073381,
-    0.6473294495532388,
-    0.6474410190623384,
-    0.6476292704319382,
-    0.6471187716244126,
-    0.4848978443906459,
-    0.48484688004435844,
-    0.48475765388364805,
-    0.48456940607276594,
-    0.4850067490271975,
-    0.4850187365383283,
-    0.48525980138293656,
-    0.48516238436722653,
-    0.6279023656493041,
-    0.6281468737921598,
-    0.6283156705845551,
-    0.6280271420358873,
-    0.628026946860152,
-    0.6282908228344413,
-    0.6281600540558904,
-    0.6279733052109427,
-    0.6277421066711281,
-    0.6278769053426508,
-    0.6286883127970024,
-    0.6281343035247084,
-    0.6281292299681172,
-    0.6277872706078097,
-    0.6278531570472111,
-    0.6285441754422537,
-    0.6284047851367978,
-    0.6283140536346776,
-    0.6281499282360293,
-    0.6285481383470801,
-    0.6281251443487925,
-    0.6284361962847654,
-    0.6284482844164598,
-    0.6286081295548268,
-    0.6279703831408971],
-   &#39;peak&#39;: [2.6917552104452027,
-    2.715255164704313,
-    2.6851505333043484,
-    2.7266109280295483,
-    2.6970042262531173,
-    2.711735134992144,
-    2.681259855287886,
-    2.667384142184121,
-    2.6787570888613037,
-    2.7229817204780704,
-    2.682739508062897,
-    2.682787559190933,
-    2.700802677842825,
-    2.7210068297972096,
-    2.738182747476402,
-    2.6924439987220383,
-    2.3720132599872614,
-    2.2734294797799635,
-    2.3565631117706656,
-    2.367473192872302,
-    2.2605627121879217,
-    2.3019645284833294,
-    2.260862113899039,
-    2.33652828167628,
-    3.0371081557922737,
-    3.0697912558897955,
-    3.1035036648621293,
-    3.032672310338032,
-    2.9693198781385552,
-    3.029719051997296,
-    3.136087697846743,
-    3.123363962089775,
-    3.0473913260795387,
-    3.1346266673634613,
-    3.0981306499825583,
-    3.069391137549435,
-    2.9618012255115946,
-    3.07212973445674,
-    3.0116547698238354,
-    2.978442280270874,
-    3.1067808753934667,
-    3.0939468951811686,
-    2.996531248730437,
-    3.012682780143234,
-    3.103924514311588,
-    3.0582901611724864,
-    3.0854686711406067,
-    3.049574684496507,
-    3.088072126729926],
-   &#39;peak2peak&#39;: [5.36700439453125,
-    5.41485595703125,
-    5.3515625,
-    5.39532470703125,
-    5.31097412109375,
-    5.314697265625,
-    5.325927734375,
-    5.2713623046875,
-    5.379150390625,
-    5.4998779296875,
-    5.299072265625,
-    5.278564453125,
-    5.42462158203125,
-    5.3746337890625,
-    5.36669921875,
-    5.36260986328125,
-    4.60797119140625,
-    4.55438232421875,
-    4.66448974609375,
-    4.70159912109375,
-    4.65277099609375,
-    4.59197998046875,
-    4.6187744140625,
-    4.58441162109375,
-    5.60101318359375,
-    5.72088623046875,
-    5.7542724609375,
-    5.69451904296875,
-    5.6492919921875,
-    5.67547607421875,
-    5.7117919921875,
-    5.7236328125,
-    5.65484619140625,
-    5.79638671875,
-    5.69525146484375,
-    5.6915283203125,
-    5.5751953125,
-    5.696533203125,
-    5.71685791015625,
-    5.55279541015625,
-    5.70556640625,
-    5.68310546875,
-    5.58990478515625,
-    5.6024169921875,
-    5.71759033203125,
-    5.59027099609375,
-    5.76727294921875,
-    5.6591796875,
-    5.77734375],
-   &#39;variance&#39;: [0.41877813895368365,
-    0.4181260819674838,
-    0.41845460385927424,
-    0.4181554410092465,
-    0.41825320907821134,
-    0.41873935787743477,
-    0.4191652790117996,
-    0.4184767248305968,
-    0.4195175569728141,
-    0.4187238983258814,
-    0.41888448590685734,
-    0.4182863170083822,
-    0.41903541625889906,
-    0.4191798731644793,
-    0.41942367192020447,
-    0.41876270458868864,
-    0.23512591949469505,
-    0.2350764970887485,
-    0.2349899829987787,
-    0.23480750930171312,
-    0.2352315466019309,
-    0.2352431747932363,
-    0.23547707483820707,
-    0.23538253920489244,
-    0.3942613807879924,
-    0.3945684950548635,
-    0.3947805819021192,
-    0.3944180911337645,
-    0.39441784598248414,
-    0.3947493580579793,
-    0.39458505351149914,
-    0.3943504720575559,
-    0.3940601524879059,
-    0.3942294082626641,
-    0.39524899464754154,
-    0.3945527032644705,
-    0.3945463295403398,
-    0.39411685713720324,
-    0.3941995868141499,
-    0.39506778048238267,
-    0.394892573982825,
-    0.3947785499948405,
-    0.39457233234292877,
-    0.3950727622195802,
-    0.39454119696319145,
-    0.3949320528008642,
-    0.3949472461859916,
-    0.39514818054241796,
-    0.39434680210212514],
-   &#39;crest_factor&#39;: [4.159523297336503,
-    4.199107751094795,
-    4.1509209493542905,
-    4.216521264842036,
-    4.17024899238794,
-    4.190591973090684,
-    4.141391189142457,
-    4.12334725189317,
-    4.169192536071003,
-    4.291368147281347,
-    4.145065209055815,
-    4.148102264510928,
-    4.207778444296482,
-    4.202709976173473,
-    4.228009561164774,
-    4.160664342904785,
-    4.891779345746705,
-    4.704480813056079,
-    4.861322132597601,
-    4.885725683880231,
-    4.932319578447107,
-    4.746135262552724,
-    4.85907197225831,
-    4.815971635401411,
-    4.8369114721389,
-    4.8870596734125,
-    4.939401976039809,
-    4.8288873320139665,
-    4.728013492070362,
-    4.822160282923067,
-    4.992497815799841,
-    4.973720914841443,
-    4.854527510094295,
-    4.992422305535833,
-    4.927927856967997,
-    4.886520478703161,
-    4.715273679688384,
-    4.893583986630332,
-    4.796750221003309,
-    4.738636354676574,
-    4.94391664238704,
-    4.924204507735062,
-    4.770407690955719,
-    4.793082019248064,
-    4.941570230450774,
-    4.866508611777468,
-    4.909662016192138,
-    4.851312830866793,
-    4.917544218063957],
-   &#39;utilization&#39;: [1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1],
-   &#39;dc_component&#39;: [-0.14042464403895252,
-    -0.1402429576730629,
-    -0.14035072861684825,
-    -0.1404292874045484,
-    -0.14005842547186725,
-    -0.14050710764839433,
-    -0.1403663006003861,
-    -0.140528673434121,
-    -0.14048804589255356,
-    -0.13985183766557055,
-    -0.14032007446914688,
-    -0.1403681255971829,
-    -0.140316837999075,
-    -0.1400742126097098,
-    -0.14040442716390175,
-    -0.14007583465953835,
-    -0.1144449006122614,
-    -0.11473807352996325,
-    -0.11492492817691537,
-    -0.11484868115355228,
-    -0.11462765359417189,
-    -0.11458659879582928,
-    -0.11486602014903888,
-    -0.11454341839503018,
-    -0.10992309719852371,
-    -0.11007445901479568,
-    -0.10960718048712936,
-    -0.10988178299428189,
-    -0.10915142110730502,
-    -0.10979717699729602,
-    -0.10965947519049304,
-    -0.1095089816210249,
-    -0.1101965018607887,
-    -0.10960225330096143,
-    -0.10978836482630816,
-    -0.10967434067443484,
-    -0.11005562004284482,
-    -0.10966635555049033,
-    -0.10961619560508544,
-    -0.10985097167712396,
-    -0.10934435195596687,
-    -0.1092667193999186,
-    -0.10999560419918701,
-    -0.11009488951823405,
-    -0.10966181899908826,
-    -0.10937658695373634,
-    -0.10927238207810663,
-    -0.10908396184025694,
-    -0.10906822047992606]},
-  &#39;timestamps&#39;: [1570273260,
-   1570359660,
-   1570446060,
-   1570532460,
-   1570618860,
-   1570705260,
-   1570791660,
-   1570878060,
-   1570964460,
-   1571050860,
-   1571137260,
-   1571223660,
-   1571310060,
-   1571396460,
-   1571482860,
-   1571569260,
-   1571655660,
-   1571742060,
-   1571828460,
-   1571914860,
-   1572001260,
-   1572087660,
-   1572177660,
-   1572264060,
-   1572350460,
-   1572436860,
-   1572523260,
-   1572609660,
-   1572696060,
-   1572782460,
-   1572868860,
-   1572955260,
-   1573041660,
-   1573128060,
-   1573214460,
-   1573300860,
-   1573387260,
-   1573473660,
-   1573560060,
-   1573646460,
-   1573732860,
-   1573819260,
-   1573905660,
-   1573992060,
-   1574078460,
-   1574164860,
-   1574251260,
-   1574337660,
-   1574424060]},
- &#39;inputs&#39;: {&#39;request_id&#39;: &#39;6ca83f696c2c9c7852db61292b7b9c76&#39;,
-  &#39;feature&#39;: &#39;KPIDemo&#39;,
-  &#39;experiment&#39;: &#39;KPIDemo&#39;,
-  &#39;sw-commit&#39;: {&#39;api&#39;: &#39;0.0.0-dev0&#39;, &#39;feature&#39;: &#39;1.0.0&#39;},
-  &#39;dataType&#39;: &#39;waveform&#39;,
-  &#39;db_def&#39;: &#39;vibium_app/pipeline/apfel/strudel/data/strudelDb/database.json&#39;,
-  &#39;UUID&#39;: &#39;u0001&#39;,
-  &#39;timestamps&#39;: [1570273260,
-   1570359660,
-   1570446060,
-   1570532460,
-   1570618860,
-   1570705260,
-   1570791660,
-   1570878060,
-   1570964460,
-   1571050860,
-   1571137260,
-   1571223660,
-   1571310060,
-   1571396460,
-   1571482860,
-   1571569260,
-   1571655660,
-   1571742060,
-   1571828460,
-   1571914860,
-   1572001260,
-   1572087660,
-   1572177660,
-   1572264060,
-   1572350460,
-   1572436860,
-   1572523260,
-   1572609660,
-   1572696060,
-   1572782460,
-   1572868860,
-   1572955260,
-   1573041660,
-   1573128060,
-   1573214460,
-   1573300860,
-   1573387260,
-   1573473660,
-   1573560060,
-   1573646460,
-   1573732860,
-   1573819260,
-   1573905660,
-   1573992060,
-   1574078460,
-   1574164860,
-   1574251260,
-   1574337660,
-   1574424060],
-  &#39;params&#39;: {&#39;utilization_threshold&#39;: 0.1}},
- &#39;error_info&#39;: &#39;&#39;,
- &#39;debug_info&#39;: &#39;&#39;}
-</pre></div></div>
-</div>
+</section>
+<section id="Parse-Results">
+<h3>Parse Results<a class="headerlink" href="#Parse-Results" title="Permalink to this headline"></a></h3>
+</section>
 </section>
 <section id="Showing-and-Browsing-the-results-using-analysis_classes">
-<h3>Showing and Browsing the results using analysis_classes<a class="headerlink" href="#Showing-and-Browsing-the-results-using-analysis_classes" title="Permalink to this headline"></a></h3>
+<h2>Showing and Browsing the results using analysis_classes<a class="headerlink" href="#Showing-and-Browsing-the-results-using-analysis_classes" title="Permalink to this headline"></a></h2>
 <p>To make the results more accessible, we’ll use the analysis_classes. The parse_results function will take the raw_results of (any) analysis and represent them in a python object with a number of convenience methods for summarising, plotting and exporting. For the full list of provided methods check <a class="reference external" href="https://vikinganalytics.github.io/mvg/content/utilities_reference/analysis_classes.html">the documentation</a>.</p>
-<p>The parse function will automatically determine the kind (feature) of analysis based on the raw_results. Once the results are parsed, we can summarize them using the summary() method <em>irrespective of which analysis them stem from</em>. To verify this you can rerun the cell above by selecting another feature for the analysis.</p>
-</section>
+<p>The parse function will automatically determine the kind (feature) of analysis based on the raw_results. Once the results are parsed, we can summarize them using the summary() method <em>irrespective of which analysis they stem from</em>. To verify this you can rerun the cell above by selecting another feature for the analysis.</p>
 </section>
 <section id="Timestamps">
 <h2>Timestamps<a class="headerlink" href="#Timestamps" title="Permalink to this headline"></a></h2>
-<p>The Vibration API requires timestamps to be represented in EPOCH time. To display human interpertable timestamps a timezone and a time unit (specifying if the timestamps are seconds ‘s’ or milliseconds ‘ms’ from EPOCH). This information can be given in the parse_results calls 2nd and 3rd argument). If they are left blank EPOCH times are kept. When exporting the results to a DataFrame, a column called “datetime” will be appended to show the human interpretable times.</p>
+<p>The Vibration API requires timestamps to be represented in EPOCH time. To display human interpertable timestamps, one needs a timezone and a time unit (specifying if the timestamps are seconds ‘s’ or milliseconds ‘ms’ from EPOCH). This information can be given in the parse_results calls (2nd and 3rd argument). If they are left blank EPOCH times are kept. When exporting the results to a DataFrame, a column called “datetime” will be appended to show the human interpretable times.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parse</span>
@@ -1021,29 +556,33 @@ Waiting for {&#39;request_id&#39;: &#39;6ca83f696c2c9c7852db61292b7b9c76&#39;, &
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 === KPIDemo ===
-request_id 6ca83f696c2c9c7852db61292b7b9c76
-from 20191005-13:01.00 to 20191122-13:01.00
+request_id 9fa506fd651f10b05401840edf9f33cb
+from 20191004-13:01.00 to 20191122-13:01.00
 
 +-------+--------------+------------+------------+-----------------+----------------+--------------------+-------------------+--------------------+
 |       |   timestamps |    rms_acc |   peak_acc |   peak2peak_acc |   variance_acc |   crest_factor_acc |   utilization_acc |   dc_component_acc |
 |-------+--------------+------------+------------+-----------------+----------------+--------------------+-------------------+--------------------|
-| count | 49           | 49         |   49       |       49        |     49         |          49        |                49 |         49         |
-| mean  |  1.57235e+09 |  0.610976  |    2.82032 |        5.40237  |      0.376463  |           4.63947  |                 1 |         -0.120482  |
-| std   |  1.2361e+06  |  0.0568944 |    0.28031 |        0.381933 |      0.0639936 |           0.329529 |                 0 |          0.0140604 |
-| min   |  1.57027e+09 |  0.484569  |    2.26056 |        4.55438  |      0.234808  |           4.12335  |                 1 |         -0.140529  |
-| 25%   |  1.57131e+09 |  0.627902  |    2.68279 |        5.3147   |      0.394261  |           4.20778  |                 1 |         -0.140076  |
-| 50%   |  1.57235e+09 |  0.628314  |    2.9618  |        5.5528   |      0.394779  |           4.81597  |                 1 |         -0.110197  |
-| 75%   |  1.57339e+09 |  0.646751  |    3.06939 |        5.69452  |      0.418286  |           4.89178  |                 1 |         -0.109662  |
-| max   |  1.57442e+09 |  0.647702  |    3.13609 |        5.79639  |      0.419518  |           4.9925   |                 1 |         -0.109068  |
+| count | 50           | 50         |  50        |       50        |     50         |          50        |                50 |         50         |
+| mean  |  1.57231e+09 |  0.611691  |   2.81764  |        5.40059  |      0.377299  |           4.62976  |                 1 |         -0.120874  |
+| std   |  1.26105e+06 |  0.0565414 |   0.278079 |        0.378225 |      0.0636172 |           0.333367 |                 0 |          0.0141936 |
+| min   |  1.57019e+09 |  0.484564  |   2.26056  |        4.55438  |      0.234802  |           4.12339  |                 1 |         -0.140524  |
+| 25%   |  1.57125e+09 |  0.627912  |   2.68338  |        5.31364  |      0.394273  |           4.20402  |                 1 |         -0.140196  |
+| 50%   |  1.57231e+09 |  0.628307  |   2.84999  |        5.52634  |      0.39477   |           4.80641  |                 1 |         -0.112316  |
+| 75%   |  1.57337e+09 |  0.64684   |   3.06661  |        5.69377  |      0.418402  |           4.89065  |                 1 |         -0.10966   |
+| max   |  1.57442e+09 |  0.647694  |   3.13609  |        5.79639  |      0.419507  |           4.99256  |                 1 |         -0.109065  |
 +-------+--------------+------------+------------+-----------------+----------------+--------------------+-------------------+--------------------+
 </pre></div></div>
 </div>
+<section id="Use-Generic-Methods">
+<h3>Use Generic Methods<a class="headerlink" href="#Use-Generic-Methods" title="Permalink to this headline"></a></h3>
+</section>
+</section>
 <section id="Plotting">
-<h3>Plotting<a class="headerlink" href="#Plotting" title="Permalink to this headline"></a></h3>
-<p>For visual representation of the results there is the ‘plot’ method:</p>
-<p>Please not that when plotting the results for the KPIDemo feature, one selects the KPI to be displayed by passing the parameter <code class="docutils literal notranslate"><span class="pre">&quot;kpi&quot;</span></code>. If this parameter is not included, the plot function will display the results of the first KPI after the timestamps, which is the RMS value.</p>
+<h2>Plotting<a class="headerlink" href="#Plotting" title="Permalink to this headline"></a></h2>
+<p>For visual representation of the results, there is the ‘plot’ method.</p>
+<p>Please not that when plotting the results for the KPIDemo feature, one selects the KPI to be displayed by passing the parameter <code class="docutils literal notranslate"><span class="pre">&quot;kpi&quot;</span></code>. If this parameter is not included, the plot function will display the results of the first column after the timestamps, which is the RMS value of the first channel.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -1058,7 +597,7 @@ from 20191005-13:01.00 to 20191122-13:01.00
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1068,10 +607,10 @@ from 20191005-13:01.00 to 20191122-13:01.00
 </div>
 </section>
 <section id="Export-results-to-DataFrame">
-<h3>Export results to DataFrame<a class="headerlink" href="#Export-results-to-DataFrame" title="Permalink to this headline"></a></h3>
+<h2>Export results to DataFrame<a class="headerlink" href="#Export-results-to-DataFrame" title="Permalink to this headline"></a></h2>
 <p>The to_df() method will export results to a DataFrame. Note that the format of the DataFrame depends on the specific analysis and that not all of the results can be represented as a data frame.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
@@ -1079,7 +618,7 @@ from 20191005-13:01.00 to 20191122-13:01.00
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1115,590 +654,602 @@ from 20191005-13:01.00 to 20191122-13:01.00
   <tbody>
     <tr>
       <th>0</th>
-      <td>1570273260</td>
-      <td>0.647131</td>
-      <td>2.691755</td>
-      <td>5.367004</td>
-      <td>0.418778</td>
-      <td>4.159523</td>
+      <td>1570186860</td>
+      <td>0.647086</td>
+      <td>2.686563</td>
+      <td>5.313293</td>
+      <td>0.418720</td>
+      <td>4.151786</td>
       <td>1</td>
-      <td>-0.140425</td>
-      <td>2019-10-05 13:01:00+02:00</td>
+      <td>-0.140237</td>
+      <td>2019-10-04 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1570359660</td>
-      <td>0.646627</td>
-      <td>2.715255</td>
-      <td>5.414856</td>
-      <td>0.418126</td>
-      <td>4.199108</td>
+      <td>1570273260</td>
+      <td>0.647123</td>
+      <td>2.691750</td>
+      <td>5.367004</td>
+      <td>0.418769</td>
+      <td>4.159563</td>
       <td>1</td>
-      <td>-0.140243</td>
-      <td>2019-10-06 13:01:00+02:00</td>
+      <td>-0.140420</td>
+      <td>2019-10-05 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1570446060</td>
-      <td>0.646881</td>
-      <td>2.685151</td>
-      <td>5.351562</td>
-      <td>0.418455</td>
-      <td>4.150921</td>
+      <td>1570359660</td>
+      <td>0.646619</td>
+      <td>2.715251</td>
+      <td>5.414856</td>
+      <td>0.418116</td>
+      <td>4.199152</td>
       <td>1</td>
-      <td>-0.140351</td>
-      <td>2019-10-07 13:01:00+02:00</td>
+      <td>-0.140239</td>
+      <td>2019-10-06 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1570532460</td>
-      <td>0.646649</td>
-      <td>2.726611</td>
-      <td>5.395325</td>
-      <td>0.418155</td>
-      <td>4.216521</td>
+      <td>1570446060</td>
+      <td>0.646873</td>
+      <td>2.685147</td>
+      <td>5.351562</td>
+      <td>0.418445</td>
+      <td>4.150966</td>
       <td>1</td>
-      <td>-0.140429</td>
-      <td>2019-10-08 13:01:00+02:00</td>
+      <td>-0.140347</td>
+      <td>2019-10-07 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1570618860</td>
-      <td>0.646725</td>
-      <td>2.697004</td>
-      <td>5.310974</td>
-      <td>0.418253</td>
-      <td>4.170249</td>
+      <td>1570532460</td>
+      <td>0.646643</td>
+      <td>2.726605</td>
+      <td>5.395325</td>
+      <td>0.418147</td>
+      <td>4.216556</td>
       <td>1</td>
-      <td>-0.140058</td>
-      <td>2019-10-09 13:01:00+02:00</td>
+      <td>-0.140423</td>
+      <td>2019-10-08 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>1570705260</td>
-      <td>0.647101</td>
-      <td>2.711735</td>
-      <td>5.314697</td>
-      <td>0.418739</td>
-      <td>4.190592</td>
+      <td>1570618860</td>
+      <td>0.646717</td>
+      <td>2.697001</td>
+      <td>5.310974</td>
+      <td>0.418243</td>
+      <td>4.170294</td>
       <td>1</td>
-      <td>-0.140507</td>
-      <td>2019-10-10 13:01:00+02:00</td>
+      <td>-0.140055</td>
+      <td>2019-10-09 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>1570791660</td>
-      <td>0.647430</td>
-      <td>2.681260</td>
-      <td>5.325928</td>
-      <td>0.419165</td>
-      <td>4.141391</td>
+      <td>1570705260</td>
+      <td>0.647093</td>
+      <td>2.711733</td>
+      <td>5.314697</td>
+      <td>0.418729</td>
+      <td>4.190640</td>
       <td>1</td>
-      <td>-0.140366</td>
-      <td>2019-10-11 13:01:00+02:00</td>
+      <td>-0.140505</td>
+      <td>2019-10-10 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>1570878060</td>
-      <td>0.646898</td>
-      <td>2.667384</td>
-      <td>5.271362</td>
-      <td>0.418477</td>
-      <td>4.123347</td>
+      <td>1570791660</td>
+      <td>0.647422</td>
+      <td>2.681256</td>
+      <td>5.325928</td>
+      <td>0.419155</td>
+      <td>4.141435</td>
       <td>1</td>
-      <td>-0.140529</td>
-      <td>2019-10-12 13:01:00+02:00</td>
+      <td>-0.140363</td>
+      <td>2019-10-11 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>1570964460</td>
-      <td>0.647702</td>
-      <td>2.678757</td>
-      <td>5.379150</td>
-      <td>0.419518</td>
-      <td>4.169193</td>
+      <td>1570878060</td>
+      <td>0.646890</td>
+      <td>2.667379</td>
+      <td>5.271362</td>
+      <td>0.418467</td>
+      <td>4.123387</td>
       <td>1</td>
-      <td>-0.140488</td>
-      <td>2019-10-13 13:01:00+02:00</td>
+      <td>-0.140524</td>
+      <td>2019-10-12 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>1571050860</td>
-      <td>0.647089</td>
-      <td>2.722982</td>
-      <td>5.499878</td>
-      <td>0.418724</td>
-      <td>4.291368</td>
+      <td>1570964460</td>
+      <td>0.647694</td>
+      <td>2.678755</td>
+      <td>5.379150</td>
+      <td>0.419507</td>
+      <td>4.169247</td>
       <td>1</td>
-      <td>-0.139852</td>
-      <td>2019-10-14 13:01:00+02:00</td>
+      <td>-0.140486</td>
+      <td>2019-10-13 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>1571137260</td>
-      <td>0.647213</td>
-      <td>2.682740</td>
-      <td>5.299072</td>
-      <td>0.418884</td>
-      <td>4.145065</td>
+      <td>1571050860</td>
+      <td>0.647081</td>
+      <td>2.722979</td>
+      <td>5.499878</td>
+      <td>0.418714</td>
+      <td>4.291424</td>
       <td>1</td>
-      <td>-0.140320</td>
-      <td>2019-10-15 13:01:00+02:00</td>
+      <td>-0.139850</td>
+      <td>2019-10-14 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>1571223660</td>
-      <td>0.646751</td>
-      <td>2.682788</td>
-      <td>5.278564</td>
-      <td>0.418286</td>
-      <td>4.148102</td>
+      <td>1571137260</td>
+      <td>0.647205</td>
+      <td>2.682736</td>
+      <td>5.299072</td>
+      <td>0.418874</td>
+      <td>4.145110</td>
       <td>1</td>
-      <td>-0.140368</td>
-      <td>2019-10-16 13:01:00+02:00</td>
+      <td>-0.140317</td>
+      <td>2019-10-15 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>1571310060</td>
-      <td>0.647329</td>
-      <td>2.700803</td>
-      <td>5.424622</td>
-      <td>0.419035</td>
-      <td>4.207778</td>
+      <td>1571223660</td>
+      <td>0.646743</td>
+      <td>2.682785</td>
+      <td>5.278564</td>
+      <td>0.418276</td>
+      <td>4.148148</td>
       <td>1</td>
-      <td>-0.140317</td>
-      <td>2019-10-17 13:01:00+02:00</td>
+      <td>-0.140365</td>
+      <td>2019-10-16 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>1571396460</td>
-      <td>0.647441</td>
-      <td>2.721007</td>
-      <td>5.374634</td>
-      <td>0.419180</td>
-      <td>4.202710</td>
+      <td>1571310060</td>
+      <td>0.647322</td>
+      <td>2.700798</td>
+      <td>5.424622</td>
+      <td>0.419026</td>
+      <td>4.207834</td>
       <td>1</td>
-      <td>-0.140074</td>
-      <td>2019-10-18 13:01:00+02:00</td>
+      <td>-0.140312</td>
+      <td>2019-10-17 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>1571482860</td>
-      <td>0.647629</td>
-      <td>2.738183</td>
-      <td>5.366699</td>
-      <td>0.419424</td>
-      <td>4.228010</td>
+      <td>1571396460</td>
+      <td>0.647434</td>
+      <td>2.721002</td>
+      <td>5.374634</td>
+      <td>0.419170</td>
+      <td>4.202750</td>
       <td>1</td>
-      <td>-0.140404</td>
-      <td>2019-10-19 13:01:00+02:00</td>
+      <td>-0.140069</td>
+      <td>2019-10-18 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>1571569260</td>
-      <td>0.647119</td>
-      <td>2.692444</td>
-      <td>5.362610</td>
-      <td>0.418763</td>
-      <td>4.160664</td>
+      <td>1571482860</td>
+      <td>0.647621</td>
+      <td>2.738182</td>
+      <td>5.366699</td>
+      <td>0.419413</td>
+      <td>4.228060</td>
       <td>1</td>
-      <td>-0.140076</td>
-      <td>2019-10-20 13:01:00+02:00</td>
+      <td>-0.140403</td>
+      <td>2019-10-19 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>1571655660</td>
-      <td>0.484898</td>
-      <td>2.372013</td>
-      <td>4.607971</td>
-      <td>0.235126</td>
-      <td>4.891779</td>
+      <td>1571569260</td>
+      <td>0.647111</td>
+      <td>2.692440</td>
+      <td>5.362610</td>
+      <td>0.418753</td>
+      <td>4.160706</td>
       <td>1</td>
-      <td>-0.114445</td>
-      <td>2019-10-21 13:01:00+02:00</td>
+      <td>-0.140071</td>
+      <td>2019-10-20 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>1571742060</td>
-      <td>0.484847</td>
-      <td>2.273429</td>
-      <td>4.554382</td>
-      <td>0.235076</td>
-      <td>4.704481</td>
+      <td>1571655660</td>
+      <td>0.484892</td>
+      <td>2.372010</td>
+      <td>4.607971</td>
+      <td>0.235120</td>
+      <td>4.891831</td>
       <td>1</td>
-      <td>-0.114738</td>
-      <td>2019-10-22 13:01:00+02:00</td>
+      <td>-0.114442</td>
+      <td>2019-10-21 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>1571828460</td>
-      <td>0.484758</td>
-      <td>2.356563</td>
-      <td>4.664490</td>
-      <td>0.234990</td>
-      <td>4.861322</td>
+      <td>1571742060</td>
+      <td>0.484841</td>
+      <td>2.273428</td>
+      <td>4.554382</td>
+      <td>0.235071</td>
+      <td>4.704542</td>
       <td>1</td>
-      <td>-0.114925</td>
-      <td>2019-10-23 13:01:00+02:00</td>
+      <td>-0.114736</td>
+      <td>2019-10-22 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>1571914860</td>
-      <td>0.484569</td>
-      <td>2.367473</td>
-      <td>4.701599</td>
-      <td>0.234808</td>
-      <td>4.885726</td>
+      <td>1571828460</td>
+      <td>0.484752</td>
+      <td>2.356562</td>
+      <td>4.664490</td>
+      <td>0.234984</td>
+      <td>4.861379</td>
       <td>1</td>
-      <td>-0.114849</td>
-      <td>2019-10-24 13:01:00+02:00</td>
+      <td>-0.114924</td>
+      <td>2019-10-23 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>20</th>
-      <td>1572001260</td>
-      <td>0.485007</td>
-      <td>2.260563</td>
-      <td>4.652771</td>
-      <td>0.235232</td>
-      <td>4.932320</td>
+      <td>1571914860</td>
+      <td>0.484564</td>
+      <td>2.367471</td>
+      <td>4.701599</td>
+      <td>0.234802</td>
+      <td>4.885779</td>
       <td>1</td>
-      <td>-0.114628</td>
-      <td>2019-10-25 13:01:00+02:00</td>
+      <td>-0.114846</td>
+      <td>2019-10-24 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>21</th>
-      <td>1572087660</td>
-      <td>0.485019</td>
-      <td>2.301965</td>
-      <td>4.591980</td>
-      <td>0.235243</td>
-      <td>4.746135</td>
+      <td>1572001260</td>
+      <td>0.485001</td>
+      <td>2.260560</td>
+      <td>4.652771</td>
+      <td>0.235226</td>
+      <td>4.932384</td>
       <td>1</td>
-      <td>-0.114587</td>
-      <td>2019-10-26 13:01:00+02:00</td>
+      <td>-0.114624</td>
+      <td>2019-10-25 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>22</th>
-      <td>1572177660</td>
-      <td>0.485260</td>
-      <td>2.260862</td>
-      <td>4.618774</td>
-      <td>0.235477</td>
-      <td>4.859072</td>
+      <td>1572087660</td>
+      <td>0.485013</td>
+      <td>2.301963</td>
+      <td>4.591980</td>
+      <td>0.235237</td>
+      <td>4.746192</td>
       <td>1</td>
-      <td>-0.114866</td>
-      <td>2019-10-27 13:01:00+01:00</td>
+      <td>-0.114586</td>
+      <td>2019-10-26 13:01:00+02:00</td>
     </tr>
     <tr>
       <th>23</th>
-      <td>1572264060</td>
-      <td>0.485162</td>
-      <td>2.336528</td>
-      <td>4.584412</td>
-      <td>0.235383</td>
-      <td>4.815972</td>
+      <td>1572177660</td>
+      <td>0.485254</td>
+      <td>2.260858</td>
+      <td>4.618774</td>
+      <td>0.235472</td>
+      <td>4.859134</td>
       <td>1</td>
-      <td>-0.114543</td>
-      <td>2019-10-28 13:01:00+01:00</td>
+      <td>-0.114862</td>
+      <td>2019-10-27 13:01:00+01:00</td>
     </tr>
     <tr>
       <th>24</th>
-      <td>1572350460</td>
-      <td>0.627902</td>
-      <td>3.037108</td>
-      <td>5.601013</td>
-      <td>0.394261</td>
-      <td>4.836911</td>
+      <td>1572264060</td>
+      <td>0.485157</td>
+      <td>2.336525</td>
+      <td>4.584412</td>
+      <td>0.235377</td>
+      <td>4.816021</td>
       <td>1</td>
-      <td>-0.109923</td>
-      <td>2019-10-29 13:01:00+01:00</td>
+      <td>-0.114540</td>
+      <td>2019-10-28 13:01:00+01:00</td>
     </tr>
     <tr>
       <th>25</th>
+      <td>1572350460</td>
+      <td>0.627895</td>
+      <td>3.037107</td>
+      <td>5.601013</td>
+      <td>0.394252</td>
+      <td>4.836969</td>
+      <td>1</td>
+      <td>-0.109921</td>
+      <td>2019-10-29 13:01:00+01:00</td>
+    </tr>
+    <tr>
+      <th>26</th>
       <td>1572436860</td>
-      <td>0.628147</td>
-      <td>3.069791</td>
+      <td>0.628139</td>
+      <td>3.069790</td>
       <td>5.720886</td>
-      <td>0.394568</td>
-      <td>4.887060</td>
+      <td>0.394559</td>
+      <td>4.887119</td>
       <td>1</td>
       <td>-0.110074</td>
       <td>2019-10-30 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>26</th>
+      <th>27</th>
       <td>1572523260</td>
-      <td>0.628316</td>
-      <td>3.103504</td>
+      <td>0.628308</td>
+      <td>3.103501</td>
       <td>5.754272</td>
-      <td>0.394781</td>
-      <td>4.939402</td>
+      <td>0.394771</td>
+      <td>4.939456</td>
       <td>1</td>
-      <td>-0.109607</td>
+      <td>-0.109604</td>
       <td>2019-10-31 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>27</th>
+      <th>28</th>
       <td>1572609660</td>
-      <td>0.628027</td>
-      <td>3.032672</td>
+      <td>0.628020</td>
+      <td>3.032668</td>
       <td>5.694519</td>
-      <td>0.394418</td>
-      <td>4.828887</td>
+      <td>0.394409</td>
+      <td>4.828938</td>
       <td>1</td>
-      <td>-0.109882</td>
+      <td>-0.109878</td>
       <td>2019-11-01 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>28</th>
+      <th>29</th>
       <td>1572696060</td>
-      <td>0.628027</td>
-      <td>2.969320</td>
+      <td>0.628019</td>
+      <td>2.969318</td>
       <td>5.649292</td>
-      <td>0.394418</td>
-      <td>4.728013</td>
+      <td>0.394408</td>
+      <td>4.728068</td>
       <td>1</td>
-      <td>-0.109151</td>
+      <td>-0.109149</td>
       <td>2019-11-02 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>29</th>
+      <th>30</th>
       <td>1572782460</td>
-      <td>0.628291</td>
-      <td>3.029719</td>
+      <td>0.628283</td>
+      <td>3.029716</td>
       <td>5.675476</td>
-      <td>0.394749</td>
-      <td>4.822160</td>
+      <td>0.394740</td>
+      <td>4.822214</td>
       <td>1</td>
-      <td>-0.109797</td>
+      <td>-0.109794</td>
       <td>2019-11-03 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>30</th>
+      <th>31</th>
       <td>1572868860</td>
-      <td>0.628160</td>
-      <td>3.136088</td>
+      <td>0.628152</td>
+      <td>3.136087</td>
       <td>5.711792</td>
-      <td>0.394585</td>
-      <td>4.992498</td>
+      <td>0.394575</td>
+      <td>4.992559</td>
       <td>1</td>
       <td>-0.109659</td>
       <td>2019-11-04 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>31</th>
+      <th>32</th>
       <td>1572955260</td>
-      <td>0.627973</td>
-      <td>3.123364</td>
+      <td>0.627966</td>
+      <td>3.123363</td>
       <td>5.723633</td>
-      <td>0.394350</td>
-      <td>4.973721</td>
+      <td>0.394341</td>
+      <td>4.973780</td>
       <td>1</td>
-      <td>-0.109509</td>
+      <td>-0.109508</td>
       <td>2019-11-05 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>32</th>
+      <th>33</th>
       <td>1573041660</td>
-      <td>0.627742</td>
-      <td>3.047391</td>
+      <td>0.627735</td>
+      <td>3.047385</td>
       <td>5.654846</td>
-      <td>0.394060</td>
-      <td>4.854528</td>
+      <td>0.394052</td>
+      <td>4.854570</td>
       <td>1</td>
-      <td>-0.110197</td>
+      <td>-0.110191</td>
       <td>2019-11-06 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>33</th>
+      <th>34</th>
       <td>1573128060</td>
-      <td>0.627877</td>
-      <td>3.134627</td>
+      <td>0.627870</td>
+      <td>3.134621</td>
       <td>5.796387</td>
-      <td>0.394229</td>
-      <td>4.992422</td>
+      <td>0.394221</td>
+      <td>4.992468</td>
       <td>1</td>
-      <td>-0.109602</td>
+      <td>-0.109597</td>
       <td>2019-11-07 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>34</th>
+      <th>35</th>
       <td>1573214460</td>
-      <td>0.628688</td>
-      <td>3.098131</td>
+      <td>0.628681</td>
+      <td>3.098128</td>
       <td>5.695251</td>
-      <td>0.395249</td>
-      <td>4.927928</td>
+      <td>0.395239</td>
+      <td>4.927984</td>
       <td>1</td>
-      <td>-0.109788</td>
+      <td>-0.109786</td>
       <td>2019-11-08 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>35</th>
+      <th>36</th>
       <td>1573300860</td>
-      <td>0.628134</td>
-      <td>3.069391</td>
+      <td>0.628127</td>
+      <td>3.069387</td>
       <td>5.691528</td>
-      <td>0.394553</td>
-      <td>4.886520</td>
+      <td>0.394543</td>
+      <td>4.886571</td>
       <td>1</td>
-      <td>-0.109674</td>
+      <td>-0.109670</td>
       <td>2019-11-09 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>36</th>
+      <th>37</th>
       <td>1573387260</td>
-      <td>0.628129</td>
-      <td>2.961801</td>
+      <td>0.628122</td>
+      <td>2.961798</td>
       <td>5.575195</td>
-      <td>0.394546</td>
-      <td>4.715274</td>
+      <td>0.394537</td>
+      <td>4.715324</td>
       <td>1</td>
-      <td>-0.110056</td>
+      <td>-0.110052</td>
       <td>2019-11-10 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>37</th>
+      <th>38</th>
       <td>1573473660</td>
-      <td>0.627787</td>
-      <td>3.072130</td>
+      <td>0.627780</td>
+      <td>3.072126</td>
       <td>5.696533</td>
-      <td>0.394117</td>
-      <td>4.893584</td>
+      <td>0.394108</td>
+      <td>4.893636</td>
       <td>1</td>
-      <td>-0.109666</td>
+      <td>-0.109663</td>
       <td>2019-11-11 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>38</th>
+      <th>39</th>
       <td>1573560060</td>
-      <td>0.627853</td>
-      <td>3.011655</td>
+      <td>0.627846</td>
+      <td>3.011650</td>
       <td>5.716858</td>
-      <td>0.394200</td>
-      <td>4.796750</td>
+      <td>0.394191</td>
+      <td>4.796795</td>
       <td>1</td>
-      <td>-0.109616</td>
+      <td>-0.109611</td>
       <td>2019-11-12 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>39</th>
+      <th>40</th>
       <td>1573646460</td>
-      <td>0.628544</td>
+      <td>0.628536</td>
       <td>2.978442</td>
       <td>5.552795</td>
-      <td>0.395068</td>
-      <td>4.738636</td>
+      <td>0.395058</td>
+      <td>4.738696</td>
       <td>1</td>
       <td>-0.109851</td>
       <td>2019-11-13 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>40</th>
+      <th>41</th>
       <td>1573732860</td>
-      <td>0.628405</td>
-      <td>3.106781</td>
+      <td>0.628397</td>
+      <td>3.106778</td>
       <td>5.705566</td>
-      <td>0.394893</td>
-      <td>4.943917</td>
+      <td>0.394883</td>
+      <td>4.943972</td>
       <td>1</td>
-      <td>-0.109344</td>
+      <td>-0.109341</td>
       <td>2019-11-14 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>41</th>
+      <th>42</th>
       <td>1573819260</td>
-      <td>0.628314</td>
-      <td>3.093947</td>
+      <td>0.628307</td>
+      <td>3.093943</td>
       <td>5.683105</td>
-      <td>0.394779</td>
-      <td>4.924205</td>
+      <td>0.394769</td>
+      <td>4.924257</td>
       <td>1</td>
-      <td>-0.109267</td>
+      <td>-0.109263</td>
       <td>2019-11-15 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>42</th>
+      <th>43</th>
       <td>1573905660</td>
-      <td>0.628150</td>
-      <td>2.996531</td>
+      <td>0.628142</td>
+      <td>2.996528</td>
       <td>5.589905</td>
-      <td>0.394572</td>
-      <td>4.770408</td>
+      <td>0.394563</td>
+      <td>4.770460</td>
       <td>1</td>
-      <td>-0.109996</td>
+      <td>-0.109992</td>
       <td>2019-11-16 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>43</th>
+      <th>44</th>
       <td>1573992060</td>
-      <td>0.628548</td>
-      <td>3.012683</td>
+      <td>0.628540</td>
+      <td>3.012680</td>
       <td>5.602417</td>
-      <td>0.395073</td>
-      <td>4.793082</td>
+      <td>0.395063</td>
+      <td>4.793137</td>
       <td>1</td>
-      <td>-0.110095</td>
+      <td>-0.110092</td>
       <td>2019-11-17 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>44</th>
+      <th>45</th>
       <td>1574078460</td>
-      <td>0.628125</td>
-      <td>3.103925</td>
+      <td>0.628118</td>
+      <td>3.103921</td>
       <td>5.717590</td>
-      <td>0.394541</td>
-      <td>4.941570</td>
+      <td>0.394532</td>
+      <td>4.941623</td>
       <td>1</td>
-      <td>-0.109662</td>
+      <td>-0.109658</td>
       <td>2019-11-18 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>45</th>
+      <th>46</th>
       <td>1574164860</td>
-      <td>0.628436</td>
-      <td>3.058290</td>
+      <td>0.628429</td>
+      <td>3.058288</td>
       <td>5.590271</td>
-      <td>0.394932</td>
-      <td>4.866509</td>
+      <td>0.394922</td>
+      <td>4.866564</td>
       <td>1</td>
-      <td>-0.109377</td>
+      <td>-0.109374</td>
       <td>2019-11-19 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>46</th>
+      <th>47</th>
       <td>1574251260</td>
-      <td>0.628448</td>
-      <td>3.085469</td>
+      <td>0.628441</td>
+      <td>3.085465</td>
       <td>5.767273</td>
-      <td>0.394947</td>
-      <td>4.909662</td>
+      <td>0.394938</td>
+      <td>4.909715</td>
       <td>1</td>
-      <td>-0.109272</td>
+      <td>-0.109269</td>
       <td>2019-11-20 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>47</th>
+      <th>48</th>
       <td>1574337660</td>
-      <td>0.628608</td>
-      <td>3.049575</td>
+      <td>0.628601</td>
+      <td>3.049571</td>
       <td>5.659180</td>
-      <td>0.395148</td>
-      <td>4.851313</td>
+      <td>0.395139</td>
+      <td>4.851366</td>
       <td>1</td>
-      <td>-0.109084</td>
+      <td>-0.109081</td>
       <td>2019-11-21 13:01:00+01:00</td>
     </tr>
     <tr>
-      <th>48</th>
+      <th>49</th>
       <td>1574424060</td>
-      <td>0.627970</td>
-      <td>3.088072</td>
+      <td>0.627963</td>
+      <td>3.088068</td>
       <td>5.777344</td>
-      <td>0.394347</td>
-      <td>4.917544</td>
+      <td>0.394337</td>
+      <td>4.917596</td>
       <td>1</td>
-      <td>-0.109068</td>
+      <td>-0.109065</td>
       <td>2019-11-22 13:01:00+01:00</td>
     </tr>
   </tbody>
@@ -1707,3071 +1258,49 @@ from 20191005-13:01.00 to 20191122-13:01.00
 </div>
 </section>
 <section id="Full-results">
-<h3>Full results<a class="headerlink" href="#Full-results" title="Permalink to this headline"></a></h3>
-<p>In case the full server results are needed in the form they were returned, we can obtain them with the results() method:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<h2>Full results<a class="headerlink" href="#Full-results" title="Permalink to this headline"></a></h2>
+<p>In case the full server results are needed in the raw form they were returned, we can obtain them with the results() method:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">results</span><span class="p">();</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-{&#39;acc&#39;: {&#39;rms&#39;: [0.6471306969644414,
-   0.6466266944439302,
-   0.6468806720402722,
-   0.6466493957387159,
-   0.6467249872072451,
-   0.647100732403723,
-   0.6474297483216226,
-   0.6468977699997093,
-   0.6477017500152474,
-   0.6470887870500318,
-   0.647212859812641,
-   0.6467505833073381,
-   0.6473294495532388,
-   0.6474410190623384,
-   0.6476292704319382,
-   0.6471187716244126,
-   0.4848978443906459,
-   0.48484688004435844,
-   0.48475765388364805,
-   0.48456940607276594,
-   0.4850067490271975,
-   0.4850187365383283,
-   0.48525980138293656,
-   0.48516238436722653,
-   0.6279023656493041,
-   0.6281468737921598,
-   0.6283156705845551,
-   0.6280271420358873,
-   0.628026946860152,
-   0.6282908228344413,
-   0.6281600540558904,
-   0.6279733052109427,
-   0.6277421066711281,
-   0.6278769053426508,
-   0.6286883127970024,
-   0.6281343035247084,
-   0.6281292299681172,
-   0.6277872706078097,
-   0.6278531570472111,
-   0.6285441754422537,
-   0.6284047851367978,
-   0.6283140536346776,
-   0.6281499282360293,
-   0.6285481383470801,
-   0.6281251443487925,
-   0.6284361962847654,
-   0.6284482844164598,
-   0.6286081295548268,
-   0.6279703831408971],
-  &#39;peak&#39;: [2.6917552104452027,
-   2.715255164704313,
-   2.6851505333043484,
-   2.7266109280295483,
-   2.6970042262531173,
-   2.711735134992144,
-   2.681259855287886,
-   2.667384142184121,
-   2.6787570888613037,
-   2.7229817204780704,
-   2.682739508062897,
-   2.682787559190933,
-   2.700802677842825,
-   2.7210068297972096,
-   2.738182747476402,
-   2.6924439987220383,
-   2.3720132599872614,
-   2.2734294797799635,
-   2.3565631117706656,
-   2.367473192872302,
-   2.2605627121879217,
-   2.3019645284833294,
-   2.260862113899039,
-   2.33652828167628,
-   3.0371081557922737,
-   3.0697912558897955,
-   3.1035036648621293,
-   3.032672310338032,
-   2.9693198781385552,
-   3.029719051997296,
-   3.136087697846743,
-   3.123363962089775,
-   3.0473913260795387,
-   3.1346266673634613,
-   3.0981306499825583,
-   3.069391137549435,
-   2.9618012255115946,
-   3.07212973445674,
-   3.0116547698238354,
-   2.978442280270874,
-   3.1067808753934667,
-   3.0939468951811686,
-   2.996531248730437,
-   3.012682780143234,
-   3.103924514311588,
-   3.0582901611724864,
-   3.0854686711406067,
-   3.049574684496507,
-   3.088072126729926],
-  &#39;peak2peak&#39;: [5.36700439453125,
-   5.41485595703125,
-   5.3515625,
-   5.39532470703125,
-   5.31097412109375,
-   5.314697265625,
-   5.325927734375,
-   5.2713623046875,
-   5.379150390625,
-   5.4998779296875,
-   5.299072265625,
-   5.278564453125,
-   5.42462158203125,
-   5.3746337890625,
-   5.36669921875,
-   5.36260986328125,
-   4.60797119140625,
-   4.55438232421875,
-   4.66448974609375,
-   4.70159912109375,
-   4.65277099609375,
-   4.59197998046875,
-   4.6187744140625,
-   4.58441162109375,
-   5.60101318359375,
-   5.72088623046875,
-   5.7542724609375,
-   5.69451904296875,
-   5.6492919921875,
-   5.67547607421875,
-   5.7117919921875,
-   5.7236328125,
-   5.65484619140625,
-   5.79638671875,
-   5.69525146484375,
-   5.6915283203125,
-   5.5751953125,
-   5.696533203125,
-   5.71685791015625,
-   5.55279541015625,
-   5.70556640625,
-   5.68310546875,
-   5.58990478515625,
-   5.6024169921875,
-   5.71759033203125,
-   5.59027099609375,
-   5.76727294921875,
-   5.6591796875,
-   5.77734375],
-  &#39;variance&#39;: [0.41877813895368365,
-   0.4181260819674838,
-   0.41845460385927424,
-   0.4181554410092465,
-   0.41825320907821134,
-   0.41873935787743477,
-   0.4191652790117996,
-   0.4184767248305968,
-   0.4195175569728141,
-   0.4187238983258814,
-   0.41888448590685734,
-   0.4182863170083822,
-   0.41903541625889906,
-   0.4191798731644793,
-   0.41942367192020447,
-   0.41876270458868864,
-   0.23512591949469505,
-   0.2350764970887485,
-   0.2349899829987787,
-   0.23480750930171312,
-   0.2352315466019309,
-   0.2352431747932363,
-   0.23547707483820707,
-   0.23538253920489244,
-   0.3942613807879924,
-   0.3945684950548635,
-   0.3947805819021192,
-   0.3944180911337645,
-   0.39441784598248414,
-   0.3947493580579793,
-   0.39458505351149914,
-   0.3943504720575559,
-   0.3940601524879059,
-   0.3942294082626641,
-   0.39524899464754154,
-   0.3945527032644705,
-   0.3945463295403398,
-   0.39411685713720324,
-   0.3941995868141499,
-   0.39506778048238267,
-   0.394892573982825,
-   0.3947785499948405,
-   0.39457233234292877,
-   0.3950727622195802,
-   0.39454119696319145,
-   0.3949320528008642,
-   0.3949472461859916,
-   0.39514818054241796,
-   0.39434680210212514],
-  &#39;crest_factor&#39;: [4.159523297336503,
-   4.199107751094795,
-   4.1509209493542905,
-   4.216521264842036,
-   4.17024899238794,
-   4.190591973090684,
-   4.141391189142457,
-   4.12334725189317,
-   4.169192536071003,
-   4.291368147281347,
-   4.145065209055815,
-   4.148102264510928,
-   4.207778444296482,
-   4.202709976173473,
-   4.228009561164774,
-   4.160664342904785,
-   4.891779345746705,
-   4.704480813056079,
-   4.861322132597601,
-   4.885725683880231,
-   4.932319578447107,
-   4.746135262552724,
-   4.85907197225831,
-   4.815971635401411,
-   4.8369114721389,
-   4.8870596734125,
-   4.939401976039809,
-   4.8288873320139665,
-   4.728013492070362,
-   4.822160282923067,
-   4.992497815799841,
-   4.973720914841443,
-   4.854527510094295,
-   4.992422305535833,
-   4.927927856967997,
-   4.886520478703161,
-   4.715273679688384,
-   4.893583986630332,
-   4.796750221003309,
-   4.738636354676574,
-   4.94391664238704,
-   4.924204507735062,
-   4.770407690955719,
-   4.793082019248064,
-   4.941570230450774,
-   4.866508611777468,
-   4.909662016192138,
-   4.851312830866793,
-   4.917544218063957],
-  &#39;utilization&#39;: [1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1,
-   1],
-  &#39;dc_component&#39;: [-0.14042464403895252,
-   -0.1402429576730629,
-   -0.14035072861684825,
-   -0.1404292874045484,
-   -0.14005842547186725,
-   -0.14050710764839433,
-   -0.1403663006003861,
-   -0.140528673434121,
-   -0.14048804589255356,
-   -0.13985183766557055,
-   -0.14032007446914688,
-   -0.1403681255971829,
-   -0.140316837999075,
-   -0.1400742126097098,
-   -0.14040442716390175,
-   -0.14007583465953835,
-   -0.1144449006122614,
-   -0.11473807352996325,
-   -0.11492492817691537,
-   -0.11484868115355228,
-   -0.11462765359417189,
-   -0.11458659879582928,
-   -0.11486602014903888,
-   -0.11454341839503018,
-   -0.10992309719852371,
-   -0.11007445901479568,
-   -0.10960718048712936,
-   -0.10988178299428189,
-   -0.10915142110730502,
-   -0.10979717699729602,
-   -0.10965947519049304,
-   -0.1095089816210249,
-   -0.1101965018607887,
-   -0.10960225330096143,
-   -0.10978836482630816,
-   -0.10967434067443484,
-   -0.11005562004284482,
-   -0.10966635555049033,
-   -0.10961619560508544,
-   -0.10985097167712396,
-   -0.10934435195596687,
-   -0.1092667193999186,
-   -0.10999560419918701,
-   -0.11009488951823405,
-   -0.10966181899908826,
-   -0.10937658695373634,
-   -0.10927238207810663,
-   -0.10908396184025694,
-   -0.10906822047992606]},
- &#39;timestamps&#39;: [1570273260,
-  1570359660,
-  1570446060,
-  1570532460,
-  1570618860,
-  1570705260,
-  1570791660,
-  1570878060,
-  1570964460,
-  1571050860,
-  1571137260,
-  1571223660,
-  1571310060,
-  1571396460,
-  1571482860,
-  1571569260,
-  1571655660,
-  1571742060,
-  1571828460,
-  1571914860,
-  1572001260,
-  1572087660,
-  1572177660,
-  1572264060,
-  1572350460,
-  1572436860,
-  1572523260,
-  1572609660,
-  1572696060,
-  1572782460,
-  1572868860,
-  1572955260,
-  1573041660,
-  1573128060,
-  1573214460,
-  1573300860,
-  1573387260,
-  1573473660,
-  1573560060,
-  1573646460,
-  1573732860,
-  1573819260,
-  1573905660,
-  1573992060,
-  1574078460,
-  1574164860,
-  1574251260,
-  1574337660,
-  1574424060]}
-</pre></div></div>
 </div>
 <section id="Black-Sheep-Analysis-example">
-<h4>Black Sheep Analysis example<a class="headerlink" href="#Black-Sheep-Analysis-example" title="Permalink to this headline"></a></h4>
+<h3>Black Sheep Analysis example<a class="headerlink" href="#Black-Sheep-Analysis-example" title="Permalink to this headline"></a></h3>
 <p>The BlackSheep is a population analysis and has a somewhat different call signature as it requires a number of assets to be submitted to analysis.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specific signature for BlackSheep</span>
 <span class="n">POPULATION_SOURCES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">,</span><span class="s2">&quot;u0004&quot;</span><span class="p">,</span><span class="s2">&quot;u0002&quot;</span><span class="p">,</span><span class="s2">&quot;u0003&quot;</span><span class="p">,</span><span class="s2">&quot;u0001&quot;</span><span class="p">]</span>
 <span class="n">analysis_request</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_population_analysis</span><span class="p">(</span><span class="n">POPULATION_SOURCES</span><span class="p">,</span> <span class="s2">&quot;BlackSheep&quot;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;atypical_threshold&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">})</span>
 
-<span class="c1"># Generic part, same as above</span>
+<span class="c1"># Generic part to request analysis, same as above</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waiting for </span><span class="si">{</span><span class="n">analysis_request</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">analysis_request</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">]])</span>
 <span class="n">raw_result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">analysis_request</span><span class="p">[</span><span class="s2">&quot;request_id&quot;</span><span class="p">])</span>
-<span class="n">raw_result</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Waiting for {&#39;request_id&#39;: &#39;023d673646aaa34407bc9cbcc4f078c8&#39;, &#39;request_status&#39;: &#39;queued&#39;}
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-{&#39;status&#39;: &#39;successful&#39;,
- &#39;request_id&#39;: &#39;023d673646aaa34407bc9cbcc4f078c8&#39;,
- &#39;feature&#39;: &#39;BlackSheep&#39;,
- &#39;results&#39;: {&#39;atypical_assets&#39;: [{&#39;timestamps&#39;: [1570186860,
-     1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [10,
-     10,
-     10,
-     10,
-     0,
-     10,
-     9,
-     9,
-     10,
-     10,
-     9,
-     10,
-     4,
-     4,
-     4,
-     4,
-     4,
-     4,
-     4,
-     3,
-     6,
-     3,
-     8,
-     7,
-     8,
-     8,
-     7,
-     8,
-     8,
-     8,
-     8,
-     7,
-     8,
-     8,
-     6,
-     8,
-     8,
-     3,
-     8,
-     8,
-     8,
-     8,
-     8,
-     8,
-     3,
-     8,
-     7,
-     8,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0004&#39;},
-   {&#39;timestamps&#39;: [1570186860,
-     1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     5,
-     2,
-     2,
-     2,
-     2,
-     6,
-     3,
-     8,
-     8,
-     3,
-     8,
-     8,
-     8,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     2,
-     2,
-     2,
-     2,
-     10,
-     10,
-     10,
-     9,
-     10,
-     10,
-     10,
-     10,
-     9,
-     10,
-     10,
-     10,
-     9,
-     10],
-    &#39;atypical&#39;: [True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     True,
-     True,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0002&#39;},
-   {&#39;timestamps&#39;: [1570186860,
-     1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [8,
-     8,
-     8,
-     3,
-     8,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     8,
-     8,
-     8,
-     8,
-     3,
-     8,
-     8,
-     8,
-     3,
-     8,
-     8,
-     8,
-     8,
-     8,
-     8,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0003&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;},
-   {&#39;timestamps&#39;: [1570273260,
-     1570359660,
-     1570446060,
-     1570532460,
-     1570618860,
-     1570705260,
-     1570791660,
-     1570878060,
-     1570964460,
-     1571050860,
-     1571137260,
-     1571223660,
-     1571310060,
-     1571396460,
-     1571482860,
-     1571569260,
-     1571655660,
-     1571742060,
-     1571828460,
-     1571914860,
-     1572001260,
-     1572087660,
-     1572177660,
-     1572264060,
-     1572350460,
-     1572436860,
-     1572523260,
-     1572609660,
-     1572696060,
-     1572782460,
-     1572868860,
-     1572955260,
-     1573041660,
-     1573128060,
-     1573214460,
-     1573300860,
-     1573387260,
-     1573473660,
-     1573560060,
-     1573646460,
-     1573732860,
-     1573819260,
-     1573905660,
-     1573992060,
-     1574078460,
-     1574164860,
-     1574251260,
-     1574337660,
-     1574424060],
-    &#39;labels&#39;: [9,
-     0,
-     10,
-     0,
-     0,
-     9,
-     10,
-     9,
-     10,
-     10,
-     9,
-     10,
-     10,
-     9,
-     9,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     8,
-     8,
-     8,
-     6,
-     7,
-     6,
-     7,
-     6,
-     8,
-     8,
-     8,
-     8,
-     11,
-     8,
-     11,
-     8,
-     8,
-     8,
-     3,
-     11,
-     3,
-     7,
-     3,
-     3,
-     11],
-    &#39;atypical&#39;: [False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     True,
-     False,
-     True,
-     False,
-     True,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False,
-     False],
-    &#39;source_id&#39;: &#39;u0001&#39;}]},
- &#39;inputs&#39;: {&#39;experiment&#39;: &#39;BlackSheep&#39;,
-  &#39;feature&#39;: &#39;BlackSheep&#39;,
-  &#39;dataType&#39;: &#39;waveform&#39;,
-  &#39;UUID&#39;: [&#39;u0001&#39;,
-   &#39;u0001&#39;,
-   &#39;u0001&#39;,
-   &#39;u0001&#39;,
-   &#39;u0001&#39;,
-   &#39;u0001&#39;,
-   &#39;u0001&#39;,
-   &#39;u0001&#39;,
-   &#39;u0001&#39;,
-   &#39;u0004&#39;,
-   &#39;u0002&#39;,
-   &#39;u0003&#39;,
-   &#39;u0001&#39;],
-  &#39;black_sheep&#39;: True,
-  &#39;data-commit&#39;: &#39;&#39;,
-  &#39;force_create_model&#39;: True,
-  &#39;load_model&#39;: &#39;&#39;,
-  &#39;save&#39;: False,
-  &#39;complex&#39;: False,
-  &#39;preprocessor_functions&#39;: [&#39;downselect&#39;],
-  &#39;preproc_params&#39;: {&#39;MINIMUM_REQUIRED_ROWS&#39;: 20,
-   &#39;DFT_FREQ_RESOLUTION&#39;: 0.2,
-   &#39;CORRELATION_THRESHOLD&#39;: 0.5,
-   &#39;DOWNSELECTION_BAND_WIDTH&#39;: 50,
-   &#39;window_func&#39;: &#39;hanning&#39;},
-  &#39;timestamps&#39;: [[1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570186860,
-    1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570186860,
-    1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570186860,
-    1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060],
-   [1570273260,
-    1570359660,
-    1570446060,
-    1570532460,
-    1570618860,
-    1570705260,
-    1570791660,
-    1570878060,
-    1570964460,
-    1571050860,
-    1571137260,
-    1571223660,
-    1571310060,
-    1571396460,
-    1571482860,
-    1571569260,
-    1571655660,
-    1571742060,
-    1571828460,
-    1571914860,
-    1572001260,
-    1572087660,
-    1572177660,
-    1572264060,
-    1572350460,
-    1572436860,
-    1572523260,
-    1572609660,
-    1572696060,
-    1572782460,
-    1572868860,
-    1572955260,
-    1573041660,
-    1573128060,
-    1573214460,
-    1573300860,
-    1573387260,
-    1573473660,
-    1573560060,
-    1573646460,
-    1573732860,
-    1573819260,
-    1573905660,
-    1573992060,
-    1574078460,
-    1574164860,
-    1574251260,
-    1574337660,
-    1574424060]],
-  &#39;n_trials&#39;: 12,
-  &#39;algo_params&#39;: {&#39;look_back&#39;: 1,
-   &#39;number_of_modes&#39;: [2, 12],
-   &#39;model_sparsity_factor&#39;: 0.11,
-   &#39;smoothening_factor&#39;: 1,
-   &#39;max_iterations&#39;: 20,
-   &#39;threshold&#39;: 0}},
- &#39;error_info&#39;: &#39;&#39;,
- &#39;debug_info&#39;: &#39;&#39;}
+Waiting for {&#39;request_id&#39;: &#39;e6a0938e5dd9128550f710ad0180d015&#39;, &#39;request_status&#39;: &#39;queued&#39;}
 </pre></div></div>
 </div>
 </section>
 </section>
 <section id="Using-the-analysis-classes">
-<h3>Using the analysis classes<a class="headerlink" href="#Using-the-analysis-classes" title="Permalink to this headline"></a></h3>
+<h2>Using the analysis classes<a class="headerlink" href="#Using-the-analysis-classes" title="Permalink to this headline"></a></h2>
 <p>We use exactly the same code as above to inspect the results:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parse</span>
@@ -4782,65 +1311,16 @@ Waiting for {&#39;request_id&#39;: &#39;023d673646aaa34407bc9cbcc4f078c8&#39;, &
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-=== BlackSheep ===
-request_id 023d673646aaa34407bc9cbcc4f078c8
-
-+----+----------+------------+
-|    | source   | atypical   |
-|----+----------+------------|
-|  0 | u0001    | True       |
-|  1 | u0001    | True       |
-|  2 | u0001    | True       |
-|  3 | u0001    | True       |
-|  4 | u0001    | True       |
-|  5 | u0001    | True       |
-|  6 | u0001    | True       |
-|  7 | u0001    | True       |
-|  8 | u0001    | True       |
-|  9 | u0004    | True       |
-| 10 | u0002    | True       |
-| 11 | u0003    | True       |
-| 12 | u0001    | True       |
-+----+----------+------------+
-
-+------------+-----+
-| atypical   |   N |
-|------------+-----|
-| True       |  13 |
-+------------+-----+
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/content_examples_5-analysis_classes_21_1.png" src="../../_images/content_examples_5-analysis_classes_21_1.png" />
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&#39;&#39;
-</pre></div></div>
-</div>
 </section>
 <section id="Serializing">
-<h3>Serializing<a class="headerlink" href="#Serializing" title="Permalink to this headline"></a></h3>
+<h2>Serializing<a class="headerlink" href="#Serializing" title="Permalink to this headline"></a></h2>
 <p>Finally, we can save the object including the results to pickle. If no name is given it is saved under the name <code class="docutils literal notranslate"><span class="pre">&quot;&lt;request_id&gt;.pkl&quot;</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blacksheep_result</span><span class="o">.</span><span class="n">save_pkl</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -4848,7 +1328,7 @@ request_id 023d673646aaa34407bc9cbcc4f078c8
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Saving BlackSheep object to 023d673646aaa34407bc9cbcc4f078c8.pkl
+Saving BlackSheep object to 9895be09684f27257096bd9d517a9680.pkl
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -4857,10 +1337,9 @@ Saving BlackSheep object to 023d673646aaa34407bc9cbcc4f078c8.pkl
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;023d673646aaa34407bc9cbcc4f078c8.pkl&#39;
+&#39;9895be09684f27257096bd9d517a9680.pkl&#39;
 </pre></div></div>
 </div>
-</section>
 </section>
 </section>
 

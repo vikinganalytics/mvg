@@ -25,7 +25,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Labeling of Measurements and Label Propagation" href="7-labeling.html" />
-    <link rel="prev" title="Analysis Classes - a Unified Interface to Analysis Results" href="5-analysis_classes.html" /> 
+    <link rel="prev" title="Analysis Classes - Unified Interface to Analysis Results" href="5-analysis_classes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,18 +46,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview - How to use the MVG library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - Unified Interface to Analysis Results</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Working with Tabular Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Imports">Imports</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling of Measurements and Label Propagation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -373,11 +373,11 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="Working-with-Tabular-Data">
 <h1>Working with Tabular Data<a class="headerlink" href="#Working-with-Tabular-Data" title="Permalink to this headline"></a></h1>
-<p>Although Vibium was designed with vibration waveform data in mind, it still works wonderfully well with non-vibration or KPI data. We refer to this as tabular timeseries data. Each measurement consists of one or more variables captured at the same time. This is different from the vibration waveform data, where each measurement is a short measurement sample from one vibration sensor.</p>
+<p>Although MVG has been designed with vibration waveform data in mind, it still works wonderfully well with non-vibration or KPI data. We refer to this as tabular timeseries data. Each measurement consists of one or more variables captured at the same time. This is different from the vibration waveform data, where each measurement is a short measurement sample from one vibration sensor.</p>
 <p>In this example, we will show how to work with tabular sources and measurements, and how to create an analysis. If you have seen any of the previous examples, much of this one will be familiar to you.</p>
 <section id="Imports">
 <h2>Imports<a class="headerlink" href="#Imports" title="Permalink to this headline"></a></h2>
-<p>Beyond importing <code class="docutils literal notranslate"><span class="pre">MVG</span></code> and the <code class="docutils literal notranslate"><span class="pre">ModeId</span></code> analysis class we want to use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> for loading and processing the data before the analysis.</p>
+<p>Beyond importing <code class="docutils literal notranslate"><span class="pre">MVG</span></code> and the <code class="docutils literal notranslate"><span class="pre">ModeId</span></code> analysis class, we want to use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> for loading and processing the data before the analysis.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -393,13 +393,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<p>After importing we create the <code class="docutils literal notranslate"><span class="pre">MVG</span></code> session that let us communicate with the Vibium server. For that we need an endpoint URL and a valid token. If you do not have a token, you can get one <a class="reference external" href="https://vikinganalytics.se/multiviz-vibration-api/">here</a>.</p>
+<p>After importing we create the <code class="docutils literal notranslate"><span class="pre">MVG</span></code> session that let us communicate with the MVG server. For that we need an endpoint URL and a valid token. If you do not have a token, you can get one <a class="reference external" href="https://vikinganalytics.se/multiviz-vibration-api/">here</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Each token is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA vibration’ service.</p>
+<p>Each token is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA-MVG’ service.</p>
 </div>
+<p><strong>You need to insert your token received from Viking Analytics here:</strong> Just replace <code class="docutils literal notranslate"><span class="pre">&quot;os.environ['TEST_TOKEN']&quot;</span></code> by your token as a string.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;http://api.beta.multiviz.com&quot;</span>
@@ -408,7 +409,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
@@ -417,7 +418,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>We will use a dataset that is collected from a heat pump in the cellar of one of the employees at Viking Analytics. The data is available in <a class="reference external" href="https://github.com/vikinganalytics/tabular-example-data">this git repository</a>. We clone the repository to get access it. If you don’t have git you can download the data from the link.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/vikinganalytics/tabular-example-data.git
@@ -427,13 +428,13 @@ div.rendered_html tbody tr:hover {
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-fatal: destination path &#39;tabular-example-data&#39; already exists and is not an empty directory.
+Cloning into &#39;tabular-example-data&#39;...
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;tabular-example-data&quot;</span> <span class="o">/</span> <span class="s2">&quot;heatpump.csv&quot;</span>
@@ -443,7 +444,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -541,10 +542,10 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </table>
 </div></div>
 </div>
-<p>We loaded the <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file into a dataframe object and printed out the first five rows. The timestamp was read as string timestamps, but for the Vibium API we need the timestamps to be in milliseconds since EPOCH. So we need to do some data wrangling in order to get it to the correct data type.</p>
-<p>We can use the function <code class="docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> to convert a column into datetime objects. Then we can convert the timestamps into integers, which will automatically get converted to nanoseconds since EPOCH. By dividing by 1e6 we get the same time in milliseconds. We can see that the conversion was successful by printing the first five rows again.</p>
+<p>We loaded the <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file into a dataframe object and printed out the first five rows. The timestamp was read as string timestamps, but for the MVG API we need the timestamps to be in milliseconds since EPOCH. So we need to do some data wrangling in order to get it to the correct data type.</p>
+<p>We can use the function <code class="docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> to convert a column into datetime objects. Then we can convert the timestamps into integers, which will automatically get converted to nanoseconds since EPOCH. Then, when dividing by 1e6 we get the same time in milliseconds. We can see that the conversion was successful by printing the first five rows again.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data_df</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="mi">1000000</span>
@@ -552,17 +553,8 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-&lt;ipython-input-16-012b223473e2&gt;:1: FutureWarning: casting datetime64[ns, UTC] values to int64 with .astype(...) is deprecated and will raise in a future version. Use .view(...) instead.
-  data_df[&#34;timestamp&#34;] = pd.to_datetime(data_df[&#34;timestamp&#34;]).astype(&#34;int64&#34;) // 1000000
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -666,7 +658,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 <p>The dictionary must have a <code class="docutils literal notranslate"><span class="pre">&quot;timestamp&quot;</span></code> key and at least one more column, corresponding to a tracked variable. The <code class="docutils literal notranslate"><span class="pre">to_dict(&quot;list&quot;)</span></code> method will not include the index, so it is important to have the timestamp as a column in the data and not as an index.</p>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dict</span> <span class="o">=</span> <span class="n">data_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
@@ -675,7 +667,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </div>
 <p>Now that the data has been converted to the correct format we are ready to create the source and upload some measurements. When creating a tabular source, you must define the columns that the data will contain ahead of time. This is to prevent arbitrary data to be uploaded to the source. Besides the columns argument, creating a tabular source works the exact same way as creating a waveform source.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">create_tabular_source</span><span class="p">(</span>
@@ -686,9 +678,9 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </pre></div>
 </div>
 </div>
-<p>We can check that the source was uploaded correctly by getting the source information.</p>
+<p>We can check that the source was created correctly by getting the source information.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s2">&quot;heatpump&quot;</span><span class="p">)</span>
@@ -716,7 +708,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </div>
 <p>Next, let’s upload the data we prepared to the source</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">create_tabular_measurement</span><span class="p">(</span>
@@ -727,9 +719,9 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </div>
 </div>
 <p>Now that we have a source with measurements we can request an analysis of the data from the server. Requesting analyses for tabular data works the same way as it does for waveform data. Although not all features will work for tabular data. The KPIDemo feature for example will only work with waveform data. Another thing to keep in mind is that when requesting population analyses, all sources to be analyzed simultaneously must have the same data class.</p>
-<p>For now we will simply run the mode identification algorithm</p>
+<p>For now, we will simply run the mode identification algorithm.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span>
@@ -740,9 +732,9 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </pre></div>
 </div>
 </div>
-<p>To make the results easier to work with we can load them into an analysis class. There exists one for each analysis feature. Once the analysis is finished and we have received the results, we can instatiate the analysis class with the results dictionary.</p>
+<p>To make the results easier to work with we can load them into an analysis class. There exists one for each analysis feature. Once the analysis is completed and we have received the results, we can instatiate the analysis class with the results dictionary.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">([</span><span class="n">request_id</span><span class="p">])</span>
@@ -753,7 +745,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </div>
 <p>The analysis class makes it very convenient to view the results. Let’s use the <code class="docutils literal notranslate"><span class="pre">ModeId.plot()</span></code> method to get an overview of the results.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analysis</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -768,7 +760,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -776,17 +768,14 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
 &#39;&#39;
 </pre></div></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Gray stripes in the plot correspond to gaps in measurements and not a third mode.</p>
-</div>
+<p>The different modes help to identify between idle and have high-usage conditions along all seasons of the year.</p>
 <p>When you are finished with the example you can go ahead and delete the source</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">delete_source</span><span class="p">(</span><span class="s2">&quot;heatpump&quot;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -796,7 +785,7 @@ fatal: destination path &#39;tabular-example-data&#39; already exists and is not
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="5-analysis_classes.html" class="btn btn-neutral float-left" title="Analysis Classes - a Unified Interface to Analysis Results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="5-analysis_classes.html" class="btn btn-neutral float-left" title="Analysis Classes - Unified Interface to Analysis Results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="7-labeling.html" class="btn btn-neutral float-right" title="Labeling of Measurements and Label Propagation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

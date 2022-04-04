@@ -24,7 +24,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Using MVG features" href="../features/general.html" />
+    <link rel="next" title="Error Handling Example" href="4-error_handling.html" />
     <link rel="prev" title="Labeling of Measurements and Label Propagation" href="7-labeling.html" /> 
 </head>
 
@@ -46,24 +46,28 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview - How to use the MVG library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - Unified Interface to Analysis Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling of Measurements and Label Propagation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Inference for New Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Setup-the-connection">Setup the connection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Load-the-data">Load the data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Create-source-and-measurements">Create source and measurements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Build-the-model">Build the model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Review-the-results">Review the results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Apply-the-model-on-the-whole-dataset">Apply the model on the whole dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Create-source-and-measurements">Create source and measurements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Build-the-model">Build the model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Review-the-results">Review the results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Apply-the-model-on-the-whole-dataset">Apply the model on the whole dataset</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#Review-the-results-of-the-inference">Review the results of the inference</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="4-error_handling.html">Error Handling Example</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -384,7 +388,7 @@ div.rendered_html tbody tr:hover {
 <section id="Setup-the-connection">
 <h2>Setup the connection<a class="headerlink" href="#Setup-the-connection" title="Permalink to this headline"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -395,7 +399,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;http://api.beta.multiviz.com&quot;</span>
@@ -405,7 +409,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
@@ -417,7 +421,7 @@ div.rendered_html tbody tr:hover {
 <h2>Load the data<a class="headerlink" href="#Load-the-data" title="Permalink to this headline"></a></h2>
 <p>The data from Iris dataset needs to be wrangled to conform to the format used by MVG. The data is in the form of a 2D numpy array which needs to be converted to a dictionary where each key holds the name of a column (in this case features of the plants) and the corresponding values.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
@@ -427,7 +431,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -439,7 +443,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
@@ -450,7 +454,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Note that this dataset is not a timeseries dataset. It is chosen because of its availability in the common python packages like sklearn. However, it is sufficient for demonstration purposes of the <code class="docutils literal notranslate"><span class="pre">ApplyModel</span></code> feature. MVG requires timestamps for each datapoint to be provided as well. We use dummy timestamps from 0 to 149.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])))</span>
@@ -462,7 +466,7 @@ div.rendered_html tbody tr:hover {
 <h2>Create source and measurements<a class="headerlink" href="#Create-source-and-measurements" title="Permalink to this headline"></a></h2>
 <p>A tabular source with these measurements needs to be created for the model to be built.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">create_tabular_source</span><span class="p">(</span><span class="n">sid</span><span class="o">=</span><span class="s2">&quot;iris&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">{},</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -472,7 +476,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>The three classes in the data are indicated in <code class="docutils literal notranslate"><span class="pre">dataset[&quot;target&quot;]</span></code>. Data is divided into three equal parts, each with 50 samples for each class.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
@@ -480,7 +484,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -494,12 +498,11 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
        2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
 </pre></div></div>
 </div>
-</section>
 <section id="Build-the-model">
-<h2>Build the model<a class="headerlink" href="#Build-the-model" title="Permalink to this headline"></a></h2>
+<h3>Build the model<a class="headerlink" href="#Build-the-model" title="Permalink to this headline"></a></h3>
 <p>To demonstrate <code class="docutils literal notranslate"><span class="pre">ApplyModel</span></code> as a feature, we train a model on the middle 100 samples and then apply the trained model on the entire data.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">request_data</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span>
@@ -513,7 +516,7 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 </div>
 <p>Helper function <code class="docutils literal notranslate"><span class="pre">wait_for_analysis</span></code> allows the possibility of waiting for the termination a group of analyses jobs.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">wait_for_analyses</span><span class="p">(</span><span class="n">request_id_list</span><span class="o">=</span><span class="p">[</span><span class="n">request_id</span><span class="p">])</span>
@@ -521,7 +524,7 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mode_output</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">request_id</span><span class="p">)</span>
@@ -529,21 +532,22 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 </div>
 </div>
 </section>
+</section>
 <section id="Review-the-results">
 <h2>Review the results<a class="headerlink" href="#Review-the-results" title="Permalink to this headline"></a></h2>
 <p>We can plot the result of the analysis that shows the three distinct modes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="n">mode_output</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mode_info&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mode_output</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mode_info&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="n">mode_output</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mode_probabilities&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="n">plotting</span><span class="o">.</span><span class="n">modes_over_time</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mode_output</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]),</span> <span class="n">request_id</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -560,7 +564,7 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 </div>
 <p>Comparing the resulting labels with the ground-truth in the original iris dataset shows that the borders are identified precisely. Note that <code class="docutils literal notranslate"><span class="pre">ModeId</span></code> feature sorts the ID of modes in a way that the ID for the first encountered mode is reported as 0, the second mode as 1, and so on. This happens to be the case in the iris dataset as well but for other datasets sorting of modes needs to be done before comparison.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">all</span><span class="p">(</span><span class="n">mode_output</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">][</span><span class="mi">25</span><span class="p">:</span><span class="mi">125</span><span class="p">])</span>
@@ -568,7 +572,7 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -576,12 +580,11 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 True
 </pre></div></div>
 </div>
-</section>
 <section id="Apply-the-model-on-the-whole-dataset">
-<h2>Apply the model on the whole dataset<a class="headerlink" href="#Apply-the-model-on-the-whole-dataset" title="Permalink to this headline"></a></h2>
+<h3>Apply the model on the whole dataset<a class="headerlink" href="#Apply-the-model-on-the-whole-dataset" title="Permalink to this headline"></a></h3>
 <p>Now, we apply the model on the entire dataset. To that end, we need to call <code class="docutils literal notranslate"><span class="pre">ApplyModel</span></code> feature and provide the <code class="docutils literal notranslate"><span class="pre">request_id</span></code> of the analysis that contains the model. Note that running <code class="docutils literal notranslate"><span class="pre">ApplyModel</span></code> is much faster than <code class="docutils literal notranslate"><span class="pre">ModeId</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">request_data_am</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">request_analysis</span><span class="p">(</span>
@@ -595,7 +598,7 @@ True
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">am_output</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="o">=</span><span class="n">request_id_am</span><span class="p">)</span>
@@ -603,19 +606,20 @@ True
 </div>
 </div>
 </section>
+</section>
 <section id="Review-the-results-of-the-inference">
 <h2>Review the results of the inference<a class="headerlink" href="#Review-the-results-of-the-inference" title="Permalink to this headline"></a></h2>
 <p>Comparing the results, show that the first 25 and last 25 elements of the data that was excluded while building the model in earlier steps are now correctly classified.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">all</span><span class="p">(</span><span class="n">am_output</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span><span class="o">==</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -631,7 +635,7 @@ True
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="7-labeling.html" class="btn btn-neutral float-left" title="Labeling of Measurements and Label Propagation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../features/general.html" class="btn btn-neutral float-right" title="Using MVG features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4-error_handling.html" class="btn btn-neutral float-right" title="Error Handling Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

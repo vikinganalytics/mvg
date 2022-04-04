@@ -24,8 +24,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Sources and Measurements Example" href="2-sources_and_measurements.html" />
-    <link rel="prev" title="Check Version Example" href="0-check_version.html" /> 
+    <link rel="next" title="Using MVG features" href="../features/general.html" />
+    <link rel="prev" title="Model Inference for New Data" href="8-inference.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,8 +46,14 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview on How to Use the MultiViz Analytics Engine (MVG) Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview - How to use the MVG library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0-check_version.html">Check Version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - Unified Interface to Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling of Measurements and Label Propagation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Error Handling Example</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Invalid-Token">Invalid Token</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Illegal-source_id">Illegal source_id</a></li>
@@ -56,12 +62,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#Missing-Parameter">Missing Parameter</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="2-sources_and_measurements.html">Sources and Measurements Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="6-analysis_visual.html">Analysis and Results Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5-analysis_classes.html">Analysis Classes - a Unified Interface to Analysis Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3-tabular_example.html">Working with Tabular Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7-labeling.html">Labeling of Measurements and Label Propagation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="8-inference.html">Model Inference for New Data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul>
@@ -378,7 +378,7 @@ div.rendered_html tbody tr:hover {
 <section id="Error-Handling-Example">
 <h1>Error Handling Example<a class="headerlink" href="#Error-Handling-Example" title="Permalink to this headline"></a></h1>
 <p>This script shows how handle errors occurring during API calls to the Vibration service</p>
-<p>The mvg design principle is that the client application using the MVG API is responsible for error handling</p>
+<p>The MVG design principle is that the client application using the MVG API is responsible for error handling.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -394,7 +394,10 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<p>Note that the <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the VA vibration service.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> is used both for authorization and authentication. Thus, each unique token represents a unique user and each user has their own unique database on the VA-MVG’ service.</p>
+</div>
 <p><strong>You need to insert your token received from Viking Analytics here:</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -407,7 +410,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>This is Viking Analytics default logging setup and can be adapted to suit your needs. Log messages are printed from <code class="docutils literal notranslate"><span class="pre">mvg</span></code> library, see the source code for details.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
@@ -422,16 +425,16 @@ div.rendered_html tbody tr:hover {
 <p>As we are interested in error handling we set the logger level to <code class="docutils literal notranslate"><span class="pre">logging.DEBUG</span></code>. That will trace out the detailed information on exceptions provided by the server.</p>
 <p>Set log level to <code class="docutils literal notranslate"><span class="pre">logging.ERROR</span></code> to just see the results of proper error handling in the code <code class="docutils literal notranslate"><span class="pre">root_logger.setLevel(logging.ERROR)</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">root_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>Instantiate a session object with mvg library a session object basically caches the endpoint and the token, to simplify the the calls to the mvg library.</p>
+<p>Instantiate a session object with MVG library. A session object basically catches the endpoint and the token, to simplify the calls to the MVG library.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="n">TOKEN</span><span class="p">)</span>
@@ -440,7 +443,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>We now check if the server is alive. The hello message contains, amongst others the API version.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hello_message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">say_hello</span><span class="p">())</span>
@@ -453,14 +456,14 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#34;api&#34;: {&#34;name&#34;: &#34;MultiViz Engine API&#34;, &#34;version&#34;: &#34;v0.2.7&#34;, &#34;swagger&#34;: &#34;http://api.beta.multiviz.com/docs&#34;}}
+{&#34;name&#34;: &#34;MultiViz Engine API&#34;, &#34;version&#34;: &#34;v0.3.2&#34;, &#34;swagger&#34;: &#34;http://api.beta.multiviz.com/docs&#34;}
 </pre></div></div>
 </div>
 <section id="Invalid-Token">
 <h2>Invalid Token<a class="headerlink" href="#Invalid-Token" title="Permalink to this headline"></a></h2>
-<p>Lets provoke an error by creating a session with a non-valid token.</p>
+<p>Let’s provoke an error by creating a session with a non-valid token.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unauth_session</span> <span class="o">=</span> <span class="n">MVG</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">,</span> <span class="s2">&quot;PASSKEY&quot;</span><span class="p">)</span>
@@ -469,7 +472,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>We need to call a method requiring authentication. Check <a class="reference external" href="https://api.beta.multiviz.com/docs">https://api.beta.multiviz.com/docs</a> to see which methods require authentication, they have a lock icon.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -497,9 +500,9 @@ OUCH
 </section>
 <section id="Illegal-source_id">
 <h2>Illegal source_id<a class="headerlink" href="#Illegal-source_id" title="Permalink to this headline"></a></h2>
-<p>We provoke the service using an illegal string for the <code class="docutils literal notranslate"><span class="pre">source_id</span></code></p>
+<p>We provoke the service using an illegal string for the <code class="docutils literal notranslate"><span class="pre">source_id</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -529,7 +532,7 @@ OUCH
 <h2>Non-existing Source<a class="headerlink" href="#Non-existing-Source" title="Permalink to this headline"></a></h2>
 <p>In some cases where there is detailed information provided by the server, we can retrieve it by inspecting the exception object <code class="docutils literal notranslate"><span class="pre">exc</span></code>, which actually contains all information about the request.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -559,7 +562,7 @@ OUCH
 <h2>Parameter Value Out of Range<a class="headerlink" href="#Parameter-Value-Out-of-Range" title="Permalink to this headline"></a></h2>
 <p>Sometimes, it is possible to pass a value that it is out of range of the expected, as in this example where the values for the duration and timestamp parameters are negative values.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -587,9 +590,9 @@ OUCH
 </section>
 <section id="Missing-Parameter">
 <h2>Missing Parameter<a class="headerlink" href="#Missing-Parameter" title="Permalink to this headline"></a></h2>
-<p>In this case we have an error on the client side. This means that the data is never sent to the server so we do not get an <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code>, but a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> instead. Only the <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code> contains any details from the server, so to be on the safe side we should catch them separately.</p>
+<p>In this case we have an error on the client side. This means that the data is never sent to the server, so we do not get an <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code>, but a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> instead. Only the <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code> contains any details from the server, so to be on the safe side we should catch them separately.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -603,7 +606,7 @@ OUCH
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No details from server available&quot;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -623,8 +626,8 @@ No details from server available
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="0-check_version.html" class="btn btn-neutral float-left" title="Check Version Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="2-sources_and_measurements.html" class="btn btn-neutral float-right" title="Sources and Measurements Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="8-inference.html" class="btn btn-neutral float-left" title="Model Inference for New Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../features/general.html" class="btn btn-neutral float-right" title="Using MVG features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
