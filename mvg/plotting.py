@@ -139,6 +139,7 @@ def modes_group_boxplot(dfs, feature, request_ids):
 
 
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-statements
 def modes_over_time(
     data,
     request_id,
@@ -210,6 +211,13 @@ def modes_over_time(
     else:
         data["Date"] = pd.to_datetime(data["timestamps"], unit=timeunit)
 
+    # Add an additional row with a future timestamp to ensure the mode
+    # for the last timestamp (if the said mode lasts for a single
+    # timestamp) in the dataset is clearly visible.
+    ts_start, ts_end = data["timestamps"].iloc[[0, -1]]
+    ts_next = (ts_end - ts_start) / 30 + ts_end
+    data.loc[len(data)] = {**data.iloc[-1], "timestamps": int(ts_next)}
+
     colors = colors or MODE_COLOR_CODES
 
     # Create figure with blank plot
@@ -219,26 +227,30 @@ def modes_over_time(
     image = axes.plot()
 
     # Create rectangular patch for timestamp
-
     ts_range = data["timestamps"].iloc[-1] - data["timestamps"].iloc[0]
     scaling_factor = len(data) / ts_range
 
-    def _plot_row(row_data, is_uncert_data, y_pos=0):
-        # Collect the indices of data where modes change plus start and end points
+    # List of coordinates, one for each row we want to plot
+    row_coordinates = [
+        {"y_pos": 0, "row_height": 0.85 * height},
+        {"y_pos": 0.85 * height, "row_height": 0.2 * height},
+    ]
+
+    def _plot_row(row_data, is_uncert_data, y_pos=0, row_height=height):
+        # Collect the indices of data where the labels change plus start and end points
         interval_list = (
             [0]
             + [i for i in range(1, len(row_data)) if row_data[i] != row_data[i - 1]]
             + [len(row_data) - 1]
         )
-
         for idx in range(len(interval_list) - 1):
-            # gray border around uncertains
             i = interval_list[idx]
+            i_next = interval_list[idx + 1]
             if is_uncert_data:
+                # gray border around uncertains
                 col = -2 if row_data[i] else -1
             else:
                 col = row_data[i]
-            i_next = interval_list[idx + 1]
             block_len = (
                 data["timestamps"].iloc[i_next] - data["timestamps"].iloc[i]
             ) * scaling_factor
@@ -248,31 +260,50 @@ def modes_over_time(
             rect = patches.Rectangle(
                 (width * start_pos, y_pos),
                 width * block_len,
-                height - y_pos,
+                row_height,
                 edgecolor=colors[col],
                 facecolor=colors[col],
                 fill=True,
             )
             axes.add_patch(rect)
 
+    # This datalist contains the additional row which
+    # will be required to plot the patches
     datalist = data["labels"].tolist()
-    _plot_row(datalist, is_uncert_data=False)
+    _plot_row(
+        datalist,
+        is_uncert_data=False,
+        y_pos=row_coordinates[0]["y_pos"],
+        row_height=row_coordinates[0]["row_height"],
+    )
 
     if show_uncertain:
         uncertlist = data["uncertain"].tolist()
-        _plot_row(uncertlist, is_uncert_data=True, y_pos=4 / 5 * height)
+        _plot_row(
+            uncertlist,
+            is_uncert_data=True,
+            y_pos=row_coordinates[1]["y_pos"],
+            row_height=row_coordinates[1]["row_height"],
+        )
 
     # Create time ticks on x-axis and labels
+    # The tick indexes should be based on the user data
+    # (without the additional row)
+    _datalist = datalist[:-1]
     if timeticks_interval is None:
         tick_index = (
             [0]
-            + [i for i in range(1, len(datalist)) if datalist[i] != datalist[i - 1]]
-            + [len(datalist) - 1]
+            + [
+                i
+                for i in range(1, len(_datalist) - 1)
+                if datalist[i] != datalist[i - 1]
+            ]
+            + [len(_datalist) - 1]
         )
     else:
-        tick_index = list(range(0, len(datalist), timeticks_interval))
+        tick_index = list(range(0, len(_datalist), timeticks_interval))
     if only_start_end_timeticks:
-        tick_index = [0, len(datalist) - 1]
+        tick_index = [0, len(_datalist) - 1]
     tick_positions = [
         (data["timestamps"].iloc[i] - data["timestamps"].iloc[0])
         * scaling_factor
@@ -294,10 +325,9 @@ def modes_over_time(
 
     # Modify ticks position and create legend
     df_changes = data.iloc[tick_index]
-    if time_format is None:
-        tick_x_labels = df_changes["Date"].apply(lambda x: x.date())
-    else:
-        tick_x_labels = df_changes["Date"].apply(lambda x: x.strftime(time_format))
+    tick_x_labels = df_changes["Date"].apply(
+        lambda x: x.date() if time_format is None else x.strftime(time_format)
+    )
 
     axes.set_xticklabels(tick_x_labels, rotation=timetick_angle)
     legend_labels = [
@@ -497,7 +527,6 @@ LABEL_COLOR_CODES = dict(
 )
 
 
-# pylint: disable=too-many-locals
 def plot_labels_over_time(
     data,
     source_id,
@@ -510,7 +539,7 @@ def plot_labels_over_time(
     only_start_end_timeticks=False,
     timetick_angle=85,
     time_format=None,
-):
+):  # pylint: disable=too-many-locals
     """Creates a rectangular timeline of labels.
 
     The rectangle presents the timeline of the labels for a source.

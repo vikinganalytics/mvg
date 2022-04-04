@@ -54,7 +54,7 @@ class KPIDemo(Analysis):
 
     def plot(
         self, kpi=None, interactive=True, time_format=None, filename=None
-    ):  # pylint: disable=arguments-differ
+    ):  # pylint: disable=arguments-differ,arguments-renamed
         """
         Generate a basic plot on KPIs.
 
@@ -82,7 +82,6 @@ class KPIDemo(Analysis):
           name of plot file (or emtpy string in case of interactive plot)
         """
         result_df = self.to_df()
-        print("columns", result_df.columns)
 
         # Select the default column as the one after timestamps which is first
         kpi = kpi if kpi is not None else result_df.columns[1]
