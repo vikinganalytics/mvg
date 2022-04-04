@@ -356,7 +356,7 @@
     }
    ],
    "source": [
-    "session.create_source(SOURCE_ID, meta, channels=[\"acc\"])  # create\n",
+    "session.create_source(SOURCE_ID, channels=[\"acc\"], meta=meta)  # create\n",
     "source = session.get_source(SOURCE_ID)\n",
     "print(\"Recreated source info:\")\n",
     "print(source)"
@@ -871,7 +871,7 @@
     "    m_file_name = REF_DB_PATH / source_id / \"meta.json\"\n",
     "    with open(m_file_name, \"r\") as json_file:\n",
     "        meta = json.load(json_file)\n",
-    "    session.create_source(source_id, meta, channels=[\"acc\"])  # create\n",
+    "    session.create_source(source_id, channels=[\"acc\"], meta=meta)  # create\n",
     "\n",
     "    meas = [f.stem for f in Path(src_path).glob(\"*.csv\")]\n",
     "\n",
