@@ -55,7 +55,7 @@ def pytest_configure():
     pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
     pytest.REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
     pytest.SOURCE_ID_TABULAR = uuid.uuid1().hex
-    pytest.VALID_TOKEN = os.environ["TEST_TOKEN"]
+    pytest.VALID_TOKEN = "INSERT TOKEN" # os.environ["TEST_TOKEN"]
 
 
 def is_responsive(url):
@@ -85,6 +85,8 @@ def vibium_prod():
 # e.g. --host http://127.0.0.1:8000
 # the token shall be stored in an environemnt variable
 # TEST_TOKEN
+args.host = "http://alb-vibium-api-2053397745.eu-west-1.elb.amazonaws.com"
+# args.host = "http://127.0.0.1:8000"
 if args.host == "":
 
     @pytest.fixture(scope="session")
