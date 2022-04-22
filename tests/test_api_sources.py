@@ -350,13 +350,15 @@ def test_create_label(session, tabular_source_with_measurements):
 
     labels = session.list_labels(source_id)
 
-    # Remove timestamps
-    for label in labels:
-        label.pop("label_timestamp")
-    assert labels == [
-        dict(timestamp=timestamps[0], **label1),
-        dict(timestamp=timestamps[1], **label2),
-    ]
+    # Remove label creation timestamps
+    labels.pop("label_timestamp")
+    assert labels == {
+        "timestamp": timestamps[0:2],
+        "label": [label1["label"], label2["label"]],
+        "severity": [label1["severity"], label2["severity"]],
+        "notes": [label1["notes"], label2["notes"]],
+    }
+
     label1_timestamp = label1_response.pop("label_timestamp")
     dtdiff1 = datetime.utcnow() - datetime.strptime(
         label1_timestamp, "%Y-%m-%d %H:%M:%S"
