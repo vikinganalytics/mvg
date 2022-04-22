@@ -55,7 +55,7 @@ def pytest_configure():
     pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
     pytest.REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
     pytest.SOURCE_ID_TABULAR = uuid.uuid1().hex
-    pytest.VALID_TOKEN = "INSERT TOKEN" # os.environ["TEST_TOKEN"]
+    pytest.VALID_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTQ5NDcwNTAsImV4cCI6MTkzMDQ4MzQ0MCwiY2xpZW50X2lkIjoiZGV2X2NsaWVudF8yIiwic2l0ZV9pZCI6ImRldl9zaXRlXzEifQ.qxwJenMV6pr7bT5F4avR80xvn9M7USPrq717TX63C3vEmTAcJCvpYOUCcNuXMh1gfYT27HUl2vzVYbLq2MAS-ZzXlVuN7zV1wmNXRv9rCHfKpOnse-AD58Febe9K-kBxIgRfZd0DICXdzwrE09qLkCaoJQwo-Eyv39COkwYJWvI"
 
 
 def is_responsive(url):
@@ -85,8 +85,9 @@ def vibium_prod():
 # e.g. --host http://127.0.0.1:8000
 # the token shall be stored in an environemnt variable
 # TEST_TOKEN
-args.host = "http://alb-vibium-api-2053397745.eu-west-1.elb.amazonaws.com"
+# args.host = "http://alb-vibium-api-2053397745.eu-west-1.elb.amazonaws.com"
 # args.host = "http://127.0.0.1:8000"
+args.host = "https://api.beta.multiviz.com"
 if args.host == "":
 
     @pytest.fixture(scope="session")
