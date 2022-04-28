@@ -408,4 +408,32 @@ def test_delete_label(session, tabular_source_with_measurements):
         assert exc.value.response.status_code == 404
 
 
+def test_list_labels(session, tabular_source_with_measurements):
+    source_id, tabular_dict = tabular_source_with_measurements
+    timestamps = tabular_dict["timestamp"]
+    for k in [0, -1]:
+        session.create_label(
+            source_id,
+            timestamps[k],
+            "failure",
+            100,
+            "This is really bad!",
+        )
+
+    list_short = session.list_labels(source_id, include_unlabeled=False)
+    list_short.pop("label_timestamp")
+    assert list_short == {
+        "timestamp": [43854, 44080],
+        "label": ["failure", "failure"],
+        "severity": [100, 100],
+        "notes": ["This is really bad!", "This is really bad!"],
+    }
+
+    list_long = session.list_labels(source_id, include_unlabeled=True)
+    assert list_long["timestamp"] == tabular_dict["timestamp"]
+    assert list_long["label"][0] == "failure"
+    assert list_long["label"][-1] == "failure"
+    assert np.all(np.isnan(np.array(list_long["label"][1:-2])))
+
+
 # End of code

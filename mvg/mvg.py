@@ -14,6 +14,7 @@ import re
 import time
 import logging
 from typing import Dict, List, Optional
+import pandas as pd
 import requests
 from requests.exceptions import RequestException
 
@@ -995,25 +996,12 @@ class MVGAPI:
 
         # Inlcude the missing labels
         measurements = self.list_measurements(source_id)
-        labels_by_ts = {label["timestamp"]: label for label in labels}
-        labelled_measurements = []
-
-        for measurement in measurements:
-            timestamp = measurement["timestamp"]
-            if timestamp in labels_by_ts:
-                labelled_measurements.append(labels_by_ts[timestamp])
-            else:
-                labelled_measurements.append(
-                    {
-                        "timestamp": timestamp,
-                        "label": None,
-                        "severity": -1,
-                        "notes": "",
-                        "label_timestamp": None,
-                    }
-                )
-
-        return labelled_measurements
+        measurements_ts = pd.DataFrame(measurements)[["timestamp"]]
+        return (
+            pd.DataFrame(labels)
+            .merge(measurements_ts, on=["timestamp"], how="outer", sort=True)
+            .to_dict("list")
+        )
 
     def update_label(
         self,
