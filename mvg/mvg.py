@@ -994,7 +994,7 @@ class MVGAPI:
         if not include_unlabeled:
             return labels
 
-        # Inlcude the missing labels
+        # Include the missing labels
         measurements = self.list_measurements(source_id)
         measurements_ts = pd.DataFrame(measurements)[["timestamp"]]
         return (
