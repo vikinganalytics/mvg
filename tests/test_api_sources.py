@@ -350,13 +350,15 @@ def test_create_label(session, tabular_source_with_measurements):
 
     labels = session.list_labels(source_id)
 
-    # Remove timestamps
-    for label in labels:
-        label.pop("label_timestamp")
-    assert labels == [
-        dict(timestamp=timestamps[0], **label1),
-        dict(timestamp=timestamps[1], **label2),
-    ]
+    # Remove label creation timestamps
+    labels.pop("label_timestamp")
+    assert labels == {
+        "timestamp": timestamps[0:2],
+        "label": [label1["label"], label2["label"]],
+        "severity": [label1["severity"], label2["severity"]],
+        "notes": [label1["notes"], label2["notes"]],
+    }
+
     label1_timestamp = label1_response.pop("label_timestamp")
     dtdiff1 = datetime.utcnow() - datetime.strptime(
         label1_timestamp, "%Y-%m-%d %H:%M:%S"
@@ -404,6 +406,34 @@ def test_delete_label(session, tabular_source_with_measurements):
     with pytest.raises(MVGAPIError) as exc:
         session.get_label(source_id, timestamps[0])
         assert exc.value.response.status_code == 404
+
+
+def test_list_labels(session, tabular_source_with_measurements):
+    source_id, tabular_dict = tabular_source_with_measurements
+    timestamps = tabular_dict["timestamp"]
+    for k in [0, -1]:
+        session.create_label(
+            source_id,
+            timestamps[k],
+            "failure",
+            100,
+            "This is really bad!",
+        )
+
+    list_short = session.list_labels(source_id, include_unlabeled=False)
+    list_short.pop("label_timestamp")
+    assert list_short == {
+        "timestamp": [43854, 44080],
+        "label": ["failure", "failure"],
+        "severity": [100, 100],
+        "notes": ["This is really bad!", "This is really bad!"],
+    }
+
+    list_long = session.list_labels(source_id, include_unlabeled=True)
+    assert list_long["timestamp"] == tabular_dict["timestamp"]
+    assert list_long["label"][0] == "failure"
+    assert list_long["label"][-1] == "failure"
+    assert np.all(np.isnan(np.array(list_long["label"][1:-2])))
 
 
 # End of code

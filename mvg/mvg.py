@@ -14,6 +14,7 @@ import re
 import time
 import logging
 from typing import Dict, List, Optional
+import pandas as pd
 import requests
 from requests.exceptions import RequestException
 
@@ -55,8 +56,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.12.3")
-        self.tested_api_version = self.parse_version("v0.3.4")
+        self.mvg_version = self.parse_version("v0.13.0")
+        self.tested_api_version = self.parse_version("v0.4.0")
 
         # Get API version
         try:
@@ -993,27 +994,14 @@ class MVGAPI:
         if not include_unlabeled:
             return labels
 
-        # Inlcude the missing labels
+        # Include the missing labels
         measurements = self.list_measurements(source_id)
-        labels_by_ts = {label["timestamp"]: label for label in labels}
-        labelled_measurements = []
-
-        for measurement in measurements:
-            timestamp = measurement["timestamp"]
-            if timestamp in labels_by_ts:
-                labelled_measurements.append(labels_by_ts[timestamp])
-            else:
-                labelled_measurements.append(
-                    {
-                        "timestamp": timestamp,
-                        "label": None,
-                        "severity": -1,
-                        "notes": "",
-                        "label_timestamp": None,
-                    }
-                )
-
-        return labelled_measurements
+        measurements_ts = pd.DataFrame(measurements)[["timestamp"]]
+        return (
+            pd.DataFrame(labels)
+            .merge(measurements_ts, on=["timestamp"], how="outer", sort=True)
+            .to_dict("list")
+        )
 
     def update_label(
         self,
