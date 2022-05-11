@@ -9,8 +9,6 @@ Tests need to be run in order
 from datetime import datetime, timedelta
 import os
 import json
-from time import sleep
-import time
 import numpy as np
 import pandas as pd
 import pytest
@@ -37,67 +35,19 @@ def test_sources_cru(session):
     m_file_name = pytest.REF_DB_PATH / "u0001" / "meta.json"
     with open(m_file_name, "r") as json_file:
         meta = json.load(json_file)
-    start = time.time()
     # create_source happy case
     session.create_source(source, meta=meta, channels=["acc"])
-
-    # sleep(40)
-    K0 = 0
-    K1 = 0
-    K2 = 0
-    K3 = 0
     # list_source happy case
-    while True:
-        try:
-            src = session.get_source(source)
-            break
-        except Exception as exc:
-            print(exc)
-            K0+=1
-            pass
-    print(time.time() - start)
+    src = session.get_source(source)
     assert src["source_id"] == source
     assert src["meta"] == meta
 
     # update source
     meta["updated"] = "YES!"
-    while True:
-        try:
-            session.update_source(source, meta)
-            break
-        except Exception as exc:
-            print(exc)
-            K1+=1
-            pass
-    while True:
-        try:
-            src = session.get_source(source)
-            break
-        except Exception as exc:
-            print(exc)
-            K2+=1
-            pass
-
-    while True:
-        try:
-            src = session.get_source(source)
-            break
-        except Exception as exc:
-            print(exc)
-            K3+=1
-            pass
-
-
+    session.update_source(source, meta)
+    src = session.get_source(source)
     assert src["source_id"] == source
     assert src["meta"] == meta
-    print(K0)
-    print(K1)
-    print(K2)
-    print(K3)
-    assert K0 == 0
-    assert K1 == 0
-    assert K2 == 0
-    assert K3 == 0
 
 
 # API GET    /sources/
