@@ -227,8 +227,9 @@ def modes_over_time(
     image = axes.plot()
 
     # Create rectangular patch for timestamp
-    ts_range = data["timestamps"].iloc[-1] - data["timestamps"].iloc[0]
-    scaling_factor = len(data) / ts_range
+    #ts_range = data["timestamps"].iloc[-1] - data["timestamps"].iloc[0]
+    #scaling_factor = len(data) / ts_range
+    scaling_factor = len(data) / len(data)
 
     # List of coordinates, one for each row we want to plot
     row_coordinates = [
@@ -251,12 +252,14 @@ def modes_over_time(
                 col = -2 if row_data[i] else -1
             else:
                 col = row_data[i]
-            block_len = (
-                data["timestamps"].iloc[i_next] - data["timestamps"].iloc[i]
-            ) * scaling_factor
-            start_pos = (
-                data["timestamps"].iloc[i] - data["timestamps"].iloc[0]
-            ) * scaling_factor
+            # block_len = (
+            #     data["timestamps"].iloc[i_next] - data["timestamps"].iloc[i]
+            # ) * scaling_factor
+            # start_pos = (
+            #     data["timestamps"].iloc[i] - data["timestamps"].iloc[0]
+            # ) * scaling_factor
+            block_len = (i_next - i) * scaling_factor
+            start_pos = i * scaling_factor
             rect = patches.Rectangle(
                 (width * start_pos, y_pos),
                 width * block_len,
@@ -305,7 +308,7 @@ def modes_over_time(
     if only_start_end_timeticks:
         tick_index = [0, len(_datalist) - 1]
     tick_positions = [
-        (data["timestamps"].iloc[i] - data["timestamps"].iloc[0])
+        i #(data["timestamps"].iloc[i] - data["timestamps"].iloc[0])
         * scaling_factor
         * width
         for i in tick_index
@@ -313,7 +316,7 @@ def modes_over_time(
 
     # Modify figure properties to leave wide rectangle only
     axes.set_ylim(0, height)
-    axes.set_xlim(0, len(datalist) * width)
+    axes.set_xlim(0, (len(datalist) - 1) * width)
     axes.tick_params(
         axis="y",  # changes apply to the y-axis
         which="both",  # both major and minor ticks are affected
@@ -325,9 +328,11 @@ def modes_over_time(
 
     # Modify ticks position and create legend
     df_changes = data.iloc[tick_index]
-    tick_x_labels = df_changes["Date"].apply(
-        lambda x: x.date() if time_format is None else x.strftime(time_format)
-    )
+    #tick_x_labels = tick_index
+    tick_x_labels = [x+1 for x in tick_index]
+    #tick_x_labels = df_changes["Date"].apply(
+    #    lambda x: x.date() if time_format is None else x.strftime(time_format)
+    #)
 
     axes.set_xticklabels(tick_x_labels, rotation=timetick_angle)
     legend_labels = [
@@ -685,7 +690,7 @@ def plot_labels_over_time(
         patches.Patch(
             facecolor=colors[i], edgecolor="black", hatch="/////", label="No data"
         )
-        if i == -1
+        if i == -1 or i == "_missing_label"
         else patches.Patch(
             color=colors[i], label=f"{data[data['label_idx'] == i].iloc[0]['label']}"
         )
