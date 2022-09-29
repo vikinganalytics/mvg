@@ -7,6 +7,7 @@ For more information see README.md.
 
 import logging
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import patches
 
@@ -546,8 +547,9 @@ def plot_labels_over_time(
 
     Parameters
     ----------
-    data: dataframe or list of dicts
-        data from labels table.
+    data: dataframe
+        the dataframe version of either the result of label propagation or
+        the response of mvg.list_labels
 
     source_id: string
         string with source_Id. Can be replaced by other name
@@ -585,9 +587,6 @@ def plot_labels_over_time(
     image: object of class matplotlib.axes
 
     """
-
-    data = pd.DataFrame(data)
-
     data["Date"] = pd.to_datetime(data["timestamp"], unit=timeunit)
     # Categorize the labels as integers
     data["label_idx"] = pd.factorize(data["label"])[0]
@@ -622,7 +621,15 @@ def plot_labels_over_time(
             start_pos = (
                 data["timestamp"].iloc[i] - data["timestamp"].iloc[0]
             ) * scaling_factor
-            if label is not None:
+            if label in [None, np.nan, ""]:
+                rect = patches.Rectangle(
+                    (width * start_pos, y_pos),
+                    width * block_len,
+                    height - y_pos,
+                    fill=False,
+                    hatch="/////",
+                )
+            else:
                 rect = patches.Rectangle(
                     (width * start_pos, y_pos),
                     width * block_len,
@@ -630,14 +637,6 @@ def plot_labels_over_time(
                     edgecolor=colors[col],
                     facecolor=colors[col],
                     fill=True,
-                )
-            else:
-                rect = patches.Rectangle(
-                    (width * start_pos, y_pos),
-                    width * block_len,
-                    height - y_pos,
-                    fill=False,
-                    hatch="/////",
                 )
 
             axes.add_patch(rect)

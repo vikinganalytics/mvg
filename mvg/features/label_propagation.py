@@ -67,8 +67,17 @@ class LabelPropagation(Analysis):
         """
         self.check_status()
         sources = ", ".join(self.sources())
+
+        timestamps_df = pd.DataFrame({"timestamp": self._inputs["timestamps"]})
+        timestamps_df = self._add_datetime_df(timestamps_df, "timestamp")
+
+        result_df = self.to_df()
+        result_df = pd.merge(
+            timestamps_df, result_df, how="left", on=["datetime", "timestamp"]
+        )
+
         plotting.plot_labels_over_time(
-            self.results(), sources, timeunit=self._t_unit, time_format=time_format
+            result_df, sources, timeunit=self._t_unit, time_format=time_format
         )
 
         return self._render_plot(interactive, filename)
