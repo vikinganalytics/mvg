@@ -5,7 +5,7 @@ twine
 black
 flake8
 darglint
-pylint
+pylint==2.13.9
 pytest
 pytest-docker
 # for callback test server
