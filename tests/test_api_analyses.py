@@ -14,6 +14,8 @@ import socket
 from pathlib import Path
 import pytest
 
+from mvg import MVG
+
 LOG_FILE = Path("_callback_test_server_log.txt")
 
 
@@ -54,6 +56,11 @@ def callback_server():
             process.kill()
             f.close()
             os.remove(LOG_FILE)
+
+
+def test_kpidemo_sources(session: MVG, waveform_source_with_measurements):
+    meas = session.list_measurements(waveform_source_with_measurements)
+    assert len(meas) > 0
 
 
 def test_kpidemo_analysis(session, waveform_source_with_measurements):
