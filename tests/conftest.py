@@ -94,7 +94,7 @@ if args.host == "":
         port = docker_services.port_for("vibium", 8000)
         url = f"http://{docker_ip}:{port}"
         docker_services.wait_until_responsive(
-            timeout=30.0, pause=0.1, check=lambda: is_responsive(url)
+            timeout=120.0, pause=0.1, check=lambda: is_responsive(url)
         )
         return url
 
