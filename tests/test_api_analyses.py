@@ -77,6 +77,7 @@ def test_kpidemo_analysis(session, waveform_source_with_measurements):
     assert len(kpi_results["acc"].keys()) == 7
 
 
+@pytest.mark.skip(reason="callback feature")
 def test_callback(session, callback_server, waveform_source_with_measurements):
     req = session.request_analysis(
         waveform_source_with_measurements, "KPIDemo", callback_url=callback_server
@@ -88,6 +89,7 @@ def test_callback(session, callback_server, waveform_source_with_measurements):
     assert f"{req_id}::{status}" in LOG_FILE.read_text()
 
 
+@pytest.mark.skip(reason="callback feature")
 def test_callback_server_failure(
     session, callback_server, waveform_source_with_measurements
 ):
