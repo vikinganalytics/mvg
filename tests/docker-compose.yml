@@ -1,8 +1,47 @@
 version: "3.3"
 
+x-vibium-services-config: &vibium-services-config
+    image: ${AWS_ECR}/vibium-app:${VIBIUM_VERSION}
+    restart: unless-stopped
+    environment:
+        - VIBIUM_SLEEP=60 # wait for localstack to be ready
+        - VIBIUM_PIPELINE=/pipeline
+        - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - AWS_ENDPOINT_URL=http://localstack:4566
+        - ANALYSIS_IN_QUEUE=vibium-analysis-in
+    volumes:
+        - "vibium-pipeline:/pipeline"
+    networks:
+        - vibium_net
+    depends_on:
+        - localstack
+
 services:
-    vibium:
-        image: ghcr.io/vikinganalytics/vibium/vibium_cloud:${VIBIUM_VERSION}
-        restart: unless-stopped
+    vibium-worker:
+        <<: *vibium-services-config
+        entrypoint: ["python", "worker.py"]
+    vibium-api:
+        <<: *vibium-services-config
         ports:
-          - 8000:8000
+            - 8000:8000
+
+    localstack:
+        image: localstack/localstack:0.14
+        ports:
+            - 4566:4566
+            - 4571:4571
+        volumes:
+            - "./localstack:/docker-entrypoint-initaws.d"
+        environment:
+            - SERVICES=sqs,s3
+            - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+        networks:
+            - vibium_net
+
+volumes:
+  vibium-pipeline:
+
+networks:
+  vibium_net:

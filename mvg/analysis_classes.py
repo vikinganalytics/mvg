@@ -63,7 +63,7 @@ def parse_results(results, t_zone=None, t_unit=None):
         feature = results["feature"]
     except KeyError:
         raise KeyError(
-            "Malformed input." "Check if input is result of a get_results call."
+            "Malformed input. Check if input is result of a get_results call."
         )
 
     # Get the analysis class from the features dict

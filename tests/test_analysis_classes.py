@@ -93,7 +93,7 @@ def test_ModeId():
     # Check dataframe conversion
     df_df = pd.read_csv("./tests/test_data/ModeId_df.csv")
     pd.testing.assert_frame_equal(
-        feat.to_df().drop("datetime", axis=1), df_df, check_less_precise=True
+        feat.to_df().drop("datetime", axis=1), df_df, atol=1e-5, rtol=0
     )
 
     # Summary
