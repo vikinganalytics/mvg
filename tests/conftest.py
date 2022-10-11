@@ -47,8 +47,9 @@ sys.argv[1:] = notknownargs
 
 
 # Retrieve API version to test against
-version_session = MVG("https://api.beta.multiviz.com", "NO TOKEN")
-VIBIUM_VERSION = "v" + str(version_session.tested_api_version)
+version_session = MVG(VIBIUM_PROD_URL, "NO TOKEN")
+# VIBIUM_VERSION = str(version_session.tested_api_version)
+VIBIUM_VERSION = "prod"
 
 # Pytest initial configuration
 def pytest_configure():
@@ -91,7 +92,7 @@ if args.host == "":
     def vibium(docker_ip, docker_services):
         """Ensure that HTTP service is up and responsive."""
         # `port_for` takes a container port and returns the corresponding host port
-        port = docker_services.port_for("vibium", 8000)
+        port = docker_services.port_for("vibium-api", 8000)
         url = f"http://{docker_ip}:{port}"
         docker_services.wait_until_responsive(
             timeout=120.0, pause=0.1, check=lambda: is_responsive(url)

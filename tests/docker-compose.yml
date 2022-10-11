@@ -19,9 +19,11 @@ x-vibium-services-config: &vibium-services-config
         - localstack
 
 services:
-    vibium:
-        image: ghcr.io/vikinganalytics/vibium/vibium_cloud:${VIBIUM_VERSION}
-        restart: unless-stopped
+    vibium-worker:
+        <<: *vibium-services-config
+        entrypoint: ["python", "worker.py"]
+    vibium-api:
+        <<: *vibium-services-config
         ports:
             - 8000:8000
 
