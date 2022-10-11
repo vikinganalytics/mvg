@@ -14,6 +14,8 @@ import socket
 from pathlib import Path
 import pytest
 
+from mvg import MVG
+
 LOG_FILE = Path("_callback_test_server_log.txt")
 
 
@@ -56,6 +58,11 @@ def callback_server():
             os.remove(LOG_FILE)
 
 
+def test_kpidemo_sources(session: MVG, waveform_source_with_measurements):
+    meas = session.list_measurements(waveform_source_with_measurements)
+    assert len(meas) > 0
+
+
 def test_kpidemo_analysis(session, waveform_source_with_measurements):
     kpi = session.request_analysis(waveform_source_with_measurements, "KPIDemo")
     session.wait_for_analyses([kpi["request_id"]])
@@ -70,6 +77,7 @@ def test_kpidemo_analysis(session, waveform_source_with_measurements):
     assert len(kpi_results["acc"].keys()) == 7
 
 
+@pytest.mark.skip(reason="callback feature")
 def test_callback(session, callback_server, waveform_source_with_measurements):
     req = session.request_analysis(
         waveform_source_with_measurements, "KPIDemo", callback_url=callback_server
@@ -81,6 +89,7 @@ def test_callback(session, callback_server, waveform_source_with_measurements):
     assert f"{req_id}::{status}" in LOG_FILE.read_text()
 
 
+@pytest.mark.skip(reason="callback feature")
 def test_callback_server_failure(
     session, callback_server, waveform_source_with_measurements
 ):
