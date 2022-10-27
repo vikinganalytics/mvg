@@ -1,6 +1,5 @@
 [pylint]
-disable = 
-    W3101, # missing-timeout
+disable =
     R0904,
     R0801,
     no-self-argument,

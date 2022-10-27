@@ -8,6 +8,7 @@ darglint
 pylint
 pytest
 pytest-docker
+pytest_localserver
 # for callback test server
 uvicorn==0.16.0
 fastapi

@@ -17,10 +17,10 @@ from typing import Dict, List, Optional
 import pandas as pd
 import requests
 from requests.exceptions import RequestException
-
 import semver
 
-from mvg.exceptions import MVGConnectionError, raise_for_status
+from mvg.exceptions import MVGConnectionError
+from mvg.http_client import HTTPClient
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ class MVGAPI:
         self.token = token
 
         self.mvg_version = self.parse_version("v0.13.1")
-        self.tested_api_version = self.parse_version("v0.4.6")
+        self.tested_api_version = self.parse_version("v0.4.7")
 
         # Get API version
         try:
@@ -94,22 +94,10 @@ class MVGAPI:
         -------
         Response from the API call
         """
-        headers = {"Authorization": f"Bearer {self.token}"}
-        response = requests.request(
-            method=method,
-            url=self.endpoint + path,
-            headers=headers,
-            **kwargs,
+        client = HTTPClient(self.endpoint, self.token)
+        response = client.request(
+            method=method, path=path, do_not_raise=do_not_raise, **kwargs
         )
-
-        if do_not_raise is None:
-            do_not_raise = []
-
-        if response.status_code in do_not_raise:
-            logger.info(f"Ignoring error {response.status_code} - {response.text}")
-        else:
-            raise_for_status(response)
-
         return response
 
     @staticmethod
