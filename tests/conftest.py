@@ -56,7 +56,7 @@ def pytest_configure():
     pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
     pytest.REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
     pytest.SOURCE_ID_TABULAR = uuid.uuid1().hex
-    pytest.VALID_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDY3Mjk4NzEsImV4cCI6MTk2MjM1MjYyMCwiY2xpZW50X2lkIjoidmFfdGhpbmdzYm9hcmQiLCJzaXRlX2lkIjoiZGVtbyJ9.APD54EHbHkldnAI9LVIYMVqFx4x5Zp2h9JU-EjxLyDSLjDWXG2z6nxfWNXb3WL30CjeZmIievjq0dqlMFNTHPntzX9kXm9xH7Ze2FbxAPVNbQIDn0YjJRSol1-mjKBfLHS80ildHtmF2jJS8MTvGV7scX7xYu3YyfGeRzpE12io"
+    pytest.VALID_TOKEN = os.environ["TEST_TOKEN"]
 
 
 def is_responsive(url):
