@@ -70,7 +70,9 @@ class MVGAPI:
         self.api_version = self.parse_version(api_vstr)
         self.api_content = api_root["content"]
 
-    def _request(self, method, path, do_not_raise=None, **kwargs) -> requests.Response:
+    def _request(
+        self, method, path, do_not_raise=None, retries=None, **kwargs
+    ) -> requests.Response:
         """Helper function for removing duplicate code on API requests.
         Makes requests on self.endpoint with authorization header and
         validates the response by status code. Writes DEBUG logs on
@@ -87,6 +89,9 @@ class MVGAPI:
         do_not_raise : list
             List of error status codes to ignore. Defaults to [] if None
 
+        retries: RequestRetry
+            A RequestRetry object that defines the configuration for retry requests
+
         **kwargs : Any
             Keyword arguments to pass to requests.request
 
@@ -94,7 +99,7 @@ class MVGAPI:
         -------
         Response from the API call
         """
-        client = HTTPClient(self.endpoint, self.token)
+        client = HTTPClient(self.endpoint, self.token, retries)
         response = client.request(
             method=method, path=path, do_not_raise=do_not_raise, **kwargs
         )

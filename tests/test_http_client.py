@@ -17,7 +17,7 @@ def test_retry_default(httpserver):
     client = HTTPClient(endpoint=httpserver.url, token="")
     retries = client.retries.total
     status_forcelist = client.retries.status_forcelist
-    status_code = status_forcelist[0]
+    status_code = next(iter(status_forcelist))
 
     # Ask the server to return content with the provided status code
     httpserver.serve_content({}, code=status_code)
@@ -50,22 +50,22 @@ def test_retry_custom(httpserver):
 
 
 def test_ignore_409(httpserver):
-    # Define retry for status code 402
     client = HTTPClient(endpoint=httpserver.url, token="")
     status_code = 409
 
     httpserver.serve_content({}, code=status_code)
+    # Does not raise 409
     client.request("get", "", do_not_raise=[status_code])
     assert len(httpserver.requests) == 1
 
 
 def test_do_not_ignore_409(httpserver):
-    # Define retry for status code 402
     client = HTTPClient(endpoint=httpserver.url, token="")
     status_code = 409
 
     httpserver.serve_content({}, code=status_code)
-    with pytest.raises(MVGAPIError) as exc:
+    # Raises 409
+    with pytest.raises(MVGAPIError) as _:
         client.request("get", "", do_not_raise=[])
     assert len(httpserver.requests) == 1
 

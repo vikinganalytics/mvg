@@ -11,14 +11,29 @@ class RequestRetry(Retry):
     Retry with logging
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(
+        self,
+        total=3,
+        status_forcelist=frozenset([500, 502, 503, 504]),
+        raise_on_status=False,
+        backoff_factor=0.5,
+        remove_headers_on_redirect=frozenset(),
+        **kwargs,
+    ):
         if kwargs.get("history"):
             request = kwargs.get("history")[-1]
             logger.warning(
                 f"Retring request {request[1]} with status code {request[3]}"
             )
 
-        super().__init__(*args, **kwargs)
+        super().__init__(
+            total=total,
+            status_forcelist=status_forcelist,
+            raise_on_status=raise_on_status,
+            backoff_factor=backoff_factor,
+            remove_headers_on_redirect=remove_headers_on_redirect,
+            **kwargs,
+        )
 
 
 class HTTPClient:
@@ -35,13 +50,7 @@ class HTTPClient:
 
         self.retries = retries
         if not self.retries:
-            self.retries = RequestRetry(
-                total=3,
-                status_forcelist=[500, 502, 503, 504],
-                raise_on_status=False,
-                backoff_factor=0.5,
-                remove_headers_on_redirect=[],
-            )
+            self.retries = RequestRetry()
 
     def request(self, method, path, headers=None, do_not_raise=None, **kwargs):
         response = None
