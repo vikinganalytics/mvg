@@ -17,10 +17,10 @@ from typing import Dict, List, Optional
 import pandas as pd
 import requests
 from requests.exceptions import RequestException
-
 import semver
 
-from mvg.exceptions import MVGConnectionError, raise_for_status
+from mvg.exceptions import MVGConnectionError
+from mvg.http_client import HTTPClient
 
 logger = logging.getLogger(__name__)
 
@@ -56,8 +56,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.13.1")
-        self.tested_api_version = self.parse_version("v0.4.6")
+        self.mvg_version = self.parse_version("v0.13.2")
+        self.tested_api_version = self.parse_version("v0.4.7")
 
         # Get API version
         try:
@@ -70,7 +70,9 @@ class MVGAPI:
         self.api_version = self.parse_version(api_vstr)
         self.api_content = api_root["content"]
 
-    def _request(self, method, path, do_not_raise=None, **kwargs) -> requests.Response:
+    def _request(
+        self, method, path, do_not_raise=None, retries=None, **kwargs
+    ) -> requests.Response:
         """Helper function for removing duplicate code on API requests.
         Makes requests on self.endpoint with authorization header and
         validates the response by status code. Writes DEBUG logs on
@@ -87,6 +89,9 @@ class MVGAPI:
         do_not_raise : list
             List of error status codes to ignore. Defaults to [] if None
 
+        retries: RequestRetry
+            A RequestRetry object that defines the configuration for retry requests
+
         **kwargs : Any
             Keyword arguments to pass to requests.request
 
@@ -94,22 +99,10 @@ class MVGAPI:
         -------
         Response from the API call
         """
-        headers = {"Authorization": f"Bearer {self.token}"}
-        response = requests.request(
-            method=method,
-            url=self.endpoint + path,
-            headers=headers,
-            **kwargs,
+        client = HTTPClient(self.endpoint, self.token, retries)
+        response = client.request(
+            method=method, path=path, do_not_raise=do_not_raise, **kwargs
         )
-
-        if do_not_raise is None:
-            do_not_raise = []
-
-        if response.status_code in do_not_raise:
-            logger.info(f"Ignoring error {response.status_code} - {response.text}")
-        else:
-            raise_for_status(response)
-
         return response
 
     @staticmethod
