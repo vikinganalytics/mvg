@@ -37,7 +37,7 @@ class HTTPClient:
         if not self.retries:
             self.retries = RequestRetry(
                 total=3,
-                status_forcelist=[502],
+                status_forcelist=[500, 502, 503, 504],
                 raise_on_status=False,
                 backoff_factor=0.5,
                 remove_headers_on_redirect=[],
