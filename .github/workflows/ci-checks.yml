@@ -85,7 +85,7 @@ jobs:
         -   name: "Running tests with pytest"
             env:
                 TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
-            run: "python -m pytest --durations=0 --verbose tests/ --ignore=tests/test_notebooks.py"
+            run: "python -m pytest --cov-report term-missing --cov=mvg --durations=0 --verbose tests/ --ignore=tests/test_notebooks.py"
         -   name: Log out of Amazon ECR
             id: login-ecr
             if: always()
