@@ -15,7 +15,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -84,8 +86,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>MVG: MultiViz Analytics Engine Client Library</li>
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">MVG: MultiViz Analytics Engine Client Library</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -120,7 +122,7 @@
 }
 </style>
 <section id="mvg-multiviz-analytics-engine-client-library">
-<h1>MVG: MultiViz Analytics Engine Client Library<a class="headerlink" href="#mvg-multiviz-analytics-engine-client-library" title="Permalink to this headline"></a></h1>
+<h1>MVG: MultiViz Analytics Engine Client Library<a class="headerlink" href="#mvg-multiviz-analytics-engine-client-library" title="Permalink to this heading"></a></h1>
 <p><span class="raw-html-m2r"><a href="https://pypi.org/project/va-mvg/">
 <img src="https://badge.fury.io/py/va-mvg.svg" alt="Package version">
 </a></span>
@@ -131,17 +133,17 @@
 <li><p>interface the services by means of API calls. <a class="reference external" href="https://api.beta.multiviz.com/docs">API documentation</a>.</p></li>
 </ul>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>Usage of the library and several examples can be found <a class="reference external" href="https://vikinganalytics.github.io/mvg/">here</a>.</p>
 </section>
 <section id="obtaining-the-library">
-<h2>Obtaining the library<a class="headerlink" href="#obtaining-the-library" title="Permalink to this headline"></a></h2>
+<h2>Obtaining the library<a class="headerlink" href="#obtaining-the-library" title="Permalink to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">va</span><span class="o">-</span><span class="n">mvg</span>
 </pre></div>
 </div>
 </section>
 <section id="basic-usage">
-<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline"></a></h2>
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Create a session by instantiating a MVG object. A session is a combination
 of an endpoint (server address) and a token. The token is used both for
@@ -153,7 +155,7 @@ to handle error cases.</p></li>
 </ol>
 </section>
 <section id="important-concepts">
-<h2>Important Concepts<a class="headerlink" href="#important-concepts" title="Permalink to this headline"></a></h2>
+<h2>Important Concepts<a class="headerlink" href="#important-concepts" title="Permalink to this heading"></a></h2>
 <ul>
 <li><p>endpoint: The server providing the analytics and data handling functions.
 Represented by an URL. The endpoint is set when creating the session.</p></li>
@@ -193,7 +195,7 @@ It is primarily the clients side’s responsibility to keep track of analyses.</
 </ul>
 </section>
 <section id="version-handling-of-mvg-and-api-version">
-<h2>Version handling of mvg and API version<a class="headerlink" href="#version-handling-of-mvg-and-api-version" title="Permalink to this headline"></a></h2>
+<h2>Version handling of mvg and API version<a class="headerlink" href="#version-handling-of-mvg-and-api-version" title="Permalink to this heading"></a></h2>
 <p>The version string of the MVG API on the server side has the form
 v{MAJOR}.{MINOR}.{PATCH}.
 An increase of MAJOR means an incompatible change which requires an
@@ -202,12 +204,12 @@ mvg, but may then not allow to access new features of the API. See mvg
 documentation and examples/0-check_version.ipynb for details.</p>
 </section>
 <section id="additional-documentation">
-<h2>Additional Documentation<a class="headerlink" href="#additional-documentation" title="Permalink to this headline"></a></h2>
+<h2>Additional Documentation<a class="headerlink" href="#additional-documentation" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>API documentation on mvg, autogenerated from mvg.py</p></li>
 </ul>
 <section id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
 <p>Under the examples section there are a number of jupyter notebooks
 with Python code to show how to use the library for interfacing the
 Viking Analytics Engine. The notebooks can be downloaded by
@@ -216,7 +218,7 @@ examples. You will need to change the extension to .ipynb before
 running them.</p>
 </section>
 <section id="analysis-classes-beta">
-<h3>Analysis Classes (beta)<a class="headerlink" href="#analysis-classes-beta" title="Permalink to this headline"></a></h3>
+<h3>Analysis Classes (beta)<a class="headerlink" href="#analysis-classes-beta" title="Permalink to this heading"></a></h3>
 <p>Analysis classes provide a simple and powerful way to parse and
 inspect the results for analysis calls for our features.
 Apart from converting the results to dataframes,
@@ -226,16 +228,16 @@ shell to inspect the results from analysis calls.</p>
 showing how to use the analysis classes.</p>
 </section>
 <section id="maintainer">
-<h3>Maintainer<a class="headerlink" href="#maintainer" title="Permalink to this headline"></a></h3>
+<h3>Maintainer<a class="headerlink" href="#maintainer" title="Permalink to this heading"></a></h3>
 <p>Maintainer of the mvg library is Viking Analytics AB. <a class="reference external" href="https://www.vikinganalytics.se">https://www.vikinganalytics.se</a></p>
 </section>
 <section id="bug-reporting-pull-request-and-support">
-<h3>Bug Reporting, Pull request, and support …<a class="headerlink" href="#bug-reporting-pull-request-and-support" title="Permalink to this headline"></a></h3>
+<h3>Bug Reporting, Pull request, and support …<a class="headerlink" href="#bug-reporting-pull-request-and-support" title="Permalink to this heading"></a></h3>
 <p>… please use the issue tracking and pull requests on
 <a class="reference external" href="https://github.com/vikinganalytics/mvg">https://github.com/vikinganalytics/mvg</a></p>
 </section>
 <section id="license">
-<h3>License<a class="headerlink" href="#license" title="Permalink to this headline"></a></h3>
+<h3>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h3>
 <p>The mvg library is licensed under Apache License 2.0, see LICENSE file.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
@@ -364,16 +366,26 @@ showing how to use the analysis classes.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="content/api_reference/mvg.html">MutliViz Analytics Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="content/api_reference/mvg.html#mvg-library">MVG library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/api_reference/mvg.html#mvg.mvg.MVG"><code class="docutils literal notranslate"><span class="pre">MVG</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/api_reference/mvg.html#mvg.mvg.MVGAPI"><code class="docutils literal notranslate"><span class="pre">MVGAPI</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="content/utilities_reference/analysis_classes.html">MutliViz Analysis Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/utilities_reference/analysis_classes.html">MutliViz Analysis Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="content/utilities_reference/analysis_classes.html#mvg.analysis_classes.parse_results"><code class="docutils literal notranslate"><span class="pre">parse_results()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/utilities_reference/analysis_classes.html#mvg.features.analysis.Analysis"><code class="docutils literal notranslate"><span class="pre">Analysis</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/utilities_reference/analysis_classes.html#mvg.features.modeid.ModeId"><code class="docutils literal notranslate"><span class="pre">ModeId</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/utilities_reference/analysis_classes.html#mvg.features.blacksheep.BlackSheep"><code class="docutils literal notranslate"><span class="pre">BlackSheep</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/utilities_reference/analysis_classes.html#mvg.features.kpidemo.KPIDemo"><code class="docutils literal notranslate"><span class="pre">KPIDemo</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="content/utilities_reference/analysis_classes.html#mvg.features.kpidemo.unfold_result_to_df"><code class="docutils literal notranslate"><span class="pre">unfold_result_to_df()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
 </section>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>

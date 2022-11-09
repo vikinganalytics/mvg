@@ -15,7 +15,9 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -68,7 +70,45 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../api_reference/mvg.html">MutliViz Analytics Engine</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">MutliViz Analysis Classes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MutliViz Analysis Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mvg.analysis_classes.parse_results"><code class="docutils literal notranslate"><span class="pre">parse_results()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mvg.features.analysis.Analysis"><code class="docutils literal notranslate"><span class="pre">Analysis</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.check_status"><code class="docutils literal notranslate"><span class="pre">Analysis.check_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.feature"><code class="docutils literal notranslate"><span class="pre">Analysis.feature()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.inputs"><code class="docutils literal notranslate"><span class="pre">Analysis.inputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.plot"><code class="docutils literal notranslate"><span class="pre">Analysis.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.raw_results"><code class="docutils literal notranslate"><span class="pre">Analysis.raw_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.request_id"><code class="docutils literal notranslate"><span class="pre">Analysis.request_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.results"><code class="docutils literal notranslate"><span class="pre">Analysis.results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.save_df"><code class="docutils literal notranslate"><span class="pre">Analysis.save_df()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.save_json"><code class="docutils literal notranslate"><span class="pre">Analysis.save_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.save_pkl"><code class="docutils literal notranslate"><span class="pre">Analysis.save_pkl()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.sources"><code class="docutils literal notranslate"><span class="pre">Analysis.sources()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.status"><code class="docutils literal notranslate"><span class="pre">Analysis.status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.summary"><code class="docutils literal notranslate"><span class="pre">Analysis.summary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.analysis.Analysis.to_df"><code class="docutils literal notranslate"><span class="pre">Analysis.to_df()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mvg.features.modeid.ModeId"><code class="docutils literal notranslate"><span class="pre">ModeId</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.modeid.ModeId.mode_table"><code class="docutils literal notranslate"><span class="pre">ModeId.mode_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.modeid.ModeId.plot"><code class="docutils literal notranslate"><span class="pre">ModeId.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.modeid.ModeId.plot_probabilities"><code class="docutils literal notranslate"><span class="pre">ModeId.plot_probabilities()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.modeid.ModeId.summary"><code class="docutils literal notranslate"><span class="pre">ModeId.summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mvg.features.blacksheep.BlackSheep"><code class="docutils literal notranslate"><span class="pre">BlackSheep</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.blacksheep.BlackSheep.plot"><code class="docutils literal notranslate"><span class="pre">BlackSheep.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.blacksheep.BlackSheep.summary"><code class="docutils literal notranslate"><span class="pre">BlackSheep.summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mvg.features.kpidemo.KPIDemo"><code class="docutils literal notranslate"><span class="pre">KPIDemo</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.kpidemo.KPIDemo.plot"><code class="docutils literal notranslate"><span class="pre">KPIDemo.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.features.kpidemo.KPIDemo.summary"><code class="docutils literal notranslate"><span class="pre">KPIDemo.summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mvg.features.kpidemo.unfold_result_to_df"><code class="docutils literal notranslate"><span class="pre">unfold_result_to_df()</span></code></a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -84,8 +124,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>MutliViz Analysis Classes</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">MutliViz Analysis Classes</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/content/utilities_reference/analysis_classes.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -120,7 +160,7 @@
 }
 </style>
 <section id="module-mvg.analysis_classes">
-<span id="mutliviz-analysis-classes"></span><span id="analysis-classes-reference"></span><h1>MutliViz Analysis Classes<a class="headerlink" href="#module-mvg.analysis_classes" title="Permalink to this headline"></a></h1>
+<span id="mutliviz-analysis-classes"></span><span id="analysis-classes-reference"></span><h1>MutliViz Analysis Classes<a class="headerlink" href="#module-mvg.analysis_classes" title="Permalink to this heading"></a></h1>
 <p>Utility classes for working with the results from the
 analysis requests, like summarizing, plotting and exporting to
 a pandas dataFrame.</p>
@@ -371,7 +411,7 @@ successful</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvg.features.modeid.ModeId">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvg.features.modeid.</span></span><span class="sig-name descname"><span class="pre">ModeId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.modeid.ModeId.mode_table">
 <span class="sig-name descname"><span class="pre">mode_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_uncertain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.modeid.ModeId.mode_table" title="Permalink to this definition"></a></dt>
@@ -463,7 +503,7 @@ format “{source_name}_{analysis_request_id}.png”.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvg.features.blacksheep.BlackSheep">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvg.features.blacksheep.</span></span><span class="sig-name descname"><span class="pre">BlackSheep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">Analysis</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.blacksheep.BlackSheep.plot">
 <span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.blacksheep.BlackSheep.plot" title="Permalink to this definition"></a></dt>
@@ -510,7 +550,7 @@ ignored. If interactive is False, default filename will be of the format
 <dl class="py class">
 <dt class="sig sig-object py" id="mvg.features.kpidemo.KPIDemo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvg.features.kpidemo.</span></span><span class="sig-name descname"><span class="pre">KPIDemo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvg.features.kpidemo.KPIDemo" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">mvg.features.analysis.Analysis</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#mvg.features.analysis.Analysis" title="mvg.features.analysis.Analysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">Analysis</span></code></a></p>
 <p>Analysis class for KPIDemo feature.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.features.kpidemo.KPIDemo.plot">
@@ -556,7 +596,7 @@ format “{source_name}_{analysis_request_id}.png”.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mvg.features.kpidemo.unfold_result_to_df">
-<span class="sig-prename descclassname"><span class="pre">mvg.features.kpidemo.</span></span><span class="sig-name descname"><span class="pre">unfold_result_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="headerlink" href="#mvg.features.kpidemo.unfold_result_to_df" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvg.features.kpidemo.</span></span><span class="sig-name descname"><span class="pre">unfold_result_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#mvg.features.kpidemo.unfold_result_to_df" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

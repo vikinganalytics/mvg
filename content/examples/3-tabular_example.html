@@ -15,7 +15,9 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -90,8 +92,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Working with Tabular Data</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Working with Tabular Data</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/content/examples/3-tabular_example.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -316,6 +318,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -324,10 +327,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -339,12 +346,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -372,11 +382,11 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Working-with-Tabular-Data">
-<h1>Working with Tabular Data<a class="headerlink" href="#Working-with-Tabular-Data" title="Permalink to this headline"></a></h1>
+<h1>Working with Tabular Data<a class="headerlink" href="#Working-with-Tabular-Data" title="Permalink to this heading"></a></h1>
 <p>Although MVG has been designed with vibration waveform data in mind, it still works wonderfully well with non-vibration or KPI data. We refer to this as tabular timeseries data. Each measurement consists of one or more variables captured at the same time. This is different from the vibration waveform data, where each measurement is a short measurement sample from one vibration sensor.</p>
 <p>In this example, we will show how to work with tabular sources and measurements, and how to create an analysis. If you have seen any of the previous examples, much of this one will be familiar to you.</p>
 <section id="Imports">
-<h2>Imports<a class="headerlink" href="#Imports" title="Permalink to this headline"></a></h2>
+<h2>Imports<a class="headerlink" href="#Imports" title="Permalink to this heading"></a></h2>
 <p>Beyond importing <code class="docutils literal notranslate"><span class="pre">MVG</span></code> and the <code class="docutils literal notranslate"><span class="pre">ModeId</span></code> analysis class, we want to use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> for loading and processing the data before the analysis.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:

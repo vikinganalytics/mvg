@@ -15,7 +15,9 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -94,8 +96,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Error Handling Example</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Error Handling Example</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/content/examples/4-error_handling.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -320,6 +322,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -328,10 +331,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -343,12 +350,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -376,7 +386,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Error-Handling-Example">
-<h1>Error Handling Example<a class="headerlink" href="#Error-Handling-Example" title="Permalink to this headline"></a></h1>
+<h1>Error Handling Example<a class="headerlink" href="#Error-Handling-Example" title="Permalink to this heading"></a></h1>
 <p>This script shows how handle errors occurring during API calls to the Vibration service</p>
 <p>The MVG design principle is that the client application using the MVG API is responsible for error handling.</p>
 <div class="nbinput nblast docutils container">
@@ -460,7 +470,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <section id="Invalid-Token">
-<h2>Invalid Token<a class="headerlink" href="#Invalid-Token" title="Permalink to this headline"></a></h2>
+<h2>Invalid Token<a class="headerlink" href="#Invalid-Token" title="Permalink to this heading"></a></h2>
 <p>Let’s provoke an error by creating a session with a non-valid token.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -499,7 +509,7 @@ OUCH
 <p>We’ll now return to the original session and show how to get details when the server internally rejected a request for other reasons.</p>
 </section>
 <section id="Illegal-source_id">
-<h2>Illegal source_id<a class="headerlink" href="#Illegal-source_id" title="Permalink to this headline"></a></h2>
+<h2>Illegal source_id<a class="headerlink" href="#Illegal-source_id" title="Permalink to this heading"></a></h2>
 <p>We provoke the service using an illegal string for the <code class="docutils literal notranslate"><span class="pre">source_id</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -529,7 +539,7 @@ OUCH
 <p>We’ll show a couple of examples what can go wrong when creating a measurement</p>
 </section>
 <section id="Non-existing-Source">
-<h2>Non-existing Source<a class="headerlink" href="#Non-existing-Source" title="Permalink to this headline"></a></h2>
+<h2>Non-existing Source<a class="headerlink" href="#Non-existing-Source" title="Permalink to this heading"></a></h2>
 <p>In some cases where there is detailed information provided by the server, we can retrieve it by inspecting the exception object <code class="docutils literal notranslate"><span class="pre">exc</span></code>, which actually contains all information about the request.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -559,7 +569,7 @@ OUCH
 </div>
 </section>
 <section id="Parameter-Value-Out-of-Range">
-<h2>Parameter Value Out of Range<a class="headerlink" href="#Parameter-Value-Out-of-Range" title="Permalink to this headline"></a></h2>
+<h2>Parameter Value Out of Range<a class="headerlink" href="#Parameter-Value-Out-of-Range" title="Permalink to this heading"></a></h2>
 <p>Sometimes, it is possible to pass a value that it is out of range of the expected, as in this example where the values for the duration and timestamp parameters are negative values.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
@@ -589,7 +599,7 @@ OUCH
 </div>
 </section>
 <section id="Missing-Parameter">
-<h2>Missing Parameter<a class="headerlink" href="#Missing-Parameter" title="Permalink to this headline"></a></h2>
+<h2>Missing Parameter<a class="headerlink" href="#Missing-Parameter" title="Permalink to this heading"></a></h2>
 <p>In this case we have an error on the client side. This means that the data is never sent to the server, so we do not get an <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code>, but a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> instead. Only the <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code> contains any details from the server, so to be on the safe side we should catch them separately.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:

@@ -15,7 +15,9 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -95,8 +97,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Analysis and Results Visualization</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Analysis and Results Visualization</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/content/examples/6-analysis_visual.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -321,6 +323,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -329,10 +332,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -344,12 +351,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -377,11 +387,11 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Analysis-and-Results-Visualization">
-<h1>Analysis and Results Visualization<a class="headerlink" href="#Analysis-and-Results-Visualization" title="Permalink to this headline"></a></h1>
+<h1>Analysis and Results Visualization<a class="headerlink" href="#Analysis-and-Results-Visualization" title="Permalink to this heading"></a></h1>
 <p>This script describes the procedure to request an analysis to the Viking Analytics’ MultiViz Analytics Engine (MVG) service. It shows how to query for results of single-asset or asset-population analyses. In addition, it presents some examples of how to visualize the results available for the <a class="reference internal" href="../features/ModeId.html"><span class="doc">“mode identification”</span></a> feature.</p>
 <p>In this example, we will describe how to access and manipulate the analysis results directly. The <a class="reference internal" href="5-analysis_classes.html"><span class="doc">“Analysis Classes”</span></a> example provides a simplified and unified interface to access these results as a pandas dataframe, along with some basic visualization of the results.</p>
 <section id="Preliminaries">
-<h2>Preliminaries<a class="headerlink" href="#Preliminaries" title="Permalink to this headline"></a></h2>
+<h2>Preliminaries<a class="headerlink" href="#Preliminaries" title="Permalink to this heading"></a></h2>
 <p>This procedure describes all the steps to request an analysis, get analysis results, and plot those results using the functions in <code class="docutils literal notranslate"><span class="pre">plotting</span></code>. Local visualizations functions to create the figures are imported from <code class="docutils literal notranslate"><span class="pre">plotting</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -420,7 +430,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="Asset-Analysis">
-<h3>Asset Analysis<a class="headerlink" href="#Asset-Analysis" title="Permalink to this headline"></a></h3>
+<h3>Asset Analysis<a class="headerlink" href="#Asset-Analysis" title="Permalink to this heading"></a></h3>
 <p>In this example, we will use the sources uploaded by the <a class="reference internal" href="2-sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example. We start by looking if the sources are available in the database. At least, sources, “u0001” and “u0005”, should appear as available.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -635,7 +645,7 @@ ModeId Analysis: successful
 </div>
 </section>
 <section id="Visualization">
-<h3>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this headline"></a></h3>
+<h3>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this heading"></a></h3>
 <p>Once the analysis is complete, one get the results by calling the corresponding “request_id” for each analysis.</p>
 <p>First, let’s check all existing “request_id” in the database for each source and feature.</p>
 <div class="nbinput docutils container">
@@ -1369,7 +1379,7 @@ over each timestamp. For a more focused plot, one can use the method’s <code c
 </div>
 </section>
 <section id="Population-Analysis">
-<h3>Population Analysis<a class="headerlink" href="#Population-Analysis" title="Permalink to this headline"></a></h3>
+<h3>Population Analysis<a class="headerlink" href="#Population-Analysis" title="Permalink to this heading"></a></h3>
 <p>Another feature is “BlackSheep”, which targets a group of assets and aims to identify the atypical assets within a population.</p>
 <p>During our example, we will utilize all sources previously uploaded to our database.</p>
 <div class="nbinput docutils container">
