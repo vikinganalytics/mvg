@@ -56,7 +56,7 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.13.2")
+        self.mvg_version = self.parse_version("v0.13.3")
         self.tested_api_version = self.parse_version("v0.4.7")
 
         # Get API version
@@ -897,6 +897,21 @@ class MVGAPI:
         response = self._request("get", f"/analyses/requests/{request_id}/results")
 
         return response.json()
+
+    def delete_analysis(self, request_id: str):
+        """Deletes an analysis.
+
+        Parameters
+        ----------
+        request_id : str
+            request_id (analysis identifier)
+
+        """
+
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("deleting analysis with request_id=%s", request_id)
+
+        self._request("delete", f"/analyses/requests/{request_id}")
 
     # Labels
     def create_label(

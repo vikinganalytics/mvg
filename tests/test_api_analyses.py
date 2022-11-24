@@ -15,6 +15,7 @@ from pathlib import Path
 import pytest
 
 from mvg import MVG
+from mvg.exceptions import MVGAPIError
 
 LOG_FILE = Path("_callback_test_server_log.txt")
 
@@ -64,11 +65,13 @@ def test_kpidemo_sources(session: MVG, waveform_source_with_measurements):
 
 
 def test_kpidemo_analysis(session, waveform_source_with_measurements):
-    kpi = session.request_analysis(waveform_source_with_measurements, "KPIDemo")
-    session.wait_for_analyses([kpi["request_id"]])
-    status = session.get_analysis_status(kpi["request_id"])
+    request = session.request_analysis(waveform_source_with_measurements, "KPIDemo")
+    request_id = request["request_id"]
+
+    session.wait_for_analyses([request_id])
+    status = session.get_analysis_status(request_id)
     assert status == "successful"
-    results = session.get_analysis_results(kpi["request_id"])
+    results = session.get_analysis_results(request_id)
     assert len(results.keys()) == 7
     assert results["status"] == "successful"
     assert results["feature"] == "KPIDemo"
@@ -76,30 +79,40 @@ def test_kpidemo_analysis(session, waveform_source_with_measurements):
     assert len(kpi_results.keys()) == 2
     assert len(kpi_results["acc"].keys()) == 7
 
+    # Delete analysis
+    session.delete_analysis(request_id)
+
 
 @pytest.mark.skip(reason="callback feature")
 def test_callback(session, callback_server, waveform_source_with_measurements):
-    req = session.request_analysis(
+    request = session.request_analysis(
         waveform_source_with_measurements, "KPIDemo", callback_url=callback_server
     )
-    req_id = req["request_id"]
-    session.wait_for_analyses([req_id])
-    status = session.get_analysis_status(req_id)
+    request_id = request["request_id"]
+    session.wait_for_analyses([request_id])
+    status = session.get_analysis_status(request_id)
     assert status == "successful"
-    assert f"{req_id}::{status}" in LOG_FILE.read_text()
+    assert f"{request_id}::{status}" in LOG_FILE.read_text()
+
+    # Delete analysis
+    session.delete_analysis(request_id)
 
 
 @pytest.mark.skip(reason="callback feature")
 def test_callback_server_failure(
     session, callback_server, waveform_source_with_measurements
 ):
-    req = session.request_analysis(
+    request = session.request_analysis(
         waveform_source_with_measurements,
         "KPIDemo",
         callback_url=f"{callback_server}/fail",
     )
-    session.wait_for_analyses([req["request_id"]])
+    request_id = request["request_id"]
+    session.wait_for_analyses([request_id])
     assert "400 Bad Request" in LOG_FILE.read_text()
+
+    # Delete analysis
+    session.delete_analysis(request_id)
 
 
 def test_modeid_analysis_selected_columns(session, tabular_source_with_measurements):
@@ -107,12 +120,20 @@ def test_modeid_analysis_selected_columns(session, tabular_source_with_measureme
     columns = list(tabular_dict.keys())
 
     def assert_results(selected_columns):
-        req = session.request_analysis(
-            source_id, "ModeId", selected_columns=selected_columns
+        parameters = {"n_trials": 1}
+        request = session.request_analysis(
+            source_id,
+            "ModeId",
+            selected_columns=selected_columns,
+            parameters=parameters,
         )
-        session.wait_for_analyses([req["request_id"]])
-        results = session.get_analysis_results(req["request_id"])
+        request_id = request["request_id"]
+        session.wait_for_analyses([request_id])
+        results = session.get_analysis_results(request_id)
         assert results["inputs"]["selected_columns"] == (selected_columns or [])
+
+        # Delete analysis
+        session.delete_analysis(request_id)
 
     # Test with defined selected_columns
     assert_results(columns[1:3])
@@ -127,15 +148,44 @@ def test_modeid_analysis_selected_channels(session, waveform_source_multiaxial_0
     channels = source_info["properties"]["channels"]
 
     def assert_results(selected_channels):
-        req = session.request_analysis(
-            source_id, "ModeId", selected_channels=selected_channels
+        parameters = {"n_trials": 1}
+        request = session.request_analysis(
+            source_id,
+            "ModeId",
+            selected_channels=selected_channels,
+            parameters=parameters,
         )
-        session.wait_for_analyses([req["request_id"]])
-        results = session.get_analysis_results(req["request_id"])
+        request_id = request["request_id"]
+        session.wait_for_analyses([request_id])
+        results = session.get_analysis_results(request_id)
         assert results["inputs"]["selected_channels"] == (selected_channels or [])
+
+        # Delete analysis
+        session.delete_analysis(request_id)
 
     # Test with defined selected_channels
     assert_results(channels[:2])
 
     # Test with defined selected_channels
     assert_results(None)
+
+
+def test_delete_analysis(session, waveform_source_multiaxial_001):
+    source_id, _ = waveform_source_multiaxial_001
+    parameters = {"n_trials": 10}
+    request = session.request_analysis(
+        sid=source_id, feature="ModeId", parameters=parameters
+    )
+    request_id = request["request_id"]
+
+    # Deleting a queued analysis
+    with pytest.raises(MVGAPIError) as exc:
+        session.delete_analysis(request_id)
+
+    session.wait_for_analyses([request_id])
+    session.delete_analysis(request_id)
+
+    # Accessing a deleted analysis
+    with pytest.raises(MVGAPIError) as exc:
+        session.get_analysis_results(request_id)
+    assert f"Request with ID {request_id} does not exist" in str(exc)

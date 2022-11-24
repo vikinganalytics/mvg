@@ -1,5 +1,5 @@
-import numpy as np
 from itertools import cycle
+import numpy as np
 
 from mvg.mvg import MVG
 
