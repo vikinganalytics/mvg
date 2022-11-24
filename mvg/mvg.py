@@ -898,6 +898,21 @@ class MVGAPI:
 
         return response.json()
 
+    def delete_analysis(self, request_id: str):
+        """Deletes an analysis.
+
+        Parameters
+        ----------
+        request_id : str
+            request_id (analysis identifier)
+
+        """
+
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("deleting analysis with request_id=%s", request_id)
+
+        self._request("delete", f"/analyses/requests/{request_id}")
+
     # Labels
     def create_label(
         self,
