@@ -89,10 +89,10 @@ def test_callback(session, callback_server, waveform_source_with_measurements):
         waveform_source_with_measurements, "KPIDemo", callback_url=callback_server
     )
     request_id = request["request_id"]
-    session.wait_for_analyses([request])
-    status = session.get_analysis_status(request)
+    session.wait_for_analyses([request_id])
+    status = session.get_analysis_status(request_id)
     assert status == "successful"
-    assert f"{request}::{status}" in LOG_FILE.read_text()
+    assert f"{request_id}::{status}" in LOG_FILE.read_text()
 
     # Delete analysis
     session.delete_analysis(request_id)
