@@ -21,9 +21,9 @@ jobs:
         runs-on: ubuntu-latest
         name: "running black"
         steps: 
-        -   uses: actions/checkout@v2
+        -   uses: actions/checkout@v3
         -   name: "Set up Python 3"
-            uses: actions/setup-python@v2
+            uses: actions/setup-python@v4
             with: 
                 python-version: '3.x'
         -   name: "Install dependencies"
@@ -34,9 +34,9 @@ jobs:
         runs-on: ubuntu-latest
         name: "running pylint"
         steps: 
-        -   uses: actions/checkout@v2
+        -   uses: actions/checkout@v3
         -   name: "Set up Python 3"
-            uses: actions/setup-python@v2
+            uses: actions/setup-python@v4
             with: 
                 python-version: '3.x'
         -   name: "Install dependencies"
@@ -49,9 +49,9 @@ jobs:
         runs-on: ubuntu-latest
         name: "running flake8"
         steps: 
-        -   uses: actions/checkout@v2
+        -   uses: actions/checkout@v3
         -   name: "Set up Python 3"
-            uses: actions/setup-python@v2
+            uses: actions/setup-python@v4
             with: 
                 python-version: '3.x'
         -   name: "Install dependencies"
@@ -69,9 +69,9 @@ jobs:
                 -   python-version: 3.6
                     os: ubuntu-20.04
         steps: 
-        -   uses: actions/checkout@v2
+        -   uses: actions/checkout@v3
         -   name: "Set up Python ${{ matrix.python-version }}"
-            uses: actions/setup-python@v2
+            uses: actions/setup-python@v4
             with: 
                 python-version: "${{ matrix.python-version }}"
         -   name: "Install dependencies"
@@ -97,15 +97,19 @@ jobs:
             if: always()
             run: docker logout ${{ steps.login-ecr.outputs.registry }}
     test-notebooks:
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         needs: [black, pylint, flake8]
         strategy:
             matrix:
-              python-version: ["3.6","3.7","3.8","3.9","3.10","3.11"]
+                python-version: ["3.7","3.8","3.9","3.10","3.11"]
+                os: [ubuntu-latest]
+                include:
+                -   python-version: 3.6
+                    os: ubuntu-20.04
         steps:
-        -   uses: actions/checkout@v2
+        -   uses: actions/checkout@v3
         -   name: "Set up Python ${{ matrix.python-version }}"
-            uses: actions/setup-python@v2
+            uses: actions/setup-python@v4
             with: 
                 python-version: "${{ matrix.python-version }}"
         -   name: "Install dependencies"
