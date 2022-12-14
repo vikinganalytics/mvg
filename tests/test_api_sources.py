@@ -308,17 +308,19 @@ def test_list_tabular_measurements(session, tabular_source):
     # Retrieve data for a segment (1..n)
     response = session.list_tabular_measurements(source_id, ts_1, ts_n)
     assert all(
-        tabular_dict[column][1:] == response["data"][column] for column in columns
+        tabular_dict[column][1:] == response[column] for column in columns
     )
-    assert len(response["meta"].keys()) == 1
-    assert response["meta"][f"{ts_1}"] == meta[f"{ts_1}"]
 
     # Retrieve entire data (0..n)
-    response = session.list_tabular_measurements(source_id, None, None)
-    assert all(tabular_dict[column] == response["data"][column] for column in columns)
-    assert len(response["meta"].keys()) == 2
-    assert response["meta"][f"{ts_0}"] == meta[f"{ts_0}"]
-    assert response["meta"][f"{ts_1}"] == meta[f"{ts_1}"]
+    response = session.list_tabular_measurements(
+        source_id, start_timestamp=ts_0, end_timestamp=ts_n
+    )
+    assert all(tabular_dict[column] == response[column] for column in columns)
+
+    # Retrieve one page (0..MAX_PAGE_LIMIT)
+    response = session.list_tabular_measurements(source_id)
+
+    assert all(tabular_dict[column] == response[column] for column in columns)
 
     # Retrieve data that is beyond the range of the dataset timestamps
     with pytest.raises(MVGAPIError) as exc:

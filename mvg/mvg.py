@@ -518,13 +518,17 @@ class MVGAPI:
         )
 
     # in example
-    def list_measurements(self, sid: str) -> list:
-        """Retrieves all measurements (all timestamps and metadata) for a source.
+    def list_measurements(self, sid: str, list_all=True) -> list:
+        """Retrieves measurements (all timestamps and metadata) for a source.
 
         Parameters
         ----------
         sid : str
             source Id.
+        list_all: bool
+            By default it retrive all measuremnets. Setting this flag to
+            False forces the method to retrieve only measurments up to a
+            limit specified by the server.
 
         Returns
         -------
@@ -534,10 +538,21 @@ class MVGAPI:
         logger.info("endpoint %s", self.endpoint)
         logger.info("retrieving all measurements from source id=%s", sid)
 
-        response = self._request("get", f"/sources/{sid}/measurements")
-        all_measurements = response.json()
+        url = f"/sources/{sid}/measurements"
+        response = self._request("get", url)
+        resp_first = response.json()
+        all_measurements = resp_first["items"]
+        num_meaurements = resp_first["total"]
+        if list_all:
+            limit = resp_first["limit"]
+            num_reqs = (num_meaurements - 1) // limit
+            for idx in range(1, num_reqs + 1):
+                offset = idx * limit
+                response = self._request("get", url, params={"offset": offset})
+                all_measurements += response.json()["items"]
 
-        logger.info("%s measurements in database", len(all_measurements))
+        logger.info("%s measurements in database", num_meaurements)
+        logger.info("Returned %s measurements", len(all_measurements))
 
         return all_measurements
 
@@ -573,7 +588,11 @@ class MVGAPI:
         return response.json()
 
     def list_tabular_measurements(
-        self, sid: str, start_timestamp: int = None, end_timestamp: int = None
+        self,
+        sid: str,
+        start_timestamp: int = None,
+        end_timestamp: int = None,
+        list_all=True,
     ) -> dict:
         """Retrieves tabular measurements (including metadata) for a source.
 
@@ -588,30 +607,45 @@ class MVGAPI:
         end_timestamp : int
             Measurements ending at a timestamp [optional].
 
+        list_all: bool
+            In the absense of start and end timestamps, this flag specifies whether
+            all measurements must be retrieved, if False only one page of data will
+            be downloaded.
+
         Returns
         -------
         An dict having a list of all timestamps, a list of all measurements grouped by
-        KPI, and metadata corresponding to a measurement
+        column names, and metadata corresponding to a measurement.
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info("retrieving all measurements from source id=%s", sid)
 
-        query_params_list = []
-        query_params_str = ""
+        url = f"/sources/{sid}/measurements/tabular"
+        query_params = {}
 
         if start_timestamp is not None:
-            query_params_list.append(f"start_timestamp={start_timestamp}")
+            query_params["start_timestamp"] = start_timestamp
         if end_timestamp is not None:
-            query_params_list.append(f"end_timestamp={end_timestamp}")
-
-        if len(query_params_list) != 0:
-            query_params_str = f"?{'&'.join(query_params_list)}"
+            query_params["end_timestamp"] = end_timestamp
 
         response = self._request(
-            "get", f"/sources/{sid}/measurements/tabular{query_params_str}"
+            "get",
+            url,
+            params=query_params,
         )
 
-        return response.json()
+        resp_first = response.json()
+        all_measurements = resp_first["items"]
+        num_meaurements = resp_first["total"]
+        if start_timestamp is None and end_timestamp is None and list_all:
+            limit = resp_first["limit"]
+            num_reqs = (num_meaurements - 1) // limit
+            for idx in range(1, num_reqs + 1):
+                offset = idx * limit
+                response = self._request("get", url, params={"offset": offset})
+                all_measurements += response.json()["items"]
+
+        return all_measurements
 
     # in example
     def update_measurement(self, sid: str, timestamp: int, meta: dict):
