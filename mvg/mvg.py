@@ -13,7 +13,7 @@ For more information see README.md.
 import re
 import time
 import logging
-from typing import Dict, List, Optional, TypedDict
+from typing import Dict, List, Optional
 import pandas as pd
 import requests
 from requests.exceptions import RequestException
@@ -616,13 +616,9 @@ class MVGAPI:
     def list_tabular_downsampled_measurements(
         self,
         sid: str,
-        **kwargs: TypedDict(
-            "TabularDownsampledMeasurementsArgs", {
-                "threshold": Optional[int],
-                "start_timestamp": Optional[int],
-                "end_timestamp": Optional[int],
-            }
-        )
+        threshold: Optional[int] = None,
+        start_timestamp: Optional[int] = None,
+        end_timestamp: Optional[int] = None,
     ) -> dict:
         """Retrieves downsampled tabular measurements for a source.
 
@@ -640,7 +636,6 @@ class MVGAPI:
 
         end_timestamp : int
             Measurements ending at a timestamp [optional].
-
         Returns
         -------
         A dictionary of KPIs in the format:
@@ -649,8 +644,17 @@ class MVGAPI:
         logger.info("endpoint %s", self.endpoint)
         logger.info("retrieving all measurements from source id=%s", sid)
 
+        params = {}
+
+        if threshold is not None:
+            params["threshold"] = threshold
+        if start_timestamp is not None:
+            params["start_timestamp"] = start_timestamp
+        if end_timestamp is not None:
+            params["end_timestamp"] = end_timestamp
+
         response = self._request(
-            "get", f"/sources/{sid}/measurements/tabular/downsample", params=kwargs
+            "get", f"/sources/{sid}/measurements/tabular/downsample", params=params
         )
 
         return response.json()
