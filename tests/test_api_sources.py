@@ -337,11 +337,10 @@ def test_list_tabular_measurements(session, tabular_source):
     assert exc.value.response.status_code == 422
 
 
-def test_list_tabular_downsampled_measurements(session, tabular_source):
-    source_id, tabular_dict = tabular_source
-
-    # Create all measurements
-    session.create_tabular_measurement(source_id, tabular_dict)
+def test_list_tabular_downsampled_measurements(
+    session, tabular_source_with_measurements
+):
+    source_id, tabular_dict = tabular_source_with_measurements
 
     # Unsuccessfull call to API using a negative threshold
     with pytest.raises(MVGAPIError) as exc:
@@ -350,11 +349,28 @@ def test_list_tabular_downsampled_measurements(session, tabular_source):
 
     # Successfull call to API requesting downsampled data
     threshold = 2
-    response = session.list_tabular_downsampled_measurements(source_id, threshold)
-    assert len(response["data"]) > 0
+    responseThreshold = session.list_tabular_downsampled_measurements(
+        source_id, threshold
+    )
+    assert len(responseThreshold["data"]) > 0
     assert all(
+        # Ensure number of x and y values equals threshold value
         len(value["x"]) == threshold and len(value["y"]) == threshold
-        for value in list(response["data"].values())
+        for value in list(responseThreshold["data"].values())
+    )
+
+    # Successfull call to API requesting a specific time range
+    timestamps = sorted(tabular_dict["timestamp"])
+    start_timestamp = timestamps[len(timestamps) // 5]
+    end_timestamp = timestamps[len(timestamps) - len(timestamps) // 5]
+    responseTimeRange = session.list_tabular_downsampled_measurements(
+        source_id, start_timestamp=start_timestamp, end_timestamp=end_timestamp
+    )
+    assert len(responseTimeRange["data"]) > 0
+    assert all(
+        # Ensure response timestamps are within given timestamp range
+        all(x >= start_timestamp and x <= end_timestamp for x in data["x"])
+        for data in responseTimeRange["data"].values()
     )
 
 
