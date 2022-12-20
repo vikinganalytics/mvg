@@ -369,8 +369,8 @@ def test_list_tabular_downsampled_measurements(
     assert len(responseTimeRange["data"]) > 0
     assert all(
         # Ensure response timestamps are within given timestamp range
-        all(x >= start_timestamp and x <= end_timestamp for x in data["x"])
-        for data in responseTimeRange["data"].values()
+        all(x in range(start_timestamp, end_timestamp + 1) for x in kpi["x"])
+        for kpi in responseTimeRange["data"].values()
     )
 
 
