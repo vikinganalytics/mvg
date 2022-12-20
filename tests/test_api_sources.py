@@ -15,6 +15,7 @@ import pytest
 
 from mvg.exceptions import MVGAPIError
 
+
 # Just to check if API is live
 def test_say_hello(session):
     hello = session.say_hello()
@@ -334,6 +335,27 @@ def test_list_tabular_measurements(session, tabular_source):
     with pytest.raises(MVGAPIError) as exc:
         session.list_tabular_measurements(source_id, None, -1)
     assert exc.value.response.status_code == 422
+
+
+def test_list_tabular_downsampled_measurements(session, tabular_source):
+    source_id, tabular_dict = tabular_source
+
+    # Create all measurements
+    session.create_tabular_measurement(source_id, tabular_dict)
+
+    # Unsuccessfull call to API using a negative threshold
+    with pytest.raises(MVGAPIError) as exc:
+        session.list_tabular_downsampled_measurements(source_id, -1)
+    assert exc.value.response.status_code == 422
+
+    # Successfull call to API requesting downsampled data
+    threshold = 2
+    response = session.list_tabular_downsampled_measurements(source_id, threshold)
+    assert len(response["data"]) > 0
+    assert all(
+        len(value["x"]) == threshold and len(value["y"]) == threshold
+        for value in list(response["data"].values())
+    )
 
 
 def test_create_label(session, tabular_source_with_measurements):
