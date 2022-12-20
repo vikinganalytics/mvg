@@ -613,6 +613,57 @@ class MVGAPI:
 
         return response.json()
 
+    def list_tabular_downsampled_measurements(
+        self,
+        sid: str,
+        threshold: int = None,
+        start_timestamp: int = None,
+        end_timestamp: int = None,
+    ) -> dict:
+        """Retrieves downsampled tabular measurements for a source.
+
+        Parameters
+        ----------
+        sid : str
+            source Id.
+
+        threshold: int
+            Max number of points to display per dataset.
+            Value of 0 means no downsampling will occure [optional].
+
+        start_timestamp : int
+            Measurements starting from a timestamp [optional].
+
+        end_timestamp : int
+            Measurements ending at a timestamp [optional].
+
+        Returns
+        -------
+        A dictionary of KPIs in the format:
+        {key1: { x: timestamps, y: values }, key2: { ... }}
+        """
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("retrieving all measurements from source id=%s", sid)
+
+        query_params_list = []
+        query_params_str = ""
+
+        if threshold is not None:
+            query_params_list.append(f"threshold={threshold}")
+        if start_timestamp is not None:
+            query_params_list.append(f"start_timestamp={start_timestamp}")
+        if end_timestamp is not None:
+            query_params_list.append(f"end_timestamp={end_timestamp}")
+
+        if len(query_params_list) != 0:
+            query_params_str = f"?{'&'.join(query_params_list)}"
+
+        response = self._request(
+            "get", f"/sources/{sid}/measurements/tabular/downsample{query_params_str}"
+        )
+
+        return response.json()
+
     # in example
     def update_measurement(self, sid: str, timestamp: int, meta: dict):
         """Replaces meta information along measurement.
