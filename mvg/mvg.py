@@ -540,8 +540,18 @@ class MVGAPI:
         logger.info("endpoint %s", self.endpoint)
         logger.info("retrieving all measurements from source id=%s", sid)
         url = f"/sources/{sid}/measurements"
-        if offset is None and limit is None:
-            # List all by default
+        params = {}
+        if limit is not None:
+            params["limit"] = limit
+        if offset is not None:
+            params["offset"] = offset
+        if params:
+            response = self._request("get", url, params=params)
+            response = response.json()
+            all_measurements = response["items"]
+            num_measurements = response["total"]
+        else:
+            # List all by default if pagination is not requested
             response = self._request("get", url)
             resp_first = response.json()
             all_measurements = resp_first["items"]
@@ -552,16 +562,6 @@ class MVGAPI:
                 offset = idx * limit
                 response = self._request("get", url, params={"offset": offset})
                 all_measurements += response.json()["items"]
-        else:
-            params = {}
-            if limit is not None:
-                params["limit"] = limit
-            if offset is not None:
-                params["offset"] = offset
-            response = self._request("get", url, params=params)
-            response = response.json()
-            all_measurements = response["items"]
-            num_measurements = response["total"]
 
         logger.info("%s measurements in database", num_measurements)
         logger.info("Returned %s measurements", len(all_measurements))
@@ -634,34 +634,31 @@ class MVGAPI:
         logger.info("retrieving all measurements from source id=%s", sid)
 
         url = f"/sources/{sid}/measurements/tabular"
-        query_params = {}
+        params = {}
 
         if start_timestamp is not None:
-            query_params["start_timestamp"] = start_timestamp
+            params["start_timestamp"] = start_timestamp
         if end_timestamp is not None:
-            query_params["end_timestamp"] = end_timestamp
+            params["end_timestamp"] = end_timestamp
         if limit is not None:
-            query_params["limit"] = limit
+            params["limit"] = limit
         if offset is not None:
-            query_params["offset"] = offset
+            params["offset"] = offset
 
         response = self._request(
             "get",
             url,
-            params=query_params,
+            params=params,
         )
 
         resp_first = response.json()
         all_measurements = resp_first["items"]
-        num_meaurements = resp_first["total"]
-        if (
-            start_timestamp is None
-            and end_timestamp is None
-            and offset is None
-            and limit is None
-        ):
+        num_v = resp_first["total"]
+        if not params:
+            # List all by default if pagination is not requested or
+            # start/end timestamps are not specified
             limit = resp_first["limit"]
-            num_reqs = (num_meaurements - 1) // limit
+            num_reqs = (num_v - 1) // limit
             for idx in range(1, num_reqs + 1):
                 offset = idx * limit
                 response = self._request("get", url, params={"offset": offset})
