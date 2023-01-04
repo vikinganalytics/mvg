@@ -307,9 +307,7 @@ def test_list_tabular_measurements(session, tabular_source):
 
     # Retrieve data for a segment (1..n)
     response = session.list_tabular_measurements(source_id, ts_1, ts_n)
-    assert all(
-        tabular_dict[column][1:] == response[column] for column in columns
-    )
+    assert all(tabular_dict[column][1:] == response[column] for column in columns)
 
     # Retrieve entire data (0..n)
     response = session.list_tabular_measurements(

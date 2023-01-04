@@ -542,16 +542,16 @@ class MVGAPI:
         response = self._request("get", url)
         resp_first = response.json()
         all_measurements = resp_first["items"]
-        num_meaurements = resp_first["total"]
+        num_measurements = resp_first["total"]
         if list_all:
             limit = resp_first["limit"]
-            num_reqs = (num_meaurements - 1) // limit
+            num_reqs = (num_measurements - 1) // limit
             for idx in range(1, num_reqs + 1):
                 offset = idx * limit
                 response = self._request("get", url, params={"offset": offset})
                 all_measurements += response.json()["items"]
 
-        logger.info("%s measurements in database", num_meaurements)
+        logger.info("%s measurements in database", num_measurements)
         logger.info("Returned %s measurements", len(all_measurements))
 
         return all_measurements
