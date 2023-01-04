@@ -518,17 +518,19 @@ class MVGAPI:
         )
 
     # in example
-    def list_measurements(self, sid: str, list_all=True) -> list:
+    def list_measurements(
+        self, sid: str, offset: int = None, limit: int = None
+    ) -> list:
         """Retrieves measurements (all timestamps and metadata) for a source.
 
         Parameters
         ----------
         sid : str
-            source Id.
-        list_all: bool
-            By default it retrive all measuremnets. Setting this flag to
-            False forces the method to retrieve only measurments up to a
-            limit specified by the server.
+            source ID.
+        offset: int
+            index of the first measurment in the database
+        limit: int
+            maximum number of measurments to be returned
 
         Returns
         -------
@@ -537,19 +539,29 @@ class MVGAPI:
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info("retrieving all measurements from source id=%s", sid)
-
         url = f"/sources/{sid}/measurements"
-        response = self._request("get", url)
-        resp_first = response.json()
-        all_measurements = resp_first["items"]
-        num_measurements = resp_first["total"]
-        if list_all:
+        if offset is None and limit is None:
+            # List all by default
+            response = self._request("get", url)
+            resp_first = response.json()
+            all_measurements = resp_first["items"]
+            num_measurements = resp_first["total"]
             limit = resp_first["limit"]
             num_reqs = (num_measurements - 1) // limit
             for idx in range(1, num_reqs + 1):
                 offset = idx * limit
                 response = self._request("get", url, params={"offset": offset})
                 all_measurements += response.json()["items"]
+        else:
+            params = {}
+            if limit is not None:
+                params["limit"] = limit
+            if offset is not None:
+                params["offset"] = offset
+            response = self._request("get", url, params=params)
+            response = response.json()
+            all_measurements = response["items"]
+            num_measurements = response["total"]
 
         logger.info("%s measurements in database", num_measurements)
         logger.info("Returned %s measurements", len(all_measurements))
@@ -592,7 +604,8 @@ class MVGAPI:
         sid: str,
         start_timestamp: int = None,
         end_timestamp: int = None,
-        list_all=True,
+        offset: int = None,
+        limit: int = None,
     ) -> dict:
         """Retrieves tabular measurements (including metadata) for a source.
 
@@ -607,10 +620,10 @@ class MVGAPI:
         end_timestamp : int
             Measurements ending at a timestamp [optional].
 
-        list_all: bool
-            In the absense of start and end timestamps, this flag specifies whether
-            all measurements must be retrieved, if False only one page of data will
-            be downloaded.
+        offset: int
+            index of the first measurment in the database
+        limit: int
+            maximum number of measurments to be returned
 
         Returns
         -------
@@ -627,6 +640,10 @@ class MVGAPI:
             query_params["start_timestamp"] = start_timestamp
         if end_timestamp is not None:
             query_params["end_timestamp"] = end_timestamp
+        if limit is not None:
+            query_params["limit"] = limit
+        if offset is not None:
+            query_params["offset"] = offset
 
         response = self._request(
             "get",
@@ -637,7 +654,12 @@ class MVGAPI:
         resp_first = response.json()
         all_measurements = resp_first["items"]
         num_meaurements = resp_first["total"]
-        if start_timestamp is None and end_timestamp is None and list_all:
+        if (
+            start_timestamp is None
+            and end_timestamp is None
+            and offset is None
+            and limit is None
+        ):
             limit = resp_first["limit"]
             num_reqs = (num_meaurements - 1) // limit
             for idx in range(1, num_reqs + 1):
