@@ -317,13 +317,11 @@ def test_list_tabular_measurements(session, tabular_source):
 
     # Retrieve one page (0..MAX_PAGE_LIMIT)
     response = session.list_tabular_measurements(source_id)
-
     assert all(tabular_dict[column] == response[column] for column in columns)
 
     # Retrieve data that is beyond the range of the dataset timestamps
-    with pytest.raises(MVGAPIError) as exc:
-        session.list_tabular_measurements(source_id, ts_n + 1, ts_n + 2)
-    assert exc.value.response.status_code == 404
+    response = session.list_tabular_measurements(source_id, ts_n + 1, ts_n + 2)
+    assert all(response[column] == [] for column in columns)
 
     # Call API with negative timestamp
     with pytest.raises(MVGAPIError) as exc:
