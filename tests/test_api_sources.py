@@ -352,8 +352,8 @@ def test_list_tabular_downsampled_measurements(
     )
     assert len(response_threshold["data"]) > 0
     assert all(
-        # Ensure number of x and y values equals threshold value
-        len(value["x"]) == threshold and len(value["y"]) == threshold
+        # Ensure number of timestamps and values equals threshold value
+        len(value["timestamps"]) == threshold and len(value["values"]) == threshold
         for value in list(response_threshold["data"].values())
     )
 
@@ -362,12 +362,18 @@ def test_list_tabular_downsampled_measurements(
     start_timestamp = timestamps[len(timestamps) // 5]
     end_timestamp = timestamps[len(timestamps) - len(timestamps) // 5]
     response_time_range = session.list_tabular_downsampled_measurements(
-        source_id, start_timestamp=start_timestamp, end_timestamp=end_timestamp
+        source_id,
+        threshold=0,
+        start_timestamp=start_timestamp,
+        end_timestamp=end_timestamp,
     )
     assert len(response_time_range["data"]) > 0
     assert all(
         # Ensure response timestamps are within given timestamp range
-        all(x in range(start_timestamp, end_timestamp + 1) for x in kpi["x"])
+        all(
+            timestamp in range(start_timestamp, end_timestamp + 1)
+            for timestamp in kpi["timestamps"]
+        )
         for kpi in response_time_range["data"].values()
     )
 
