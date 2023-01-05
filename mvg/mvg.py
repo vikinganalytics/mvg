@@ -621,9 +621,9 @@ class MVGAPI:
             Measurements ending at a timestamp [optional].
 
         offset: int
-            index of the first measurment in the database
+            index of the first measurement in the database
         limit: int
-            maximum number of measurments to be returned
+            maximum number of measurements to be returned
 
         Returns
         -------
@@ -682,17 +682,18 @@ class MVGAPI:
 
         threshold: int
             Max number of points to display per dataset.
-            Value of 0 means no downsampling will occure [optional].
+            Value of 0 means no downsampling will be applied [optional].
 
         start_timestamp : int
             Measurements starting from a timestamp [optional].
 
         end_timestamp : int
             Measurements ending at a timestamp [optional].
+
         Returns
         -------
         A dictionary of KPIs in the format:
-        {key1: { x: timestamps, y: values }, key2: { ... }}
+        {kpi1: { x: timestamps, y: values }, kpi2: { ... }}
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info("retrieving all measurements from source id=%s", sid)
