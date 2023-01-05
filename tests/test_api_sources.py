@@ -308,23 +308,21 @@ def test_list_tabular_measurements(session, tabular_source):
 
     # Retrieve data for a segment (1..n)
     response = session.list_tabular_measurements(source_id, ts_1, ts_n)
-    assert all(
-        tabular_dict[column][1:] == response["data"][column] for column in columns
-    )
-    assert len(response["meta"].keys()) == 1
-    assert response["meta"][f"{ts_1}"] == meta[f"{ts_1}"]
+    assert all(tabular_dict[column][1:] == response[column] for column in columns)
 
     # Retrieve entire data (0..n)
-    response = session.list_tabular_measurements(source_id, None, None)
-    assert all(tabular_dict[column] == response["data"][column] for column in columns)
-    assert len(response["meta"].keys()) == 2
-    assert response["meta"][f"{ts_0}"] == meta[f"{ts_0}"]
-    assert response["meta"][f"{ts_1}"] == meta[f"{ts_1}"]
+    response = session.list_tabular_measurements(
+        source_id, start_timestamp=ts_0, end_timestamp=ts_n
+    )
+    assert all(tabular_dict[column] == response[column] for column in columns)
+
+    # Retrieve one page (0..MAX_PAGE_LIMIT)
+    response = session.list_tabular_measurements(source_id)
+    assert all(tabular_dict[column] == response[column] for column in columns)
 
     # Retrieve data that is beyond the range of the dataset timestamps
-    with pytest.raises(MVGAPIError) as exc:
-        session.list_tabular_measurements(source_id, ts_n + 1, ts_n + 2)
-    assert exc.value.response.status_code == 404
+    response = session.list_tabular_measurements(source_id, ts_n + 1, ts_n + 2)
+    assert all(response[column] == [] for column in columns)
 
     # Call API with negative timestamp
     with pytest.raises(MVGAPIError) as exc:
@@ -474,4 +472,30 @@ def test_list_labels(session, tabular_source_with_measurements):
     assert np.all(np.isnan(np.array(list_long["label"][1:-2])))
 
 
-# End of code
+def test_pagination(session, tabular_source_with_measurements):
+    sid, tabular_dict = tabular_source_with_measurements
+    timestamps = tabular_dict["timestamp"]
+    num_meas = len(timestamps)
+
+    # deafult offset and limit
+    response = session.list_measurements(sid)
+    assert len(response) == num_meas
+
+    response = session.list_tabular_measurements(sid)
+    assert len(response["timestamp"]) == num_meas
+
+    # non-default offset
+    offset = num_meas // 3
+    response = session.list_measurements(sid, offset=offset)
+    assert len(response) == num_meas - offset
+
+    response = session.list_tabular_measurements(sid, offset=offset)
+    assert len(response["timestamp"]) == num_meas - offset
+
+    # non-default limit
+    limit = num_meas // 10
+    response = session.list_measurements(sid, limit=limit)
+    assert len(response) == limit
+
+    response = session.list_tabular_measurements(sid, limit=limit)
+    assert len(response["timestamp"]) == limit
