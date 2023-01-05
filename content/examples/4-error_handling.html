@@ -1,21 +1,39 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
   <title>Error Handling Example &mdash; MultiViz Analytics Engine Library  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
@@ -23,21 +41,39 @@
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="../../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Using MVG features" href="../features/general.html" />
     <link rel="prev" title="Model Inference for New Data" href="8-inference.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html">
-            <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MultiViz Analytics Engine Library
+          
+
+          
           </a>
+
+          
+            
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -45,7 +81,18 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview - How to use the MVG library</a></li>
@@ -83,30 +130,71 @@
 <li class="toctree-l1"><a class="reference internal" href="../utilities_reference/analysis_classes.html">MutliViz Analysis Classes</a></li>
 </ul>
 
+            
+          
         </div>
+        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">MultiViz Analytics Engine Library</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">Error Handling Example</li>
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Error Handling Example</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
+          
             <a href="../../_sources/content/examples/4-error_handling.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   
 <style>
 /* CSS for nbsphinx extension */
@@ -217,10 +305,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -386,7 +475,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Error-Handling-Example">
-<h1>Error Handling Example<a class="headerlink" href="#Error-Handling-Example" title="Permalink to this heading"></a></h1>
+<h1>Error Handling Example<a class="headerlink" href="#Error-Handling-Example" title="Permalink to this heading">¶</a></h1>
 <p>This script shows how handle errors occurring during API calls to the Vibration service</p>
 <p>The MVG design principle is that the client application using the MVG API is responsible for error handling.</p>
 <div class="nbinput nblast docutils container">
@@ -470,7 +559,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <section id="Invalid-Token">
-<h2>Invalid Token<a class="headerlink" href="#Invalid-Token" title="Permalink to this heading"></a></h2>
+<h2>Invalid Token<a class="headerlink" href="#Invalid-Token" title="Permalink to this heading">¶</a></h2>
 <p>Let’s provoke an error by creating a session with a non-valid token.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -509,7 +598,7 @@ OUCH
 <p>We’ll now return to the original session and show how to get details when the server internally rejected a request for other reasons.</p>
 </section>
 <section id="Illegal-source_id">
-<h2>Illegal source_id<a class="headerlink" href="#Illegal-source_id" title="Permalink to this heading"></a></h2>
+<h2>Illegal source_id<a class="headerlink" href="#Illegal-source_id" title="Permalink to this heading">¶</a></h2>
 <p>We provoke the service using an illegal string for the <code class="docutils literal notranslate"><span class="pre">source_id</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -539,7 +628,7 @@ OUCH
 <p>We’ll show a couple of examples what can go wrong when creating a measurement</p>
 </section>
 <section id="Non-existing-Source">
-<h2>Non-existing Source<a class="headerlink" href="#Non-existing-Source" title="Permalink to this heading"></a></h2>
+<h2>Non-existing Source<a class="headerlink" href="#Non-existing-Source" title="Permalink to this heading">¶</a></h2>
 <p>In some cases where there is detailed information provided by the server, we can retrieve it by inspecting the exception object <code class="docutils literal notranslate"><span class="pre">exc</span></code>, which actually contains all information about the request.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -569,7 +658,7 @@ OUCH
 </div>
 </section>
 <section id="Parameter-Value-Out-of-Range">
-<h2>Parameter Value Out of Range<a class="headerlink" href="#Parameter-Value-Out-of-Range" title="Permalink to this heading"></a></h2>
+<h2>Parameter Value Out of Range<a class="headerlink" href="#Parameter-Value-Out-of-Range" title="Permalink to this heading">¶</a></h2>
 <p>Sometimes, it is possible to pass a value that it is out of range of the expected, as in this example where the values for the duration and timestamp parameters are negative values.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
@@ -599,7 +688,7 @@ OUCH
 </div>
 </section>
 <section id="Missing-Parameter">
-<h2>Missing Parameter<a class="headerlink" href="#Missing-Parameter" title="Permalink to this heading"></a></h2>
+<h2>Missing Parameter<a class="headerlink" href="#Missing-Parameter" title="Permalink to this heading">¶</a></h2>
 <p>In this case we have an error on the client side. This means that the data is never sent to the server, so we do not get an <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code>, but a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> instead. Only the <code class="docutils literal notranslate"><span class="pre">MVGAPIError</span></code> contains any details from the server, so to be on the safe side we should catch them separately.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
@@ -634,33 +723,50 @@ No details from server available
 
 
            </div>
+           
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="8-inference.html" class="btn btn-neutral float-left" title="Model Inference for New Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="../features/general.html" class="btn btn-neutral float-right" title="Using MVG features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="8-inference.html" class="btn btn-neutral float-left" title="Model Inference for New Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Viking Analytics AB.</p>
-  </div>
+    <p>
+        &#169; Copyright 2022, Viking Analytics AB.
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
