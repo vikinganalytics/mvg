@@ -15,6 +15,7 @@ import pytest
 
 from mvg.exceptions import MVGAPIError
 
+
 # Just to check if API is live
 def test_say_hello(session):
     hello = session.say_hello()
@@ -332,6 +333,49 @@ def test_list_tabular_measurements(session, tabular_source):
     with pytest.raises(MVGAPIError) as exc:
         session.list_tabular_measurements(source_id, None, -1)
     assert exc.value.response.status_code == 422
+
+
+def test_list_tabular_downsampled_measurements(
+    session, tabular_source_with_measurements
+):
+    source_id, tabular_dict = tabular_source_with_measurements
+
+    # Unsuccessful call to API using a negative threshold
+    with pytest.raises(MVGAPIError) as exc:
+        session.list_tabular_downsampled_measurements(source_id, -1)
+    assert exc.value.response.status_code == 422
+
+    # Successful call to API requesting downsampled data
+    threshold = 2
+    response_threshold = session.list_tabular_downsampled_measurements(
+        source_id, threshold
+    )
+    assert len(response_threshold["data"]) > 0
+    assert all(
+        # Ensure number of timestamps and values equals threshold value
+        len(value["timestamps"]) == threshold and len(value["values"]) == threshold
+        for value in list(response_threshold["data"].values())
+    )
+
+    # Successful call to API requesting a specific time range
+    timestamps = sorted(tabular_dict["timestamp"])
+    start_timestamp = timestamps[len(timestamps) // 5]
+    end_timestamp = timestamps[len(timestamps) - len(timestamps) // 5]
+    response_time_range = session.list_tabular_downsampled_measurements(
+        source_id,
+        threshold=0,
+        start_timestamp=start_timestamp,
+        end_timestamp=end_timestamp,
+    )
+    assert len(response_time_range["data"]) > 0
+    assert all(
+        # Ensure response timestamps are within given timestamp range
+        all(
+            timestamp in range(start_timestamp, end_timestamp + 1)
+            for timestamp in kpi["timestamps"]
+        )
+        for kpi in response_time_range["data"].values()
+    )
 
 
 def test_create_label(session, tabular_source_with_measurements):

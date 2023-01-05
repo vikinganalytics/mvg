@@ -56,8 +56,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.0")
-        self.tested_api_version = self.parse_version("v0.5.0")
+        self.mvg_version = self.parse_version("v0.14.1")
+        self.tested_api_version = self.parse_version("v0.5.1")
 
         # Get API version
         try:
@@ -621,9 +621,9 @@ class MVGAPI:
             Measurements ending at a timestamp [optional].
 
         offset: int
-            index of the first measurment in the database
+            index of the first measurement in the database
         limit: int
-            maximum number of measurments to be returned
+            maximum number of measurements to be returned
 
         Returns
         -------
@@ -665,6 +665,53 @@ class MVGAPI:
                 all_measurements += response.json()["items"]
 
         return all_measurements
+
+    def list_tabular_downsampled_measurements(
+        self,
+        sid: str,
+        threshold: Optional[int] = None,
+        start_timestamp: Optional[int] = None,
+        end_timestamp: Optional[int] = None,
+    ) -> dict:
+        """Retrieves downsampled tabular measurements for a source.
+
+        Parameters
+        ----------
+        sid : str
+            source Id.
+
+        threshold: int
+            Max number of points to display per dataset.
+            Value of 0 means no downsampling will be applied [optional].
+
+        start_timestamp : int
+            Measurements starting from a timestamp [optional].
+
+        end_timestamp : int
+            Measurements ending at a timestamp [optional].
+
+        Returns
+        -------
+        A dictionary of KPIs in the format:
+        {kpi1: { x: timestamps, y: values }, kpi2: { ... }}
+        """
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("retrieving all measurements from source id=%s", sid)
+
+        params = {}
+
+        if threshold is not None:
+            params["threshold"] = threshold
+        if start_timestamp is not None:
+            params["start_timestamp"] = start_timestamp
+        if end_timestamp is not None:
+            params["end_timestamp"] = end_timestamp
+
+        response = self._request(
+            "get", f"/sources/{sid}/measurements/tabular/downsample", params=params
+        )
+
+        return response.json()
 
     # in example
     def update_measurement(self, sid: str, timestamp: int, meta: dict):
