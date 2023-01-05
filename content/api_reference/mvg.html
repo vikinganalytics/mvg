@@ -144,6 +144,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_labels"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_labels()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_measurements"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_measurements()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_sources"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_sources()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_tabular_downsampled_measurements"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_tabular_downsampled_measurements()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_tabular_measurements"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_tabular_measurements()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.parse_version"><code class="docutils literal notranslate"><span class="pre">MVGAPI.parse_version()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.read_single_measurement"><code class="docutils literal notranslate"><span class="pre">MVGAPI.read_single_measurement()</span></code></a></li>
@@ -649,6 +650,30 @@ and a feature.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mvg.mvg.MVGAPI.list_tabular_downsampled_measurements">
+<span class="sig-name descname"><span class="pre">list_tabular_downsampled_measurements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.list_tabular_downsampled_measurements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves downsampled tabular measurements for a source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
+<li><p><strong>threshold</strong> (<em>int</em>) – Max number of points to display per dataset.
+Value of 0 means no downsampling will be applied [optional].</p></li>
+<li><p><strong>start_timestamp</strong> (<em>int</em>) – Measurements starting from a timestamp [optional].</p></li>
+<li><p><strong>end_timestamp</strong> (<em>int</em>) – Measurements ending at a timestamp [optional].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>A dictionary of KPIs in the format</em></p></li>
+<li><p><strong>{kpi1</strong> (<em>{ x: timestamps, y: values }, kpi2: { … }}</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVGAPI.list_tabular_measurements">
 <span class="sig-name descname"><span class="pre">list_tabular_measurements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.list_tabular_measurements" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves tabular measurements (including metadata) for a source.</p>
@@ -658,8 +683,8 @@ and a feature.</p>
 <li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
 <li><p><strong>start_timestamp</strong> (<em>int</em>) – Measurements starting from a timestamp [optional].</p></li>
 <li><p><strong>end_timestamp</strong> (<em>int</em>) – Measurements ending at a timestamp [optional].</p></li>
-<li><p><strong>offset</strong> (<em>int</em>) – index of the first measurment in the database</p></li>
-<li><p><strong>limit</strong> (<em>int</em>) – maximum number of measurments to be returned</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – index of the first measurement in the database</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – maximum number of measurements to be returned</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
