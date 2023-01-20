@@ -20,7 +20,7 @@ from requests.exceptions import RequestException
 import semver
 
 from mvg.exceptions import MVGConnectionError
-from mvg.helper import SortOrder, get_paginated_items
+from mvg.utils.response_processing import SortOrder, get_paginated_items
 from mvg.http_client import HTTPClient
 
 logger = logging.getLogger(__name__)

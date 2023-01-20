@@ -1,3 +1,7 @@
+"""
+This module contains helper functions for manipulating the response from endpoints.
+"""
+
 from enum import Enum
 from typing import Dict, Union, Callable
 
