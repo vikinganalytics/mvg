@@ -13,7 +13,7 @@ For more information see README.md.
 import re
 import time
 import logging
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional
 import pandas as pd
 import requests
 from requests.exceptions import RequestException
