@@ -38,7 +38,7 @@ def get_paginated_items(
         num_items = response["total"]
     else:
         # List all by default if pagination is not requested
-        response = request("get", url)
+        response = request("get", url, params=params)
         resp_first = response.json()
         all_items = resp_first["items"]
         num_items = resp_first["total"]
@@ -46,6 +46,7 @@ def get_paginated_items(
         num_reqs = (num_items - 1) // limit
         for idx in range(1, num_reqs + 1):
             offset = idx * limit
-            response = request("get", url, params={"offset": offset})
+            params["offset"] = offset
+            response = request("get", url, params=params)
             all_items += response.json()["items"]
     return {"items": all_items, "total": num_items}

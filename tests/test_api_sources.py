@@ -508,3 +508,11 @@ def test_pagination(session, tabular_source_with_measurements):
 
     response = session.list_timestamps(sid, limit=limit)
     assert len(response) == limit
+
+    # test order=asc
+    response = session.list_timestamps(sid, order="asc")
+    assert response == sorted(response)
+
+    # test order=desc
+    response = session.list_timestamps(sid, order="desc")
+    assert response == sorted(response, reverse=True)

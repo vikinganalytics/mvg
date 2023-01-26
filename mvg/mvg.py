@@ -523,20 +523,21 @@ class MVGAPI:
         sid: str,
         offset: int = None,
         limit: int = None,
-        order: SortOrder = None,
-    ) -> Dict[str, Union[int, List[int]]]:
-        """Retrieves timestamps for a source.
+        order: SortOrder = SortOrder.ASC.value,
+    ) -> list:
+        """
+        Retrieves timestamps for a source.
 
         Parameters
         ----------
         sid : str
             source ID.
         offset: int
-            index of the first timestamp in the database.
+            index of the first timestamp in the database [optional].
         limit: int
-            maximum number of timestamps to be returned.
+            maximum number of timestamps to be returned [optional].
         order : SortOrder
-            Sort order, either "asc" or "desc".
+            Sort order, either "asc" or "desc". Defaults to "asc".
 
         Returns
         -------
