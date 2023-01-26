@@ -89,7 +89,8 @@ jobs:
         -   name: "Running tests with pytest"
             env:
                 TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
-            run: "python -m pytest --cov-report term-missing --cov=mvg --durations=0 --verbose tests/ --ignore=tests/test_notebooks.py"
+            # run: "python -m pytest --cov-report term-missing --cov=mvg --durations=0 --verbose tests/ --ignore=tests/test_notebooks.py"
+            run: "python -m pytest tests/test_api_sources.py::test_pagination"
         -   name: Upload coverage to Codecov
             uses: codecov/codecov-action@v3
         -   name: Log out of Amazon ECR

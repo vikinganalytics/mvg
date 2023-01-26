@@ -49,7 +49,8 @@ sys.argv[1:] = notknownargs
 # Retrieve API version to test against
 version_session = MVG(VIBIUM_PROD_URL, "NO TOKEN")
 # VIBIUM_VERSION = str(version_session.tested_api_version)
-VIBIUM_VERSION = "prod"
+VIBIUM_VERSION = "dev"
+
 
 
 # Pytest initial configuration
