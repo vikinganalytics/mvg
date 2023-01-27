@@ -16,6 +16,7 @@ def get_paginated_items(
 ) -> Dict:
     """
     Retrieves items and total as a dictionary from a paginated endpoint.
+    If offset and limit params are not specified, all items will be returned.
 
     Parameters
     ----------
@@ -28,8 +29,12 @@ def get_paginated_items(
 
     Returns
     -------
-    Dict
-        A dictionary containing the items and total number of items.
+    A dictionary containing the following keys:
+
+        - "offset": int, representing starting point of returned items.
+        - "limit: int, representing max items to return."
+        - "items": list of int, representing timestamps.
+        - "total": int, representing total number of items.
     """
     if "limit" in params or "offset" in params:
         response = request("get", url, params=params)

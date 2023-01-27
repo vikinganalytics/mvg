@@ -524,9 +524,10 @@ class MVGAPI:
         offset: int = None,
         limit: int = None,
         order: SortOrder = SortOrder.ASC.value,
-    ) -> list:
+    ) -> Dict:
         """
         Retrieves timestamps for a source.
+        If offset and limit params are not specified, all timestamps will be returned.
 
         Parameters
         ----------
@@ -541,7 +542,12 @@ class MVGAPI:
 
         Returns
         -------
-        A list of timestamps. Retrieves all timestamps if limit and offset is None.
+        A dictionary containing the following keys:
+
+            - "offset": int, representing starting point of returned items.
+            - "limit: int, representing max items to return."
+            - "items": list of int, representing timestamps.
+            - "total": int, representing total number of items.
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info("retrieving timestamps from source id=%s", sid)
@@ -558,7 +564,12 @@ class MVGAPI:
         logger.info("%s timestamps in database", paginated_items["total"])
         logger.info("Returned %s timestamps", len(paginated_items["items"]))
 
-        return paginated_items["items"]
+        return {
+            "offset": offset or 0,
+            "limit": limit or paginated_items["total"],
+            "items": paginated_items["items"],
+            "total": paginated_items["total"],
+        }
 
     # in example
     def list_measurements(

@@ -485,7 +485,7 @@ def test_pagination(session, tabular_source_with_measurements):
     assert len(response["timestamp"]) == num_meas
 
     response = session.list_timestamps(sid)
-    assert len(response) == num_meas
+    assert len(response["items"]) == num_meas
 
     # non-default offset
     offset = num_meas // 3
@@ -496,7 +496,8 @@ def test_pagination(session, tabular_source_with_measurements):
     assert len(response["timestamp"]) == num_meas - offset
 
     response = session.list_timestamps(sid, offset=offset)
-    assert len(response) == num_meas - offset
+    assert response["total"] == num_meas
+    assert len(response["items"]) == num_meas - offset
 
     # non-default limit
     limit = num_meas // 10
@@ -507,12 +508,13 @@ def test_pagination(session, tabular_source_with_measurements):
     assert len(response["timestamp"]) == limit
 
     response = session.list_timestamps(sid, limit=limit)
-    assert len(response) == limit
+    assert response["total"] == num_meas
+    assert len(response["items"]) == limit
 
     # test order=asc
     response = session.list_timestamps(sid, order="asc")
-    assert response == sorted(response)
+    assert response["items"] == sorted(response["items"])
 
     # test order=desc
     response = session.list_timestamps(sid, order="desc")
-    assert response == sorted(response, reverse=True)
+    assert response["items"] == sorted(response["items"], reverse=True)
