@@ -837,13 +837,13 @@ class MVGAPI:
         Parameters
         ----------
         sid : str
-            source Id.
+            Source Id.
 
         feature : str
-            name of feature to run.
+            Name of feature to run.
 
         parameters : dict
-            name value pairs of parameters [optional].
+            Name value pairs of parameters [optional].
 
         selected_channels : List[str]
             Subset of Waveform Data channels for analysis.
@@ -854,10 +854,10 @@ class MVGAPI:
             This cannot be used in conjunction with selected_channels [optional].
 
         start_timestamp : int
-            start of analysis time window [optional].
+            Start of analysis time window [optional].
 
         end_timestamp : int
-            start of analysis time window [optional].
+            Start of analysis time window [optional].
 
         callback_url : str
             Base URL to receive a notification when the analysis job ends.
@@ -865,19 +865,25 @@ class MVGAPI:
             that includes the request_id and request_status of the job [optional].
 
         force: bool
-            set to False to reuse the analysis results if it already exists, otherwise
+            Set to False to reuse the analysis results if it already exists, otherwise
             re-run the analysis. Defaults to False.
 
         Returns
         -------
-        request_id: analysis identifier
+        dict
+            Containing request_id and request_status corresponding to
+            analysis identifier and analysis status.
 
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info("source id=%s", sid)
         logger.info("sending %s analysis request", feature)
         logger.info("parameters %s", parameters)
-        logger.info("from %s to %s ", start_timestamp, end_timestamp)
+        logger.info(
+            "from start timestamp as %s to end timestamp as %s ",
+            start_timestamp,
+            end_timestamp,
+        )
 
         if parameters is None:
             parameters = {}
@@ -916,8 +922,8 @@ class MVGAPI:
         end_timestamp: int = None,
         callback_url: str = None,
         force: bool = False,
-    ) -> str:
-        """Request an population analysis on the given endpoint with given parameters.
+    ) -> dict:
+        """Request a population analysis on the given endpoint with given parameters.
 
         Parameters
         ----------
@@ -925,16 +931,16 @@ class MVGAPI:
             Source ids.
 
         feature : str
-            name of feature to run. This feature must be of population type.
+            Name of feature to run. This feature must be of population type.
 
         parameters : dict
-            name value pairs of parameters [optional].
+            Name value pairs of parameters [optional].
 
         start_timestamp : int
-            start of analysis time window [optional].
+            Start of analysis time window [optional].
 
         end_timestamp : int
-            start of analysis time window [optional].
+            Start of analysis time window [optional].
 
         callback_url : str
             Base URL to receive a notification when the analysis job ends.
@@ -942,19 +948,25 @@ class MVGAPI:
             that includes the request_id and request_status of the job [optional].
 
         force: bool
-            set to False to reuse the analysis results if it already exists, otherwise
-            re-run the analysis. Defaults to False.
+            Set to True to force a re-run on any existing analysis, otherwise existing
+            analysis results will be reused. Defaults to False.
 
         Returns
         -------
-        request_id: analysis identifier
+        dict
+            Containing request_id and request_status corresponding to
+            analysis identifier and analysis status.
 
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info("source ids=%s", sids)
         logger.info("sending %s analysis request", feature)
         logger.info("parameters %s", parameters)
-        logger.info("from %s to %s ", start_timestamp, end_timestamp)
+        logger.info(
+            "from start timestamp as %s to end timestamp as %s ",
+            start_timestamp,
+            end_timestamp,
+        )
 
         if parameters is None:
             parameters = {}
