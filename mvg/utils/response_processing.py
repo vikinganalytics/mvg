@@ -24,9 +24,9 @@ def get_paginated_items(request: Callable, url: str, params: Dict) -> Dict:
         The paginated endpoint URL.
     params : Dict
         The query parameters for the GET request, including optional:
-        offset: NonNegativeInt
+        offset: int
             index of the first timestamp in the database [optional].
-        limit: PositiveInt
+        limit: int
             maximum number of timestamps to be returned [optional].
 
     Returns
