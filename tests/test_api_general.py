@@ -13,6 +13,7 @@ from mvg.plotting import MODE_COLOR_CODES, LABEL_COLOR_CODES
 # MVG Token
 VALID_TOKEN = pytest.VALID_TOKEN
 
+
 # API        /
 def test_say_hello(vibium):
     session = MVG(vibium, "NO TOKEN")
@@ -30,7 +31,6 @@ def test_check_prod_version(vibium_prod):
 # API        /
 # Test version handling
 def test_check_version(vibium):
-
     # Get current API version for testing
     session = MVG(vibium, "NO TOKEN")
 

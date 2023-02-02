@@ -84,7 +84,6 @@ def test_BlackSheep():
 
 
 def test_ModeId():
-
     # read dict
     with open("./tests/test_data/ModeId_results_dict.json") as json_file:
         api_results = json.load(json_file)
@@ -112,7 +111,6 @@ def test_ModeId():
 
 
 def test_labelprop():
-
     with open("./tests/test_data/label_prop_results.json") as json_file:
         api_results = json.load(json_file)
 

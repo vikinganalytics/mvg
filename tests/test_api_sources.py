@@ -74,7 +74,6 @@ def test_measurements_crud(session):
 
     # iterate over 4 meas (m is timestamp)
     for ts_m in meas:
-
         # samples file for one measurement
         ts_meas = str(ts_m) + ".csv"  # filename
         ts_meas = src_path / ts_meas  # path to file
@@ -143,7 +142,6 @@ def test_measurements_crud(session):
 
 # API POST   /sources/{source_id}/measurements [non-existing source]
 def test_failure_create_measurement(session):
-
     with pytest.raises(MVGAPIError) as exc:
         data = [1, 2, 3]
         session.create_measurement(
@@ -154,7 +152,6 @@ def test_failure_create_measurement(session):
 
 # API GET    /sources/{source_id}//measurements/{timestamp} [non-existing meas]
 def test_failure_get_measurement(session):
-
     with pytest.raises(MVGAPIError) as exc:
         session.delete_measurement(pytest.SOURCE_ID_WAVEFORM, 314152)
 
@@ -163,7 +160,6 @@ def test_failure_get_measurement(session):
 
 # API GET    /sources/{source_id} [non-existing source]
 def test_failure_get_source(session):
-
     with pytest.raises(MVGAPIError) as exc:
         session.get_source(sid="THE_VOID")
 
@@ -172,7 +168,6 @@ def test_failure_get_source(session):
 
 # API DELETE /sources/{source_id} [non-existing source]
 def test_failure_delete_source(session):
-
     with pytest.raises(MVGAPIError) as exc:
         session.delete_source(sid="THE_VOID")
 
@@ -189,7 +184,6 @@ def test_failure_create_source(session):
 # API POST   /sources/
 # API DELETE /sources/{source_id}
 def test_sources_d(session):
-
     session.delete_source(pytest.SOURCE_ID_WAVEFORM)
     with pytest.raises(MVGAPIError) as exc:
         session.get_source(sid=pytest.SOURCE_ID_WAVEFORM)

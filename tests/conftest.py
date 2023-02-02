@@ -51,6 +51,7 @@ version_session = MVG(VIBIUM_PROD_URL, "NO TOKEN")
 # VIBIUM_VERSION = str(version_session.tested_api_version)
 VIBIUM_VERSION = "prod"
 
+
 # Pytest initial configuration
 def pytest_configure():
     pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
@@ -110,7 +111,6 @@ else:
 
 @pytest.fixture(scope="session")
 def session(vibium) -> MVG:
-
     url = vibium
     print("Overriding vibium function with url %s", url)
     session = MVG(url, pytest.VALID_TOKEN)
