@@ -3,7 +3,7 @@ This module contains helper functions for manipulating the response from endpoin
 """
 
 from enum import Enum
-from typing import Dict, Union, Callable
+from typing import Dict, Callable
 
 
 class SortOrder(Enum):
@@ -11,9 +11,7 @@ class SortOrder(Enum):
     DESC = "desc"
 
 
-def get_paginated_items(
-    request: Callable, url: str, params: Dict[str, Union[int, SortOrder]]
-) -> Dict:
+def get_paginated_items(request: Callable, url: str, params: Dict) -> Dict:
     """
     Retrieves items and total as a dictionary from a paginated endpoint.
     If offset and limit params are not specified, all items will be returned.
@@ -24,15 +22,17 @@ def get_paginated_items(
         The request function to be used to make the GET request.
     url : str
         The paginated endpoint URL.
-    params : Dict[str, Union[int, SortOrder]]
-        The query parameters for the GET request.
+    params : Dict
+        The query parameters for the GET request, including optional:
+        offset: NonNegativeInt
+            index of the first timestamp in the database [optional].
+        limit: PositiveInt
+            maximum number of timestamps to be returned [optional].
 
     Returns
     -------
     A dictionary containing the following keys:
 
-        - "offset": int, representing starting point of returned items.
-        - "limit: int, representing max items to return."
         - "items": list of int, representing timestamps.
         - "total": int, representing total number of items.
     """

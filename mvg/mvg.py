@@ -15,6 +15,7 @@ import time
 import logging
 from typing import Dict, List, Optional
 import pandas as pd
+from pydantic import NonNegativeInt, PositiveInt
 import requests
 from requests.exceptions import RequestException
 import semver
@@ -521,8 +522,8 @@ class MVGAPI:
     def list_timestamps(
         self,
         sid: str,
-        offset: int = None,
-        limit: int = None,
+        offset: NonNegativeInt = None,
+        limit: PositiveInt = None,
         order: SortOrder = SortOrder.ASC.value,
     ) -> Dict:
         """
@@ -533,9 +534,9 @@ class MVGAPI:
         ----------
         sid : str
             source ID.
-        offset: int
+        offset: NonNegativeInt
             index of the first timestamp in the database [optional].
-        limit: int
+        limit: PositiveInt
             maximum number of timestamps to be returned [optional].
         order : SortOrder
             Sort order, either "asc" or "desc". Defaults to "asc".
