@@ -20,6 +20,7 @@ from requests.exceptions import RequestException
 import semver
 
 from mvg.exceptions import MVGConnectionError
+from mvg.utils.response_processing import SortOrder, get_paginated_items
 from mvg.http_client import HTTPClient
 
 logger = logging.getLogger(__name__)
@@ -56,7 +57,7 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.1")
+        self.mvg_version = self.parse_version("v0.14.2")
         self.tested_api_version = self.parse_version("v0.5.2")
 
         # Get API version
@@ -517,6 +518,59 @@ class MVGAPI:
             json=body,
         )
 
+    def list_timestamps(
+        self,
+        sid: str,
+        offset: int = None,
+        limit: int = None,
+        order: SortOrder = SortOrder.ASC.value,
+    ) -> Dict:
+        """
+        Retrieves timestamps for a source.
+        If offset and limit params are not specified, all timestamps will be returned.
+
+        Parameters
+        ----------
+        sid : str
+            source ID.
+        offset: int
+            index of the first timestamp in the database [optional].
+        limit: int
+            maximum number of timestamps to be returned [optional].
+        order : SortOrder
+            Sort order, either "asc" or "desc". Defaults to "asc".
+
+        Returns
+        -------
+        A dictionary containing the following keys:
+
+            - "offset": int, representing starting point of returned items.
+            - "limit: int, representing max items to return."
+            - "items": list of int, representing timestamps.
+            - "total": int, representing total number of items.
+        """
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("retrieving timestamps from source id=%s", sid)
+        url = f"/sources/{sid}/timestamps"
+        params = {}
+        if limit is not None:
+            params["limit"] = limit
+        if offset is not None:
+            params["offset"] = offset
+        if order is not None:
+            params["order"] = order
+        paginated_items = get_paginated_items(self._request, url, params)
+
+        logger.info("%s timestamps in database", paginated_items["total"])
+        logger.info("Returned %s timestamps", len(paginated_items["items"]))
+
+        return {
+            "offset": offset or 0,
+            "limit": limit or paginated_items["total"],
+            "items": paginated_items["items"],
+            "total": paginated_items["total"],
+        }
+
     # in example
     def list_measurements(
         self, sid: str, offset: int = None, limit: int = None
@@ -545,28 +599,12 @@ class MVGAPI:
             params["limit"] = limit
         if offset is not None:
             params["offset"] = offset
-        if params:
-            response = self._request("get", url, params=params)
-            response = response.json()
-            all_measurements = response["items"]
-            num_measurements = response["total"]
-        else:
-            # List all by default if pagination is not requested
-            response = self._request("get", url)
-            resp_first = response.json()
-            all_measurements = resp_first["items"]
-            num_measurements = resp_first["total"]
-            limit = resp_first["limit"]
-            num_reqs = (num_measurements - 1) // limit
-            for idx in range(1, num_reqs + 1):
-                offset = idx * limit
-                response = self._request("get", url, params={"offset": offset})
-                all_measurements += response.json()["items"]
+        paginated_items = get_paginated_items(self._request, url, params)
 
-        logger.info("%s measurements in database", num_measurements)
-        logger.info("Returned %s measurements", len(all_measurements))
+        logger.info("%s measurements in database", paginated_items["total"])
+        logger.info("Returned %s measurements", len(paginated_items["items"]))
 
-        return all_measurements
+        return paginated_items["items"]
 
     # in example
     def read_single_measurement(self, sid: str, timestamp: int) -> dict:
