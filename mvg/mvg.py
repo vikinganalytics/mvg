@@ -36,7 +36,7 @@ class MVGAPI:
         On instantiation of a MVG object the session parameters
         are stored for future calls and the version of the API
         is requested.
-        In case token is "NO TOKEN", will insert the harcoded
+        In case token is "NO TOKEN", will insert the hardcoded
         valid token from testcases.
 
         Parameters
@@ -57,7 +57,7 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.2")
+        self.mvg_version = self.parse_version("v0.14.3")
         self.tested_api_version = self.parse_version("v0.5.2")
 
         # Get API version
@@ -165,7 +165,7 @@ class MVGAPI:
         Returns
         ------
         message : dict
-           Showing the api version, the highest vesrion tested against
+           Showing the api version, the highest version tested against
            and the version of the MVG library.
         """
         logger.info("Checking versions for:%s", self.endpoint)
@@ -205,7 +205,7 @@ class MVGAPI:
             if self.api_version.minor > self.tested_api_version.minor:
                 raise UserWarning(
                     f"API version {self.api_version} may contain features"
-                    f" not supporeted by "
+                    f" not supported by "
                     f"current MVG version {self.mvg_version}"
                 )
 
@@ -218,7 +218,7 @@ class MVGAPI:
 
     def say_hello(self) -> dict:
         """
-        Retrievs information about the API.
+        Retrieves information about the API.
         This call does not require a valid token.
 
         Returns
@@ -582,9 +582,9 @@ class MVGAPI:
         sid : str
             source ID.
         offset: int
-            index of the first measurment in the database
+            index of the first measurement in the database
         limit: int
-            maximum number of measurments to be returned
+            maximum number of measurements to be returned
 
         Returns
         -------
@@ -830,49 +830,60 @@ class MVGAPI:
         start_timestamp: int = None,
         end_timestamp: int = None,
         callback_url: str = None,
+        force: bool = False,
     ) -> dict:
         """Request an analysis on the given endpoint with given parameters.
 
         Parameters
         ----------
         sid : str
-            source Id.
+            Source Id.
 
         feature : str
-            name of feature to run.
+            Name of feature to run.
 
         parameters : dict
-            name value pairs of parameters [optional].
+            Name value pairs of parameters [optional].
 
         selected_channels : List[str]
             Subset of Waveform Data channels for analysis.
-            This cannot be used in conjuction with selected_columns [optional].
+            This cannot be used in conjunction with selected_columns [optional].
 
         selected_columns : List[str]
             Subset of Tabular Data columns for analysis.
-            This cannot be used in conjuction with selected_channels [optional].
+            This cannot be used in conjunction with selected_channels [optional].
 
         start_timestamp : int
-            start of analysis time window [optional].
+            Start of analysis time window [optional].
 
         end_timestamp : int
-            start of analysis time window [optional].
+            Start of analysis time window [optional].
 
         callback_url : str
-            Base URL to receieve a notification when the analysis job ends.
-            A POST reuest will be made to {callback_url}/analyses with payload
+            Base URL to receive a notification when the analysis job ends.
+            A POST request will be made to {callback_url}/analyses with payload
             that includes the request_id and request_status of the job [optional].
+
+        force: bool
+            Set to False to reuse the analysis results if it already exists, otherwise
+            re-run the analysis. Defaults to False.
 
         Returns
         -------
-        request_id: analysis identifier
+        dict
+            Containing request_id and request_status corresponding to
+            analysis identifier and analysis status.
 
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info("source id=%s", sid)
         logger.info("sending %s analysis request", feature)
         logger.info("parameters %s", parameters)
-        logger.info("from %s to %s ", start_timestamp, end_timestamp)
+        logger.info(
+            "from start timestamp as %s to end timestamp as %s ",
+            start_timestamp,
+            end_timestamp,
+        )
 
         if parameters is None:
             parameters = {}
@@ -890,7 +901,9 @@ class MVGAPI:
             "params": parameters,
             "start_timestamp": start_timestamp,
             "end_timestamp": end_timestamp,
+            "force": force,
         }
+
         params = None
         if callback_url:
             params = {"callback_url": callback_url}
@@ -908,8 +921,9 @@ class MVGAPI:
         start_timestamp: int = None,
         end_timestamp: int = None,
         callback_url: str = None,
-    ) -> str:
-        """Request an population analysis on the given endpoint with given parameters.
+        force: bool = False,
+    ) -> dict:
+        """Request a population analysis on the given endpoint with given parameters.
 
         Parameters
         ----------
@@ -917,32 +931,42 @@ class MVGAPI:
             Source ids.
 
         feature : str
-            name of feature to run. This feature must be of population type.
+            Name of feature to run. This feature must be of population type.
 
         parameters : dict
-            name value pairs of parameters [optional].
+            Name value pairs of parameters [optional].
 
         start_timestamp : int
-            start of analysis time window [optional].
+            Start of analysis time window [optional].
 
         end_timestamp : int
-            start of analysis time window [optional].
+            Start of analysis time window [optional].
 
         callback_url : str
-            Base URL to receieve a notification when the analysis job ends.
-            A POST reuest will be made to {callback_url}/analyses with payload
+            Base URL to receive a notification when the analysis job ends.
+            A POST request will be made to {callback_url}/analyses with payload
             that includes the request_id and request_status of the job [optional].
+
+        force: bool
+            Set to True to force a re-run on any existing analysis, otherwise existing
+            analysis results will be reused. Defaults to False.
 
         Returns
         -------
-        request_id: analysis identifier
+        dict
+            Containing request_id and request_status corresponding to
+            analysis identifier and analysis status.
 
         """
         logger.info("endpoint %s", self.endpoint)
         logger.info("source ids=%s", sids)
         logger.info("sending %s analysis request", feature)
         logger.info("parameters %s", parameters)
-        logger.info("from %s to %s ", start_timestamp, end_timestamp)
+        logger.info(
+            "from start timestamp as %s to end timestamp as %s ",
+            start_timestamp,
+            end_timestamp,
+        )
 
         if parameters is None:
             parameters = {}
@@ -954,6 +978,7 @@ class MVGAPI:
             "params": parameters,
             "start_timestamp": start_timestamp,
             "end_timestamp": end_timestamp,
+            "force": force,
         }
 
         params = None
@@ -962,6 +987,7 @@ class MVGAPI:
         response = self._request(
             "post", "/analyses/requests/population/", json=analysis_info, params=params
         )
+
         return response.json()
 
     def list_analyses(self, sid: str, feature: str) -> list:
@@ -1001,7 +1027,7 @@ class MVGAPI:
         -------
         str
             status of the analysis. It can take any of the following values:
-            "queued": The request is cheduled but have not started.
+            "queued": The request is scheduled but have not started.
             "ongoing": The request is running
             "failed": The request failed due to internal issue.
             "successful": The request finished successfully.
@@ -1218,7 +1244,7 @@ class MVG(MVGAPI):
             for request_id in jobs:
                 status = self.get_analysis_status(request_id)
                 if status in ("successful", "failed"):
-                    logger.info("Anlysis with ID %s done", request_id)
+                    logger.info("Analysis with ID %s done", request_id)
                     done_jobs.add(request_id)
             jobs = jobs - done_jobs
 
