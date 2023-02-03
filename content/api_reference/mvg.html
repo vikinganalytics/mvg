@@ -305,7 +305,7 @@ version of the MVG library.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>message</strong> – Showing the api version, the highest vesrion tested against
+<dd class="field-even"><p><strong>message</strong> – Showing the api version, the highest version tested against
 and the version of the MVG library.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -498,7 +498,7 @@ The format of the result structure depends on the feature.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>status of the analysis. It can take any of the following values:
-“queued”: The request is cheduled but have not started.
+“queued”: The request is scheduled but have not started.
 “ongoing”: The request is running
 “failed”: The request failed due to internal issue.
 “successful”: The request finished successfully.</p>
@@ -626,8 +626,8 @@ and a feature.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sid</strong> (<em>str</em>) – source ID.</p></li>
-<li><p><strong>offset</strong> (<em>int</em>) – index of the first measurment in the database</p></li>
-<li><p><strong>limit</strong> (<em>int</em>) – maximum number of measurments to be returned</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – index of the first measurement in the database</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – maximum number of measurements to be returned</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -770,56 +770,62 @@ subsequent values being the data (samples).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVGAPI.request_analysis">
-<span class="sig-name descname"><span class="pre">request_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.request_analysis" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">request_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.request_analysis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Request an analysis on the given endpoint with given parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sid</strong> (<em>str</em>) – source Id.</p></li>
-<li><p><strong>feature</strong> (<em>str</em>) – name of feature to run.</p></li>
-<li><p><strong>parameters</strong> (<em>dict</em>) – name value pairs of parameters [optional].</p></li>
+<li><p><strong>sid</strong> (<em>str</em>) – Source Id.</p></li>
+<li><p><strong>feature</strong> (<em>str</em>) – Name of feature to run.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – Name value pairs of parameters [optional].</p></li>
 <li><p><strong>selected_channels</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Subset of Waveform Data channels for analysis.
-This cannot be used in conjuction with selected_columns [optional].</p></li>
+This cannot be used in conjunction with selected_columns [optional].</p></li>
 <li><p><strong>selected_columns</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Subset of Tabular Data columns for analysis.
-This cannot be used in conjuction with selected_channels [optional].</p></li>
-<li><p><strong>start_timestamp</strong> (<em>int</em>) – start of analysis time window [optional].</p></li>
-<li><p><strong>end_timestamp</strong> (<em>int</em>) – start of analysis time window [optional].</p></li>
-<li><p><strong>callback_url</strong> (<em>str</em>) – Base URL to receieve a notification when the analysis job ends.
-A POST reuest will be made to {callback_url}/analyses with payload
+This cannot be used in conjunction with selected_channels [optional].</p></li>
+<li><p><strong>start_timestamp</strong> (<em>int</em>) – Start of analysis time window [optional].</p></li>
+<li><p><strong>end_timestamp</strong> (<em>int</em>) – Start of analysis time window [optional].</p></li>
+<li><p><strong>callback_url</strong> (<em>str</em>) – Base URL to receive a notification when the analysis job ends.
+A POST request will be made to {callback_url}/analyses with payload
 that includes the request_id and request_status of the job [optional].</p></li>
+<li><p><strong>force</strong> (<em>bool</em>) – Set to False to reuse the analysis results if it already exists, otherwise
+re-run the analysis. Defaults to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>request_id</strong></p>
+<dd class="field-even"><p>Containing request_id and request_status corresponding to
+analysis identifier and analysis status.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>analysis identifier</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVGAPI.request_population_analysis">
-<span class="sig-name descname"><span class="pre">request_population_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.request_population_analysis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Request an population analysis on the given endpoint with given parameters.</p>
+<span class="sig-name descname"><span class="pre">request_population_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.request_population_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request a population analysis on the given endpoint with given parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sids</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Source ids.</p></li>
-<li><p><strong>feature</strong> (<em>str</em>) – name of feature to run. This feature must be of population type.</p></li>
-<li><p><strong>parameters</strong> (<em>dict</em>) – name value pairs of parameters [optional].</p></li>
-<li><p><strong>start_timestamp</strong> (<em>int</em>) – start of analysis time window [optional].</p></li>
-<li><p><strong>end_timestamp</strong> (<em>int</em>) – start of analysis time window [optional].</p></li>
-<li><p><strong>callback_url</strong> (<em>str</em>) – Base URL to receieve a notification when the analysis job ends.
-A POST reuest will be made to {callback_url}/analyses with payload
+<li><p><strong>feature</strong> (<em>str</em>) – Name of feature to run. This feature must be of population type.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – Name value pairs of parameters [optional].</p></li>
+<li><p><strong>start_timestamp</strong> (<em>int</em>) – Start of analysis time window [optional].</p></li>
+<li><p><strong>end_timestamp</strong> (<em>int</em>) – Start of analysis time window [optional].</p></li>
+<li><p><strong>callback_url</strong> (<em>str</em>) – Base URL to receive a notification when the analysis job ends.
+A POST request will be made to {callback_url}/analyses with payload
 that includes the request_id and request_status of the job [optional].</p></li>
+<li><p><strong>force</strong> (<em>bool</em>) – Set to True to force a re-run on any existing analysis, otherwise existing
+analysis results will be reused. Defaults to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>request_id</strong></p>
+<dd class="field-even"><p>Containing request_id and request_status corresponding to
+analysis identifier and analysis status.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>analysis identifier</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -827,7 +833,7 @@ that includes the request_id and request_status of the job [optional].</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvg.mvg.MVGAPI.say_hello">
 <span class="sig-name descname"><span class="pre">say_hello</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.say_hello" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrievs information about the API.
+<dd><p>Retrieves information about the API.
 This call does not require a valid token.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
