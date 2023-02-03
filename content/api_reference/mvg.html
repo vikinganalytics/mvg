@@ -146,6 +146,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_sources"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_sources()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_tabular_downsampled_measurements"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_tabular_downsampled_measurements()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_tabular_measurements"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_tabular_measurements()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.list_timestamps"><code class="docutils literal notranslate"><span class="pre">MVGAPI.list_timestamps()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.parse_version"><code class="docutils literal notranslate"><span class="pre">MVGAPI.parse_version()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.read_single_measurement"><code class="docutils literal notranslate"><span class="pre">MVGAPI.read_single_measurement()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.request_analysis"><code class="docutils literal notranslate"><span class="pre">MVGAPI.request_analysis()</span></code></a></li>
@@ -693,6 +694,35 @@ Value of 0 means no downsampling will be applied [optional].</p></li>
 <li><p><em>column names, and metadata corresponding to a measurement.</em></p></li>
 </ul>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.mvg.MVGAPI.list_timestamps">
+<span class="sig-name descname"><span class="pre">list_timestamps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SortOrder</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'asc'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.list_timestamps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves timestamps for a source.
+If offset and limit params are not specified, all timestamps will be returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sid</strong> (<em>str</em>) – source ID.</p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – index of the first timestamp in the database [optional].</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – maximum number of timestamps to be returned [optional].</p></li>
+<li><p><strong>order</strong> (<em>SortOrder</em>) – Sort order, either “asc” or “desc”. Defaults to “asc”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“offset”: int, representing starting point of returned items.</p></li>
+<li><p>”limit: int, representing max items to return.”</p></li>
+<li><p>”items”: list of int, representing timestamps.</p></li>
+<li><p>”total”: int, representing total number of items.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing the following keys</p>
 </dd>
 </dl>
 </dd></dl>
