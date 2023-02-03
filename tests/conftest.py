@@ -52,7 +52,6 @@ version_session = MVG(VIBIUM_PROD_URL, "NO TOKEN")
 VIBIUM_VERSION = "prod"
 
 
-
 # Pytest initial configuration
 def pytest_configure():
     pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
