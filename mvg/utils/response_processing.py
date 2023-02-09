@@ -76,21 +76,23 @@ def get_paginated_analysis_results(request: Callable, url: str, params: Dict) ->
     Dict
         Analysis results
     """
-    # Pagination Model fields
-    paginator_model_fields = ["total", "limit", "offset"]
-    # Fields without paginated data
-    non_paginated_fields = ["mode_info", "mode_probabilities"]
-
     response = request("get", url, params=params).json()
-    if not ("limit" in params or "offset" in params):
+
+    if "limit" not in params and "offset" not in params:
         # User has not requested a subset of results
         results = response["results"]
+
+        # Pagination Model fields
+        paginator_model_fields = ["total", "limit", "offset"]
 
         # Does the analysis results include pagination?
         # We remove this check when the backend has enabled pagination for
         # the results of all analysis
-        is_paginated = all(f in results.keys() for f in paginator_model_fields)
+        is_paginated = all(f in results for f in paginator_model_fields)
         if is_paginated:
+            # Fields with paginated data
+            paginated_fields = ["timestamps", "labels", "uncertain", "mode_probability"]
+
             num_items = results["total"]
             limit = results["limit"]
             num_reqs = (num_items - 1) // limit
@@ -99,7 +101,7 @@ def get_paginated_analysis_results(request: Callable, url: str, params: Dict) ->
                 params["offset"] = offset
                 _results = request("get", url, params=params).json()["results"]
                 for key in _results:
-                    if key not in paginator_model_fields + non_paginated_fields:
+                    if key in paginated_fields:
                         results[key] += _results[key]
 
         # Construct the response to return
