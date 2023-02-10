@@ -1,96 +1,51 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Label Propagation &mdash; MultiViz Analytics Engine Library  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Callback on Analysis Completion" href="../advanced/callback.html" />
     <link rel="prev" title="Population Based Anomaly Detection (BlackSheep)" href="blacksheep.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../index.html" class="icon icon-home"> MultiViz Analytics Engine Library
           
-
-          
+          <a href="../../index.html">
+            
+              <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../examples/1-brief_overview.html">Brief Overview - How to use the MVG library</a></li>
@@ -133,71 +88,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../utilities_reference/analysis_classes.html">MutliViz Analysis Classes</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">MultiViz Analytics Engine Library</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>Label Propagation</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Label Propagation</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/content/features/label_propagation.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -223,19 +137,19 @@
 }
 </style>
 <section id="label-propagation">
-<h1>Label Propagation<a class="headerlink" href="#label-propagation" title="Permalink to this heading">¶</a></h1>
+<h1>Label Propagation<a class="headerlink" href="#label-propagation" title="Permalink to this heading"></a></h1>
 <img alt="../../_images/label-propagation_sales.png" src="../../_images/label-propagation_sales.png" />
 <section id="what-does-label-propagation-do">
-<h2>What does Label Propagation do?<a class="headerlink" href="#what-does-label-propagation-do" title="Permalink to this heading">¶</a></h2>
+<h2>What does Label Propagation do?<a class="headerlink" href="#what-does-label-propagation-do" title="Permalink to this heading"></a></h2>
 <p>The label propagation feature spreads existing ground truth labels to unlabelled measurements.</p>
 </section>
 <section id="use-case-for-the-algorithm">
-<h2>Use case for the algorithm<a class="headerlink" href="#use-case-for-the-algorithm" title="Permalink to this heading">¶</a></h2>
+<h2>Use case for the algorithm<a class="headerlink" href="#use-case-for-the-algorithm" title="Permalink to this heading"></a></h2>
 <p>Associate labels to all individual measurements without
 an expert having to manually provide with a label to every single measurement.</p>
 </section>
 <section id="how-does-label-propagation-work">
-<h2>How does Label Propagation work?<a class="headerlink" href="#how-does-label-propagation-work" title="Permalink to this heading">¶</a></h2>
+<h2>How does Label Propagation work?<a class="headerlink" href="#how-does-label-propagation-work" title="Permalink to this heading"></a></h2>
 <p>Label propagation uses a semi-supervised algorithm for the spreading of the labels.
 It uses the results from the ModeId, such as mode assigment and mode probability of each individual measurement,
 along with the ground truth labels provided by the expert.
@@ -244,7 +158,7 @@ Ideally, the expert should had provided at least one label per each mode segment
 However, the more labels had been provided the better is the performance of the algorithm.
 The end result is a label attached to each individual measurement.</p>
 <section id="illustrative-example">
-<h3>Illustrative Example<a class="headerlink" href="#illustrative-example" title="Permalink to this heading">¶</a></h3>
+<h3>Illustrative Example<a class="headerlink" href="#illustrative-example" title="Permalink to this heading"></a></h3>
 <p>The figure below shows the results of a ModeId analysis where a total of three operational modes has been identified.
 This is followed by a plot showing the initial labeled measurements, which correspond to three measurements per mode.
 Finally, it shows how all the labels had been propagated to all the measurements after using the LabelPropagation feature.</p>
@@ -252,7 +166,7 @@ Finally, it shows how all the labels had been propagated to all the measurements
 </section>
 </section>
 <section id="using-the-algorithm-via-mvg">
-<h2>Using the algorithm via mvg<a class="headerlink" href="#using-the-algorithm-via-mvg" title="Permalink to this heading">¶</a></h2>
+<h2>Using the algorithm via mvg<a class="headerlink" href="#using-the-algorithm-via-mvg" title="Permalink to this heading"></a></h2>
 <p>For code example see the <a class="reference internal" href="../examples/7-labeling.html"><span class="doc">“Labeling and Label Propagation”</span></a> example.</p>
 <ol class="arabic simple">
 <li><p>Identify the <code class="docutils literal notranslate"><span class="pre">request_id</span></code> of a successful ModeId analysis.</p></li>
@@ -261,13 +175,13 @@ Finally, it shows how all the labels had been propagated to all the measurements
 </ol>
 </section>
 <section id="analysis-parameters">
-<h2>Analysis Parameters<a class="headerlink" href="#analysis-parameters" title="Permalink to this heading">¶</a></h2>
+<h2>Analysis Parameters<a class="headerlink" href="#analysis-parameters" title="Permalink to this heading"></a></h2>
 <p>The LabelPropagation feature requires to know the source id (<code class="docutils literal notranslate"><span class="pre">sid</span></code>) of the asset to analyze and the <code class="docutils literal notranslate"><span class="pre">request_id</span></code> of a successful “ModeId” analysis.</p>
 <p>By default, LabelPropagation will not require any additional, algorithmic input parameters,
 given that the optimal parameters had been thoroughly tested and are used as the default settings.</p>
 </section>
 <section id="structure-of-the-results">
-<h2>Structure of the Results<a class="headerlink" href="#structure-of-the-results" title="Permalink to this heading">¶</a></h2>
+<h2>Structure of the Results<a class="headerlink" href="#structure-of-the-results" title="Permalink to this heading"></a></h2>
 <p>The results returned by the analysis call will be a dictionary called <code class="docutils literal notranslate"><span class="pre">propagated_labels</span></code>,
 which contains a list equal to the number of measurements in the source.
 Each item on this list is a dictionary with five elements, the keys of these elements are: <em>label</em>, <em>severity</em>, <em>notes</em>, <em>label_timestamp</em>, and <em>timestamp</em>.
@@ -279,7 +193,7 @@ This final item refers to the timestamp of the measurement.</p>
 </div>
 </section>
 <section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">¶</a></h2>
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>The label identification string is unique for each label and is case and spelling sensitive, i.e. <code class="docutils literal notranslate"><span class="pre">&quot;failure&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Failure&quot;</span></code> are not interpreted as the same label.</p></li>
 <li><p>The propagated severity level is used to indicate whether the label was added by the user or propagated by the algorithm. A value of -1 means that the label was propagated by the algorithm.</p></li>
@@ -290,50 +204,33 @@ This final item refers to the timestamp of the measurement.</p>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../advanced/callback.html" class="btn btn-neutral float-right" title="Callback on Analysis Completion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="blacksheep.html" class="btn btn-neutral float-left" title="Population Based Anomaly Detection (BlackSheep)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../advanced/callback.html" class="btn btn-neutral float-right" title="Callback on Analysis Completion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2022, Viking Analytics AB.
-
-    </p>
+    <p>&#169; Copyright 2022, Viking Analytics AB.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

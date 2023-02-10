@@ -1,38 +1,18 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Analysis and Results Visualization &mdash; MultiViz Analytics Engine Library  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
@@ -41,58 +21,33 @@
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Analysis Classes - Unified Interface to Analysis Results" href="5-analysis_classes.html" />
     <link rel="prev" title="Sources and Measurements Example" href="2-sources_and_measurements.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../index.html" class="icon icon-home"> MultiViz Analytics Engine Library
           
-
-          
+          <a href="../../index.html">
+            
+              <img src="../../_static/VA_Symbol_DarkBlue.png" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1-brief_overview.html">Brief Overview - How to use the MVG library</a></li>
@@ -131,71 +86,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../utilities_reference/analysis_classes.html">MutliViz Analysis Classes</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">MultiViz Analytics Engine Library</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>Analysis and Results Visualization</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Analysis and Results Visualization</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/content/examples/6-analysis_visual.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -476,11 +390,11 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Analysis-and-Results-Visualization">
-<h1>Analysis and Results Visualization<a class="headerlink" href="#Analysis-and-Results-Visualization" title="Permalink to this heading">¶</a></h1>
+<h1>Analysis and Results Visualization<a class="headerlink" href="#Analysis-and-Results-Visualization" title="Permalink to this heading"></a></h1>
 <p>This script describes the procedure to request an analysis to the Viking Analytics’ MultiViz Analytics Engine (MVG) service. It shows how to query for results of single-asset or asset-population analyses. In addition, it presents some examples of how to visualize the results available for the <a class="reference internal" href="../features/ModeId.html"><span class="doc">“mode identification”</span></a> feature.</p>
 <p>In this example, we will describe how to access and manipulate the analysis results directly. The <a class="reference internal" href="5-analysis_classes.html"><span class="doc">“Analysis Classes”</span></a> example provides a simplified and unified interface to access these results as a pandas dataframe, along with some basic visualization of the results.</p>
 <section id="Preliminaries">
-<h2>Preliminaries<a class="headerlink" href="#Preliminaries" title="Permalink to this heading">¶</a></h2>
+<h2>Preliminaries<a class="headerlink" href="#Preliminaries" title="Permalink to this heading"></a></h2>
 <p>This procedure describes all the steps to request an analysis, get analysis results, and plot those results using the functions in <code class="docutils literal notranslate"><span class="pre">plotting</span></code>. Local visualizations functions to create the figures are imported from <code class="docutils literal notranslate"><span class="pre">plotting</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -519,7 +433,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="Asset-Analysis">
-<h3>Asset Analysis<a class="headerlink" href="#Asset-Analysis" title="Permalink to this heading">¶</a></h3>
+<h3>Asset Analysis<a class="headerlink" href="#Asset-Analysis" title="Permalink to this heading"></a></h3>
 <p>In this example, we will use the sources uploaded by the <a class="reference internal" href="2-sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example. We start by looking if the sources are available in the database. At least, sources, “u0001” and “u0005”, should appear as available.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -734,7 +648,7 @@ ModeId Analysis: successful
 </div>
 </section>
 <section id="Visualization">
-<h3>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this heading">¶</a></h3>
+<h3>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this heading"></a></h3>
 <p>Once the analysis is complete, one get the results by calling the corresponding “request_id” for each analysis.</p>
 <p>First, let’s check all existing “request_id” in the database for each source and feature.</p>
 <div class="nbinput docutils container">
@@ -1468,7 +1382,7 @@ over each timestamp. For a more focused plot, one can use the method’s <code c
 </div>
 </section>
 <section id="Population-Analysis">
-<h3>Population Analysis<a class="headerlink" href="#Population-Analysis" title="Permalink to this heading">¶</a></h3>
+<h3>Population Analysis<a class="headerlink" href="#Population-Analysis" title="Permalink to this heading"></a></h3>
 <p>Another feature is “BlackSheep”, which targets a group of assets and aims to identify the atypical assets within a population.</p>
 <p>During our example, we will utilize all sources previously uploaded to our database.</p>
 <div class="nbinput docutils container">
@@ -1607,50 +1521,33 @@ The 2nd blacksheep is u0002
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="5-analysis_classes.html" class="btn btn-neutral float-right" title="Analysis Classes - Unified Interface to Analysis Results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="2-sources_and_measurements.html" class="btn btn-neutral float-left" title="Sources and Measurements Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="5-analysis_classes.html" class="btn btn-neutral float-right" title="Analysis Classes - Unified Interface to Analysis Results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2022, Viking Analytics AB.
-
-    </p>
+    <p>&#169; Copyright 2022, Viking Analytics AB.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
