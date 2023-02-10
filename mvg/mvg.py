@@ -20,7 +20,11 @@ from requests.exceptions import RequestException
 import semver
 
 from mvg.exceptions import MVGConnectionError
-from mvg.utils.response_processing import SortOrder, get_paginated_items
+from mvg.utils.response_processing import (
+    SortOrder,
+    get_paginated_analysis_results,
+    get_paginated_items,
+)
 from mvg.http_client import HTTPClient
 
 logger = logging.getLogger(__name__)
@@ -57,8 +61,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.3")
-        self.tested_api_version = self.parse_version("v0.5.2")
+        self.mvg_version = self.parse_version("v0.14.4")
+        self.tested_api_version = self.parse_version("v0.5.3")
 
         # Get API version
         try:
@@ -1040,7 +1044,12 @@ class MVGAPI:
 
         return response.json()["request_status"]
 
-    def get_analysis_results(self, request_id: str) -> dict:
+    def get_analysis_results(
+        self,
+        request_id: str,
+        offset: int = None,
+        limit: int = None,
+    ) -> dict:
         """Retrieves an analysis with given request_id
         The format of the result structure depends on the feature.
 
@@ -1048,6 +1057,12 @@ class MVGAPI:
         ----------
         request_id : str
             request_id (analysis identifier)
+        offset: int
+            zero-based index of an item in one of the dictionaries
+            in the data for "results" key [optional].
+        limit: int
+            maximum number of items to be returned from each
+            dictionary in the data for "results" key [optional].
 
         Returns
         -------
@@ -1058,9 +1073,15 @@ class MVGAPI:
         logger.info("endpoint %s", self.endpoint)
         logger.info("get analysis results with request_id=%s", request_id)
 
-        response = self._request("get", f"/analyses/requests/{request_id}/results")
+        url = f"/analyses/requests/{request_id}/results"
+        params = {}
+        if offset is not None:
+            params["offset"] = offset
+        if limit is not None:
+            params["limit"] = limit
 
-        return response.json()
+        response = get_paginated_analysis_results(self._request, url, params)
+        return response
 
     def delete_analysis(self, request_id: str):
         """Deletes an analysis.

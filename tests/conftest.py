@@ -210,7 +210,7 @@ def waveform_source_multiaxial_fixture_creator(source_id, pattern):
                 source_id, meta={"type": "pump"}, channels=list(pattern.keys())
             )
             upload_measurements(session, source_id, data)
-            yield source_id, timestamps
+            yield source_id, {"timestamps": timestamps, "pattern": pattern}
         finally:
             session.delete_source(source_id)
 

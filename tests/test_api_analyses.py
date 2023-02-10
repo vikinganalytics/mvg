@@ -189,3 +189,73 @@ def test_delete_analysis(session, waveform_source_multiaxial_001):
     with pytest.raises(MVGAPIError) as exc:
         session.get_analysis_results(request_id)
     assert f"Request with ID {request_id} does not exist" in str(exc)
+
+
+def test_get_analysis_results_modeid_paginated(
+    session: MVG, waveform_source_multiaxial_001
+):
+    source_id, source_info = waveform_source_multiaxial_001
+    timestamps = source_info["timestamps"]
+    pattern = source_info["pattern"]["acc_x"]
+
+    # ModeId
+    parameters = {"n_trials": 1}
+    request = session.request_analysis(source_id, "ModeId", parameters=parameters)
+    request_id = request["request_id"]
+    response = session.get_analysis_results(request_id)
+    assert response["results"] == {}
+    session.wait_for_analyses([request_id])
+
+    # Request for entire results
+    response = session.get_analysis_results(request_id)
+    assert timestamps == response["results"]["timestamps"]
+    assert pattern == response["results"]["labels"]
+
+    # Request for a subset of results with a limit
+    result_size = 100
+    response = session.get_analysis_results(request_id, limit=result_size)
+    assert timestamps[:result_size] == response["results"]["timestamps"]
+    assert pattern[:result_size] == response["results"]["labels"]
+
+    # Request for a subset of results with a limit and an offset
+    offset = 10
+    result_size = 100
+    response = session.get_analysis_results(
+        request_id, offset=offset, limit=result_size
+    )
+    assert timestamps[offset:result_size] == response["results"]["timestamps"]
+    assert pattern[offset:result_size] == response["results"]["labels"]
+
+    # Request for a subset of results with an offset
+    offset = 10
+    response = session.get_analysis_results(request_id, offset=offset)
+    assert timestamps[offset:] == response["results"]["timestamps"]
+    assert pattern[offset:] == response["results"]["labels"]
+
+    # Delete analysis
+    session.delete_analysis(request_id)
+
+
+def test_get_analysis_results_kpidemo_paginated(
+    session: MVG, waveform_source_multiaxial_001
+):
+    source_id, source_info = waveform_source_multiaxial_001
+    timestamps = source_info["timestamps"]
+
+    request = session.request_analysis(source_id, "KPIDemo")
+    request_id = request["request_id"]
+    response = session.get_analysis_results(request_id)
+    assert response["results"] == {}
+    session.wait_for_analyses([request_id])
+
+    # Request for entire results
+    response = session.get_analysis_results(request_id)
+    assert timestamps == response["results"]["timestamps"]
+
+    # Request for a subset of results, but still returns entire results
+    result_size = 10
+    response = session.get_analysis_results(request_id, limit=result_size)
+    assert timestamps == response["results"]["timestamps"]
+
+    # Delete analysis
+    session.delete_analysis(request_id)
