@@ -61,8 +61,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.4")
-        self.tested_api_version = self.parse_version("v0.5.3")
+        self.mvg_version = self.parse_version("v0.14.5")
+        self.tested_api_version = self.parse_version("v0.5.6")
 
         # Get API version
         try:
@@ -445,7 +445,7 @@ class MVGAPI:
         """
 
         logger.info("endpoint %s", self.endpoint)
-        logger.info("creating measurement from source id=%s", sid)
+        logger.info("creating measurement for source id=%s", sid)
         logger.info("  duration:  %s", duration)
         logger.info("  timestamp: %s", timestamp)
         logger.info("  meta data: %s", meta)
@@ -505,7 +505,7 @@ class MVGAPI:
         """
 
         logger.info("endpoint %s", self.endpoint)
-        logger.info("creating tabular measurement from source id=%s", sid)
+        logger.info("creating tabular measurement for source id=%s", sid)
 
         do_not_raise = []
         if exist_ok:
