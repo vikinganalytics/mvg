@@ -396,15 +396,15 @@ def test_create_label(session, tabular_source_with_measurements):
     }
 
     label1_timestamp = label1_response.pop("label_timestamp")
-    dtdiff1 = datetime.utcnow() - datetime.strptime(
-        label1_timestamp, "%Y-%m-%d %H:%M:%S"
+    dtdiff1 = datetime.now().astimezone() - datetime.strptime(
+        label1_timestamp, "%Y-%m-%d %H:%M:%S%z"
     )
     assert label1_response == label1
     assert dtdiff1 < timedelta(minutes=1)
 
     label2_timestamp = label2_response.pop("label_timestamp")
-    dtdiff2 = datetime.utcnow() - datetime.strptime(
-        label2_timestamp, "%Y-%m-%d %H:%M:%S"
+    dtdiff2 = datetime.now().astimezone() - datetime.strptime(
+        label2_timestamp, "%Y-%m-%d %H:%M:%S%z"
     )
     assert label2_response == label2
     assert dtdiff2 < timedelta(minutes=1)
@@ -422,7 +422,9 @@ def test_update_label(session, tabular_source_with_measurements):
     label_response = session.get_label(source_id, timestamps[0])
 
     label_timestamp = label_response.pop("label_timestamp")
-    dtdiff = datetime.utcnow() - datetime.strptime(label_timestamp, "%Y-%m-%d %H:%M:%S")
+    dtdiff = datetime.now().astimezone() - datetime.strptime(
+        label_timestamp, "%Y-%m-%d %H:%M:%S%z"
+    )
     assert label_response == label_post
     assert dtdiff < timedelta(minutes=1)
 
