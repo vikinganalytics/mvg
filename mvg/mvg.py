@@ -1044,6 +1044,32 @@ class MVGAPI:
 
         return response.json()["request_status"]
 
+    def get_analysis_info(self, request_id: str) -> dict:
+        """Retrieves info of an analysis request.
+
+        The info of an analysis request includes the current status and the
+        status history of the analysis where the status history is a list of
+        statuses logged for the analysis. The info also contains an overview
+        of the measurements used by the analysis.
+
+        Parameters
+        ----------
+        request_id : str
+            request_id (analysis identifier)
+
+        Returns
+        -------
+        dict
+            a dictionary with the analysis info.
+
+        """
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("get analysis info with request_id=%s", request_id)
+
+        response = self._request("get", f"/analyses/requests/{request_id}")
+
+        return response.json()
+
     def get_analysis_results(
         self,
         request_id: str,
