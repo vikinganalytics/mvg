@@ -61,8 +61,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.4")
-        self.tested_api_version = self.parse_version("v0.5.3")
+        self.mvg_version = self.parse_version("v0.14.5")
+        self.tested_api_version = self.parse_version("v0.5.6")
 
         # Get API version
         try:
@@ -445,7 +445,7 @@ class MVGAPI:
         """
 
         logger.info("endpoint %s", self.endpoint)
-        logger.info("creating measurement from source id=%s", sid)
+        logger.info("creating measurement for source id=%s", sid)
         logger.info("  duration:  %s", duration)
         logger.info("  timestamp: %s", timestamp)
         logger.info("  meta data: %s", meta)
@@ -505,7 +505,7 @@ class MVGAPI:
         """
 
         logger.info("endpoint %s", self.endpoint)
-        logger.info("creating tabular measurement from source id=%s", sid)
+        logger.info("creating tabular measurement for source id=%s", sid)
 
         do_not_raise = []
         if exist_ok:
@@ -1043,6 +1043,32 @@ class MVGAPI:
         response = self._request("get", f"/analyses/requests/{request_id}")
 
         return response.json()["request_status"]
+
+    def get_analysis_info(self, request_id: str) -> dict:
+        """Retrieves info of an analysis request.
+
+        The info of an analysis request includes the current status and the
+        status history of the analysis where the status history is a list of
+        statuses logged for the analysis. The info also contains an overview
+        of the measurements used by the analysis.
+
+        Parameters
+        ----------
+        request_id : str
+            request_id (analysis identifier)
+
+        Returns
+        -------
+        dict
+            a dictionary with the analysis info.
+
+        """
+        logger.info("endpoint %s", self.endpoint)
+        logger.info("get analysis info with request_id=%s", request_id)
+
+        response = self._request("get", f"/analyses/requests/{request_id}")
+
+        return response.json()
 
     def get_analysis_results(
         self,

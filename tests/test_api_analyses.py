@@ -259,3 +259,19 @@ def test_get_analysis_results_kpidemo_paginated(
 
     # Delete analysis
     session.delete_analysis(request_id)
+
+
+def test_get_analysis_info(session: MVG, waveform_source_multiaxial_001):
+    sid, _ = waveform_source_multiaxial_001
+    request = session.request_analysis(sid, "KPIDemo")
+    request_id = request["request_id"]
+
+    analysis_info = session.get_analysis_info(request_id)
+    assert isinstance(analysis_info, dict)
+    assert analysis_info["request_status"] in ["queued", "running"]
+    assert analysis_info["request_id"] == request_id
+
+    session.wait_for_analyses([request_id])
+
+    analysis_info = session.get_analysis_info(request_id)
+    assert analysis_info["request_status"] == "successful"
