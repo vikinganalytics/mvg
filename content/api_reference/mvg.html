@@ -89,6 +89,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.delete_label"><code class="docutils literal notranslate"><span class="pre">MVGAPI.delete_label()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.delete_measurement"><code class="docutils literal notranslate"><span class="pre">MVGAPI.delete_measurement()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.delete_source"><code class="docutils literal notranslate"><span class="pre">MVGAPI.delete_source()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.get_analysis_info"><code class="docutils literal notranslate"><span class="pre">MVGAPI.get_analysis_info()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.get_analysis_results"><code class="docutils literal notranslate"><span class="pre">MVGAPI.get_analysis_results()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.get_analysis_status"><code class="docutils literal notranslate"><span class="pre">MVGAPI.get_analysis_status()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mvg.mvg.MVGAPI.get_endpoint"><code class="docutils literal notranslate"><span class="pre">MVGAPI.get_endpoint()</span></code></a></li>
@@ -380,6 +381,27 @@ caused by trying to create an existing source. Defaults to False.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>sid</strong> (<em>str</em>) – source Id.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvg.mvg.MVGAPI.get_analysis_info">
+<span class="sig-name descname"><span class="pre">get_analysis_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#mvg.mvg.MVGAPI.get_analysis_info" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves info of an analysis request.</p>
+<p>The info of an analysis request includes the current status and the
+status history of the analysis where the status history is a list of
+statuses logged for the analysis. The info also contains an overview
+of the measurements used by the analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request_id</strong> (<em>str</em>) – request_id (analysis identifier)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dictionary with the analysis info.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
