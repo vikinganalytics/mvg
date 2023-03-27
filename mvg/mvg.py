@@ -1075,6 +1075,7 @@ class MVGAPI:
         request_id: str,
         offset: int = None,
         limit: int = None,
+        result_type: str = None,
     ) -> dict:
         """Retrieves an analysis with given request_id
         The format of the result structure depends on the feature.
@@ -1089,6 +1090,10 @@ class MVGAPI:
         limit: int
             maximum number of items to be returned from each
             dictionary in the data for "results" key [optional].
+        result_type: str
+            The type of results to return. By default, the type is
+            'full' implying the complete analysis results will be
+            returned. The allowed types varies between features [optional].
 
         Returns
         -------
@@ -1105,6 +1110,8 @@ class MVGAPI:
             params["offset"] = offset
         if limit is not None:
             params["limit"] = limit
+        if result_type is not None:
+            params["result_type"] = result_type
 
         response = get_paginated_analysis_results(self._request, url, params)
         return response

@@ -275,3 +275,55 @@ def test_get_analysis_info(session: MVG, waveform_source_multiaxial_001):
 
     analysis_info = session.get_analysis_info(request_id)
     assert analysis_info["request_status"] == "successful"
+
+
+def test_get_analysis_results_with_valid_result_type(
+    session: MVG, waveform_source_multiaxial_001
+):
+    source_id, source_info = waveform_source_multiaxial_001
+    timestamps = source_info["timestamps"]
+    pattern = source_info["pattern"]
+
+    parameters = {"n_trials": 1}
+    request = session.request_analysis(source_id, "ModeId", parameters=parameters)
+    request_id = request["request_id"]
+    result_type = "compressed"
+    session.wait_for_analyses([request_id])
+    response = session.get_analysis_results(request_id, result_type=result_type)
+
+    results = response["results"]
+    num_timestamps_in_modes = [6, 14, 5]  # from the pattern
+    assert response["status"] == "successful"
+    assert results["count"] == num_timestamps_in_modes
+    for channel in pattern.keys():
+        assert all(label in pattern[channel] for label in results["label"])
+    assert all(ts in timestamps for ts in results["start_timestamp"])
+    assert all(ts in timestamps for ts in results["end_timestamp"])
+
+
+def test_get_analysis_results_with_noncompliant_result_type(
+    session: MVG, waveform_source_with_measurements
+):
+    source_id = waveform_source_with_measurements
+
+    request = session.request_analysis(source_id, "KPIDemo")
+    request_id = request["request_id"]
+    result_type = "compressed"
+    session.wait_for_analyses([request_id])
+
+    with pytest.raises(MVGAPIError) as _:
+        session.get_analysis_results(request_id, result_type=result_type)
+
+
+def test_get_analysis_results_with_invalid_result_type(
+    session: MVG, waveform_source_with_measurements
+):
+    source_id = waveform_source_with_measurements
+
+    request = session.request_analysis(source_id, "KPIDemo")
+    request_id = request["request_id"]
+    result_type = "someresultype"
+    session.wait_for_analyses([request_id])
+
+    with pytest.raises(MVGAPIError) as _:
+        session.get_analysis_results(request_id, result_type=result_type)
