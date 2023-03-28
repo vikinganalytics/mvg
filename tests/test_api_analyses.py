@@ -306,13 +306,15 @@ def test_get_analysis_results_with_noncompliant_result_type(
 ):
     source_id = waveform_source_with_measurements
 
-    request = session.request_analysis(source_id, "KPIDemo")
+    feature = "KPIDemo"
+    request = session.request_analysis(source_id, feature)
     request_id = request["request_id"]
     result_type = "compressed"
     session.wait_for_analyses([request_id])
 
-    with pytest.raises(MVGAPIError) as _:
+    with pytest.raises(MVGAPIError) as exc:
         session.get_analysis_results(request_id, result_type=result_type)
+    assert f"Feature {feature} supports only result types in" in str(exc)
 
 
 def test_get_analysis_results_with_invalid_result_type(
@@ -325,5 +327,6 @@ def test_get_analysis_results_with_invalid_result_type(
     result_type = "someresultype"
     session.wait_for_analyses([request_id])
 
-    with pytest.raises(MVGAPIError) as _:
+    with pytest.raises(MVGAPIError) as exc:
         session.get_analysis_results(request_id, result_type=result_type)
+    assert f"Feature result type '{result_type}' does not exist." in str(exc)
