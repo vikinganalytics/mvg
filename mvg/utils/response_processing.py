@@ -91,7 +91,10 @@ def get_paginated_analysis_results(request: Callable, url: str, params: Dict) ->
         is_paginated = all(f in results for f in paginator_model_fields)
         if is_paginated:
             # Fields with paginated data
-            paginated_fields = ["timestamps", "labels", "uncertain", "mode_probability"]
+            # We might have to later re-enable this to not make this
+            # automatically paginate list-based values.
+            # paginated_fields = ["timestamps", "labels", "uncertain",
+            # "mode_probability"]
 
             num_items = results["total"]
             limit = results["limit"]
@@ -101,7 +104,7 @@ def get_paginated_analysis_results(request: Callable, url: str, params: Dict) ->
                 params["offset"] = offset
                 _results = request("get", url, params=params).json()["results"]
                 for key in _results:
-                    if key in paginated_fields:
+                    if isinstance(_results[key], list):
                         results[key] += _results[key]
 
         # Construct the response to return

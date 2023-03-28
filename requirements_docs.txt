@@ -1,5 +1,6 @@
 papermill
 ipywidgets
+ipykernel
 tqdm
 sphinx
 sphinx-rtd-theme
