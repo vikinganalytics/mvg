@@ -13,7 +13,7 @@ For more information see README.md.
 import re
 import time
 import logging
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import pandas as pd
 import requests
 from requests.exceptions import RequestException
@@ -61,7 +61,7 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.6")
+        self.mvg_version = self.parse_version("v0.14.7")
         self.tested_api_version = self.parse_version("v0.5.12")
 
         # Get API version
@@ -518,7 +518,7 @@ class MVGAPI:
     def create_spectrum_measurement(
         self,
         sid: str,
-        freq_range: tuple[float, float],
+        freq_range: Tuple[float, float],
         timestamp: int,
         data: Dict[str, List[float]],
         meta: dict = None,
