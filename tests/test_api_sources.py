@@ -218,6 +218,67 @@ def test_sources_cru_existing(session):
         session.create_source(source, meta=meta, channels=["acc"])
 
 
+def test_spectrum_source_create_read_delete(session):
+    source_id = pytest.SOURCE_ID_SPECTRUM
+    meta = {"test_meta": "test_id"}
+
+    # Create - read - delete
+    try:
+        session.create_spectrum_source(source_id, meta=meta, channels=["test"])
+        source = session.get_source(source_id)
+    finally:
+        session.delete_source(source_id)
+
+    # Check received source data
+    assert source["source_id"] == source_id
+    assert source["meta"] == meta
+
+    props = source["properties"]
+    assert props["data_class"] == "spectrum"
+    assert props["channels"] == ["test"]
+
+    # Check that the source has been removed
+    with pytest.raises(MVGAPIError) as exc:
+        session.get_source(source_id)
+    assert exc.value.response.status_code == 404
+
+
+def test_spectrum_create_new_measurement(session, empty_spectrum_source):
+    source_id = empty_spectrum_source["source_id"]
+    timestamp = 111
+    data = {"ch": [0.5, 1.5]}
+    freq_range = (5, 15)
+    meta = {"new_id": "new"}
+
+    session.create_spectrum_measurement(source_id, freq_range, timestamp, data, meta)
+    measurements = session.list_measurements(source_id)
+
+    # Check received source data
+    assert len(measurements) == 1
+
+    assert measurements[0]["timestamp"] == timestamp
+    assert measurements[0]["freq_range"] == list(freq_range)
+    assert measurements[0]["meta"] == meta
+
+
+def test_spectrum_create_existing_source(session, simple_spectrum_source):
+    source_id = simple_spectrum_source["source_id"]
+
+    with pytest.raises(MVGAPIError) as exc:
+        session.create_spectrum_source(source_id, meta={}, channels=["test"])
+
+    assert exc.value.response.status_code == 409
+
+
+def test_spectrum_create_existing_measurement(session, simple_spectrum_source):
+    with pytest.raises(MVGAPIError) as exc:
+        source_id = simple_spectrum_source["source_id"]
+        session.create_spectrum_measurement(
+            source_id, (1, 2), 123, {"ch": [0.5, 1.5]}, {}
+        )
+    assert exc.value.response.status_code == 422
+
+
 def test_tabular_sources(session, tabular_source):
     source_id, tabular_dict = tabular_source
     columns = list(tabular_dict.keys())

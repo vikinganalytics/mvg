@@ -56,6 +56,7 @@ VIBIUM_VERSION = "prod"
 def pytest_configure():
     pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
     pytest.REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
+    pytest.SOURCE_ID_SPECTRUM = uuid.uuid1().hex
     pytest.SOURCE_ID_TABULAR = uuid.uuid1().hex
     pytest.VALID_TOKEN = os.environ["TEST_TOKEN"]
 
@@ -223,6 +224,57 @@ Create multiaxial sources with generated measurements based on a pattern
 sources_pattern = generate_sources_patterns()
 waveform_source_multiaxial_001 = waveform_source_multiaxial_fixture_creator(
     *sources_pattern[0]
+)
+
+
+def make_spectrum_source_fixture(info):
+    @pytest.fixture
+    def fixture(session):
+        sid = info["source_id"]
+        try:
+            session.create_spectrum_source(
+                sid, meta=info["meta"], channels=info["channels"]
+            )
+            for m in info["measurements"]:
+                session.create_spectrum_measurement(
+                    sid, m["freq_range"], m["timestamp"], m["data"], m["meta"]
+                )
+            yield info
+        finally:
+            session.delete_source(sid)
+
+    return fixture
+
+
+empty_spectrum_source = make_spectrum_source_fixture(
+    {
+        "source_id": uuid.uuid1().hex,
+        "meta": {"meta_test": "empty"},
+        "channels": ["ch"],
+        "measurements": [],
+    }
+)
+
+simple_spectrum_source = make_spectrum_source_fixture(
+    {
+        "source_id": uuid.uuid1().hex,
+        "meta": {"sid_meta": "sid_test"},
+        "channels": ["ch_0", "ch_1"],
+        "measurements": [
+            {
+                "timestamp": 0,
+                "data": {"ch_0": [0.1, 0.2, 0.3], "ch_1": [1, 2, 3]},
+                "freq_range": [2, 10],
+                "meta": {"meta0": "test_0"},
+            },
+            {
+                "timestamp": 100500,
+                "data": {"ch_0": [1.1, 2.2], "ch_1": [1, 2]},
+                "freq_range": [1, 100],
+                "meta": {"meta1": "test100500"},
+            },
+        ],
+    }
 )
 
 
