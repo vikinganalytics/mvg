@@ -15,6 +15,7 @@ import pytest
 
 from mvg.exceptions import MVGAPIError
 
+from tests.helpers import generate_random_source_id
 
 # Just to check if API is live
 def test_say_hello(session):
@@ -219,7 +220,7 @@ def test_sources_cru_existing(session):
 
 
 def test_spectrum_source_create_read_delete(session):
-    source_id = pytest.SOURCE_ID_SPECTRUM
+    source_id = generate_random_source_id()
     meta = {"test_meta": "test_id"}
 
     # Create - read - delete
@@ -243,8 +244,8 @@ def test_spectrum_source_create_read_delete(session):
     assert exc.value.response.status_code == 404
 
 
-def test_spectrum_create_new_measurement(session, empty_spectrum_source):
-    source_id = empty_spectrum_source["source_id"]
+def test_spectrum_create_new_measurement(session, spectrum_source_with_zero_measurements):
+    source_id = spectrum_source_with_zero_measurements["source_id"]
     timestamp = 111
     data = {"ch": [0.5, 1.5]}
     freq_range = (5, 15)
@@ -261,8 +262,8 @@ def test_spectrum_create_new_measurement(session, empty_spectrum_source):
     assert measurements[0]["meta"] == meta
 
 
-def test_spectrum_create_existing_source(session, simple_spectrum_source):
-    source_id = simple_spectrum_source["source_id"]
+def test_spectrum_create_existing_source(session, spectrum_source_with_measurements):
+    source_id = spectrum_source_with_measurements["source_id"]
 
     with pytest.raises(MVGAPIError) as exc:
         session.create_spectrum_source(source_id, meta={}, channels=["test"])
@@ -270,13 +271,25 @@ def test_spectrum_create_existing_source(session, simple_spectrum_source):
     assert exc.value.response.status_code == 409
 
 
-def test_spectrum_create_existing_measurement(session, simple_spectrum_source):
+def test_spectrum_create_existing_measurement(session, spectrum_source_with_measurements):
+    source_id = spectrum_source_with_measurements["source_id"]
+    data = spectrum_source_with_measurements["measurements"][0]["data"]
+    freq_range = [1, 2]
+    timestamp = 123
+    meta = {}
+
+    # create existing source (409 ignored)
+    session.create_spectrum_measurement(
+        source_id, freq_range, timestamp, data, meta, exist_ok=True
+    )
+
+    # create existing source (409 not ignored)
     with pytest.raises(MVGAPIError) as exc:
-        source_id = simple_spectrum_source["source_id"]
         session.create_spectrum_measurement(
-            source_id, (1, 2), 123, {"ch": [0.5, 1.5]}, {}
+            source_id, freq_range, timestamp, data, meta, exist_ok=False
         )
-    assert exc.value.response.status_code == 422
+
+    assert exc.value.response.status_code == 409
 
 
 def test_tabular_sources(session, tabular_source):

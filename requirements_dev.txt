@@ -1,6 +1,5 @@
 setuptools
 packaging
-papermill
 wheel
 twine
 black

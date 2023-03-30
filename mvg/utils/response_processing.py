@@ -2,9 +2,12 @@
 This module contains helper functions for manipulating the response from endpoints.
 """
 
+from pydantic import conlist
+
 from enum import Enum
 from typing import Dict, Callable
 
+FrequencyRange = conlist(float, min_items=2, max_items=2)
 
 class SortOrder(Enum):
     ASC = "asc"

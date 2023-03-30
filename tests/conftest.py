@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pytest
 import requests
-import uuid
 import json
 import pandas as pd
 from mvg import MVG
@@ -13,6 +12,7 @@ import argparse
 import sys
 
 from tests.helpers import (
+    generate_random_source_id,
     generate_sources_patterns,
     stub_multiaxial_data,
     upload_measurements,
@@ -54,10 +54,9 @@ VIBIUM_VERSION = "prod"
 
 # Pytest initial configuration
 def pytest_configure():
-    pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
+    pytest.SOURCE_ID_WAVEFORM = generate_random_source_id()
     pytest.REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
-    pytest.SOURCE_ID_SPECTRUM = uuid.uuid1().hex
-    pytest.SOURCE_ID_TABULAR = uuid.uuid1().hex
+    pytest.SOURCE_ID_TABULAR = generate_random_source_id()
     pytest.VALID_TOKEN = os.environ["TEST_TOKEN"]
 
 
@@ -246,18 +245,18 @@ def make_spectrum_source_fixture(info):
     return fixture
 
 
-empty_spectrum_source = make_spectrum_source_fixture(
+spectrum_source_with_zero_measurements = make_spectrum_source_fixture(
     {
-        "source_id": uuid.uuid1().hex,
+        "source_id": generate_random_source_id(),
         "meta": {"meta_test": "empty"},
         "channels": ["ch"],
         "measurements": [],
     }
 )
 
-simple_spectrum_source = make_spectrum_source_fixture(
+spectrum_source_with_measurements = make_spectrum_source_fixture(
     {
-        "source_id": uuid.uuid1().hex,
+        "source_id": generate_random_source_id(),
         "meta": {"sid_meta": "sid_test"},
         "channels": ["ch_0", "ch_1"],
         "measurements": [

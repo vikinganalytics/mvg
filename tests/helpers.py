@@ -1,7 +1,12 @@
 from itertools import cycle
 import numpy as np
+import uuid
 
 from mvg.mvg import MVG
+
+
+def generate_random_source_id():
+    return uuid.uuid1().hex
 
 
 def upload_measurements(session: MVG, sid: str, data: list):

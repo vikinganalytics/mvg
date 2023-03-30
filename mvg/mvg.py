@@ -13,7 +13,7 @@ For more information see README.md.
 import re
 import time
 import logging
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 import pandas as pd
 import requests
 from requests.exceptions import RequestException
@@ -21,6 +21,7 @@ import semver
 
 from mvg.exceptions import MVGConnectionError
 from mvg.utils.response_processing import (
+    FrequencyRange,
     SortOrder,
     get_paginated_analysis_results,
     get_paginated_items,
@@ -321,7 +322,6 @@ class MVGAPI:
         if exist_ok:
             do_not_raise.append(requests.codes["conflict"])  # 409
 
-        # Package info to be submitted to db
         source_info = {"source_id": sid, "meta": meta, "channels": channels}
         self._request("post", "/sources/spectrum", do_not_raise, json=source_info)
 
@@ -518,7 +518,7 @@ class MVGAPI:
     def create_spectrum_measurement(
         self,
         sid: str,
-        freq_range: Tuple[float, float],
+        freq_range: FrequencyRange,
         timestamp: int,
         data: Dict[str, List[float]],
         meta: dict = None,
@@ -537,8 +537,8 @@ class MVGAPI:
         sid: str
             source Id.
 
-        freq_range: float
-            lowest and highest frequency available in the spectrum as tuple (MIN, MAX)
+        freq_range: [float, float]
+            lowest and highest frequency available in the spectrum as list [MIN, MAX]
 
         timestamp: int
             in milliseconds since EPOCH.
@@ -568,7 +568,6 @@ class MVGAPI:
         if exist_ok:
             do_not_raise.append(requests.codes["conflict"])  # 409
 
-        # Package info for db to be submitted
         meas_struct = [
             {
                 "timestamp": timestamp,
