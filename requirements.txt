@@ -5,3 +5,4 @@ numpy
 semver
 matplotlib
 tabulate
+pydantic

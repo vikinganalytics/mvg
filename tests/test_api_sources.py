@@ -17,6 +17,7 @@ from mvg.exceptions import MVGAPIError
 
 from tests.helpers import generate_random_source_id
 
+
 # Just to check if API is live
 def test_say_hello(session):
     hello = session.say_hello()
@@ -244,7 +245,9 @@ def test_spectrum_source_create_read_delete(session):
     assert exc.value.response.status_code == 404
 
 
-def test_spectrum_create_new_measurement(session, spectrum_source_with_zero_measurements):
+def test_spectrum_create_new_measurement(
+    session, spectrum_source_with_zero_measurements
+):
     source_id = spectrum_source_with_zero_measurements["source_id"]
     timestamp = 111
     data = {"ch": [0.5, 1.5]}
@@ -271,7 +274,9 @@ def test_spectrum_create_existing_source(session, spectrum_source_with_measureme
     assert exc.value.response.status_code == 409
 
 
-def test_spectrum_create_existing_measurement(session, spectrum_source_with_measurements):
+def test_spectrum_create_existing_measurement(
+    session, spectrum_source_with_measurements
+):
     source_id = spectrum_source_with_measurements["source_id"]
     data = spectrum_source_with_measurements["measurements"][0]["data"]
     freq_range = [1, 2]

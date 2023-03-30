@@ -1,6 +1,7 @@
 [pylint]
 disable =
     R0904,
+    no-name-in-module,
     too-few-public-methods,
     too-many-arguments,
     logging-fstring-interpolation,

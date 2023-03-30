@@ -537,7 +537,7 @@ class MVGAPI:
         sid: str
             source Id.
 
-        freq_range: [float, float]
+        freq_range: FrequencyRange
             lowest and highest frequency available in the spectrum as list [MIN, MAX]
 
         timestamp: int
