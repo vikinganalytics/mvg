@@ -6,15 +6,15 @@ relying on access to vibium-cloud API
 Tests need to be run in order
 -p no:randomly
 """
-from datetime import datetime, timedelta
-import os
 import json
+import os
+from datetime import datetime, timedelta
+
 import numpy as np
 import pandas as pd
 import pytest
 
 from mvg.exceptions import MVGAPIError
-
 from tests.helpers import generate_random_source_id
 
 
@@ -268,10 +268,14 @@ def test_spectrum_create_new_measurement(
 def test_spectrum_create_existing_source(session, spectrum_source_with_measurements):
     source_id = spectrum_source_with_measurements["source_id"]
 
+    # create existing source (409 not ignored)
     with pytest.raises(MVGAPIError) as exc:
         session.create_spectrum_source(source_id, meta={}, channels=["test"])
 
     assert exc.value.response.status_code == 409
+
+    # create existing source (409 ignored)
+    session.create_spectrum_source(source_id, meta={}, channels=["test"], exist_ok=True)
 
 
 def test_spectrum_create_existing_measurement(
@@ -279,22 +283,19 @@ def test_spectrum_create_existing_measurement(
 ):
     source_id = spectrum_source_with_measurements["source_id"]
     data = spectrum_source_with_measurements["measurements"][0]["data"]
-    freq_range = [1, 2]
-    timestamp = 123
-    meta = {}
+    timestamp = spectrum_source_with_measurements["measurements"][0]["timestamp"]
+    freq_range = spectrum_source_with_measurements["measurements"][0]["freq_range"]
 
-    # create existing source (409 ignored)
-    session.create_spectrum_measurement(
-        source_id, freq_range, timestamp, data, meta, exist_ok=True
-    )
-
-    # create existing source (409 not ignored)
+    # create existing measurement (409 not ignored)
     with pytest.raises(MVGAPIError) as exc:
-        session.create_spectrum_measurement(
-            source_id, freq_range, timestamp, data, meta, exist_ok=False
-        )
+        session.create_spectrum_measurement(source_id, freq_range, timestamp, data)
 
     assert exc.value.response.status_code == 409
+
+    # create existing measurement (409 ignored)
+    session.create_spectrum_measurement(
+        source_id, freq_range, timestamp, data, exist_ok=True
+    )
 
 
 def test_tabular_sources(session, tabular_source):
@@ -302,13 +303,13 @@ def test_tabular_sources(session, tabular_source):
     columns = list(tabular_dict.keys())
     meta = {"extra": "information"}
 
-    # create source again (409 ignored)
-    session.create_tabular_source(source_id, columns, meta, exist_ok=True)
-
     # create source again (409 not ignored)
     with pytest.raises(MVGAPIError) as exc:
         session.create_tabular_source(source_id, columns, meta)
     assert exc.value.response.status_code == 409
+
+    # create source again (409 ignored)
+    session.create_tabular_source(source_id, columns, meta, exist_ok=True)
 
     columns.remove("timestamp")
     src = session.get_source(source_id)
