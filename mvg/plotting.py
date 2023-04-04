@@ -6,34 +6,12 @@ For more information see README.md.
 """
 
 import logging
-import pandas as pd
+
 import matplotlib.pyplot as plt
+import pandas as pd
 from matplotlib import patches
 
 logger = logging.getLogger(__name__)
-
-
-# Dictionary the defines color coding for modes
-# where code -1 represents "No Data"
-MODE_COLOR_CODES = dict(
-    (
-        [-2, "gray"],
-        [-1, "white"],
-        [0, "blue"],
-        [1, "fuchsia"],
-        [2, "orange"],
-        [3, "aqua"],
-        [4, "pink"],
-        [5, "steelblue"],
-        [6, "olive"],
-        [7, "purple"],
-        [8, "darkgoldenrod"],
-        [9, "mediumseagreen"],
-        [10, "indigo"],
-        [11, "lightcoral"],
-        [12, "black"],
-    )
-)
 
 
 def modes_boxplot(data, feature, request_id, total_modes=None, axes=None):
@@ -143,7 +121,7 @@ def modes_group_boxplot(dfs, feature, request_ids):
 def modes_over_time(
     data,
     request_id,
-    colors=None,
+    colors,
     height=100,
     width=5,
     timeticks_interval=None,
@@ -167,7 +145,7 @@ def modes_over_time(
         string with request_id (or source_Id). Can be replaced by other name
         to represent the request_id.
 
-    colors: dictionary, optional
+    colors: dictionary
         color code for each mode.
 
     height: int, optional
@@ -217,8 +195,6 @@ def modes_over_time(
     ts_start, ts_end = data["timestamps"].iloc[[0, -1]]
     ts_next = (ts_end - ts_start) / 30 + ts_end
     data.loc[len(data)] = {**data.iloc[-1], "timestamps": int(ts_next)}
-
-    colors = colors or MODE_COLOR_CODES
 
     # Create figure with blank plot
     if axes is None:
@@ -347,7 +323,7 @@ def modes_over_time(
 def modes_probabilities_over_time(
     data,
     title,
-    colors=None,
+    colors,
     height=12,
     width=4,
     timeticks_interval=None,
@@ -367,7 +343,7 @@ def modes_probabilities_over_time(
     title: string
         plot title
 
-    colors: dictionary, optional
+    colors: dictionary
         color code for each mode.
         the dictionary keys should be of the form "mode {mode number}".
 
@@ -398,11 +374,6 @@ def modes_probabilities_over_time(
     image: object of class matplotlib.axes
 
     """
-
-    # Colors for the line chart
-    colors = colors or {
-        f"mode {mode}": color for mode, color in MODE_COLOR_CODES.items()
-    }
 
     # Create figure with blank plot
     if axes is None:
@@ -441,7 +412,7 @@ def modes_probabilities_over_time(
     return image
 
 
-def modes_over_time_group(dfs, request_ids, days=1, tol=2, timeunit="ms"):
+def modes_over_time_group(dfs, request_ids, colors, days=1, tol=2, timeunit="ms"):
     """Creates a rectangular timeline of modes for a set of sources.
 
     The figure display the rectangular timeline of modes
@@ -455,6 +426,9 @@ def modes_over_time_group(dfs, request_ids, days=1, tol=2, timeunit="ms"):
     request_ids: List of strings
         list of strings with request_ids (or source_Ids). Can be replaced by other name
         to represent each request_id.
+
+    colors: dictionary
+        color code for each mode.
 
     days: int, optional
         interval to be considered for each measurement.
@@ -499,38 +473,17 @@ def modes_over_time_group(dfs, request_ids, days=1, tol=2, timeunit="ms"):
         modes_over_time(
             dfexp,
             request_ids[count],
+            colors,
             timeticks_interval=7,
             timeunit=timeunit,
             axes=axes[count],
         )
 
 
-# Dictionary the defines color coding for labels
-# where code -1 represents "No Data"
-LABEL_COLOR_CODES = dict(
-    (
-        [-1, "white"],
-        [0, "orangered"],
-        [1, "coral"],
-        [2, "darksalmon"],
-        [3, "darkviolet"],
-        [4, "mediumorchid"],
-        [5, "mediumpurple"],
-        [6, "thistle"],
-        [7, "slategrey"],
-        [8, "silver"],
-        [9, "sienna"],
-        [10, "tan"],
-        [11, "moccasin"],
-        [12, "khaki"],
-    )
-)
-
-
 def plot_labels_over_time(
     data,
     source_id,
-    colors=None,
+    colors,
     height=100,
     width=5,
     timeticks_interval=None,
@@ -552,7 +505,7 @@ def plot_labels_over_time(
     source_id: string
         string with source_Id. Can be replaced by other name
 
-    colors: dictionary, optional
+    colors: dictionary
         color code for each mode.
 
     height: int, optional
@@ -591,8 +544,6 @@ def plot_labels_over_time(
     data["Date"] = pd.to_datetime(data["timestamp"], unit=timeunit)
     # Categorize the labels as integers
     data["label_idx"] = pd.factorize(data["label"])[0]
-
-    colors = colors or LABEL_COLOR_CODES
 
     # Create figure with blank plot
     if axes is None:

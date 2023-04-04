@@ -9,13 +9,16 @@ from mvg.features.analysis import Analysis
 
 
 class BlackSheep(Analysis):
-    def __init__(self, results, t_zone=None, t_unit=None):
+    def __init__(self, results, metadata, t_zone=None, t_unit=None):
         """Constructor
 
         Parameters
         ----------
         results: dict
             Dictionary with the server response form a get_analysis_results call.
+
+        metadata: dict
+            not used in this analysis
 
         t_zone: str
             timezone, if None, times will remain in epoch time [UTC].
@@ -25,7 +28,7 @@ class BlackSheep(Analysis):
         """
 
         # Super
-        Analysis.__init__(self, results, t_zone, t_unit)
+        Analysis.__init__(self, results, metadata, t_zone, t_unit)
 
         # Dataframe conversion
         if "success" not in self.status():

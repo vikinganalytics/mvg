@@ -1,12 +1,12 @@
 import pandas as pd
 from tabulate import tabulate
-from mvg import plotting
 
+from mvg import plotting
 from mvg.features.analysis import Analysis
 
 
 class LabelPropagation(Analysis):
-    def __init__(self, results, t_zone=None, t_unit=None):
+    def __init__(self, results, metadata, t_zone=None, t_unit=None):
         """Constructor
 
         Parameters
@@ -14,15 +14,19 @@ class LabelPropagation(Analysis):
         results: dict
             Dictionary with the server response from a get_analysis_results call.
 
+        metadata: dict
+            analysis metadata (contains plotting color scheme)
+
         t_zone: str
             timezone, if None, times will remain in epoch time [UTC].
 
         t_unit: str
             time unit for conversion from epoch time [ms].
         """
-        super().__init__(results, t_zone=t_zone, t_unit=t_unit)
+        super().__init__(results, metadata, t_zone=t_zone, t_unit=t_unit)
         self._results_df = pd.DataFrame(self.results())
         self._add_datetime("timestamp")
+        self.color_scheme = metadata["color_scheme"]["labels"]
 
     def results(self):
         return super().results()["propagated_labels"]
@@ -68,7 +72,7 @@ class LabelPropagation(Analysis):
         self.check_status()
         sources = ", ".join(self.sources())
         plotting.plot_labels_over_time(
-            self.results(), sources, timeunit=self._t_unit, time_format=time_format
+            self.results(), sources, self.color_scheme, timeunit=self._t_unit, time_format=time_format
         )
 
         return self._render_plot(interactive, filename)

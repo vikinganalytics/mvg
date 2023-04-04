@@ -14,13 +14,13 @@ from mvg.features.label_propagation import LabelPropagation
 TZ = "Europe/Stockholm"
 
 
-def test_KPIDemo():
+def test_KPIDemo(session):
     # read dict
     with open("./tests/test_data/KPIDemo_results_dict.json") as json_file:
         api_results = json.load(json_file)
 
     # get object
-    feat = parse_results(api_results, t_zone=TZ, t_unit=None)
+    feat = parse_results(api_results, session.metadata, t_zone=TZ, t_unit=None)
 
     cols = feat.to_df().columns.tolist()
     cols_without_datetime = cols.copy()  # Datetime is not part of the original data
@@ -33,7 +33,7 @@ def test_KPIDemo():
     assert len(feat.to_df()["timestamps"]) == len(api_results["results"]["timestamps"])
 
     # Test datetime conversion
-    feat = analysis_classes.KPIDemo(api_results, t_zone=TZ, t_unit="s")
+    feat = analysis_classes.KPIDemo(api_results, session.metadata, t_zone=TZ, t_unit="s")
     assert str(feat.to_df()["datetime"][0]) == "2019-10-04 13:01:00+02:00"
 
     # Summary
@@ -65,13 +65,13 @@ def test_KPIDemo():
     assert feat.sources() == ["u0001"]
 
 
-def test_BlackSheep():
+def test_BlackSheep(session):
     # read dict
     with open("./tests/test_data/BlackSheep_results_dict.json") as json_file:
         api_results = json.load(json_file)
 
     # get object
-    feat = parse_results(api_results, t_zone=TZ, t_unit=None)
+    feat = parse_results(api_results, session.metadata, t_zone=TZ, t_unit=None)
 
     # Check dataframe conversion
     df_df = pd.read_csv("./tests/test_data/BlackSheep_df.csv")
@@ -83,12 +83,12 @@ def test_BlackSheep():
     assert feat_summary_df.equals(summary_df)
 
 
-def test_ModeId():
+def test_ModeId(session):
     # read dict
     with open("./tests/test_data/ModeId_results_dict.json") as json_file:
         api_results = json.load(json_file)
 
-    feat = parse_results(api_results, t_zone=TZ, t_unit=None)
+    feat = parse_results(api_results, session.metadata, t_zone=TZ, t_unit=None)
     # Check dataframe conversion
     df_df = pd.read_csv("./tests/test_data/ModeId_df.csv")
     pd.testing.assert_frame_equal(
@@ -103,18 +103,18 @@ def test_ModeId():
     assert (res[1]["portion"][0] == 84).any()
 
     # Mode table (+wallclock times)
-    feat = parse_results(api_results, t_zone=TZ, t_unit="s")
+    feat = parse_results(api_results, session.metadata, t_zone=TZ, t_unit="s")
     mt_df = feat.mode_table().reset_index(drop=True)
     mt_correct_df = pd.read_pickle("./tests/test_data/mode_table_wc.pkl")
     mt_correct_df = mt_correct_df.reset_index(drop=True)
     assert mt_correct_df.equals(mt_df.reset_index(drop=True))
 
 
-def test_labelprop():
+def test_labelprop(session):
     with open("./tests/test_data/label_prop_results.json") as json_file:
         api_results = json.load(json_file)
 
-    labelprop: LabelPropagation = parse_results(api_results, t_zone=TZ)
+    labelprop: LabelPropagation = parse_results(api_results, session.metadata, t_zone=TZ)
 
     # Accessor functions
     assert labelprop.feature() == "LabelPropagation"
@@ -132,23 +132,23 @@ def test_labelprop():
     os.remove(plt_file)  # Cleanup
 
 
-def test_none_existing_feature():
+def test_none_existing_feature(session):
     # read dict
     with open("./tests/test_data/Nonexisting_feature.json") as json_file:
         api_results = json.load(json_file)
 
     # try to get non implemented object
     with pytest.raises(KeyError):
-        assert parse_results(api_results, t_zone=TZ, t_unit=None)
+        assert parse_results(api_results, session.metadata, t_zone=TZ, t_unit=None)
 
 
-def test_failed_run():
+def test_failed_run(session):
     # read dict
     with open("./tests/test_data/BlackSheep_failed.json") as json_file:
         api_results = json.load(json_file)
 
     # try to get non implemented object
-    feat = parse_results(api_results, t_zone=TZ, t_unit=None)
+    feat = parse_results(api_results, session.metadata, t_zone=TZ, t_unit=None)
     with pytest.raises(ValueError):
         assert feat.summary()
 

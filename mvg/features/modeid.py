@@ -2,18 +2,22 @@
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
+
 from mvg import plotting
 from mvg.features.analysis import Analysis
 
 
 class ModeId(Analysis):
-    def __init__(self, results, t_zone=None, t_unit=None):
+    def __init__(self, results, metadata, t_zone=None, t_unit=None):
         """Constructor
 
         Parameters
         ----------
         results: dict
             Dictionary with the server response from a get_analysis_results call.
+
+        metadata: dict
+            analysis metadata (contains plotting color scheme)
 
         t_zone: str
             timezone, if None, times will remain in epoch time [UTC].
@@ -22,7 +26,7 @@ class ModeId(Analysis):
             time unit for conversion from epoch time [ms].
         """
 
-        Analysis.__init__(self, results, t_zone, t_unit)
+        Analysis.__init__(self, results, metadata, t_zone, t_unit)
         if "success" not in self.status():
             print(f"Analysis {self.request_id} failed on server side")
         else:
@@ -34,6 +38,7 @@ class ModeId(Analysis):
             self._results_df = pd.DataFrame.from_dict(dict_for_df)
             self._add_datetime()
             self.emerging_df = self._add_datetime_df(self.emerging_df, "emerging_time")
+            self.color_scheme = metadata["color_scheme"]["modes"]
 
     def summary(self):
         """
@@ -101,6 +106,7 @@ class ModeId(Analysis):
         plotting.modes_over_time(
             data=self.to_df(),
             request_id=self.request_id(),
+            colors=self.color_scheme,
             timeunit=self._t_unit,
             time_format=time_format,
         )
@@ -150,9 +156,13 @@ class ModeId(Analysis):
             modes_list = [f"mode {n}" for n in selected_modes]
             data = data[modes_list]
 
+        # Colors for the line chart
+        colors = {f"mode {mode}": color for mode, color in self.color_scheme.items()}
+
         plotting.modes_probabilities_over_time(
             data=data,
             title=f"Probability of modes over time for {self.request_id()}",
+            colors=colors,
             timeunit=self._t_unit,
             time_format=time_format,
         )

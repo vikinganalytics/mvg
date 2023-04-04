@@ -45,7 +45,7 @@ else:
 res_dict = ses.get_analysis_results(REQ_ID)
 
 # Parse results
-res = parse_results(res_dict, "Europe/Stockholm", "s")
+res = parse_results(res_dict, ses.metadata, "Europe/Stockholm", "s")
 res.summary()
 res.plot()
 print(res.to_df().head())

@@ -4,7 +4,7 @@ a pandas dataFrame.
 
 Basic usage:
 
->>> result = parse_results(session.get_analysis_results(request_id))  # call API
+>>> result = parse_results(session.get_analysis_results(request_id), session.metadata)  # call API
 >>> result.plot() # plot results
 >>> result.summary() # print summary table
 >>> df = result.to_df() # convert to dataframe
@@ -30,7 +30,7 @@ FEATURES = {
 
 
 # Parser/Factory function
-def parse_results(results, t_zone=None, t_unit=None):
+def parse_results(results, metadata, t_zone=None, t_unit=None):
     """Parses the result from a get_analysis_results call
     and returns an instance
     of the analysis class.
@@ -39,6 +39,9 @@ def parse_results(results, t_zone=None, t_unit=None):
     ----------
     results: dict
         Dictionary with the server response form a get_analysis_results call.
+
+    metadata: dict
+        analysis metadata
 
     t_zone: str
         timezone, if None, times will remain in epoch time [UTC].
@@ -72,4 +75,4 @@ def parse_results(results, t_zone=None, t_unit=None):
     except KeyError:
         raise KeyError(f"Analysis class for: {feature} not implemented!")
 
-    return feature_class(results, t_zone, t_unit)
+    return feature_class(results, metadata, t_zone, t_unit)

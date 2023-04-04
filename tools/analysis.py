@@ -89,9 +89,9 @@ def get_and_display_results(ses, request_id, show, pdb, gbg, sec):
 
     # Parse results
     if gbg:
-        res = parse_results(res_dict, "Europe/Stockholm", t_unit)
+        res = parse_results(res_dict, ses.metadata, "Europe/Stockholm", t_unit)
     else:
-        res = parse_results(res_dict, None, None)
+        res = parse_results(res_dict, ses.metadata, None, None)
     if pdb:
         breakpoint()
 

@@ -19,13 +19,16 @@ def unfold_result_to_df(result: dict) -> pd.DataFrame:
 class KPIDemo(Analysis):
     """Analysis class for KPIDemo feature."""
 
-    def __init__(self, results, t_zone=None, t_unit=None):
+    def __init__(self, results, metadata, t_zone=None, t_unit=None):
         """Constructor
 
         Parameters
         ----------
         results: dict
             Dictionary with the server response form a get_analysis_results call.
+
+        metadata: dict
+            not used in this analysis
 
         t_zone: str
             timezone, if None, times will remain in epoch time [UTC].
@@ -34,7 +37,7 @@ class KPIDemo(Analysis):
             time unit for conversion from epoch time [ms].
         """
 
-        super().__init__(results, t_zone, t_unit)
+        super().__init__(results, metadata, t_zone, t_unit)
         self._results_df = unfold_result_to_df(self.results())
         self._add_datetime()
 

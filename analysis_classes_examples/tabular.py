@@ -42,7 +42,7 @@ try:
 except MVGAPIError as exc:
     print(exc)
 
-ana = parse_results(ana_res, t_zone="Europe/Stockholm", t_unit="s")
+ana = parse_results(ana_res, ses.metadata, t_zone="Europe/Stockholm", t_unit="s")
 ana.plot()
 ana.summary()
 print("Bye")

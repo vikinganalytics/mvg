@@ -10,23 +10,24 @@ The MVGAPI class is intended for development of the library itself.
 For more information see README.md.
 """
 
+import logging
 import re
 import time
-import logging
 from typing import Dict, List, Optional
+
 import pandas as pd
 import requests
-from requests.exceptions import RequestException
 import semver
+from requests.exceptions import RequestException
 
 from mvg.exceptions import MVGConnectionError
+from mvg.http_client import HTTPClient
 from mvg.utils.response_processing import (
     FrequencyRange,
     SortOrder,
     get_paginated_analysis_results,
     get_paginated_items,
 )
-from mvg.http_client import HTTPClient
 
 logger = logging.getLogger(__name__)
 
@@ -75,6 +76,14 @@ class MVGAPI:
         api_vstr = api_root["api"]["version"]
         self.api_version = self.parse_version(api_vstr)
         self.api_content = api_root["content"]
+
+        color_scheme = self.api_content["color_scheme"]
+        self.metadata = {
+            "color_scheme": {
+                "modes": {int(k): v for k, v in color_scheme["modes"].items()},
+                "labels": {int(k): v for k, v in color_scheme["labels"].items()}
+            }
+        }
 
     def _request(
         self, method, path, do_not_raise=None, retries=None, **kwargs

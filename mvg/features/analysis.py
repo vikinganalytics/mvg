@@ -10,7 +10,7 @@ class Analysis:
     """Root class for analysis system classes."""
 
     # Init class with results
-    def __init__(self, results, t_zone=None, t_unit=None):
+    def __init__(self, results, metadata, t_zone=None, t_unit=None):
         """
         Constructor
         Called as super() from specific analysis class. Stores the results
@@ -21,6 +21,10 @@ class Analysis:
         ----------
         results: dict
             analysis results
+
+        metadata: dict
+            analysis metadata
+
         t_zone: t_zone
             timezone, if None, times will remain in epoch time [UTC].
 
