@@ -1,6 +1,7 @@
 [pylint]
+extension-pkg-whitelist=pydantic
 disable =
-    R0904,
+    too-many-public-methods,
     too-few-public-methods,
     too-many-arguments,
     logging-fstring-interpolation,

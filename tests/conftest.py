@@ -1,19 +1,20 @@
+import argparse
+import json
 import os
+import sys
 from pathlib import Path
 
+import pandas as pd
 import pytest
 import requests
-import uuid
-import json
-import pandas as pd
+
 from mvg import MVG
 from mvg.exceptions import MVGAPIError
-
-import argparse
-import sys
-
 from tests.helpers import (
+    generate_random_source_id,
     generate_sources_patterns,
+    make_channel_names,
+    simulate_spectrum_data,
     stub_multiaxial_data,
     upload_measurements,
 )
@@ -54,9 +55,9 @@ VIBIUM_VERSION = "prod"
 
 # Pytest initial configuration
 def pytest_configure():
-    pytest.SOURCE_ID_WAVEFORM = uuid.uuid1().hex
+    pytest.SOURCE_ID_WAVEFORM = generate_random_source_id()
     pytest.REF_DB_PATH = Path.cwd() / "tests" / "test_data" / "mini_charlie"
-    pytest.SOURCE_ID_TABULAR = uuid.uuid1().hex
+    pytest.SOURCE_ID_TABULAR = generate_random_source_id()
     pytest.VALID_TOKEN = os.environ["TEST_TOKEN"]
 
 
@@ -223,6 +224,51 @@ Create multiaxial sources with generated measurements based on a pattern
 sources_pattern = generate_sources_patterns()
 waveform_source_multiaxial_001 = waveform_source_multiaxial_fixture_creator(
     *sources_pattern[0]
+)
+
+
+def make_spectrum_source_fixture(pattern, n_channels=1):
+    @pytest.fixture
+    def fixture(session: MVG):
+        sid = generate_random_source_id()
+        channels = make_channel_names(n_channels=n_channels)
+
+        source_info = {"sid": sid, "channels": channels, "meta": {}}
+        session.create_spectrum_source(**source_info)
+        timestamps = []
+        measurements = []
+        if pattern:
+            timestamps, measurements = simulate_spectrum_data(
+                pattern=pattern, channels=channels
+            )
+            for meas in measurements:
+                session.create_spectrum_measurement(
+                    sid=sid,
+                    freq_range=meas["freq_range"],
+                    timestamp=meas["timestamp"],
+                    data=meas["data"],
+                    meta=meas["meta"],
+                )
+
+        info = {
+            "measurements": measurements,
+            "timestamps": timestamps,
+            "pattern": pattern,
+            "channels": channels,
+            "meta": source_info["meta"],
+        }
+        try:
+            yield sid, info
+        finally:
+            session.delete_source(sid)
+
+    return fixture
+
+
+spectrum_source_with_zero_measurements = make_spectrum_source_fixture(pattern=[])
+
+spectrum_source_with_measurements = make_spectrum_source_fixture(
+    pattern=7 * [0] + 15 * [1]
 )
 
 
