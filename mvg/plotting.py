@@ -81,7 +81,7 @@ def modes_boxplot(data, feature, request_id, total_modes=None, axes=None):
     modes = modes.astype("category")
     data["Modes"] = data["labels"].copy()
     data["Modes"] = data["Modes"].astype("category")
-    data["Modes"].cat.set_categories(modes.tolist(), inplace=True)
+    data["Modes"] = data["Modes"].cat.set_categories(modes.tolist())
 
     # Plot and format figure
     image = data.boxplot(column=feature, by="Modes", ax=axes)
