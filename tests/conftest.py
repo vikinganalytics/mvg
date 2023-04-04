@@ -1,19 +1,20 @@
+import argparse
+import json
 import os
+import sys
 from pathlib import Path
 
+import pandas as pd
 import pytest
 import requests
-import json
-import pandas as pd
+
 from mvg import MVG
 from mvg.exceptions import MVGAPIError
-
-import argparse
-import sys
-
 from tests.helpers import (
     generate_random_source_id,
     generate_sources_patterns,
+    make_channel_names,
+    simulate_spectrum_data,
     stub_multiaxial_data,
     upload_measurements,
 )
@@ -226,54 +227,48 @@ waveform_source_multiaxial_001 = waveform_source_multiaxial_fixture_creator(
 )
 
 
-def make_spectrum_source_fixture(info):
+def make_spectrum_source_fixture(pattern, n_channels=1):
     @pytest.fixture
-    def fixture(session):
-        sid = info["source_id"]
-        try:
-            session.create_spectrum_source(
-                sid, meta=info["meta"], channels=info["channels"]
+    def fixture(session: MVG):
+        sid = generate_random_source_id()
+        channels = make_channel_names(n_channels=n_channels)
+
+        source_info = {"sid": sid, "channels": channels, "meta": {}}
+        session.create_spectrum_source(**source_info)
+        timestamps = []
+        measurements = []
+        if pattern:
+            timestamps, measurements = simulate_spectrum_data(
+                pattern=pattern, channels=channels
             )
-            for m in info["measurements"]:
+            for meas in measurements:
                 session.create_spectrum_measurement(
-                    sid, m["freq_range"], m["timestamp"], m["data"], m["meta"]
+                    sid=sid,
+                    freq_range=meas["freq_range"],
+                    timestamp=meas["timestamp"],
+                    data=meas["data"],
+                    meta=meas["meta"],
                 )
-            yield info
+
+        info = {
+            "measurements": measurements,
+            "timestamps": timestamps,
+            "pattern": pattern,
+            "channels": channels,
+            "meta": source_info["meta"],
+        }
+        try:
+            yield sid, info
         finally:
             session.delete_source(sid)
 
     return fixture
 
 
-spectrum_source_with_zero_measurements = make_spectrum_source_fixture(
-    {
-        "source_id": generate_random_source_id(),
-        "meta": {"meta_test": "empty"},
-        "channels": ["ch"],
-        "measurements": [],
-    }
-)
+spectrum_source_with_zero_measurements = make_spectrum_source_fixture(pattern=[])
 
 spectrum_source_with_measurements = make_spectrum_source_fixture(
-    {
-        "source_id": generate_random_source_id(),
-        "meta": {"sid_meta": "sid_test"},
-        "channels": ["ch_0", "ch_1"],
-        "measurements": [
-            {
-                "timestamp": 0,
-                "data": {"ch_0": [0.1, 0.2, 0.3], "ch_1": [1, 2, 3]},
-                "freq_range": [2, 10],
-                "meta": {"meta0": "test_0"},
-            },
-            {
-                "timestamp": 100500,
-                "data": {"ch_0": [1.1, 2.2], "ch_1": [1, 2]},
-                "freq_range": [1, 100],
-                "meta": {"meta1": "test100500"},
-            },
-        ],
-    }
+    pattern=7 * [0] + 15 * [1]
 )
 
 

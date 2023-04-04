@@ -1,12 +1,19 @@
-from itertools import cycle
-import numpy as np
+from typing import List
 import uuid
+from itertools import cycle
+
+import numpy as np
+from scipy import fft
 
 from mvg.mvg import MVG
 
 
 def generate_random_source_id():
     return uuid.uuid1().hex
+
+
+def make_channel_names(n_channels):
+    return [f"acc_{i}" for i in range(n_channels)]
 
 
 def upload_measurements(session: MVG, sid: str, data: list):
@@ -17,6 +24,29 @@ def upload_measurements(session: MVG, sid: str, data: list):
         session.create_measurement(
             sid, ts_data["meta"]["duration"], ts, ts_data["data"], ts_data["meta"]
         )
+
+
+def FFT(data, sample_freq) -> list():
+    """Calculates FFT of the given time-series data.
+
+    Parameters
+    ----------
+    data : array
+           data to be transformed.
+    sample_freq : float
+         sampling frequency.
+
+    Returns
+    -------
+    tuple : the frequency range and FFT
+    """
+    N = len(data)  # Number of samples
+    T = 1 / sample_freq  # Sample spacing
+    xf = np.linspace(0.0, 1.0 / (2.0 * T), int(N / 2))  # Creates frequency vector
+    yf = fft.rfft(data)  # Performs FFT
+    # FFTpeak is currently calculated, to calculate FFTrms reaplce 2.0 by np.sqrt(2)
+    abs_yf = (2.0 / N) * np.absolute(yf[: N // 2])  # Calculates norm
+    return xf, abs_yf
 
 
 def stub_multiaxial_data(samp_freq=3000, duration=3.0, pattern={}):
@@ -42,7 +72,7 @@ def stub_multiaxial_data(samp_freq=3000, duration=3.0, pattern={}):
 
     Examples
     --------
-    >>> pattern = {'acc_x': [0] * 1 + [1] * 1, 'acc_x': [0] * 2, 'acc_z': [1] * 2}
+    >>> pattern = {'acc_x': [0] * 1 + [1] * 1, 'acc_y': [0] * 2, 'acc_z': [1] * 2}
     >>> timestamps, data, duration = stub_multiaxial_data()
     >>> print(data)
     {0: {"data": {"acc_x": [...], "acc_y": [...], "acc_z": [...]}, "meta": {}}, 3600000: {"data": {"acc_x": [...], "acc_y": [...], "acc_z": [...]}, "meta": {}}}
@@ -89,6 +119,35 @@ def stub_multiaxial_data(samp_freq=3000, duration=3.0, pattern={}):
         }
 
     return timestamps, data, duration
+
+
+def simulate_spectrum_data(pattern, channels, sample_freq=3000):
+    channels_pattern = {channel: pattern for channel in channels}
+
+    timestamps, data, _ = stub_multiaxial_data(
+        samp_freq=sample_freq, pattern=channels_pattern
+    )
+
+    measurements: List[dict] = []
+    for timestamp in timestamps:
+        waveform_data = data[timestamp]["data"]
+        spectrum_data = {}
+        for channel, channel_data in waveform_data.items():
+            # convert the waveform data in each channel to its
+            # respective spectrum
+            _, fft_y = FFT(channel_data, sample_freq)
+            spectrum_data[channel] = list(fft_y)
+
+        measurements.append(
+            {
+                "timestamp": timestamp,
+                "freq_range": [0, sample_freq],
+                "meta": {},
+                "data": spectrum_data,
+            }
+        )
+
+    return timestamps, measurements
 
 
 def generate_sources_patterns():
