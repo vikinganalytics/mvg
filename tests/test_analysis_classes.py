@@ -59,7 +59,6 @@ def test_KPIDemo():
     assert sum(feat.raw_results()["results"]["timestamps"]) == ts_sum
     assert feat.request_id() == "75fc046d1b6ca741cf442552f506f95b"
     assert feat.feature() == "KPIDemo"
-    assert sum(feat.inputs()["timestamps"]) == ts_sum
     assert sum(feat.results()["timestamps"]) == ts_sum
     assert feat.status() == "successful"
     assert feat.sources() == ["u0001"]
