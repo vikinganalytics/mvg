@@ -10,23 +10,24 @@ The MVGAPI class is intended for development of the library itself.
 For more information see README.md.
 """
 
+import logging
 import re
 import time
-import logging
 from typing import Dict, List, Optional
+
 import pandas as pd
 import requests
-from requests.exceptions import RequestException
 import semver
+from requests.exceptions import RequestException
 
 from mvg.exceptions import MVGConnectionError
+from mvg.http_client import HTTPClient
 from mvg.utils.response_processing import (
     FrequencyRange,
     SortOrder,
     get_paginated_analysis_results,
     get_paginated_items,
 )
-from mvg.http_client import HTTPClient
 
 logger = logging.getLogger(__name__)
 
@@ -62,8 +63,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.7")
-        self.tested_api_version = self.parse_version("v0.5.12")
+        self.mvg_version = self.parse_version("v0.14.8")
+        self.tested_api_version = self.parse_version("v0.6.5")
 
         # Get API version
         try:
@@ -754,6 +755,7 @@ class MVGAPI:
 
         return response.json()
 
+    # pylint: disable=too-many-locals
     def list_tabular_measurements(
         self,
         sid: str,
@@ -808,16 +810,27 @@ class MVGAPI:
 
         resp_first = response.json()
         all_measurements = resp_first["items"]
-        num_v = resp_first["total"]
-        if not params:
+        total_num = resp_first.get("total", None)
+        request_limit = resp_first.get("limit", None)
+
+        has_missing_items = False
+        if total_num and request_limit:
+            offset = offset or 0
+            limit = min(limit or total_num, total_num - offset)
+            has_missing_items = request_limit < limit
+
+        if not params or has_missing_items:
             # List all by default if pagination is not requested or
             # start/end timestamps are not specified
-            limit = resp_first["limit"]
-            num_reqs = (num_v - 1) // limit
-            for idx in range(1, num_reqs + 1):
-                offset = idx * limit
-                response = self._request("get", url, params={"offset": offset})
-                all_measurements += response.json()["items"]
+            num_reqs = (total_num - 1) // request_limit
+            for _ in range(1, num_reqs + 1):
+                if "limit" in params:
+                    params["limit"] -= request_limit
+                offset += request_limit
+                params["offset"] = offset
+                response = self._request("get", url, params=params)
+                for key, items in response.json()["items"].items():
+                    all_measurements[key] += items
 
         return all_measurements
 

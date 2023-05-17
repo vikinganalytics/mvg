@@ -16,6 +16,7 @@ import pytest
 
 from mvg.exceptions import MVGAPIError
 from mvg.mvg import MVG
+from mvg.utils.response_processing import get_paginated_items
 from tests.helpers import (
     generate_random_source_id,
     make_channel_names,
@@ -578,7 +579,7 @@ def test_pagination(session, tabular_source_with_measurements):
     timestamps = tabular_dict["timestamp"]
     num_meas = len(timestamps)
 
-    # deafult offset and limit
+    # default offset and limit
     response = session.list_measurements(sid)
     assert len(response) == num_meas
 
@@ -619,3 +620,48 @@ def test_pagination(session, tabular_source_with_measurements):
     # test order=desc
     response = session.list_timestamps(sid, order="desc")
     assert response["items"] == sorted(response["items"], reverse=True)
+
+
+def test_pagination_limits(session, tabular_source_with_measurements):
+    # API sets the limits for pagination which MVG is not aware of. The source
+    # fixtures defined in MVG might have measurements less than the pagination
+    # limits. This test enhances the fixtures beyond the pagination limits to
+    # run tests
+
+    sid, tabular_dict = tabular_source_with_measurements
+    end_timestamp = tabular_dict["timestamp"][-1]
+    num_meas = len(tabular_dict["timestamp"])
+
+    # Find the default pagination limits of the API
+    url = f"/sources/{sid}/measurements"
+    paginated_items = get_paginated_items(session._request, url, {})
+    measurements_limit = paginated_items["limit"]
+
+    # Prepare measurements upto "x" times the limit
+    n_times = 2 * measurements_limit
+    new_timestamps = [end_timestamp + i for i in range(1, n_times + 1)]
+    data = {
+        col: n_times * [values[-1]]
+        for col, values in tabular_dict.items()
+        if col != "timestamp"
+    }
+    data["timestamp"] = new_timestamps
+
+    # Add measurements
+    session.create_tabular_measurement(sid, data)
+    for column in tabular_dict:
+        tabular_dict[column].extend(data[column])
+
+    # Number of new + existing measurements
+    num_new_meas = len(tabular_dict["timestamp"])
+    # Assert we have the expected number of measurements
+    assert num_new_meas == num_meas + n_times
+
+    # Default offset and limit
+    response = session.list_measurements(sid)
+    assert len(response) == num_new_meas
+
+    # Non-default limit
+    limit = num_new_meas // 2
+    response = session.list_measurements(sid, limit=limit)
+    assert len(response) == limit
