@@ -97,7 +97,7 @@ def get_paginated_items(request: Callable, url: str, params: Dict) -> Dict:
         response = request("get", url, params=params)
         items += response.json()["items"]
 
-    return {"items": items, "total": total_items_num}
+    return {"items": items, "total": total_items_num, "limit": request_limit}
 
 
 def get_paginated_analysis_results(request: Callable, url: str, params: Dict) -> Dict:
