@@ -77,7 +77,7 @@ def get_paginated_items(request: Callable, url: str, params: Dict) -> Dict:
     total_items_num = response["total"]
     request_limit = response["limit"]
 
-    offset = params.get("offset", 0)
+    offset = params.get("offset", response["offset"])
     limit = params.get("limit", total_items_num)
 
     # The items count we expect to receive given the pagination params
