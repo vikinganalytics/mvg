@@ -4,16 +4,18 @@
 </a>
 <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/va-mvg.svg?style=flat-square">
 
-A Python library to interface the the **M**ulti**V**iz Analytics En**G**ine ('MVG')
+The **M**ulti**V**iz Analytics En**G**ine ('MVG') is a Python library that enables users to:
 
-* setup a session towards the vibium-cloud service
-
-* interface the services by means of API calls. [API documentation](https://api.beta.multiviz.com/docs).
+- Establish a session with the Vibium Cloud service
+- Interface the services via API calls. For more information, refer to the [API documentation](https://api.beta.multiviz.com/docs).
 
 ## Documentation
 
 Usage of the library and several examples can be found [here](https://vikinganalytics.github.io/mvg/).
-## Obtaining the library
+
+## Installation
+
+To install the library, use the following pip command:
 
 ```
 pip install va-mvg
@@ -21,101 +23,62 @@ pip install va-mvg
 
 ## Basic Usage
 
-1. Create a session by instantiating a MVG object. A session is a combination
-of an endpoint (server address) and a token. The token is used both for
-authentication and authorization.
-The token is provided by Viking Analytics.
+The basic usage involves three steps:
 
-2. Call the API functions
+1. Create a session by instantiating an MVG object. A session is a combination of an endpoint (server address) and a token. The token, provided by Viking Analytics, is used for both authentication and authorization.
 
-3. Errors are propagated via exceptions. It is up to the calling application
-to handle error cases.
+2. Call the API functions.
+
+3. Handle exceptions. Errors are propagated via exceptions, and it is the responsibility of the calling application to handle these.
 
 ## Important Concepts
 
-* endpoint: The server providing the analytics and data handling functions.
-Represented by an URL. The endpoint is set when creating the session.
+- **Endpoint**: The server that provides the analytics and data handling functions. This is represented by a URL and is set when creating the session.
 
-* source ID (sid): an identifier representing a measurement source,
-typically a sensor. The sid is set on the client side and will be used
-as a reference for the source and all information related to it
-(e.g. measurements and analysis results).
+- **Source ID (sid)**: An identifier that represents a measurement source, typically a sensor. The sid is set on the client side and is used as a reference for the source and all information related to it (e.g., measurements and analysis results).
 
-* token: authentication and authorization token (to be provided by Viking
-Analytics)
+- **Token**: An authentication and authorization token provided by Viking Analytics.
 
-* meta information: additional information attached to sources or measurements.
-For some analyses the meta information needs to contain specific key-value pairs,
-but in general meta information is managed by the client side.
-Meta information will be stored along the sources/measurements and can be
-retrieved from the server side, even if it is not processed on the
-server side. Example of meta information for a source
+- **Meta information**: Additional information attached to sources or measurements. This can contain specific key-value pairs for some analyses, but generally, meta information is managed by the client side. Even if it is not processed on the server side, meta information is stored alongside the sources/measurements and can be retrieved from the server side. For example:
 ```python
 {"sensor_type": "arduino",
  "location": "gearbox"}
 ``` 
 
-* measurements: measurements is numerical data (typically a list of float values
-representing sensor data) identified by the source ID (the sensor recording the
-measurement) and the timestamp when the measurement was recorded. It is the
-responsibility of the client side to convey source ID and timestamp to the server
-side.
+- **Measurements**: Numerical data (typically a list of float values representing sensor data) identified by the source ID (the sensor recording the measurement) and the timestamp when the measurement was recorded. The client side is responsible for conveying the source ID and timestamp to the server side.
 
-* features: features are the analytics functions supported by the server side.
-An analytics function is invoked on a set of measurements by requesting
-an analysis.
+- **Features**: The analytics functions supported by the server side. An analytics function is invoked on a set of measurements by requesting an analysis.
 
-* analysis: an analysis applies a feature on a set of previously stored data.
-To specify an analysis the feature, the data, and the parameters need to be
-specified by the client side. Data needs to be available on the server.
-All calls to analysis are asynchronous. So the flow is to (1) request an
-analysis (2) poll for status (3) retrieve results when the analysis is completed.
-Each analysis is assigned a unique ID (request_id). Completed analyses are stored
-on the server side and can be retrieved by means of the jobid.
-It is primarily the clients side's responsibility to keep track of analyses.
+- **Analysis**: An analysis applies a feature on a set of previously stored data. The client side needs to specify the feature, the data, and the parameters for an analysis. Data needs to be available on the server. All calls to analysis are asynchronous. The typical flow is to (1) request an analysis, (2) poll for status, and (3) retrieve results when the analysis is completed. Each analysis is assigned a unique ID (request_id). Completed analyses are stored on the server side and can be retrieved using the job ID. It is primarily the client side's responsibility to keep track of analyses.
 
-## Version handling of mvg and API version
+## Version Handling of MVG and API Version
 
-The version string of the MVG API on the server side has the form
-v{MAJOR}.{MINOR}.{PATCH}.
-An increase of MAJOR means an incompatible change which requires an
-upgrade of mvg, an increase in MINOR does not require an upgrade of
-mvg, but may then not allow to access new features of the API. See mvg
-documentation and examples/0-check_version.ipynb for details.
+The version string of the MVG API on the server side has the form v{MAJOR}.{MINOR}.{PATCH}. An increase in MAJOR signifies an incompatible change that requires an upgrade of mvg. An increase in MINOR does not require an upgrade but may not allow access to new features of the API. Please refer to the mvg documentation
+
+ and the example "examples/0-check_version.ipynb" for details.
 
 ## Additional Documentation
 
-* API documentation on mvg, autogenerated from mvg.py
+- Autogenerated API documentation on mvg from mvg.py
 
 ### Examples
 
-Under the examples section there are a number of jupyter notebooks
-with Python code to show how to use the library for interfacing the
-Viking Analytics Engine. The notebooks can be downloaded by 
-clicking "View Page Source" link located on the top left of the
-examples. You will need to change the extension to .ipynb before
-running them.
+In the examples section, there are several Jupyter notebooks with Python code demonstrating how to use the library for interfacing with the Viking Analytics Engine. You can download these notebooks by clicking on the "View Page Source" link located at the top left of the examples. Be sure to change the extension to .ipynb before running them.
 
 ### Analysis Classes (beta)
 
-Analysis classes provide a simple and powerful way to parse and
-inspect the results for analysis calls for our features.
-Apart from converting the results to dataframes, 
-they can be used in an interactive
-shell to inspect the results from analysis calls.
+Analysis classes provide a simple and powerful way to parse and inspect the results from analysis calls for our features. Apart from converting the results to dataframes, they can be used in an interactive shell to inspect the results from analysis calls.
 
-In the directory anlysis_class_examples there are scripts for 
-showing how to use the analysis classes. 
+In the "analysis_class_examples" directory, there are scripts showing how to use the analysis classes.
 
 ### Maintainer
 
-Maintainer of the mvg library is Viking Analytics AB. <https://www.vikinganalytics.se>
+The mvg library is maintained by Viking Analytics AB. Visit their website at <https://www.vikinganalytics.se>.
 
-### Bug Reporting, Pull request, and support ...
+### Bug Reporting, Pull Requests, and Support
 
-... please use the issue tracking and pull requests on 
-https://github.com/vikinganalytics/mvg
+For bug reporting, pull requests, and support, please use the issue tracking and pull requests on the mvg GitHub page: https://github.com/vikinganalytics/mvg.
 
 ### License
 
-The mvg library is licensed under Apache License 2.0, see LICENSE file.
+The mvg library is licensed under the Apache License 2.0. See the LICENSE file for details.
