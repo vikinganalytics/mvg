@@ -39,7 +39,7 @@ The basic usage involves three steps:
 
 - **Token**: An authentication and authorization token provided by Viking Analytics.
 
-- **Meta information**: Additional information attached to sources or measurements. This can contain specific key-value pairs for some analyses, but generally, meta information is managed by the client side. Even if it is not processed on the server side, meta information is stored alongside the sources/measurements and can be retrieved from the server side. For example:
+- **Metadata**: Additional data providing information about the sources or measurements. This can contain specific key-value pairs for some analyses, but generally, metadata is managed by the client side. Even if it is not processed on the server side, metadata is stored alongside the sources/measurements and can be retrieved from the server side. For example:
 ```python
 {"sensor_type": "arduino",
  "location": "gearbox"}
