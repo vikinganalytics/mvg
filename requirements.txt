@@ -1,8 +1,7 @@
-typer
-pandas
-requests
-numpy
-semver
-matplotlib
-tabulate
-pydantic
+pandas>=1.1.5,<=2.0.3
+requests>=2.27.1,<=2.31.0
+numpy>=1.19.5,<=1.24.1
+semver>=2.13.0,<=3.0.1
+matplotlib>=3.3.4,<=3.7.2
+tabulate>=0.8.10,<=0.9.0
+pydantic>=1.9.2,<=1.10.11

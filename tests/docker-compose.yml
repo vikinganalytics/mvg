@@ -1,29 +1,35 @@
 version: "3.3"
 
-x-vibium-services-config: &vibium-services-config
+x-vibium-service: &vibium-service
     image: ${AWS_ECR}/vibium-app:${VIBIUM_VERSION}
     restart: unless-stopped
-    environment:
-        - VIBIUM_SLEEP=60 # wait for localstack to be ready
-        - VIBIUM_PIPELINE=/pipeline
-        - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
-        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-        - AWS_ENDPOINT_URL=http://localstack:4566
-        - ANALYSIS_IN_QUEUE=vibium-analysis-in
+    environment: &vibium-service-environment
+        VIBIUM_PIPELINE: /pipeline
+        AWS_DEFAULT_REGION: eu-west-1
+        AWS_ACCESS_KEY_ID: test
+        AWS_SECRET_ACCESS_KEY: test
+        AWS_ENDPOINT_URL: http://localstack:4566
+        MONGO_URI: mongodb://mongo:27017/
+        ACTIVE_PROFILE: local
     volumes:
         - "vibium-pipeline:/pipeline"
     networks:
         - vibium_net
     depends_on:
+        - mongo
         - localstack
 
 services:
     vibium-worker:
-        <<: *vibium-services-config
-        entrypoint: ["python", "worker.py"]
+        <<: *vibium-service
+        entrypoint: ["python", "-m", "vibium_app.worker"]
+        environment:
+            <<: *vibium-service-environment
+            HEART_BEAT_FREQUENCY_SECONDS: 0  # disable heartbeat
+            EXIT_ON_MESSAGE_PROCESSED: "False"
+
     vibium-api:
-        <<: *vibium-services-config
+        <<: *vibium-service
         ports:
             - 8000:8000
 
@@ -35,8 +41,18 @@ services:
         volumes:
             - "./localstack:/docker-entrypoint-initaws.d"
         environment:
-            - SERVICES=sqs,s3
+            - SERVICES=sqs
             - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+        networks:
+            - vibium_net
+    mongo:
+        image: mongo:6.0
+        ports:
+            - 27071:27071
+            - 27017:27017
+        restart: always
+        environment:
+            - MONGO_INITDB_DATABASE=vibiumdb
         networks:
             - vibium_net
 
