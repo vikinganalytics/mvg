@@ -41,12 +41,14 @@ class HTTPClient:
         self,
         endpoint,
         token,
+        mvg_version=None,
         retries=None,
         timeout=120,
     ):
         self.endpoint = endpoint
         self.token = token
         self.timeout = timeout
+        self.mvg_version = mvg_version
 
         self.retries = retries
         if not self.retries:
@@ -58,7 +60,10 @@ class HTTPClient:
             session.mount("http://", HTTPAdapter(max_retries=self.retries))
             session.mount("https://", HTTPAdapter(max_retries=self.retries))
 
-            _headers = {"Authorization": f"Bearer {self.token}"}
+            _headers = {
+                "Authorization": f"Bearer {self.token}",
+                "User-Agent": f"mvg/{self.mvg_version}",
+            }
             if headers:
                 _headers.update(headers)
 

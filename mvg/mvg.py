@@ -106,7 +106,7 @@ class MVGAPI:
         -------
         Response from the API call
         """
-        client = HTTPClient(self.endpoint, self.token, retries)
+        client = HTTPClient(self.endpoint, self.token, self.mvg_version, retries)
         response = client.request(
             method=method, path=path, do_not_raise=do_not_raise, **kwargs
         )
