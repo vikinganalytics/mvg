@@ -63,8 +63,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.10")
-        self.tested_api_version = self.parse_version("v0.9.3")
+        self.mvg_version = self.parse_version("v0.14.11")
+        self.tested_api_version = self.parse_version("v0.9.7")
 
         # Get API version
         try:
@@ -106,7 +106,7 @@ class MVGAPI:
         -------
         Response from the API call
         """
-        client = HTTPClient(self.endpoint, self.token, retries)
+        client = HTTPClient(self.endpoint, self.token, self.mvg_version, retries)
         response = client.request(
             method=method, path=path, do_not_raise=do_not_raise, **kwargs
         )
