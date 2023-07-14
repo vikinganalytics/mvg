@@ -106,118 +106,80 @@
 <img src="https://badge.fury.io/py/va-mvg.svg" alt="Package version">
 </a></span>
 <span class="raw-html-m2r"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/va-mvg.svg?style=flat-square"></span></p>
-<p>A Python library to interface the the <strong>M</strong>ulti<strong>V</strong>iz Analytics En<strong>G</strong>ine (‘MVG’)</p>
+<p>The <strong>M</strong>ulti<strong>V</strong>iz Analytics En<strong>G</strong>ine (‘MVG’) is a Python library that enables users to:</p>
 <ul class="simple">
-<li><p>setup a session towards the vibium-cloud service</p></li>
-<li><p>interface the services by means of API calls. <a class="reference external" href="https://api.beta.multiviz.com/docs">API documentation</a>.</p></li>
+<li><p>Establish a session with the Vibium Cloud service</p></li>
+<li><p>Interface the services via API calls. For more information, refer to the <a class="reference external" href="https://api.beta.multiviz.com/docs">API documentation</a>.</p></li>
 </ul>
 <section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>Usage of the library and several examples can be found <a class="reference external" href="https://vikinganalytics.github.io/mvg/">here</a>.</p>
 </section>
-<section id="obtaining-the-library">
-<h2>Obtaining the library<a class="headerlink" href="#obtaining-the-library" title="Permalink to this heading"></a></h2>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>To install the library, use the following pip command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">va</span><span class="o">-</span><span class="n">mvg</span>
 </pre></div>
 </div>
 </section>
 <section id="basic-usage">
 <h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this heading"></a></h2>
+<p>The basic usage involves three steps:</p>
 <ol class="arabic simple">
-<li><p>Create a session by instantiating a MVG object. A session is a combination
-of an endpoint (server address) and a token. The token is used both for
-authentication and authorization.
-The token is provided by Viking Analytics.</p></li>
-<li><p>Call the API functions</p></li>
-<li><p>Errors are propagated via exceptions. It is up to the calling application
-to handle error cases.</p></li>
+<li><p>Create a session by instantiating an MVG object. A session is a combination of an endpoint (server address) and a token. The token, provided by Viking Analytics, is used for both authentication and authorization.</p></li>
+<li><p>Call the API functions.</p></li>
+<li><p>Handle exceptions. Errors are propagated via exceptions, and it is the responsibility of the calling application to handle these.</p></li>
 </ol>
 </section>
 <section id="important-concepts">
 <h2>Important Concepts<a class="headerlink" href="#important-concepts" title="Permalink to this heading"></a></h2>
 <ul>
-<li><p>endpoint: The server providing the analytics and data handling functions.
-Represented by an URL. The endpoint is set when creating the session.</p></li>
-<li><p>source ID (sid): an identifier representing a measurement source,
-typically a sensor. The sid is set on the client side and will be used
-as a reference for the source and all information related to it
-(e.g. measurements and analysis results).</p></li>
-<li><p>token: authentication and authorization token (to be provided by Viking
-Analytics)</p></li>
-<li><p>meta information: additional information attached to sources or measurements.
-For some analyses the meta information needs to contain specific key-value pairs,
-but in general meta information is managed by the client side.
-Meta information will be stored along the sources/measurements and can be
-retrieved from the server side, even if it is not processed on the
-server side. Example of meta information for a source</p>
+<li><p><strong>Endpoint</strong>: The server that provides the analytics and data handling functions. This is represented by a URL and is set when creating the session.</p></li>
+<li><p><strong>Source ID (sid)</strong>: An identifier that represents a measurement source, typically a sensor. The sid is set on the client side and is used as a reference for the source and all information related to it (e.g., measurements and analysis results).</p></li>
+<li><p><strong>Token</strong>: An authentication and authorization token provided by Viking Analytics.</p></li>
+<li><p><strong>Metadata</strong>: Additional data providing information about the sources or measurements. This can contain specific key-value pairs for some analyses, but generally, metadata is managed by the client side. Even if it is not processed on the server side, metadata is stored alongside the sources/measurements and can be retrieved from the server side. For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;sensor_type&quot;</span><span class="p">:</span> <span class="s2">&quot;arduino&quot;</span><span class="p">,</span>
 <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;gearbox&quot;</span><span class="p">}</span>
 </pre></div>
 </div>
 </li>
-<li><p>measurements: measurements is numerical data (typically a list of float values
-representing sensor data) identified by the source ID (the sensor recording the
-measurement) and the timestamp when the measurement was recorded. It is the
-responsibility of the client side to convey source ID and timestamp to the server
-side.</p></li>
-<li><p>features: features are the analytics functions supported by the server side.
-An analytics function is invoked on a set of measurements by requesting
-an analysis.</p></li>
-<li><p>analysis: an analysis applies a feature on a set of previously stored data.
-To specify an analysis the feature, the data, and the parameters need to be
-specified by the client side. Data needs to be available on the server.
-All calls to analysis are asynchronous. So the flow is to (1) request an
-analysis (2) poll for status (3) retrieve results when the analysis is completed.
-Each analysis is assigned a unique ID (request_id). Completed analyses are stored
-on the server side and can be retrieved by means of the jobid.
-It is primarily the clients side’s responsibility to keep track of analyses.</p></li>
+<li><p><strong>Measurements</strong>: Numerical data (typically a list of float values representing sensor data) identified by the source ID (the sensor recording the measurement) and the timestamp when the measurement was recorded. The client side is responsible for conveying the source ID and timestamp to the server side.</p></li>
+<li><p><strong>Features</strong>: The analytics functions supported by the server side. An analytics function is invoked on a set of measurements by requesting an analysis.</p></li>
+<li><p><strong>Analysis</strong>: An analysis applies a feature on a set of previously stored data. The client side needs to specify the feature, the data, and the parameters for an analysis. Data needs to be available on the server. All calls to analysis are asynchronous. The typical flow is to (1) request an analysis, (2) poll for status, and (3) retrieve results when the analysis is completed. Each analysis is assigned a unique ID (request_id). Completed analyses are stored on the server side and can be retrieved using the job ID. It is primarily the client side’s responsibility to keep track of analyses.</p></li>
 </ul>
 </section>
 <section id="version-handling-of-mvg-and-api-version">
-<h2>Version handling of mvg and API version<a class="headerlink" href="#version-handling-of-mvg-and-api-version" title="Permalink to this heading"></a></h2>
-<p>The version string of the MVG API on the server side has the form
-v{MAJOR}.{MINOR}.{PATCH}.
-An increase of MAJOR means an incompatible change which requires an
-upgrade of mvg, an increase in MINOR does not require an upgrade of
-mvg, but may then not allow to access new features of the API. See mvg
-documentation and examples/0-check_version.ipynb for details.</p>
+<h2>Version Handling of MVG and API Version<a class="headerlink" href="#version-handling-of-mvg-and-api-version" title="Permalink to this heading"></a></h2>
+<p>The version string of the MVG API on the server side has the form v{MAJOR}.{MINOR}.{PATCH}. An increase in MAJOR signifies an incompatible change that requires an upgrade of mvg. An increase in MINOR does not require an upgrade but may not allow access to new features of the API. Please refer to the mvg documentation</p>
+<blockquote>
+<div><p>and the example “examples/0-check_version.ipynb” for details.</p>
+</div></blockquote>
 </section>
 <section id="additional-documentation">
 <h2>Additional Documentation<a class="headerlink" href="#additional-documentation" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p>API documentation on mvg, autogenerated from mvg.py</p></li>
+<li><p>Autogenerated API documentation on mvg from mvg.py</p></li>
 </ul>
 <section id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
-<p>Under the examples section there are a number of jupyter notebooks
-with Python code to show how to use the library for interfacing the
-Viking Analytics Engine. The notebooks can be downloaded by
-clicking “View Page Source” link located on the top left of the
-examples. You will need to change the extension to .ipynb before
-running them.</p>
+<p>In the examples section, there are several Jupyter notebooks with Python code demonstrating how to use the library for interfacing with the Viking Analytics Engine. You can download these notebooks by clicking on the “View Page Source” link located at the top left of the examples. Be sure to change the extension to .ipynb before running them.</p>
 </section>
 <section id="analysis-classes-beta">
 <h3>Analysis Classes (beta)<a class="headerlink" href="#analysis-classes-beta" title="Permalink to this heading"></a></h3>
-<p>Analysis classes provide a simple and powerful way to parse and
-inspect the results for analysis calls for our features.
-Apart from converting the results to dataframes,
-they can be used in an interactive
-shell to inspect the results from analysis calls.</p>
-<p>In the directory anlysis_class_examples there are scripts for
-showing how to use the analysis classes.</p>
+<p>Analysis classes provide a simple and powerful way to parse and inspect the results from analysis calls for our features. Apart from converting the results to dataframes, they can be used in an interactive shell to inspect the results from analysis calls.</p>
+<p>In the “analysis_class_examples” directory, there are scripts showing how to use the analysis classes.</p>
 </section>
 <section id="maintainer">
 <h3>Maintainer<a class="headerlink" href="#maintainer" title="Permalink to this heading"></a></h3>
-<p>Maintainer of the mvg library is Viking Analytics AB. <a class="reference external" href="https://www.vikinganalytics.se">https://www.vikinganalytics.se</a></p>
+<p>The mvg library is maintained by Viking Analytics AB. Visit their website at <a class="reference external" href="https://www.vikinganalytics.se">https://www.vikinganalytics.se</a>.</p>
 </section>
-<section id="bug-reporting-pull-request-and-support">
-<h3>Bug Reporting, Pull request, and support …<a class="headerlink" href="#bug-reporting-pull-request-and-support" title="Permalink to this heading"></a></h3>
-<p>… please use the issue tracking and pull requests on
-<a class="reference external" href="https://github.com/vikinganalytics/mvg">https://github.com/vikinganalytics/mvg</a></p>
+<section id="bug-reporting-pull-requests-and-support">
+<h3>Bug Reporting, Pull Requests, and Support<a class="headerlink" href="#bug-reporting-pull-requests-and-support" title="Permalink to this heading"></a></h3>
+<p>For bug reporting, pull requests, and support, please use the issue tracking and pull requests on the mvg GitHub page: <a class="reference external" href="https://github.com/vikinganalytics/mvg">https://github.com/vikinganalytics/mvg</a>.</p>
 </section>
 <section id="license">
 <h3>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h3>
-<p>The mvg library is licensed under Apache License 2.0, see LICENSE file.</p>
+<p>The mvg library is licensed under the Apache License 2.0. See the LICENSE file for details.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
