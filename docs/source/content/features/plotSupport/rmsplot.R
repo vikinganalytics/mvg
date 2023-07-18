@@ -1,4 +1,4 @@
-## Publication quality plot for RMS documentTION
+## Publication quality plot for RMS documentation
 
 ## Data from VA-Charlie
 ## assuming wd to be in plotSupport
