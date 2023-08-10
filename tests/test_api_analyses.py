@@ -116,7 +116,7 @@ def test_callback_server_failure(
 
 
 def test_modeid_analysis_selected_columns(session, tabular_source_with_measurements):
-    source_id, tabular_dict = tabular_source_with_measurements
+    source_id, tabular_dict, _ = tabular_source_with_measurements
     columns = list(tabular_dict.keys())
 
     def assert_results(selected_columns):

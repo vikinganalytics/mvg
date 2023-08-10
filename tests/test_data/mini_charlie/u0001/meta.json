@@ -1,1 +1,8 @@
-{"assetId": "assetJ", "measPoint": "mloc01", "location": "cancun"}
+{
+    "assetId": "assetJ",
+    "measPoint": "mloc01",
+    "location": "cancun",
+    "assetName": "motor_x",
+    "sensorName": "2CA",
+    "measurementName": "8k_Acc_1200000"
+}
