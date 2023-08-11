@@ -227,7 +227,7 @@ def test_sources_cru_existing(session):
 def test_get_source_spectrum_source(session: MVG):
     source_id = generate_random_source_id()
     channels = make_channel_names(n_channels=1)
-    
+
     m_file_name = pytest.REF_DB_PATH / "u0001" / "meta.json"
     with open(m_file_name, "r") as json_file:
         meta = json.load(json_file)
