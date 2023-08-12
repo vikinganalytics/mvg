@@ -260,7 +260,15 @@ class MVGAPI:
             Cannot be updated after creating source.
 
         meta : dict
-            Meta information of source [optional].
+            Meta information of source. Note that tabular source requires
+            "location" and "assetName" in metadata, while spectrum and waveform
+            need "location", "assetName", "sensorName" and "measurementName" e.g:
+            {
+                "location": "Factory x",
+                "assetName": "Water pump 13",
+                "sensorName": "NDE H",
+                "measurementName": "8k_Acc_1200000"
+            }
 
         exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
