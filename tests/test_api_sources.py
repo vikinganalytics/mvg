@@ -227,7 +227,11 @@ def test_sources_cru_existing(session):
 def test_get_source_spectrum_source(session: MVG):
     source_id = generate_random_source_id()
     channels = make_channel_names(n_channels=1)
-    meta = {"asset_id": "pump"}
+
+    m_file_name = pytest.REF_DB_PATH / "u0001" / "meta.json"
+    with open(m_file_name, "r") as json_file:
+        meta = json.load(json_file)
+    meta["extra"] = "pump"
 
     try:
         session.create_spectrum_source(source_id, channels=channels, meta=meta)
@@ -319,9 +323,8 @@ def test_create_spectrum_measurement_ignore_409(
 
 
 def test_tabular_sources(session, tabular_source):
-    source_id, tabular_dict = tabular_source
+    source_id, tabular_dict, meta = tabular_source
     columns = list(tabular_dict.keys())
-    meta = {"extra": "information"}
 
     # create source again (409 not ignored)
     with pytest.raises(MVGAPIError) as exc:
@@ -340,7 +343,7 @@ def test_tabular_sources(session, tabular_source):
 
 def test_tabular_measurements_float_timestamps(session, tabular_source):
     with pytest.raises(MVGAPIError) as exc:
-        source_id, tabular_dict = tabular_source
+        source_id, tabular_dict, _ = tabular_source
         tabular_dict_float = tabular_dict.copy()
         tabular_dict_float["timestamp"] = [ts + 0.1 for ts in tabular_dict["timestamp"]]
         session.create_tabular_measurement(source_id, tabular_dict_float)
@@ -348,7 +351,7 @@ def test_tabular_measurements_float_timestamps(session, tabular_source):
 
 
 def test_tabular_measurements(session, tabular_source):
-    source_id, tabular_dict = tabular_source
+    source_id, tabular_dict, _ = tabular_source
     columns = list(tabular_dict.keys())
     columns.remove("timestamp")
     tabular_df = pd.DataFrame(tabular_dict)
@@ -384,7 +387,7 @@ def test_tabular_measurements(session, tabular_source):
 
 
 def test_list_tabular_measurements(session, tabular_source):
-    source_id, tabular_dict = tabular_source
+    source_id, tabular_dict, _ = tabular_source
     columns = list(tabular_dict.keys())
 
     ts_0 = tabular_dict["timestamp"][0]
@@ -432,7 +435,7 @@ def test_list_tabular_measurements(session, tabular_source):
 def test_list_tabular_downsampled_measurements(
     session, tabular_source_with_measurements
 ):
-    source_id, tabular_dict = tabular_source_with_measurements
+    source_id, tabular_dict, _ = tabular_source_with_measurements
 
     # Unsuccessful call to API using a negative threshold
     with pytest.raises(MVGAPIError) as exc:
@@ -473,7 +476,7 @@ def test_list_tabular_downsampled_measurements(
 
 
 def test_create_label(session, tabular_source_with_measurements):
-    source_id, tabular_dict = tabular_source_with_measurements
+    source_id, tabular_dict, _ = tabular_source_with_measurements
     timestamps = tabular_dict["timestamp"]
     label1 = {"label": "normal", "severity": 0, "notes": ""}
     label2 = {"label": "failure", "severity": 100, "notes": "This is really bad!"}
@@ -511,7 +514,7 @@ def test_create_label(session, tabular_source_with_measurements):
 
 
 def test_update_label(session, tabular_source_with_measurements):
-    source_id, tabular_dict = tabular_source_with_measurements
+    source_id, tabular_dict, _ = tabular_source_with_measurements
     timestamps = tabular_dict["timestamp"]
     label_pre = {"label": "failure", "severity": 100, "notes": "This is really bad!"}
     session.create_label(source_id, timestamps[0], **label_pre)
@@ -530,7 +533,7 @@ def test_update_label(session, tabular_source_with_measurements):
 
 
 def test_delete_label(session, tabular_source_with_measurements):
-    source_id, tabular_dict = tabular_source_with_measurements
+    source_id, tabular_dict, _ = tabular_source_with_measurements
     timestamps = tabular_dict["timestamp"]
     session.create_label(
         source_id,
@@ -547,7 +550,7 @@ def test_delete_label(session, tabular_source_with_measurements):
 
 
 def test_list_labels(session, tabular_source_with_measurements):
-    source_id, tabular_dict = tabular_source_with_measurements
+    source_id, tabular_dict, _ = tabular_source_with_measurements
     timestamps = tabular_dict["timestamp"]
     for k in [0, -1]:
         session.create_label(
@@ -575,7 +578,7 @@ def test_list_labels(session, tabular_source_with_measurements):
 
 
 def test_pagination(session, tabular_source_with_measurements):
-    sid, tabular_dict = tabular_source_with_measurements
+    sid, tabular_dict, _ = tabular_source_with_measurements
     timestamps = tabular_dict["timestamp"]
     num_meas = len(timestamps)
 
@@ -628,7 +631,7 @@ def test_pagination_limits(session, tabular_source_with_measurements):
     # limits. This test enhances the fixtures beyond the pagination limits to
     # run tests
 
-    sid, tabular_dict = tabular_source_with_measurements
+    sid, tabular_dict, _ = tabular_source_with_measurements
     end_timestamp = tabular_dict["timestamp"][-1]
     num_meas = len(tabular_dict["timestamp"])
 

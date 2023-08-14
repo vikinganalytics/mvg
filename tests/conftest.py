@@ -207,9 +207,14 @@ def waveform_source_multiaxial_fixture_creator(source_id, pattern):
     def fixture(session):
         try:
             timestamps, data, _ = stub_multiaxial_data(pattern=pattern)
-            session.create_source(
-                source_id, meta={"type": "pump"}, channels=list(pattern.keys())
-            )
+            meta = {
+                "type": "pump",
+                "location": "cancun",
+                "assetName": "motor_x",
+                "sensorName": "2CA",
+                "measurementName": "8k_Acc_1200000",
+            }
+            session.create_source(source_id, meta=meta, channels=list(pattern.keys()))
             upload_measurements(session, source_id, data)
             yield source_id, {"timestamps": timestamps, "pattern": pattern}
         finally:
@@ -233,7 +238,11 @@ def make_spectrum_source_fixture(pattern, n_channels=1):
         sid = generate_random_source_id()
         channels = make_channel_names(n_channels=n_channels)
 
-        source_info = {"sid": sid, "channels": channels, "meta": {}}
+        m_file_name = pytest.REF_DB_PATH / "u0001" / "meta.json"
+        with open(m_file_name, "r") as json_file:
+            meta = json.load(json_file)
+
+        source_info = {"sid": sid, "channels": channels, "meta": meta}
         session.create_spectrum_source(**source_info)
         timestamps = []
         measurements = []
@@ -280,15 +289,15 @@ def tabular_source(session):
             pytest.REF_DB_PATH.parent / "tabular_data.csv", float_precision="round_trip"
         )
         columns = tabular_df.columns.tolist()
-        meta = {"extra": "information"}
+        meta = {"location": "gbg", "assetName": "motor_1", "extra": "information"}
         session.create_tabular_source(source_id, columns=columns, meta=meta)
-        yield source_id, tabular_df.to_dict("list")
+        yield source_id, tabular_df.to_dict("list"), meta
     finally:
         session.delete_source(source_id)
 
 
 @pytest.fixture()
 def tabular_source_with_measurements(session, tabular_source):
-    source_id, tabular_dict = tabular_source
+    source_id, tabular_dict, _ = tabular_source
     session.create_tabular_measurement(source_id, tabular_dict)
     yield tabular_source

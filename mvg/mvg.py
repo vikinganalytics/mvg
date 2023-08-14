@@ -63,8 +63,8 @@ class MVGAPI:
         self.endpoint = endpoint
         self.token = token
 
-        self.mvg_version = self.parse_version("v0.14.12")
-        self.tested_api_version = self.parse_version("v0.9.7")
+        self.mvg_version = self.parse_version("v0.14.13")
+        self.tested_api_version = self.parse_version("v0.9.14")
 
         # Get API version
         try:
@@ -260,7 +260,15 @@ class MVGAPI:
             Cannot be updated after creating source.
 
         meta : dict
-            Meta information of source [optional].
+            Meta information of source. Note that tabular source requires
+            "location" and "assetName" in metadata, while spectrum and waveform
+            need "location", "assetName", "sensorName" and "measurementName" e.g:
+            {
+                "location": "Factory x",
+                "assetName": "Water pump 13",
+                "sensorName": "NDE H",
+                "measurementName": "8k_Acc_1200000"
+            }
 
         exist_ok : bool
             Set to true to prevent exceptions for 409 Conflict errors
