@@ -84,7 +84,8 @@ def stub_multiaxial_data(samp_freq=3000, duration=3.0, pattern={}):
     n_meas = len(list(pattern.values())[0])
     assert all(len(p) == n_meas for p in pattern.values())
 
-    timestamps = [k * 3600 * 1000 for k in range(n_meas)]
+    start_ts = 1577833200000  # millis sicne epoch for 2020-01-01
+    timestamps = [start_ts + k * 3600 * 1000 for k in range(n_meas)]
     n_samples = int(samp_freq * duration)
     T = np.linspace(0.0, duration, n_samples + 1)
     f_peak = 300.0

@@ -564,7 +564,7 @@ def test_list_labels(session, tabular_source_with_measurements):
     list_short = session.list_labels(source_id, include_unlabeled=False)
     list_short.pop("label_timestamp")
     assert list_short == {
-        "timestamp": [43854, 44080],
+        "timestamp": [946684843854, 946684844080],
         "label": ["failure", "failure"],
         "severity": [100, 100],
         "notes": ["This is really bad!", "This is really bad!"],
