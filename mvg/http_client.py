@@ -61,7 +61,7 @@ class HTTPClient:
             session.mount("https://", HTTPAdapter(max_retries=self.retries))
 
             _headers = {
-                "Authorization": f"Bearer {self.token}",
+                "X-Vibium-Api-Key": self.token,
                 "User-Agent": f"mvg/{self.mvg_version}",
             }
             if headers:
