@@ -53,6 +53,8 @@ services:
         restart: always
         environment:
             - MONGO_INITDB_DATABASE=vibiumdb
+        volumes:
+        - "./mongo:/docker-entrypoint-initdb.d:ro"
         networks:
             - vibium_net
 
