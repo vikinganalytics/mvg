@@ -11,6 +11,7 @@ x-vibium-service: &vibium-service
         AWS_ENDPOINT_URL: http://localstack:4566
         MONGO_URI: mongodb://mongo:27017/
         ACTIVE_PROFILE: docker
+        MESSAGE_PRODUCER__FEATURE_TO_QUEUE: "{}"
     volumes:
         - "vibium-pipeline:/pipeline"
     networks:
