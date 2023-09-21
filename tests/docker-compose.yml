@@ -10,7 +10,8 @@ x-vibium-service: &vibium-service
         AWS_SECRET_ACCESS_KEY: test
         AWS_ENDPOINT_URL: http://localstack:4566
         MONGO_URI: mongodb://mongo:27017/
-        ACTIVE_PROFILE: local
+        ACTIVE_PROFILE: docker
+        MESSAGE_PRODUCER__FEATURE_TO_QUEUE: "{}"
     volumes:
         - "vibium-pipeline:/pipeline"
     networks:
@@ -53,6 +54,8 @@ services:
         restart: always
         environment:
             - MONGO_INITDB_DATABASE=vibiumdb
+        volumes:
+            - "./mongo:/docker-entrypoint-initdb.d:ro"
         networks:
             - vibium_net
 
