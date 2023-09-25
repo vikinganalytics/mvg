@@ -13,13 +13,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -128,7 +128,7 @@
            <div itemprop="articleBody">
              
   <section id="Analysis-Classes---Unified-Interface-to-Analysis-Results">
-<h1>Analysis Classes - Unified Interface to Analysis Results<a class="headerlink" href="#Analysis-Classes---Unified-Interface-to-Analysis-Results" title="Permalink to this heading"></a></h1>
+<h1>Analysis Classes - Unified Interface to Analysis Results<a class="headerlink" href="#Analysis-Classes---Unified-Interface-to-Analysis-Results" title="Link to this heading"></a></h1>
 <p>MVG comes with a set of analysis classes which provide a unified interface to analysis results <em>irrespective of the specific feature</em>. Note that the analysis classes are helper classes, as such the mvg class does <em>not</em> depend on them.</p>
 <p>Except for step (1) requesting the specific feature analysis, the following generic workflow holds:</p>
 <ol class="arabic simple">
@@ -138,7 +138,7 @@
 </ol>
 <p>One application is to use the analysis classes interactively from a Python REPL session.</p>
 <section id="Or-in-(pseudo)-code">
-<h2>Or in (pseudo) code<a class="headerlink" href="#Or-in-(pseudo)-code" title="Permalink to this heading"></a></h2>
+<h2>Or in (pseudo) code<a class="headerlink" href="#Or-in-(pseudo)-code" title="Link to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">parse_results</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">get_analysis_results</span><span class="p">(</span><span class="n">request_id</span><span class="p">))</span>  <span class="c1"># call API to get results</span>
 <span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span> <span class="c1"># plot results</span>
 <span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span> <span class="c1"># print summary table</span>
@@ -148,7 +148,7 @@
 </div>
 </section>
 <section id="Prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this heading"></a></h2>
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Link to this heading"></a></h2>
 <p>For running the examples in this notebook:</p>
 <ol class="arabic simple">
 <li><p>Installed mvg package</p></li>
@@ -157,7 +157,7 @@
 </ol>
 </section>
 <section id="Importing-the-required-packages,-classes-and-functions">
-<h2>Importing the required packages, classes and functions<a class="headerlink" href="#Importing-the-required-packages,-classes-and-functions" title="Permalink to this heading"></a></h2>
+<h2>Importing the required packages, classes and functions<a class="headerlink" href="#Importing-the-required-packages,-classes-and-functions" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -171,7 +171,7 @@
 </div>
 </section>
 <section id="Create-a-Session-and-test-API-access">
-<h2>Create a Session and test API access<a class="headerlink" href="#Create-a-Session-and-test-API-access" title="Permalink to this heading"></a></h2>
+<h2>Create a Session and test API access<a class="headerlink" href="#Create-a-Session-and-test-API-access" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Each token is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA-MVG’ service.</p>
@@ -208,7 +208,7 @@
 </pre></div></div>
 </div>
 <section id="Request-an-analysis">
-<h3>Request an analysis<a class="headerlink" href="#Request-an-analysis" title="Permalink to this heading"></a></h3>
+<h3>Request an analysis<a class="headerlink" href="#Request-an-analysis" title="Link to this heading"></a></h3>
 <p>Once the API session is live, we start by checking if the source u0001 we will use is available in the database:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -263,16 +263,16 @@ Waiting for {&#39;request_id&#39;: &#39;9fa506fd651f10b05401840edf9f33cb&#39;, &
 </div>
 </section>
 <section id="Parse-Results">
-<h3>Parse Results<a class="headerlink" href="#Parse-Results" title="Permalink to this heading"></a></h3>
+<h3>Parse Results<a class="headerlink" href="#Parse-Results" title="Link to this heading"></a></h3>
 </section>
 </section>
 <section id="Showing-and-Browsing-the-results-using-analysis_classes">
-<h2>Showing and Browsing the results using analysis_classes<a class="headerlink" href="#Showing-and-Browsing-the-results-using-analysis_classes" title="Permalink to this heading"></a></h2>
+<h2>Showing and Browsing the results using analysis_classes<a class="headerlink" href="#Showing-and-Browsing-the-results-using-analysis_classes" title="Link to this heading"></a></h2>
 <p>To make the results more accessible, we’ll use the analysis_classes. The parse_results function will take the raw_results of (any) analysis and represent them in a python object with a number of convenience methods for summarising, plotting and exporting. For the full list of provided methods check <a class="reference external" href="https://vikinganalytics.github.io/mvg/content/utilities_reference/analysis_classes.html">the documentation</a>.</p>
 <p>The parse function will automatically determine the kind (feature) of analysis based on the raw_results. Once the results are parsed, we can summarize them using the summary() method <em>irrespective of which analysis they stem from</em>. To verify this you can rerun the cell above by selecting another feature for the analysis.</p>
 </section>
 <section id="Timestamps">
-<h2>Timestamps<a class="headerlink" href="#Timestamps" title="Permalink to this heading"></a></h2>
+<h2>Timestamps<a class="headerlink" href="#Timestamps" title="Link to this heading"></a></h2>
 <p>The Vibration API requires timestamps to be represented in EPOCH time. To display human interpertable timestamps, one needs a timezone and a time unit (specifying if the timestamps are seconds ‘s’ or milliseconds ‘ms’ from EPOCH). This information can be given in the parse_results calls (2nd and 3rd argument). If they are left blank EPOCH times are kept. When exporting the results to a DataFrame, a column called “datetime” will be appended to show the human interpretable times.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -310,11 +310,11 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </pre></div></div>
 </div>
 <section id="Use-Generic-Methods">
-<h3>Use Generic Methods<a class="headerlink" href="#Use-Generic-Methods" title="Permalink to this heading"></a></h3>
+<h3>Use Generic Methods<a class="headerlink" href="#Use-Generic-Methods" title="Link to this heading"></a></h3>
 </section>
 </section>
 <section id="Plotting">
-<h2>Plotting<a class="headerlink" href="#Plotting" title="Permalink to this heading"></a></h2>
+<h2>Plotting<a class="headerlink" href="#Plotting" title="Link to this heading"></a></h2>
 <p>For visual representation of the results, there is the ‘plot’ method.</p>
 <p>Please not that when plotting the results for the KPIDemo feature, one selects the KPI to be displayed by passing the parameter <code class="docutils literal notranslate"><span class="pre">&quot;kpi&quot;</span></code>. If this parameter is not included, the plot function will display the results of the first column after the timestamps, which is the RMS value of the first channel.</p>
 <div class="nbinput docutils container">
@@ -343,7 +343,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </div>
 </section>
 <section id="Export-results-to-DataFrame">
-<h2>Export results to DataFrame<a class="headerlink" href="#Export-results-to-DataFrame" title="Permalink to this heading"></a></h2>
+<h2>Export results to DataFrame<a class="headerlink" href="#Export-results-to-DataFrame" title="Link to this heading"></a></h2>
 <p>The to_df() method will export results to a DataFrame. Note that the format of the DataFrame depends on the specific analysis and that not all of the results can be represented as a data frame.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
@@ -994,7 +994,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </div>
 </section>
 <section id="Full-results">
-<h2>Full results<a class="headerlink" href="#Full-results" title="Permalink to this heading"></a></h2>
+<h2>Full results<a class="headerlink" href="#Full-results" title="Link to this heading"></a></h2>
 <p>In case the full server results are needed in the raw form they were returned, we can obtain them with the results() method:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -1005,7 +1005,7 @@ from 20191004-13:01.00 to 20191122-13:01.00
 </div>
 </div>
 <section id="Black-Sheep-Analysis-example">
-<h3>Black Sheep Analysis example<a class="headerlink" href="#Black-Sheep-Analysis-example" title="Permalink to this heading"></a></h3>
+<h3>Black Sheep Analysis example<a class="headerlink" href="#Black-Sheep-Analysis-example" title="Link to this heading"></a></h3>
 <p>The BlackSheep is a population analysis and has a somewhat different call signature as it requires a number of assets to be submitted to analysis.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -1033,7 +1033,7 @@ Waiting for {&#39;request_id&#39;: &#39;e6a0938e5dd9128550f710ad0180d015&#39;, &
 </section>
 </section>
 <section id="Using-the-analysis-classes">
-<h2>Using the analysis classes<a class="headerlink" href="#Using-the-analysis-classes" title="Permalink to this heading"></a></h2>
+<h2>Using the analysis classes<a class="headerlink" href="#Using-the-analysis-classes" title="Link to this heading"></a></h2>
 <p>We use exactly the same code as above to inspect the results:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -1049,7 +1049,7 @@ Waiting for {&#39;request_id&#39;: &#39;e6a0938e5dd9128550f710ad0180d015&#39;, &
 </div>
 </section>
 <section id="Serializing">
-<h2>Serializing<a class="headerlink" href="#Serializing" title="Permalink to this heading"></a></h2>
+<h2>Serializing<a class="headerlink" href="#Serializing" title="Link to this heading"></a></h2>
 <p>Finally, we can save the object including the results to pickle. If no name is given it is saved under the name <code class="docutils literal notranslate"><span class="pre">&quot;&lt;request_id&gt;.pkl&quot;</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:

@@ -12,13 +12,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -101,7 +101,7 @@
            <div itemprop="articleBody">
              
   <section id="mvg-multiviz-analytics-engine-client-library">
-<h1>MVG: MultiViz Analytics Engine Client Library<a class="headerlink" href="#mvg-multiviz-analytics-engine-client-library" title="Permalink to this heading"></a></h1>
+<h1>MVG: MultiViz Analytics Engine Client Library<a class="headerlink" href="#mvg-multiviz-analytics-engine-client-library" title="Link to this heading"></a></h1>
 <p><span class="raw-html-m2r"><a href="https://pypi.org/project/va-mvg/">
 <img src="https://badge.fury.io/py/va-mvg.svg" alt="Package version">
 </a></span>
@@ -112,18 +112,18 @@
 <li><p>Interface the services via API calls. For more information, refer to the <a class="reference external" href="https://api.beta.multiviz.com/docs">API documentation</a>.</p></li>
 </ul>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
 <p>Usage of the library and several examples can be found <a class="reference external" href="https://vikinganalytics.github.io/mvg/">here</a>.</p>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>To install the library, use the following pip command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">va</span><span class="o">-</span><span class="n">mvg</span>
 </pre></div>
 </div>
 </section>
 <section id="basic-usage">
-<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this heading"></a></h2>
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
 <p>The basic usage involves three steps:</p>
 <ol class="arabic simple">
 <li><p>Create a session by instantiating an MVG object. A session is a combination of an endpoint (server address) and a token. The token, provided by Viking Analytics, is used for both authentication and authorization.</p></li>
@@ -132,7 +132,7 @@
 </ol>
 </section>
 <section id="important-concepts">
-<h2>Important Concepts<a class="headerlink" href="#important-concepts" title="Permalink to this heading"></a></h2>
+<h2>Important Concepts<a class="headerlink" href="#important-concepts" title="Link to this heading"></a></h2>
 <ul>
 <li><p><strong>Endpoint</strong>: The server that provides the analytics and data handling functions. This is represented by a URL and is set when creating the session.</p></li>
 <li><p><strong>Source ID (sid)</strong>: An identifier that represents a measurement source, typically a sensor. The sid is set on the client side and is used as a reference for the source and all information related to it (e.g., measurements and analysis results).</p></li>
@@ -149,36 +149,36 @@
 </ul>
 </section>
 <section id="version-handling-of-mvg-and-api-version">
-<h2>Version Handling of MVG and API Version<a class="headerlink" href="#version-handling-of-mvg-and-api-version" title="Permalink to this heading"></a></h2>
+<h2>Version Handling of MVG and API Version<a class="headerlink" href="#version-handling-of-mvg-and-api-version" title="Link to this heading"></a></h2>
 <p>The version string of the MVG API on the server side has the form v{MAJOR}.{MINOR}.{PATCH}. An increase in MAJOR signifies an incompatible change that requires an upgrade of mvg. An increase in MINOR does not require an upgrade but may not allow access to new features of the API. Please refer to the mvg documentation</p>
 <blockquote>
 <div><p>and the example “examples/0-check_version.ipynb” for details.</p>
 </div></blockquote>
 </section>
 <section id="additional-documentation">
-<h2>Additional Documentation<a class="headerlink" href="#additional-documentation" title="Permalink to this heading"></a></h2>
+<h2>Additional Documentation<a class="headerlink" href="#additional-documentation" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Autogenerated API documentation on mvg from mvg.py</p></li>
 </ul>
 <section id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<h3>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h3>
 <p>In the examples section, there are several Jupyter notebooks with Python code demonstrating how to use the library for interfacing with the Viking Analytics Engine. You can download these notebooks by clicking on the “View Page Source” link located at the top left of the examples. Be sure to change the extension to .ipynb before running them.</p>
 </section>
 <section id="analysis-classes-beta">
-<h3>Analysis Classes (beta)<a class="headerlink" href="#analysis-classes-beta" title="Permalink to this heading"></a></h3>
+<h3>Analysis Classes (beta)<a class="headerlink" href="#analysis-classes-beta" title="Link to this heading"></a></h3>
 <p>Analysis classes provide a simple and powerful way to parse and inspect the results from analysis calls for our features. Apart from converting the results to dataframes, they can be used in an interactive shell to inspect the results from analysis calls.</p>
 <p>In the “analysis_class_examples” directory, there are scripts showing how to use the analysis classes.</p>
 </section>
 <section id="maintainer">
-<h3>Maintainer<a class="headerlink" href="#maintainer" title="Permalink to this heading"></a></h3>
+<h3>Maintainer<a class="headerlink" href="#maintainer" title="Link to this heading"></a></h3>
 <p>The mvg library is maintained by Viking Analytics AB. Visit their website at <a class="reference external" href="https://www.vikinganalytics.se">https://www.vikinganalytics.se</a>.</p>
 </section>
 <section id="bug-reporting-pull-requests-and-support">
-<h3>Bug Reporting, Pull Requests, and Support<a class="headerlink" href="#bug-reporting-pull-requests-and-support" title="Permalink to this heading"></a></h3>
+<h3>Bug Reporting, Pull Requests, and Support<a class="headerlink" href="#bug-reporting-pull-requests-and-support" title="Link to this heading"></a></h3>
 <p>For bug reporting, pull requests, and support, please use the issue tracking and pull requests on the mvg GitHub page: <a class="reference external" href="https://github.com/vikinganalytics/mvg">https://github.com/vikinganalytics/mvg</a>.</p>
 </section>
 <section id="license">
-<h3>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h3>
+<h3>License<a class="headerlink" href="#license" title="Link to this heading"></a></h3>
 <p>The mvg library is licensed under the Apache License 2.0. See the LICENSE file for details.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
@@ -326,7 +326,7 @@
 </section>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>

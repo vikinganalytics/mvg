@@ -12,13 +12,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -114,25 +114,25 @@
            <div itemprop="articleBody">
              
   <section id="population-based-anomaly-detection-blacksheep">
-<h1>Population Based Anomaly Detection (BlackSheep)<a class="headerlink" href="#population-based-anomaly-detection-blacksheep" title="Permalink to this heading"></a></h1>
+<h1>Population Based Anomaly Detection (BlackSheep)<a class="headerlink" href="#population-based-anomaly-detection-blacksheep" title="Link to this heading"></a></h1>
 <img alt="../../_images/blacksheep_sales.png" src="../../_images/blacksheep_sales.png" />
 <section id="what-does-blacksheep-do">
-<h2>What does BlackSheep do?<a class="headerlink" href="#what-does-blacksheep-do" title="Permalink to this heading"></a></h2>
+<h2>What does BlackSheep do?<a class="headerlink" href="#what-does-blacksheep-do" title="Link to this heading"></a></h2>
 <p>BlackSheep identifies atypical assets in a population of assets.</p>
 </section>
 <section id="use-case-for-the-algorithm">
-<h2>Use case for the algorithm<a class="headerlink" href="#use-case-for-the-algorithm" title="Permalink to this heading"></a></h2>
+<h2>Use case for the algorithm<a class="headerlink" href="#use-case-for-the-algorithm" title="Link to this heading"></a></h2>
 <p>Identify assets which behave differently from the rest of the population.</p>
 </section>
 <section id="how-does-blacksheep-work">
-<h2>How does BlackSheep work?<a class="headerlink" href="#how-does-blacksheep-work" title="Permalink to this heading"></a></h2>
+<h2>How does BlackSheep work?<a class="headerlink" href="#how-does-blacksheep-work" title="Link to this heading"></a></h2>
 <p>BlackSheep runs ModeId over a population of assets (sources). Based on all Modes
 identified over the population the most uncommon modes will be considered as
 atypical modes. Sources with the largest portion of uncommon modes
 are labeled as atypical sources – the <em>Black Sheep</em> of the
 population.</p>
 <section id="illustrative-example">
-<h3>Illustrative Example<a class="headerlink" href="#illustrative-example" title="Permalink to this heading"></a></h3>
+<h3>Illustrative Example<a class="headerlink" href="#illustrative-example" title="Link to this heading"></a></h3>
 <p>The figure below shows a population of 6 sources. In total 4 modes are
 identified over all sources. The “red” mode is the most uncommon mode,
 and the two sources which exhibit the uncommon mode are labeled as
@@ -141,7 +141,7 @@ Black Sheep.</p>
 </section>
 </section>
 <section id="using-the-algorithm-via-mvg">
-<h2>Using the algorithm via mvg<a class="headerlink" href="#using-the-algorithm-via-mvg" title="Permalink to this heading"></a></h2>
+<h2>Using the algorithm via mvg<a class="headerlink" href="#using-the-algorithm-via-mvg" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Upload vibration time series data for a population of sources.</p></li>
 <li><p>Request an analysis for the population of sources.</p></li>
@@ -149,12 +149,12 @@ Black Sheep.</p>
 </ol>
 </section>
 <section id="analysis-parameters">
-<h2>Analysis Parameters<a class="headerlink" href="#analysis-parameters" title="Permalink to this heading"></a></h2>
+<h2>Analysis Parameters<a class="headerlink" href="#analysis-parameters" title="Link to this heading"></a></h2>
 <p>The BlackSheep feature requires no parameters apart from the
 population list (sids) and feature (“BlackSheep”).</p>
 </section>
 <section id="structure-of-the-results">
-<h2>Structure of the Results<a class="headerlink" href="#structure-of-the-results" title="Permalink to this heading"></a></h2>
+<h2>Structure of the Results<a class="headerlink" href="#structure-of-the-results" title="Link to this heading"></a></h2>
 <p>The results returned by the analysis call will be a dictionary
 containing the list of atypical assets.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -164,7 +164,7 @@ containing the list of atypical assets.</p>
 </div>
 </section>
 <section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>The algorithm is agnostic to the scale of the measurements, but the
 scale for all measurements needs to be consistent.</p></li>

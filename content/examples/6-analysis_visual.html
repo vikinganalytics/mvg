@@ -13,13 +13,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -113,11 +113,11 @@
            <div itemprop="articleBody">
              
   <section id="Analysis-and-Results-Visualization">
-<h1>Analysis and Results Visualization<a class="headerlink" href="#Analysis-and-Results-Visualization" title="Permalink to this heading"></a></h1>
+<h1>Analysis and Results Visualization<a class="headerlink" href="#Analysis-and-Results-Visualization" title="Link to this heading"></a></h1>
 <p>This script describes the procedure to request an analysis to the Viking Analytics’ MultiViz Analytics Engine (MVG) service. It shows how to query for results of single-asset or asset-population analyses. In addition, it presents some examples of how to visualize the results available for the <a class="reference internal" href="../features/ModeId.html"><span class="doc">“mode identification”</span></a> feature.</p>
 <p>In this example, we will describe how to access and manipulate the analysis results directly. The <a class="reference internal" href="5-analysis_classes.html"><span class="doc">“Analysis Classes”</span></a> example provides a simplified and unified interface to access these results as a pandas dataframe, along with some basic visualization of the results.</p>
 <section id="Preliminaries">
-<h2>Preliminaries<a class="headerlink" href="#Preliminaries" title="Permalink to this heading"></a></h2>
+<h2>Preliminaries<a class="headerlink" href="#Preliminaries" title="Link to this heading"></a></h2>
 <p>This procedure describes all the steps to request an analysis, get analysis results, and plot those results using the functions in <code class="docutils literal notranslate"><span class="pre">plotting</span></code>. Local visualizations functions to create the figures are imported from <code class="docutils literal notranslate"><span class="pre">plotting</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -156,7 +156,7 @@
 </div>
 </div>
 <section id="Asset-Analysis">
-<h3>Asset Analysis<a class="headerlink" href="#Asset-Analysis" title="Permalink to this heading"></a></h3>
+<h3>Asset Analysis<a class="headerlink" href="#Asset-Analysis" title="Link to this heading"></a></h3>
 <p>In this example, we will use the sources uploaded by the <a class="reference internal" href="2-sources_and_measurements.html"><span class="doc">“Sources and Measurement”</span></a> example. We start by looking if the sources are available in the database. At least, sources, “u0001” and “u0005”, should appear as available.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -308,7 +308,7 @@ KPI Analysis: successful
 ModeId Analysis: successful
 </pre></div></div>
 </div>
-<p>The similar procedure is repeated to request the “RMS” and “ModeId” for our source “u0005”.</p>
+<p>The similar procedure is repeated to request the “KPIDemo” and “ModeId” for our source “u0005”.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -371,16 +371,16 @@ ModeId Analysis: successful
 </div>
 </section>
 <section id="Visualization">
-<h3>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this heading"></a></h3>
+<h3>Visualization<a class="headerlink" href="#Visualization" title="Link to this heading"></a></h3>
 <p>Once the analysis is complete, one get the results by calling the corresponding “request_id” for each analysis.</p>
 <p>First, let’s check all existing “request_id” in the database for each source and feature.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">REQUEST_IDS_RMS</span> <span class="o">=</span> <span class="p">[</span><span class="n">session</span><span class="o">.</span><span class="n">list_analyses</span><span class="p">(</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;KPIDemo&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">session</span><span class="o">.</span><span class="n">list_analyses</span><span class="p">(</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;KPIDemo&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The KPI analysis of </span><span class="si">{</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> has request_id </span><span class="si">{</span><span class="n">REQUEST_IDS_RMS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The KPI analysis of </span><span class="si">{</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> has request_id </span><span class="si">{</span><span class="n">REQUEST_IDS_RMS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">REQUEST_IDS_KPI</span> <span class="o">=</span> <span class="p">[</span><span class="n">session</span><span class="o">.</span><span class="n">list_analyses</span><span class="p">(</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;KPIDemo&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">session</span><span class="o">.</span><span class="n">list_analyses</span><span class="p">(</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;KPIDemo&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The KPI analysis of </span><span class="si">{</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> has request_id </span><span class="si">{</span><span class="n">REQUEST_IDS_KPI</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The KPI analysis of </span><span class="si">{</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> has request_id </span><span class="si">{</span><span class="n">REQUEST_IDS_KPI</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 <span class="n">REQUEST_IDS_MODEID</span> <span class="o">=</span> <span class="p">[</span><span class="n">session</span><span class="o">.</span><span class="n">list_analyses</span><span class="p">(</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;ModeId&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">session</span><span class="o">.</span><span class="n">list_analyses</span><span class="p">(</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;ModeId&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The ModeId analysis of </span><span class="si">{</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> has request_id </span><span class="si">{</span><span class="n">REQUEST_IDS_MODEID</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The ModeId analysis of </span><span class="si">{</span><span class="n">SOURCE_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> has request_id </span><span class="si">{</span><span class="n">REQUEST_IDS_MODEID</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
@@ -565,7 +565,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <p>The dictionaries are called ‘mode_info’ and ‘mode_probabilities’.</p>
 <p>The dictionary ‘mode_info’ contains the “Emerging modes” results. “Emerging modes” is an additional output of the analysis results that describes the first appearance of each one of the identified modes.</p>
 <p>The dictionary ‘mode_probabilities’ contains a dictionary per each mode identified. Each of these dictionaries contains the mode probabilities as it was identified for each mode.</p>
-<p>We pass all the lists to a dataframe for ease of manipulation. Similarly to the RMS feature, we will show how to access the dictionary results information and convert it into a Pandas dataframe. Please check the <a class="reference internal" href="5-analysis_classes.html"><span class="doc">“Analysis Classes”</span></a> example for directly getting a results Pandas dataframe. In addition, the “timestamp” column is converted to a timestamp object in a column called “Date”.</p>
+<p>We pass all the lists to a dataframe for ease of manipulation. Similarly to the KPIDemo feature, we will show how to access the dictionary results information and convert it into a Pandas dataframe. Please check the <a class="reference internal" href="5-analysis_classes.html"><span class="doc">“Analysis Classes”</span></a> example for directly getting a results Pandas dataframe. In addition, the “timestamp” column is converted to a timestamp object in a column called “Date”.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
@@ -726,7 +726,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 </table>
 </div></div>
 </div>
-<p>For the purpose of demonstration of our visualization functions, we will merge the dataframes of the “RMS” results and the “ModeId” results into a single dataframe.</p>
+<p>For the purpose of demonstration of our visualization functions, we will merge the dataframes of the “KPIDemo” results and the “ModeId” results into a single dataframe.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
@@ -858,10 +858,10 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#RMS</span>
-<span class="n">df_rms5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">kpi_output5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="s2">&quot;acc&quot;</span><span class="p">])</span>
-<span class="n">df_rms5</span><span class="p">[</span><span class="s2">&quot;timestamps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kpi_output5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="s1">&#39;timestamps&#39;</span><span class="p">]</span>
-<span class="n">df_rms5</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_rms5</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#KPI</span>
+<span class="n">df_kpi5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">kpi_output5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="s2">&quot;acc&quot;</span><span class="p">])</span>
+<span class="n">df_kpi5</span><span class="p">[</span><span class="s2">&quot;timestamps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kpi_output5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">][</span><span class="s1">&#39;timestamps&#39;</span><span class="p">]</span>
+<span class="n">df_kpi5</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_kpi5</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="c1">#MODE_ID (full)</span>
 <span class="n">mode_all5</span> <span class="o">=</span> <span class="n">mode_output5</span><span class="p">[</span><span class="s2">&quot;results&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">mode_probabilities5</span> <span class="o">=</span> <span class="n">mode_all5</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mode_probabilities&quot;</span><span class="p">)</span>
@@ -869,7 +869,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 <span class="n">df_mode5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mode_all5</span><span class="p">)</span>
 <span class="n">df_mode5</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_mode5</span><span class="p">[</span><span class="s1">&#39;timestamps&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="c1">#Merging dataframes</span>
-<span class="n">df_u0005</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_rms5</span><span class="p">,</span> <span class="n">df_mode5</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;timestamps&quot;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+<span class="n">df_u0005</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">df_kpi5</span><span class="p">,</span> <span class="n">df_mode5</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;timestamps&quot;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
 <span class="n">df_u0005</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1105,7 +1105,7 @@ over each timestamp. For a more focused plot, one can use the method’s <code c
 </div>
 </section>
 <section id="Population-Analysis">
-<h3>Population Analysis<a class="headerlink" href="#Population-Analysis" title="Permalink to this heading"></a></h3>
+<h3>Population Analysis<a class="headerlink" href="#Population-Analysis" title="Link to this heading"></a></h3>
 <p>Another feature is “BlackSheep”, which targets a group of assets and aims to identify the atypical assets within a population.</p>
 <p>During our example, we will utilize all sources previously uploaded to our database.</p>
 <div class="nbinput docutils container">

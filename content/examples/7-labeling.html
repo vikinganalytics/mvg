@@ -13,13 +13,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -121,7 +121,7 @@
            <div itemprop="articleBody">
              
   <section id="Labeling-of-Measurements-and-Label-Propagation">
-<h1>Labeling of Measurements and Label Propagation<a class="headerlink" href="#Labeling-of-Measurements-and-Label-Propagation" title="Permalink to this heading"></a></h1>
+<h1>Labeling of Measurements and Label Propagation<a class="headerlink" href="#Labeling-of-Measurements-and-Label-Propagation" title="Link to this heading"></a></h1>
 <p>MVG comes with a labeling API that allows a user to store important information about a measurement. There are multiple reasons why you would want to label measurements and some of the benefits include:</p>
 <ol class="arabic simple">
 <li><p>Additional information about modes. For example, a mode with multiple critical measurements is likely a failure mode.</p></li>
@@ -131,7 +131,7 @@
 <p>In addition, the LabelPropagation feature enables to propagate those labels to the measurements that do not contain any labels.</p>
 <p>This example will go through what a label is in MVG, how the labeling API functions, and how to utilize the LabelPropagation feature.</p>
 <section id="Prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Permalink to this heading"></a></h2>
+<h2>Prerequisites<a class="headerlink" href="#Prerequisites" title="Link to this heading"></a></h2>
 <p>To follow this example you need to have:</p>
 <ol class="arabic simple">
 <li><p>Installed <code class="docutils literal notranslate"><span class="pre">mvg</span></code> package</p></li>
@@ -141,7 +141,7 @@
 </ol>
 </section>
 <section id="Import-the-required-packages-and-functions">
-<h2>Import the required packages and functions<a class="headerlink" href="#Import-the-required-packages-and-functions" title="Permalink to this heading"></a></h2>
+<h2>Import the required packages and functions<a class="headerlink" href="#Import-the-required-packages-and-functions" title="Link to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -155,7 +155,7 @@
 </div>
 </section>
 <section id="Create-a-session-for-API-access">
-<h2>Create a session for API access<a class="headerlink" href="#Create-a-session-for-API-access" title="Permalink to this heading"></a></h2>
+<h2>Create a session for API access<a class="headerlink" href="#Create-a-session-for-API-access" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Each token is used for Authorization AND Authentication. Thus, each unique token represents a unique user, each user has it own, unique database on the VA-MVG’ service.</p>
@@ -191,7 +191,7 @@
 </pre></div></div>
 </div>
 <section id="Retrieve-ModeId-results">
-<h3>Retrieve ModeId results<a class="headerlink" href="#Retrieve-ModeId-results" title="Permalink to this heading"></a></h3>
+<h3>Retrieve ModeId results<a class="headerlink" href="#Retrieve-ModeId-results" title="Link to this heading"></a></h3>
 <p>Once the API session is live, we start by checking if the source <code class="docutils literal notranslate"><span class="pre">u0001</span></code> we will use is available in the database.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -331,7 +331,7 @@
 </div>
 </section>
 <section id="Adding-labels">
-<h3>Adding labels<a class="headerlink" href="#Adding-labels" title="Permalink to this heading"></a></h3>
+<h3>Adding labels<a class="headerlink" href="#Adding-labels" title="Link to this heading"></a></h3>
 <p>A label in MVG relates to a specific measurement, which are identifiable by the source ID and the timestamp. Each measurement can only have one label. The label itself has three components:</p>
 <ol class="arabic simple">
 <li><p>A label identification string</p></li>
@@ -506,7 +506,7 @@
 </section>
 </section>
 <section id="Reading-Labels">
-<h2>Reading Labels<a class="headerlink" href="#Reading-Labels" title="Permalink to this heading"></a></h2>
+<h2>Reading Labels<a class="headerlink" href="#Reading-Labels" title="Link to this heading"></a></h2>
 <p>To get a list of all the labels for a source we use the <code class="docutils literal notranslate"><span class="pre">MVG.list_labels()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -588,7 +588,7 @@
 </div>
 </section>
 <section id="Updating-labels">
-<h2>Updating labels<a class="headerlink" href="#Updating-labels" title="Permalink to this heading"></a></h2>
+<h2>Updating labels<a class="headerlink" href="#Updating-labels" title="Link to this heading"></a></h2>
 <p>Now we realize that the label we had in the first measurement correspond to mode 0 and the label that we originally added is incorrect. Then we use the <code class="docutils literal notranslate"><span class="pre">session.update_label()</span></code> method to change the label.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
@@ -659,7 +659,7 @@
 </div>
 </section>
 <section id="Plotting-labels">
-<h2>Plotting labels<a class="headerlink" href="#Plotting-labels" title="Permalink to this heading"></a></h2>
+<h2>Plotting labels<a class="headerlink" href="#Plotting-labels" title="Link to this heading"></a></h2>
 <p>To get an overview of the data and labels it can be very good to plot the labels over time. The <code class="docutils literal notranslate"><span class="pre">plotting</span></code> module of <code class="docutils literal notranslate"><span class="pre">mvg</span></code> contains the function <code class="docutils literal notranslate"><span class="pre">plot_labels_over_time</span></code> that does just that. The plot is very similar to that of the ModeId plots, so it is easy to compare results. We can add the <code class="docutils literal notranslate"><span class="pre">include_unlabeled=True</span></code> keyword to plot the unlabeled measurements as well. Please note how “healthy” and “Healthy” was interpreted as two different labels.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
@@ -689,7 +689,7 @@
 <p>As you can see we only labeled a small subset of the data. The idea is not to label all the measurements, but to label a part and then use that information to make inference about the unlabeled measurements.</p>
 </section>
 <section id="Deleting-labels">
-<h2>Deleting labels<a class="headerlink" href="#Deleting-labels" title="Permalink to this heading"></a></h2>
+<h2>Deleting labels<a class="headerlink" href="#Deleting-labels" title="Link to this heading"></a></h2>
 <p>Now, we check the total number of existing labels in our source.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
@@ -735,7 +735,7 @@ Currently, there are 5 labels
 </pre></div></div>
 </div>
 <section id="Label-Propagation">
-<h3>Label Propagation<a class="headerlink" href="#Label-Propagation" title="Permalink to this heading"></a></h3>
+<h3>Label Propagation<a class="headerlink" href="#Label-Propagation" title="Link to this heading"></a></h3>
 <p>Until this point, we had added labels to some of our measurements but we might be interested on adding the labels to the rest of the measurements. We use the <a class="reference internal" href="../features/label_propagation.html"><span class="doc">“LabelPropagation”</span></a> feature to achieve this.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">LabelPropagation</span></code> feature uses the results from the ModeId feature to propagate the labels. However, the labels are attached to each measurement individually and not to the modes as a whole.</p>
 <p>To use the <code class="docutils literal notranslate"><span class="pre">LabelPropagation</span></code> feature, we need to know which source is to be used and the <code class="docutils literal notranslate"><span class="pre">request_id</span></code> that holds the results of the ModeId feature. Then, we can request the analysis.</p>

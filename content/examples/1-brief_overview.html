@@ -13,13 +13,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -121,24 +121,24 @@
            <div itemprop="articleBody">
              
   <section id="Brief-Overview---How-to-use-the-MVG-library">
-<h1>Brief Overview - How to use the MVG library<a class="headerlink" href="#Brief-Overview---How-to-use-the-MVG-library" title="Permalink to this heading"></a></h1>
+<h1>Brief Overview - How to use the MVG library<a class="headerlink" href="#Brief-Overview---How-to-use-the-MVG-library" title="Link to this heading"></a></h1>
 <section id="Introduction">
-<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this heading"></a></h2>
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading"></a></h2>
 <p>The MultiViz Analytics Engine (MVG) Library is a Python library that enables the use of Viking Analytics’s MVG Analytics Service. To access this service, Viking Analytics (VA) provides a REST API towards its analytics server. The simplification of access to this service is enabled by the VA-MVG Python package, which allows interaction with the service via regular python calls.</p>
 <p>This interactive document shall show the whole flow working with the service from Python, from data upload to retrieval of analysis results for the analysis of vibration signals.</p>
 <section id="Signing-up-for-the-service">
-<h3>Signing up for the service<a class="headerlink" href="#Signing-up-for-the-service" title="Permalink to this heading"></a></h3>
+<h3>Signing up for the service<a class="headerlink" href="#Signing-up-for-the-service" title="Link to this heading"></a></h3>
 <p>For commercial use of the service, you will need to acquire a token from Viking Analytics. For the example here, we use a built-in token for demo. Please contact us for a free trial and provide you with your token.</p>
 </section>
 <section id="Python-Pre-requisites">
-<h3>Python Pre-requisites<a class="headerlink" href="#Python-Pre-requisites" title="Permalink to this heading"></a></h3>
+<h3>Python Pre-requisites<a class="headerlink" href="#Python-Pre-requisites" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Make sure you have Python 3.6 or higher installed.</p></li>
 </ol>
 <p>In the following section we will walk through the code needed for the API interaction</p>
 </section>
 <section id="Imports">
-<h3>Imports<a class="headerlink" href="#Imports" title="Permalink to this heading"></a></h3>
+<h3>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h3>
 <p>First, we begin with the general imports of Python libraries that are needed as part of this project.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -185,7 +185,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;https://api.beta.multiviz.com&quot;</span>
 <span class="c1"># Replace by your own Token</span>
-<span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTA0NTY3NTQsImV4cCI6MTg5MzQ1NjAwMCwiY2xpZW50X2lkIjoiYXBmZWwiLCJzaXRlX2lkIjoic3RydWRlbCJ9.m7LYLLbTW0voLzEOTYY8nf5dKl_XPp2c5YOyF_66M6mnPICdqBVzF2JcaN7hUlQEWBzxysma5tw6QfU1NspwPeDGT87_sZKAWWqnBmgjP7OYUNYvt1fg-o5lylsHSriradI6SBJv0vcHYU3y_Mey_OmV9Vu12OnQWRBam14qqT0&quot;</span>
+<span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TEST_TOKEN&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -220,7 +220,7 @@
 </section>
 </section>
 <section id="Sources-and-Measurements">
-<h2>Sources and Measurements<a class="headerlink" href="#Sources-and-Measurements" title="Permalink to this heading"></a></h2>
+<h2>Sources and Measurements<a class="headerlink" href="#Sources-and-Measurements" title="Link to this heading"></a></h2>
 <p>Before we begin, we will ensure there are no previously existing sources and if there are, we will delete them.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -271,7 +271,7 @@ Deleting u0006
 </div>
 </div>
 <section id="Creating-a-Source">
-<h3>Creating a Source<a class="headerlink" href="#Creating-a-Source" title="Permalink to this heading"></a></h3>
+<h3>Creating a Source<a class="headerlink" href="#Creating-a-Source" title="Link to this heading"></a></h3>
 <p>A source represents a vibration data source, typically a vibration sensor. Internally, in the analytics engine and data storage, all vibration data is stored under its source. In essence, a source is an identifier formed by</p>
 <ul class="simple">
 <li><p>the source ID</p></li>
@@ -308,7 +308,7 @@ measurements.</p>
 </div>
 </section>
 <section id="List-sources">
-<h3>List sources<a class="headerlink" href="#List-sources" title="Permalink to this heading"></a></h3>
+<h3>List sources<a class="headerlink" href="#List-sources" title="Link to this heading"></a></h3>
 <p>We can now check if our source actually has been created, by listing all the sources in the database. This function provides all the existing information about the source. Notice how in the source properties, one can see that the type of data to be uploaded for the source will be a waveform given that when one passes a channel definition to the source. The server interprets this as expecting for each measurement to be waveform data with the names of channels listed by the channel variable.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -334,7 +334,7 @@ measurements.</p>
 </div>
 </section>
 <section id="Uploading-Measurements">
-<h3>Uploading Measurements<a class="headerlink" href="#Uploading-Measurements" title="Permalink to this heading"></a></h3>
+<h3>Uploading Measurements<a class="headerlink" href="#Uploading-Measurements" title="Link to this heading"></a></h3>
 <p>Now that we have created a source, we can upload vibration measurements related to the source. The information needed to create a measurement consists of</p>
 <ul class="simple">
 <li><p>sid: name of the source ID to associate the measurement with a source.</p></li>
@@ -570,7 +570,7 @@ Read 50 stored measurements
 </section>
 </section>
 <section id="Analysis">
-<h2>Analysis<a class="headerlink" href="#Analysis" title="Permalink to this heading"></a></h2>
+<h2>Analysis<a class="headerlink" href="#Analysis" title="Link to this heading"></a></h2>
 <p>We begin by listing all the features available in the service.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
@@ -714,7 +714,7 @@ dict_keys([&#39;status&#39;, &#39;request_id&#39;, &#39;feature&#39;, &#39;resul
 </div>
 </section>
 <section id="Visualization">
-<h2>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this heading"></a></h2>
+<h2>Visualization<a class="headerlink" href="#Visualization" title="Link to this heading"></a></h2>
 <p>The MVG Library incorporates a module that facilitates the handling of the results and its visualization. Using this module, it becomes easier to convert the results into a Pandas dataframe for ease of manipulation. In addition, it enables to quickly evaluate the results by getting a summary of them or visualize them.</p>
 <p>The name of this module is <code class="docutils literal notranslate"><span class="pre">&quot;analysis_classes&quot;</span></code> and we begin by calling it.</p>
 <div class="nbinput nblast docutils container">

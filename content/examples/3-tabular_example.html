@@ -13,13 +13,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -108,11 +108,11 @@
            <div itemprop="articleBody">
              
   <section id="Working-with-Tabular-Data">
-<h1>Working with Tabular Data<a class="headerlink" href="#Working-with-Tabular-Data" title="Permalink to this heading"></a></h1>
+<h1>Working with Tabular Data<a class="headerlink" href="#Working-with-Tabular-Data" title="Link to this heading"></a></h1>
 <p>Although MVG has been designed with vibration waveform data in mind, it still works wonderfully well with non-vibration or KPI data. We refer to this as tabular timeseries data. Each measurement consists of one or more variables captured at the same time. This is different from the vibration waveform data, where each measurement is a short measurement sample from one vibration sensor.</p>
 <p>In this example, we will show how to work with tabular sources and measurements, and how to create an analysis. If you have seen any of the previous examples, much of this one will be familiar to you.</p>
 <section id="Imports">
-<h2>Imports<a class="headerlink" href="#Imports" title="Permalink to this heading"></a></h2>
+<h2>Imports<a class="headerlink" href="#Imports" title="Link to this heading"></a></h2>
 <p>Beyond importing <code class="docutils literal notranslate"><span class="pre">MVG</span></code> and the <code class="docutils literal notranslate"><span class="pre">ModeId</span></code> analysis class, we want to use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> for loading and processing the data before the analysis.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:

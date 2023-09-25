@@ -12,13 +12,13 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -112,10 +112,10 @@
            <div itemprop="articleBody">
              
   <section id="automatic-mode-identification-modeid">
-<h1>Automatic Mode Identification (ModeID)<a class="headerlink" href="#automatic-mode-identification-modeid" title="Permalink to this heading"></a></h1>
+<h1>Automatic Mode Identification (ModeID)<a class="headerlink" href="#automatic-mode-identification-modeid" title="Link to this heading"></a></h1>
 <img alt="../../_images/modeid_sales.png" src="../../_images/modeid_sales.png" />
 <section id="what-does-modeid-do">
-<h2>What does ModeId do?<a class="headerlink" href="#what-does-modeid-do" title="Permalink to this heading"></a></h2>
+<h2>What does ModeId do?<a class="headerlink" href="#what-does-modeid-do" title="Link to this heading"></a></h2>
 <p>ModeId preforms Automatic Mode Identification on a time series of
 vibration measurements: the algorithm will automatically detect a
 number of operational modes in the time series data.</p>
@@ -126,7 +126,7 @@ process like different fluids to be pumped, on-off state, or a
 developing failure.</p>
 </section>
 <section id="how-does-modeid-work">
-<h2>How does ModeId work?<a class="headerlink" href="#how-does-modeid-work" title="Permalink to this heading"></a></h2>
+<h2>How does ModeId work?<a class="headerlink" href="#how-does-modeid-work" title="Link to this heading"></a></h2>
 <p>The mode identification algorithm is an unsupervised algorithm.
 It works by first converting all vibration measurements
 from the time domain into the frequency domain and then selecting the most relevant
@@ -140,7 +140,7 @@ assigned cluster, if the probability is very low the point is labeled
 as “uncertain”.</p>
 </section>
 <section id="use-cases-for-the-algorithm">
-<h2>Use cases for the algorithm<a class="headerlink" href="#use-cases-for-the-algorithm" title="Permalink to this heading"></a></h2>
+<h2>Use cases for the algorithm<a class="headerlink" href="#use-cases-for-the-algorithm" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Find operational modes (“normal”, “failure”, …).</p></li>
 <li><p>Overview representations of vibration data time series.</p></li>
@@ -149,7 +149,7 @@ as “uncertain”.</p>
 </ul>
 </section>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
 <p>The example shows the application of Automatic Mode Identification to
 one year of data from a heatpump (no frequency domain data in this
 example). The algorithm correctly detects 4
@@ -164,7 +164,7 @@ is heating, but not constantly.</p></li>
 <img alt="../../_images/modeid_heatpump.png" src="../../_images/modeid_heatpump.png" />
 </section>
 <section id="using-the-algorithm-via-mvg">
-<h2>Using the algorithm via mvg<a class="headerlink" href="#using-the-algorithm-via-mvg" title="Permalink to this heading"></a></h2>
+<h2>Using the algorithm via mvg<a class="headerlink" href="#using-the-algorithm-via-mvg" title="Link to this heading"></a></h2>
 <p>For code example see the Visual Analysis Example.</p>
 <ol class="arabic simple">
 <li><p>Upload vibration time series data to a source, a minimum of 20 data points is
@@ -174,7 +174,7 @@ required.</p></li>
 </ol>
 </section>
 <section id="analysis-parameters">
-<h2>Analysis Parameters<a class="headerlink" href="#analysis-parameters" title="Permalink to this heading"></a></h2>
+<h2>Analysis Parameters<a class="headerlink" href="#analysis-parameters" title="Link to this heading"></a></h2>
 <p>The ModeId feature requires no parameters except the source Id (sid)
 feature (“ModeId”).</p>
 <p>By default, ModeId will not require any additional, algorithmic input parameters,
@@ -191,7 +191,7 @@ result, the optimizer can be disabled and a specific number of modes
 </div>
 </section>
 <section id="structure-of-the-results">
-<h2>Structure of the Results<a class="headerlink" href="#structure-of-the-results" title="Permalink to this heading"></a></h2>
+<h2>Structure of the Results<a class="headerlink" href="#structure-of-the-results" title="Link to this heading"></a></h2>
 <p>The result returned by the analysis call will be a dictionary
 containing four lists: the <em>timestamps</em>, the <em>label</em> (aka operational
 modes), the <em>mode_probability</em> and <em>uncertain</em> where a logical value of <code class="docutils literal notranslate"><span class="pre">True</span></code> indicates an
@@ -219,7 +219,7 @@ each mode , the <em>max_prob_time</em> corresponding to the epoch with the large
 </div>
 </section>
 <section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>The algorithm is agnostic to the scale of the measurements, but the
 scale for all measurements needs to be consistent.</p></li>
